@@ -1,37 +1,32 @@
-<div class="card mt-2 pt-0 pb-1 pl-1 pr-3">
+<div class="card-plain mb-2  pt-0 pb-1 pl-1 pr-3 white rounded">
   <div class="card-body d-flex flex-row">
     <div style ="width:50%">
-      
-      <table class='table-borderless'>
-        <tr style="text-align: center;">
-          @foreach(array(0,1,2,3,4,5,6,7) as $i)
-            @php
-              $name = "name" . $i;
-            @endphp
-            <td>
+    <div class="d-flex flex-row">
+        @foreach(array(0,1,2,3,4,5,6,7) as $i)
+          <div>
+            <div class="mx-auto pr-2" style="width:100%">
+              @php
+                $name = "name" . $i;
+              @endphp
               <span class="h4 card-title">      
                 <a class="text-dark" href="{{ route('words.show', ['word' => $word]) }}">
-                  {{$word->$name}} &nbsp;
+                  {{$word->$name}}
                 </a>
               </span>
-            </td >
-          @endforeach
-        </tr>
-        <tr class="card-text" style="text-align: center;">
-          @foreach(array(0,1,2,3,4,5,6,7) as $i)
-            @php
-              $kanji_n = 'kanji' . $i;  
-            @endphp
-            @if($word->$kanji_n != '')
-              <td>
-                <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="p-1 mr-1 mt-1 text-muted">
-                    {{$word->$kanji_n}}
-                </a>
-              </td >
-            @endif
-          @endforeach
-        </tr>
-      </table>
+            </div>
+            <div class="mx-auto" style="width:30px">
+              @php
+                $kanji_n = 'kanji' . $i;  
+              @endphp        
+              @if($word->$kanji_n != '')
+              <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="p-1 mr-1 mt-1 text-muted">
+                {{$word->$kanji_n}}
+              </a>          
+              @endif
+            </div>
+          </div>
+        @endforeach    
+      </div>
     </div>
     <div class="card-body pt-0" style="width:50%">
       <div class="text-dark card-text">
@@ -46,7 +41,7 @@
   </div>
 
   <div class="d-flex flex-row">
-    <div class="small ml-4 card-text">
+    <div class="text-dark small ml-4 card-text">
       Lv.{{ $word->level }}
     </div>
 
@@ -96,7 +91,6 @@
       </div>
       <!-- modal -->
     @endif    
-
   </div>
 
 </div>

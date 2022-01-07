@@ -10,6 +10,14 @@ class Word extends Model
 {
     protected $fillable = [
         'name',
+        'name0',
+        'name1',
+        'name2',
+        'name3',
+        'name4',
+        'name5',
+        'name6',
+        'name7',
         'kanji0',
         'kanji1',
         'kanji2',
@@ -21,7 +29,6 @@ class Word extends Model
         'jp',
         'detail',
         'level',
-        
     ];
 
     public function user(): BelongsTo
@@ -67,5 +74,9 @@ class Word extends Model
         $followers = $this->anto_followers;
         return $followings->merge($followers)->sortBy('level');
     }    
-   
+    public function randomWord():Word
+    {
+        $word = Word::inRandomOrder()->first();
+        return $word;
+    }   
 }

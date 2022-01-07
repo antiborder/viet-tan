@@ -1,45 +1,42 @@
-<div class="card mt-1 mb-1 pt-1 pb-1 pl-3 pr-3" style="max-width: 30rem;">
+<div class="card mt-0 mb-1 pt-1 pb-1 pl-3 pr-3  white rounded" style="max-width: 30rem;">
   <div class="d-flex flex-row">
     <div style ="width:50%">
-      
-      <table class='table-borderless'>
-        <tr style="text-align: center;">
-          @foreach(array(0,1,2,3,4,5,6,7) as $i)
-            @php
-              $name = "name" . $i;
-            @endphp
-            <td>
+      <div class="d-flex flex-row">
+        @foreach(array(0,1,2,3,4,5,6,7) as $i)
+          <div>
+            <div class="mx-auto pr-2" style="width:100%">
+              @php
+                $name = "name" . $i;
+              @endphp
               <span class="h4 card-title">      
                 <a class="text-dark" href="{{ route('words.show', ['word' => $word]) }}">
-                  {{$word->$name}} &nbsp;
+                  {{$word->$name}}
                 </a>
               </span>
-            </td >
-          @endforeach
-        </tr>
-        <tr class="card-text" style="text-align: center;">
-          @foreach(array(0,1,2,3,4,5,6,7) as $i)
-            @php
-              $kanji_n = 'kanji' . $i;  
-            @endphp
-            @if($word->$kanji_n != '')
-              <td>
-                <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="p-1 mr-1 mt-1 text-muted">
-                    {{$word->$kanji_n}}
-                </a>
-              </td >
-            @endif
-          @endforeach
-        </tr>
-      </table>
-      <div class="small mt-2 ml-0 card-text">
-        Lv.{{$word->level}}
+            </div>
+            <div class="mx-auto" style="width:30px">
+              @php
+                $kanji_n = 'kanji' . $i;  
+              @endphp        
+              @if($word->$kanji_n != '')
+              <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="p-1 mr-1 mt-1 text-muted">
+                {{$word->$kanji_n}}
+              </a>          
+              @endif
+            </div>
+          </div>
+        @endforeach    
+      </div>
+      <div class="d-flex flex-column-reverse" >
+        <div class="text-dark small mt-2 ml-0 card-text">
+          Lv.{{$word->level}}
+        </div>
       </div>
     </div>
-    <div class="card-body pt-2" style="width:50%" >
-      <div class="text-dark card-text">
-        {{ $word->jp }}
-      </div>
+    <div class="card-body pt-2 border-left border-light" style="width:50%" >
+      <div class="text-dark card-text" style="white-space: pre-line;">{{ $word->jp }}</div>
+        
+      
       <div class="d-flex flex-row-reverse">
         @if( Auth::id() === $word->user_id )
           <!-- dropdown -->
@@ -92,9 +89,3 @@
   </div>
 </div>
 
-<style>
-  .name-table{
-    border-collapse: separate;
-    border-spacing: 10px  0px;
-  }
-</style>
