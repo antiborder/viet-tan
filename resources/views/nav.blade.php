@@ -1,8 +1,19 @@
-<nav class="navbar navbar-expand navbar-dark blue-gradient">
+<nav class="navbar navbar-dark navbar-expand light-blue border-3 ">
 
-  <a class="navbar-brand" href="/"><i class="far fa-sticky-note mr-1"></i>Memo</a>
+  <a class="navbar-brand" href="/"><i class="far fa-sticky-note mr-1"></i>　</a>
 
   <ul class="navbar-nav ml-auto">
+
+  <form class="form-inline mr-4" action="{{url('/search')}}">
+    <div class="input-group input-group-lg">
+      <div class="form-group">
+        <div class="">
+          <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control" placeholder="検索">
+        </div>
+      </div>
+      <input type="submit" value="&#xf002;" class="fas btn-info light-blue lighten-1 border shadow-none btn-sm">
+    </div>
+  </form>  
 
     @guest {{--この行を追加--}}
     <li class="nav-item">

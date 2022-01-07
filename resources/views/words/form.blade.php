@@ -2,6 +2,12 @@
 <div class="md-form">
   <label>単語</label>
   <input type="text" name="name" class="form-control" required value="{{ $word->name ?? old('name') }}">
+  @for($i=0; $i < 8; $i++)
+  @php
+    $name_n = 'name' . $i;
+  @endphp
+  {{ $word->$name_n ?? null}}
+@endfor
 </div>
 
 <div class="form-group">

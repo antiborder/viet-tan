@@ -15,12 +15,17 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">
 </head>
 
-<body>
-  <div id="app"> {{--この行を追加--}}
+<body class="blue-grey lighten-5">
+  @if (session('flash_message'))
+      <div class="flash_message">
+          {{ session('flash_message') }}
+      </div>
+  @endif
+  <div id="app">
     @yield('content')
-  </div> {{--この行を追加--}}
+  </div>
 
-  <script src="{{ mix('js/app.js') }}"></script> {{--この行を追加--}}
+  <script src="{{ mix('js/app.js') }}"></script>
   <!-- JQuery -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <!-- Bootstrap tooltips -->
