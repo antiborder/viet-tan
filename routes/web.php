@@ -18,4 +18,10 @@ Route::resource('/words', 'WordController')->only(['show']);
 
 Route::get('/tags/{name}', 'TagController@show')->name('tags.show');
 Route::get('/kanjis/{name}', 'KanjiController@show')->name('kanjis.show');
-// Route::get('/search', 'WordController@search')->name('words.search');
+Route::get('/search', 'WordController@search')->name('words.search');
+
+Route::get('/choose', 'WordController@choose')->name('choose');
+Route::post('/import', 'WordController@import')->name('import');
+Route::get('/learn', 'WordController@learn')->name('words.learn');
+
+Route::get('/learn/random', 'WordController@random')->name('words.random');
