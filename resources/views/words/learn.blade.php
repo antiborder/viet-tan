@@ -4,6 +4,9 @@
 
 @section('content')
   @include('nav')
+  <!-- @php
+    phpinfo()
+  @endphp -->
   <div class="container">
     <div>
 
