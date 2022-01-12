@@ -462,117 +462,47 @@ class WordController extends Controller
         // $words = Word::inRandomOrder()->take(4)->get();
 
         return view('words.learn');
-    }    
-
+    }
+    
     public function random()
     {
         $answer = Word::inRandomOrder()->first();
         $others = Word::inRandomOrder()->take(3)->get();
         return [
-            'answer' =>[
-                'syllables'=>[
-                    $answer->name0,
-                    $answer->name1,
-                    $answer->name2,
-                    $answer->name3,
-                    $answer->name4,
-                    $answer->name5,
-                    $answer->name6,
-                    $answer->name7
-                ],
-                'kanjis'=>[
-                    $answer->kanji0,
-                    $answer->kanji1,
-                    $answer->kanji2,
-                    $answer->kanji3,
-                    $answer->kanji4,
-                    $answer->kanji5,
-                    $answer->kanji6,
-                    $answer->kanji7
-                ],               
-                'jp'=>$answer->jp,
-                'level'=>$answer->level,
-                'id'=>$answer->id,
-            ],
+            'answer' => $this->formatWord($answer),
             'others' =>[
-                [
-                    'syllables'=>[
-                        $others[0]->name0,
-                        $others[0]->name1,
-                        $others[0]->name2,
-                        $others[0]->name3,
-                        $others[0]->name4,
-                        $others[0]->name5,
-                        $others[0]->name6,
-                        $others[0]->name7
-                    ],
-                    'kanjis'=>[
-                        $others[0]->kanji0,
-                        $others[0]->kanji1,
-                        $others[0]->kanji2,
-                        $others[0]->kanji3,
-                        $others[0]->kanji4,
-                        $others[0]->kanji5,
-                        $others[0]->kanji6,
-                        $others[0]->kanji7
-                    ],               
-                    'jp'=>$others[0]->jp,
-                    'level'=>$others[0]->level,
-                    'id'=>$others[0]->id,                    
-                ],
-                [
-                    'syllables'=>[
-                        $others[1]->name0,
-                        $others[1]->name1,
-                        $others[1]->name2,
-                        $others[1]->name3,
-                        $others[1]->name4,
-                        $others[1]->name5,
-                        $others[1]->name6,
-                        $others[1]->name7
-                    ],
-                    'kanjis'=>[
-                        $others[1]->kanji0,
-                        $others[1]->kanji1,
-                        $others[1]->kanji2,
-                        $others[1]->kanji3,
-                        $others[1]->kanji4,
-                        $others[1]->kanji5,
-                        $others[1]->kanji6,
-                        $others[1]->kanji7
-                    ],               
-                    'jp'=>$others[1]->jp,
-                    'level'=>$others[1]->level, 
-                    'id'=>$others[1]->id,
-                ],
-                [
-                    'syllables'=>[
-                        $others[2]->name0,
-                        $others[2]->name1,
-                        $others[2]->name2,
-                        $others[2]->name3,
-                        $others[2]->name4,
-                        $others[2]->name5,
-                        $others[2]->name6,
-                        $others[2]->name7
-                    ],
-                    'kanjis'=>[
-                        $others[2]->kanji0,
-                        $others[2]->kanji1,
-                        $others[2]->kanji2,
-                        $others[2]->kanji3,
-                        $others[2]->kanji4,
-                        $others[2]->kanji5,
-                        $others[2]->kanji6,
-                        $others[2]->kanji7
-                    ],               
-                    'jp'=>$others[2]->jp,
-                    'level'=>$others[2]->level, 
-                    'id'=>$others[1]->id,                    
-                ],                                
-            ]
+                $this->formatWord($others[0]),
+                $this->formatWord($others[1]),
+                $this->formatWord($others[2]),                                
+            ],
+        ];
+    }    
+
+    public function formatWord(Word $word){
+        return [
+            'syllables'=>[
+                $word->name0,
+                $word->name1,
+                $word->name2,
+                $word->name3,
+                $word->name4,
+                $word->name5,
+                $word->name6,
+                $word->name7
+            ],
+            'kanjis'=>[
+                $word->kanji0,
+                $word->kanji1,
+                $word->kanji2,
+                $word->kanji3,
+                $word->kanji4,
+                $word->kanji5,
+                $word->kanji6,
+                $word->kanji7
+            ],               
+            'jp'=>$word->jp,
+            'level'=>$word->level,
+            'id'=>$word->id,
         ];
     }
-
-
 }

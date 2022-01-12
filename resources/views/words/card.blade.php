@@ -14,12 +14,12 @@
                 </a>
               </span>
             </div>
-            <div class="mx-auto" style="width:30px">
+            <div class="mx-auto" style="width:2.5rem">
               @php
                 $kanji_n = 'kanji' . $i;  
               @endphp        
               @if($word->$kanji_n != '')
-              <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="p-1 mr-1 mt-1 text-muted">
+              <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="p-1 mr-1 mt-1 text-muted" style='font-family:"UD デジタル 教科書体 N-R", "BIZ UDゴシック Regular"; font-size:1.5rem'>
                 {{$word->$kanji_n}}
               </a>          
               @endif
