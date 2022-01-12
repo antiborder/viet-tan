@@ -8,7 +8,7 @@
               @php
                 $name = "name" . $i;
               @endphp
-              <span class="h4 card-title">      
+              <span class="card-title" style="font-size:2em">      
                 <a class="text-dark" href="{{ route('words.show', ['word' => $word]) }}">
                   {{$word->$name}}
                 </a>
@@ -19,7 +19,7 @@
                 $kanji_n = 'kanji' . $i;  
               @endphp        
               @if($word->$kanji_n != '')
-              <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="p-1 mr-1 mt-1 text-muted">
+              <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="p-1 mr-1 mt-1 text-muted" style='font-family:"UD デジタル 教科書体 N-R", "BIZ UDゴシック Regular"; font-size:1.5rem'>
                 {{$word->$kanji_n}}
               </a>          
               @endif
@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="card-body pt-0" style="width:50%">
-      <div class="text-dark card-text">
+      <div class="text-dark card-text" style="white-space: pre-line;">
         {{ $word->jp }}
       </div>
     </div>

@@ -5,12 +5,12 @@
 @section('content')
   @include('nav')
   <div class="container">
-    <div class="card mt-3">
+    <div class="card my-3">
       <div class="card-body">
-        <h2 class="h4 card-title m-0">{{ $tag->name }}</h2>
-        <div class="card-text text-right">
-          {{ $tag->words->count() }}件
-        </div>
+        <span class="h4 card-title m-0">{{ $tag->name }}</span>　タグに該当
+      </div>
+      <div class="card-text text-right mb-1 mr-2">
+        {{ $tag->words->count() }}件
       </div>
     </div>
     @foreach($tag->words as $word)

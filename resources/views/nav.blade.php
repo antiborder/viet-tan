@@ -8,10 +8,10 @@
     <div class="input-group input-group-lg">
       <div class="form-group">
         <div class="">
-          <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control" placeholder="検索">
+          <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control rounded-0" placeholder="検索">
         </div>
       </div>
-      <input type="submit" value="&#xf002;" class="fas btn-info light-blue lighten-1 border shadow-none btn-sm">
+      <input type="submit" value="&#xf002;" class="fas text-white border-white rounded-right shadow-none" style="background:transparent;">
     </div>
   </form>  
 

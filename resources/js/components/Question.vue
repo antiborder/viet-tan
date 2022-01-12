@@ -1,8 +1,8 @@
 //ほかのページの表示を調整。
-  //色、中央寄せ。意味の改行。考えてる間にデータロード。answerとothersを取得する部分を整理。
-  //検索ボタンの色を透明に。ロード中も前の単語カードは見えてる。正解不正解に色をつける。
+  //色、意味の改行。考えてる間にデータロード。answerとothersを取得する部分を整理。
+  //ロード中も前の単語カードは見えてる。正解不正解に色をつける。
   //Ｎ+1問題。
-  //questionじゃなくてapp.jsを使いたい。
+
 //単語を読み上げる
 // 発音類似語を出したい。
 
@@ -35,9 +35,10 @@
       </span>
     </div>
 
+    <div class="mx-auto border-secondary" style="width:545px">
     <div v-for="i in zeroToThree">
-      <div v-if="status==='PROMPT' || status === 'ANSWERED'">
-        <div class="d-flex flex-row mx-auto">
+      <div v-if="status==='PROMPT' || status === 'ANSWERED'" class="border-primary" >
+        <div class="d-flex flex-row" >
           <div style ="width:10%">
             <span v-if= "choices[i].pressed && choices[i].isAnswer" >
               <i class="mt-2 text-success fas fa-3x fa-check"></i>
@@ -47,8 +48,8 @@
             </span>
           </div>
           <div style="width:90%">
-            <div @click="turnPressed(i)" class="card mt-0 mb-2 pt-1 pb-1 pl-3 pr-3 white rounded d-flex flex-row" style="height:90px; max-width: 30rem;">
-              <div class = "h6" style ="width:40%">
+            <div @click="turnPressed(i)" class="card mt-0 mb-2 pt-1 pb-1 pl-3 pr-3 white rounded d-flex flex-row" style="height:90px; max-width: 500px;">
+              <div class = "h6" style ="width:40%; white-space: pre-line;">
                 {{choices[i].word.jp}}
               </div>                          
               <div class = "border-left border-light pl-2" style ="width:60%">
@@ -74,14 +75,12 @@
                   <i class="mt-3 text-muted fas fa-3x fa-question "></i>
                 </div>
               </div>
-                
-
             </div>
           </div>
         </div>
       </div>
     </div>
-
+    </div>
   </div>
 </template>
 

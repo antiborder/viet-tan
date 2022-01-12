@@ -41,7 +41,6 @@ class WordRequest extends FormRequest
 
     public function passedValidation()
     {
-        $this->name = explode(' ', $this->name, 8);
         $this->tags = collect(json_decode($this->tags))
             ->slice(0, 5)
             ->map(function ($requestTag) {
