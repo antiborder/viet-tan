@@ -61,6 +61,7 @@ class WordController extends Controller
             $name_n = "name" . $i;
             $word->$name_n = $exploded[$i];
         }                
+        
 
         //kanji
         for($i=0; $i<8; $i++){
