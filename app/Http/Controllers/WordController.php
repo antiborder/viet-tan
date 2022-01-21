@@ -370,17 +370,36 @@ class WordController extends Controller
 
             //kanji
             for($i=0; $i<8; $i++){
+
                 $kanji_n = "kanji" . $i;
-                if( ($row[2+$i]!=="") && ($row[2+$i]!=="　") ){
+                if( ($row[2+$i]=="") || ($row[2+$i]=="　") ){
+                    // $word->fill( [$kanji_n => ''] );                                                                        
+                }else{
                     $word->fill( [$kanji_n => $row[2+$i]] );                                
-                    }
-                if($word->$kanji_n !=""){
+
                     $kanji = Kanji::firstOrCreate([
                         'name' => $word->$kanji_n
                     ], [
                         'name' => $word->$kanji_n,
                     ]);
                 }
+                if($word->$kanji_n !=""){
+
+                }
+
+                // $kanji_n = "kanji" . $i;
+                // if( ($row[2+$i]!=="") && ($row[2+$i]!=="　") ){
+                //     $word->fill( [$kanji_n => $row[2+$i]] );                                
+                // }else{
+                //     $word->fill( )
+                // }
+                // if($word->$kanji_n !=""){
+                //     $kanji = Kanji::firstOrCreate([
+                //         'name' => $word->$kanji_n
+                //     ], [
+                //         'name' => $word->$kanji_n,
+                //     ]);
+                // }
             }
             $word->user_id = $request->user()->id;
             $word->save();
@@ -447,15 +466,29 @@ class WordController extends Controller
                 }
             }            
             $count++;
-        }        
-     
-        return redirect()->action('WordController@index')->with('flash_message', $count . '冊の本を登録しました！');
+        }
+        
+        return redirect()->action('WordController@index')->with('flash_message', '単語を' . $count . '個登録しました！');
     }
 
-    // public function learn(Request $request)
-    // {    
-    //     return view('words.learn');
-    // }
+    public function clear(Request $request)
+    {
+        
+        $words = Word::all();
+        foreach($words as $word){
+            $word->delete();
+        }
+        return redirect()->action('WordController@index')->with('flash_message', '単語を全て削除しました！');
+    }
+
+    public function trim(Request $request)
+    {
+        $words = Word::whereNull('level')->get();
+        foreach($words as $word){
+            $word->delete();
+        }
+        return redirect()->action('WordController@index')->with('flash_message', 'level未登録の単語を削除しました！');
+    }    
 
     public function learn()
     {

@@ -22,6 +22,8 @@ Route::get('/search', 'WordController@search')->name('words.search');
 
 Route::get('/choose', 'WordController@choose')->name('choose');
 Route::post('/import', 'WordController@import')->name('import');
+Route::post('/clear', 'WordController@clear')->name('clear');
+Route::post('/trim', 'WordController@trim')->name('trim');
 Route::get('/learn', 'WordController@learn')->name('words.learn');
 
 Route::get('/learn/random', 'WordController@random')->name('words.random');
