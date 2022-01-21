@@ -10,13 +10,11 @@
         <div class="card mt-3">
           <div class="card-body text-center">
             <h2 class="h3 card-title text-center mt-2">ユーザー登録</h2>
-
             @include('error_card_list') {{--この行を追加--}}
-
             <div class="card-text">
               {{--ここから--}}
               <form method="POST" action="{{ route('register') }}">
-
+                @csrf
                 <div class="md-form">
                   <label for="name">ユーザー名</label>
                   <input class="form-control" type="text" id="name" name="name" required value="{{ old('name') }}">
