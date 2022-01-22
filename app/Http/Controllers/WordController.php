@@ -61,7 +61,13 @@ class WordController extends Controller
             $name_n = "name" . $i;
             $word->$name_n = $exploded[$i];
         }                
-        
+
+        //no-diacritic
+        $no_diacritic = $word->name;
+        $no_diacritic = $this->simplify_vowel($word->name);
+        $no_diacritic = str_replace('đ','d',$no_diacritic);        
+        $no_diacritic = mb_strtolower($no_diacritic, "UTF-8");
+        $word->fill(['no_diacritic' => $no_diacritic]);
 
         //kanji
         for($i=0; $i<8; $i++){
@@ -291,7 +297,7 @@ class WordController extends Controller
         $query_tag = Tag::query();
 
         if(!empty($keyword)){
-            $query_name->where('name','like','%'.$keyword.'%');
+            $query_name->where('no_diacritic','like','%'.mb_strtolower($keyword).'%');
             $query_jp->where('jp','like','%'.$keyword.'%');
             $query_kanji->where('kanji0','like','%'.$keyword.'%');
                 for($i=1;$i<8;$i++){
@@ -538,5 +544,165 @@ class WordController extends Controller
             'level'=>$word->level,
             'id'=>$word->id,
         ];
+    }
+    public function simplify_vowel($str){
+
+        $str = str_replace('ã','a',$str);
+        $str = str_replace('á','a',$str);
+        $str = str_replace('ả','a',$str);
+        $str = str_replace('à','a',$str);
+        $str = str_replace('ạ','a',$str);
+
+        $str = str_replace('ă','a',$str);        
+        $str = str_replace('ẵ','a',$str);
+        $str = str_replace('ắ','a',$str);
+        $str = str_replace('ẳ','a',$str);
+        $str = str_replace('ằ','a',$str);
+        $str = str_replace('ặ','a',$str);        
+
+        $str = str_replace('â','a',$str);        
+        $str = str_replace('ẫ','a',$str);
+        $str = str_replace('ấ','a',$str);
+        $str = str_replace('ẩ','a',$str);
+        $str = str_replace('ầ','a',$str);
+        $str = str_replace('ậ','a',$str);
+        
+        $str = str_replace('ĩ','i',$str);
+        $str = str_replace('í','i',$str);
+        $str = str_replace('ỉ','i',$str);
+        $str = str_replace('ì','i',$str);
+        $str = str_replace('ị','i',$str);
+
+        $str = str_replace('ỹ','y',$str);
+        $str = str_replace('ý','y',$str);
+        $str = str_replace('ỷ','y',$str);
+        $str = str_replace('ỳ','y',$str);
+        $str = str_replace('ỵ','y',$str);        
+
+        $str = str_replace('ũ','u',$str);
+        $str = str_replace('ú','u',$str);
+        $str = str_replace('ủ','u',$str);
+        $str = str_replace('ù','u',$str);
+        $str = str_replace('ụ','u',$str);
+
+        $str = str_replace('ư','u',$str);        
+        $str = str_replace('ữ','u',$str);
+        $str = str_replace('ứ','u',$str);
+        $str = str_replace('ử','u',$str);
+        $str = str_replace('ừ','u',$str);
+        $str = str_replace('ự','u',$str);
+
+        $str = str_replace('ẽ','e',$str);
+        $str = str_replace('é','e',$str);
+        $str = str_replace('ẻ','e',$str);
+        $str = str_replace('è','e',$str);
+        $str = str_replace('ẹ','e',$str);
+
+        $str = str_replace('ê','e',$str);
+        $str = str_replace('ễ','e',$str);
+        $str = str_replace('ế','e',$str);
+        $str = str_replace('ể','e',$str);
+        $str = str_replace('ề','e',$str);
+        $str = str_replace('ệ','e',$str);
+
+        $str = str_replace('õ','o',$str);
+        $str = str_replace('ó','o',$str);
+        $str = str_replace('ỏ','o',$str);
+        $str = str_replace('ò','o',$str);
+        $str = str_replace('ọ','o',$str);
+
+        $str = str_replace('ô','o',$str);
+        $str = str_replace('ỗ','o',$str);
+        $str = str_replace('ố','o',$str);
+        $str = str_replace('ổ','o',$str);
+        $str = str_replace('ồ','o',$str);
+        $str = str_replace('ộ','o',$str);
+
+        $str = str_replace('ơ','o',$str);
+        $str = str_replace('ỡ','o',$str);
+        $str = str_replace('ớ','o',$str);
+        $str = str_replace('ở','o',$str);
+        $str = str_replace('ờ','o',$str);
+        $str = str_replace('ợ','o',$str);        
+
+        $str = str_replace('Ã','A',$str);
+        $str = str_replace('Á','A',$str);
+        $str = str_replace('Ả','A',$str);
+        $str = str_replace('À','A',$str);
+        $str = str_replace('Ạ','A',$str);        
+
+        $str = str_replace('Ă','A',$str);        
+        $str = str_replace('Ẵ','A',$str);        
+        $str = str_replace('Ắ','A',$str);
+        $str = str_replace('Ẳ','A',$str);
+        $str = str_replace('Ằ','A',$str);
+        $str = str_replace('Ặ','A',$str);                
+
+        $str = str_replace('Â','A',$str);        
+        $str = str_replace('Ẫ','A',$str);
+        $str = str_replace('Ấ','A',$str);
+        $str = str_replace('Ẩ','A',$str);
+        $str = str_replace('Ầ','A',$str);
+        $str = str_replace('Ậ','A',$str);
+        
+        $str = str_replace('Ĩ','I',$str);
+        $str = str_replace('Í','I',$str);
+        $str = str_replace('Ỉ','I',$str);
+        $str = str_replace('Ì','I',$str);
+        $str = str_replace('Ị','I',$str);
+
+        $str = str_replace('Ỹ','Y',$str);
+        $str = str_replace('Ý','Y',$str);
+        $str = str_replace('Ỷ','Y',$str);
+        $str = str_replace('Ỳ','Y',$str);
+        $str = str_replace('Ỵ','Y',$str);        
+
+        $str = str_replace('Ũ','U',$str);
+        $str = str_replace('Ú','U',$str);
+        $str = str_replace('Ủ','U',$str);
+        $str = str_replace('Ù','U',$str);
+        $str = str_replace('Ụ','U',$str);
+
+        $str = str_replace('Ư','U',$str);        
+        $str = str_replace('Ứ','U',$str);
+        $str = str_replace('Ứ','U',$str);
+        $str = str_replace('Ử','U',$str);
+        $str = str_replace('Ừ','U',$str);
+        $str = str_replace('Ự','U',$str);
+
+        $str = str_replace('Ẽ','E',$str);
+        $str = str_replace('É','E',$str);
+        $str = str_replace('Ẻ','E',$str);
+        $str = str_replace('È','E',$str);
+        $str = str_replace('Ẹ','E',$str);
+
+        $str = str_replace('Ê','E',$str);
+        $str = str_replace('Ễ','E',$str);
+        $str = str_replace('Ế','E',$str);
+        $str = str_replace('Ể','E',$str);
+        $str = str_replace('Ề','E',$str);
+        $str = str_replace('Ệ','E',$str);
+
+        $str = str_replace('Õ','O',$str);
+        $str = str_replace('Ó','O',$str);
+        $str = str_replace('Ỏ','O',$str);
+        $str = str_replace('Ò','O',$str);
+        $str = str_replace('Ọ','O',$str);
+
+        $str = str_replace('Ô','O',$str);
+        $str = str_replace('Ỗ','O',$str);
+        $str = str_replace('Ố','O',$str);
+        $str = str_replace('Ổ','O',$str);
+        $str = str_replace('Ồ','O',$str);
+        $str = str_replace('Ộ','O',$str);
+
+        $str = str_replace('Ơ','O',$str);
+        $str = str_replace('Ỡ','O',$str);
+        $str = str_replace('Ớ','O',$str);
+        $str = str_replace('Ở','O',$str);
+        $str = str_replace('Ờ','O',$str);
+        $str = str_replace('Ợ','O',$str);        
+
+        return $str;
     }
 }
