@@ -33,13 +33,16 @@
         {{ $word->jp }}
       </div>
     </div>
-    <div class="card-body pt-0" style="width:50%">
-      <div class="text-dark card-text">
-        {{ $word->detail }}
-      </div>
-    </div>    
   </div>
-
+ 
+  <div class="card-body pt-0" >
+    <div class="text-dark card-text">
+      {{ $word->detail }}
+    </div>
+    <div class="text-dark small ml-4 card-text">
+      符号なし: {{ $word->no_diacritic }}
+    </div>      
+  </div>    
   <div class="d-flex flex-row">
     <div class="text-dark small ml-4 card-text">
       Lv.{{ $word->level }}
