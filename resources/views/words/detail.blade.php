@@ -42,6 +42,9 @@
     <div class="text-dark small ml-4 card-text">
       符号なし: {{ $word->no_diacritic }}
     </div>      
+    <div class="text-dark small ml-4 card-text">
+      simplified: {{ $word->simplified }}
+    </div>      
   </div>    
   <div class="d-flex flex-row">
     <div class="text-dark small ml-4 card-text">

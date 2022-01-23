@@ -29,6 +29,8 @@ class Word extends Model
         'jp',
         'detail',
         'level',
+        'no_diacritic',
+        'simplified',
     ];
 
     public function user(): BelongsTo

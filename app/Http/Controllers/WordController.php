@@ -63,11 +63,15 @@ class WordController extends Controller
         }                
 
         //no-diacritic
-        $no_diacritic = $word->name;
         $no_diacritic = $this->simplify_vowel($word->name);
         $no_diacritic = str_replace('đ','d',$no_diacritic);        
         $no_diacritic = mb_strtolower($no_diacritic, "UTF-8");
         $word->fill(['no_diacritic' => $no_diacritic]);
+
+        //simplified
+        $simplified = $this->simplify_word($word->no_diacritic);
+        $simplified = mb_strtoupper($simplified, "UTF-8");
+        $word->fill(['simplified' => $simplified]);        
 
         //kanji
         for($i=0; $i<8; $i++){
@@ -188,7 +192,18 @@ class WordController extends Controller
         for($i=0; $i<count($exploded); $i++){
             $name_n = "name" . $i;
             $word->$name_n = $exploded[$i];
-        }                
+        }
+
+        //no-diacritic
+        $no_diacritic = $this->simplify_vowel($word->name);
+        $no_diacritic = str_replace('đ','d',$no_diacritic);        
+        $no_diacritic = mb_strtolower($no_diacritic, "UTF-8");
+        $word->fill(['no_diacritic' => $no_diacritic]);
+
+        //simplified
+        $simplified = $this->simplify_word($word->no_diacritic);
+        $simplified = mb_strtoupper($simplified, "UTF-8");
+        $word->fill(['simplified' => $simplified]);                
 
         //kanji
         for($i=0; $i<8; $i++){
@@ -283,9 +298,10 @@ class WordController extends Controller
                     $common_syllables = array_merge($common_syllables, $addition);
                 }
             }
-        }    
+        }
         $common_syllables = array_unique($common_syllables);        
-        return view('words.show', ['word' => $word, 'common_syllables' => $common_syllables]);
+        $similar_pronuciations = Word::all()->where('no_diacritic', $word->no_diacritic)->where('name', '!==', $word->name)->all();        
+        return view('words.show', ['word' => $word, 'common_syllables' => $common_syllables, 'similar_pronuciations' => $similar_pronuciations]);
     }   
     
     public function search(Request $request)
@@ -374,6 +390,17 @@ class WordController extends Controller
                 $word->fill([$name_n => $exploded[$i]]);
             }
 
+            //no-diacritic
+            $no_diacritic = $this->simplify_vowel($word->name);
+            $no_diacritic = str_replace('đ','d',$no_diacritic);        
+            $no_diacritic = mb_strtolower($no_diacritic, "UTF-8");
+            $word->fill(['no_diacritic' => $no_diacritic]);
+
+            //simplified
+            $simplified = $this->simplify_word($word->no_diacritic);
+            $simplified = mb_strtoupper($simplified, "UTF-8");
+            $word->fill(['simplified' => $simplified]);                    
+
             //kanji
             for($i=0; $i<8; $i++){
 
@@ -392,20 +419,6 @@ class WordController extends Controller
                 if($word->$kanji_n !=""){
 
                 }
-
-                // $kanji_n = "kanji" . $i;
-                // if( ($row[2+$i]!=="") && ($row[2+$i]!=="　") ){
-                //     $word->fill( [$kanji_n => $row[2+$i]] );                                
-                // }else{
-                //     $word->fill( )
-                // }
-                // if($word->$kanji_n !=""){
-                //     $kanji = Kanji::firstOrCreate([
-                //         'name' => $word->$kanji_n
-                //     ], [
-                //         'name' => $word->$kanji_n,
-                //     ]);
-                // }
             }
             $word->user_id = $request->user()->id;
             $word->save();
@@ -573,11 +586,12 @@ class WordController extends Controller
         $str = str_replace('ì','i',$str);
         $str = str_replace('ị','i',$str);
 
-        $str = str_replace('ỹ','y',$str);
-        $str = str_replace('ý','y',$str);
-        $str = str_replace('ỷ','y',$str);
-        $str = str_replace('ỳ','y',$str);
-        $str = str_replace('ỵ','y',$str);        
+        $str = str_replace('y','i',$str);
+        $str = str_replace('ỹ','i',$str);
+        $str = str_replace('ý','i',$str);
+        $str = str_replace('ỷ','i',$str);
+        $str = str_replace('ỳ','i',$str);
+        $str = str_replace('ỵ','i',$str);        
 
         $str = str_replace('ũ','u',$str);
         $str = str_replace('ú','u',$str);
@@ -651,11 +665,12 @@ class WordController extends Controller
         $str = str_replace('Ì','I',$str);
         $str = str_replace('Ị','I',$str);
 
-        $str = str_replace('Ỹ','Y',$str);
-        $str = str_replace('Ý','Y',$str);
-        $str = str_replace('Ỷ','Y',$str);
-        $str = str_replace('Ỳ','Y',$str);
-        $str = str_replace('Ỵ','Y',$str);        
+        $str = str_replace('Y','I',$str);
+        $str = str_replace('Ỹ','I',$str);
+        $str = str_replace('Ý','I',$str);
+        $str = str_replace('Ỷ','I',$str);
+        $str = str_replace('Ỳ','I',$str);
+        $str = str_replace('Ỵ','I',$str);        
 
         $str = str_replace('Ũ','U',$str);
         $str = str_replace('Ú','U',$str);
@@ -703,6 +718,34 @@ class WordController extends Controller
         $str = str_replace('Ờ','O',$str);
         $str = str_replace('Ợ','O',$str);        
 
+        return $str;
+    }
+
+    public function simplify_word($str){
+        $str = preg_replace("/^gi|^d|^th|^r|^l/", "T", $str);
+        $str = preg_replace("/\sgi|\sd|\sth|\sr|\sl/", " T", $str);
+        $str = preg_replace("/^ngh|^ng|^gh/", "G", $str);
+        $str = preg_replace("/\sngh|\sng|\sgh/", " G", $str);
+        $str = preg_replace("/^tr/", "CH", $str);
+        $str = preg_replace("/\str/", " CH", $str);
+        $str = preg_replace("/^kh|^h|^q|^c|^q/", "K", $str);
+        $str = preg_replace("/\skh|\sh|\sq|\sc|\sq/", " K", $str);
+        $str = preg_replace("/^nh|^m/", "N", $str);
+        $str = preg_replace("/\snh|\sm/", " N", $str);
+        $str = preg_replace("/^ph|^p|^v/", "B", $str);
+        $str = preg_replace("/\sph|\sp|\sv/", " B", $str);
+        $str = preg_replace("/^x/", "S", $str);
+        $str = preg_replace("/\sx/", " S", $str);                
+        $str = preg_replace("/^y/", "I", $str);        
+        $str = preg_replace("/\sy/", " I", $str);
+
+        $str = preg_replace("/nh$|m$|ng$/", "N", $str);
+        $str = preg_replace("/nh\s|m\s|ng\s/", "N ", $str);
+        $str = preg_replace("/p$/", "B", $str);
+        $str = preg_replace("/p\s/", "B ", $str);
+        $str = preg_replace("/k$|q$/", "C", $str);
+        $str = preg_replace("/k\s|q\s/", "C ", $str);        
+        
         return $str;
     }
 }
