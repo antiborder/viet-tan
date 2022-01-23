@@ -46,7 +46,12 @@
     </div>
 
     <div class="card mt-3 mb-1 pl-2 pr-2 green lighten-1 text-white" style="color: white; max-width: 30rem;">        
-        発音が類似
+      @foreach($similar_pronuciations as $similar_pronuciation)
+        @if($loop->first)
+          発音が類似
+        @endif
+        @include('words.card',['word'=>$similar_pronuciation])
+      @endforeach        
     </div>
 
     <div class="card mt-3 mb-1 pl-2 pr-2 light-green lighten-1 text-white" style="color: white; max-width: 30rem;">    
