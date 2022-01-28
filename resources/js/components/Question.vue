@@ -1,17 +1,20 @@
-//ほかのページの表示を調整。
-  //色、意味の改行。考えてる間にデータロード。answerとothersを取得する部分を整理。
-  //ロード中も前の単語カードは見えてる。正解不正解に色をつける。
-  //Ｎ+1問題。
 
-//単語を読み上げる
-// 発音類似語を出したい。
-
+//正解不正解に色をつける。
+//正解不正解の表示を左肩に。Answer単語の行とボタンの2行にする。
+//Ｎ+1問題。
+//NEXTのボタンを三種類に。
+//レベル選定はゲージで。一枚上にボックスで。
+//単語読み上げ
+//各ページの色を修正・統一。
+//ユーザーレベルや履歴を元に単語選定
+//正解率表示
+//ユーザーページ表示
+//考えてる間にデータロード。
+//WordControllerのupdate、create、importの共通部分をまとめたい。
 
 //代入には$setを使う。
 //時間切れ status=timeout の実装。
-//正解率
-//レベル選定
-//正解不正解の表示を左肩に。Answer単語の行とボタンの2行にする。
+
 
 <template>
   <div>
@@ -33,6 +36,10 @@
       <span>
         {{message}}
       </span>
+    </div>
+    <div v-if="status==='INITIAL'" style=" text-align:center;">
+      <input v-model="level" placeholder="edit me">
+      <p>input is: {{ level }}</p>
     </div>
 
     <div class="mx-auto border-secondary" style="width:545px">
@@ -94,24 +101,9 @@
         zeroToSeven:[0,1,2,3,4,5,6,7],
         answer:" ",
         status : "INITIAL",
-        choices:[
-        //   {
-        //     isAnswer:null,
-        //     pressed:false,
-        //   },
-        //   {
-        //     isAnswer:null,
-        //     pressed:false,
-        //   },          
-        //   {
-        //     isAnswer:null,
-        //     pressed:false,
-        //   },          
-        //   {
-        //     isAnswer:null,
-        //     pressed:false,
-        //   },
-        ]
+        choices:[],
+        input:"1",
+        level:"1",
       }
     },
 
@@ -163,17 +155,20 @@
         console.log("pressed");
         this.status = "LOADING";
 
-        this.setRandom()
+        this.setRandom();
       },
-
-
       async setRandom() {
-        const response = await axios.get(this.endpoint);
-        let trimed = response.data.replace(/　+/g,'');
-        let jsoned = JSON.parse(trimed);        
-        // let answer = jsoned.answer;
-        // answer = this.formatWord(answer);
-               
+        const response = await axios.get(this.endpoint, {
+          params:{
+            level: this.level
+          }
+        });
+        //元々はresponse.dataが文字列で余計な全角スペースも入っていたためこのコードを書いていたが、response.dataがJSONで来るようになったので不要。
+        // let trimed = response.data.replace(/　+/g,'');
+        // let jsoned = JSON.parse(trimed);        
+        console.log(response);
+        let jsoned = response.data;
+
         for(let i=0;i<3; i++){
           this.choices[i] = {
             'word':this.formatWord(jsoned.others[i]),
