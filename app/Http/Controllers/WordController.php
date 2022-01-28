@@ -511,16 +511,19 @@ class WordController extends Controller
 
     public function learn()
     {
-
-        // $words = Word::inRandomOrder()->take(4)->get();
-
         return view('words.learn');
     }
     
-    public function random()
+    public function random(Request $request)
     {
-        $answer = Word::inRandomOrder()->first();
-        $others = Word::inRandomOrder()->take(3)->get();
+        $answer = Word::Where('level', $request->level)->inRandomOrder()->first();
+        $similar_pronunciations =  Word::where('level', '<=', $answer->level)->where('level', '>=', $answer->level - 2)->where('simplified', $answer->simplified)->where('name', '!=', $answer->name)->inRandomOrder()->get()->all();
+        $dissimilar_pronunciations = Word::where('level', '<=', $answer->level)->where('level', '>=', $answer->level - 2)->where('simplified', '!=', $answer->simplified)->inRandomOrder()->get()->all();
+
+        $candidates = array_slice(array_merge($similar_pronunciations, $dissimilar_pronunciations),0,10);
+        shuffle($candidates);
+        $others = $candidates;
+
         return [
             'answer' => $this->formatWord($answer),
             'others' =>[
@@ -726,8 +729,8 @@ class WordController extends Controller
         $str = preg_replace("/\sgi|\sd|\sth|\sr|\sl/", " T", $str);
         $str = preg_replace("/^ngh|^ng|^gh/", "G", $str);
         $str = preg_replace("/\sngh|\sng|\sgh/", " G", $str);
-        $str = preg_replace("/^tr/", "CH", $str);
-        $str = preg_replace("/\str/", " CH", $str);
+        $str = preg_replace("/^tr|^ch/", "CH", $str);
+        $str = preg_replace("/\str|\sch/", " CH", $str);
         $str = preg_replace("/^kh|^h|^q|^c|^q/", "K", $str);
         $str = preg_replace("/\skh|\sh|\sq|\sc|\sq/", " K", $str);
         $str = preg_replace("/^nh|^m/", "N", $str);
