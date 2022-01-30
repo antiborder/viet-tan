@@ -344,7 +344,6 @@ class WordController extends Controller
 
     public function import(Request $request)
     {
-        // return redirect('/')->with('flash_message', $request->file('file'));
         // CSV ファイル保存
         $tmpName = mt_rand().".".$request->file('file')->guessExtension(); //TMPファイル名
         $request->file('file')->move(public_path()."/csv/tmp",$tmpName);
