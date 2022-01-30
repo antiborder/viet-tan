@@ -11,7 +11,8 @@
     <div>
 
       <question 
-        endpoint="{{ route('words.random') }}"
+        endpoint_to_get_word="{{ route('learn.random') }}"
+        endpoint_to_record_learn="{{ route('learn.record') }}"
       >
       </question>
 

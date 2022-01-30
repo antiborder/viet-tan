@@ -1,9 +1,10 @@
 
 //正解不正解に色をつける。
 //正解不正解の表示を左肩に。Answer単語の行とボタンの2行にする。
-//Ｎ+1問題。
 //NEXTのボタンを三種類に。
-//レベル選定はゲージで。一枚上にボックスで。
+//Ｎ+1問題。
+//いつも出ているvueのエラーを修正。
+//レベル選定はゲージで。modalで。
 //単語読み上げ
 //各ページの色を修正・統一。
 //ユーザーレベルや履歴を元に単語選定
@@ -18,6 +19,7 @@
 
 <template>
   <div>
+    {{status}}
     <div class="mt-5" style="text-align:center; height: 50px;">
       <span v-if="status==='ANSWERED' || status==='PROMPT'  "class="card mx-auto white rounded w-50" >
         <span class="h4">{{answer}}</span>
@@ -104,6 +106,7 @@
         choices:[],
         input:"1",
         level:"1",
+        isCorrect: null,
       }
     },
 
@@ -127,25 +130,41 @@
         }else if(this.status==="PROMPT"){
           return "単語の意味を選んでください";
         }else if(this.status==="ANSWERED"){
+          if(this.isCorrect == true){
+            return "正解";
+          }else{
+            return "不正解"
+          }
+        }        
+      }
+    },
+
+    watch: {
+      status: function(val) {
+        if(val=="ANSWERED"){
           if(
             this.choices[0].pressed == this.choices[0].isAnswer &&
             this.choices[1].pressed == this.choices[1].isAnswer &&
             this.choices[2].pressed == this.choices[2].isAnswer &&
             this.choices[3].pressed == this.choices[3].isAnswer
           ){
-            return "正解";
+            this.isCorrect = true;
           }else{
-            return "不正解";
+            this.isCorrect = false;
           }
-        }        
-      }
-
+        }else{
+          this.isCorrect = null;
+        }
+      },
     },
 
     props: {
-      endpoint: {
+      endpoint_to_get_word: {
         type: String,
       },
+      endpoint_to_record_learn: {
+        type: String,
+      },      
     },
     
     methods: {
@@ -153,21 +172,44 @@
       clickButton() {
         console.log(location.hostname);
         console.log("pressed");
-        this.status = "LOADING";
 
+
+        this.recordLearn();
+        this.status = "LOADING";        
+        console.log("recorded");
         this.setRandom();
       },
-      async setRandom() {
-        const response = await axios.get(this.endpoint, {
-          params:{
-            level: this.level
-          }
-        });
-        //元々はresponse.dataが文字列で余計な全角スペースも入っていたためこのコードを書いていたが、response.dataがJSONで来るようになったので不要。
-        // let trimed = response.data.replace(/　+/g,'');
-        // let jsoned = JSON.parse(trimed);        
+
+      async recordLearn() {
+        console.log(this.status);
+        console.log(this.isCorrect);
+        console.log(this.answer);
+        const response = await axios.post(this.endpoint_to_record_learn,
+        {
+          name: this.answer,
+          result: this.isCorrect, 
+          easiness: 3,
+        }
+        ).then(response => {
+          console.log('status:', response.status); // 200
+        }).catch(err => {
+          console.log('err:', err);
+        });        
         console.log(response);
-        let jsoned = response.data;
+      },
+      
+      async setRandom() {
+        const response = await axios.get(this.endpoint_to_get_word, {
+          params:{ level: this.level }
+        });
+        //本来はきれいなjsonできてほしいが、dataの頭に全角スペースが入ることもあるため、どちらでもいいように場合分けしている。
+        let jsoned;
+        if(String(response.data).substr(0,1) == '　'){
+          let trimed = response.data.replace(/　+/g,'');
+          jsoned = JSON.parse(trimed);        
+        }else{
+          jsoned = response.data;
+        }
 
         for(let i=0;i<3; i++){
           this.choices[i] = {
