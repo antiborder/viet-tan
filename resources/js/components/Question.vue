@@ -1,52 +1,72 @@
+//ユーザーレベルや履歴を元に単語選定
 
-//正解不正解に色をつける。
-//正解不正解の表示を左肩に。Answer単語の行とボタンの2行にする。
-//NEXTのボタンを三種類に。
 //Ｎ+1問題。
 //いつも出ているvueのエラーを修正。
 //レベル選定はゲージで。modalで。
 //単語読み上げ
 //各ページの色を修正・統一。
-//ユーザーレベルや履歴を元に単語選定
-//正解率表示
 //ユーザーページ表示
 //考えてる間にデータロード。
 //WordControllerのupdate、create、importの共通部分をまとめたい。
+//クリックしてほしい箇所をテカらせる。
+//時間切れ status=timeout の実装。
+//レベル別習熟度を常に隅っこに表示。
 
 //代入には$setを使う。
-//時間切れ status=timeout の実装。
 
 
 <template>
   <div>
-    {{status}}
-    <div class="mt-5" style="text-align:center; height: 50px;">
+    <div>
+      Lv.:{{level}}　正解率: {{correct}} / {{total}}
+    </div>
+    <div class="mt-5" style="text-align:center; height: 55px;">
       <span v-if="status==='ANSWERED' || status==='PROMPT'  "class="card mx-auto white rounded w-50" >
         <span class="h4">{{answer}}</span>
       </span>
     </div>
-    <div style="text-align:center; height: 50px;">
-      <button v-if=" status==='INITIAL' || status==='ANSWERED' "
-        @click="clickButton" 
-        type="button"
-        class="btn btn-info blue-gradient pt-1 pb-1 btn-sm" style="font-size: large;"
-      >
-        {{buttonText}}
-      </button>
-    </div>
-    <div style=" text-align:center; height: 50px;">
+    <div v-if=" status==='ANSWERED' "  style="text-align:center">
+      <span class="pt-2 text-nowrap;" v-bind:class="result_text_color" style = "min-width:70px; text-align:center;">
+        {{result_text}}
+      </span>
+      <span v-for="i in zeroToThree" style = " text-align:center;">
+        <span v-if=" isCorrect===true || i===0">
+          <button @click="clickButton(i)" type="button" v-bind:class="button_properties[i].color" class="btn btn-info rounded pt-1 pb-1 btn-sm text-nowrap"style="min-height:40px; max-width: 120px; font-size: 1rem;">
+            {{button_properties[i].text}}
+          </button>
+        </span>
+      </span>
+    </div>    
+    <!-- <div v-if=" status==='ANSWERED' " class="d-flex flex-row mx-auto " style=" height: 55px;">
+      <div class="pt-2 text-nowrap;" v-bind:class="result_text_color" style = "min-width:70px; text-align:center;">
+        {{result_text}}
+      </div>
+      <div v-for="i in zeroToThree" style = " text-align:center;">
+        <div v-if=" isCorrect===true || i===0">
+          <button @click="clickButton(i)" type="button" v-bind:class="button_properties[i].color" class="btn btn-info rounded pt-1 pb-1 btn-sm text-nowrap"style="min-height:40px; max-width: 120px; font-size: 1rem;">
+            {{button_properties[i].text}}
+          </button>
+        </div>
+      </div>
+      
+    </div> -->
+    <div v-if="status==='PROMPT' || status==='LOADING'" style=" text-align:center; height: 55px;">
       <span>
         {{message}}
       </span>
     </div>
     <div v-if="status==='INITIAL'" style=" text-align:center;">
-      <input v-model="level" placeholder="edit me">
-      <p>input is: {{ level }}</p>
-    </div>
+      <input v-model="level" placeholder="Choose level">
+      <div class="" style = "text-align:center; height: 80px;">
+        <button @click="clickStart()" type="button" class="btn btn-info orange m-5 lighten-1 rounded pb-1 btn-sm text-nowrap"style="max-width: 240px; font-size: 1.6rem;">
+          START
+        </button>
+      </div>
+    </div>      
 
-    <div class="mx-auto border-secondary" style="width:545px">
+    <div class="mx-auto" style="width:545px">
     <div v-for="i in zeroToThree">
-      <div v-if="status==='PROMPT' || status === 'ANSWERED'" class="border-primary" >
+      <div v-if="status==='PROMPT' || status === 'ANSWERED'" class="" >
         <div class="d-flex flex-row" >
           <div style ="width:10%">
             <span v-if= "choices[i].pressed && choices[i].isAnswer" >
@@ -72,7 +92,7 @@
                         {{ choices[i].word.kanjis[j] }}
                       </div>
                     </div>
-                    <a v-bind:href="'/words/'+choices[i].word.id" class="text-info mr-2" style="margin:0 0 0 auto">
+                    <a v-bind:href="'/words/'+choices[i].word.id" target=”_blank” class="text-info mr-2" style="margin:0 0 0 auto">
                       詳細
                     </a>                  
                   </div>
@@ -104,9 +124,17 @@
         answer:" ",
         status : "INITIAL",
         choices:[],
-        input:"1",
-        level:"1",
+        // input:"1",
+        level:1,
+        total:0,
+        correct:0,
         isCorrect: null,
+        button_properties:[
+          { text:"まだまだ"  , color:"pink lighten-2" },
+          { text:"難しい…"  , color: "red lighten-2" },
+          { text:"覚えた!"  , color: "deep-orange lighten-2" },
+          { text:"余裕♪"  , color: "orange lighten-2" },
+        ]
       }
     },
 
@@ -130,13 +158,27 @@
         }else if(this.status==="PROMPT"){
           return "単語の意味を選んでください";
         }else if(this.status==="ANSWERED"){
-          if(this.isCorrect == true){
-            return "正解";
-          }else{
-            return "不正解"
-          }
+          return "";
         }        
-      }
+      },
+      result_text: function(){
+        if(this.isCorrect == true){
+          return "正解";
+        }else if(this.isCorrect == false){
+          return "不正解";
+        }else{
+          return "";
+        }
+      },
+      result_text_color: function(){
+        if(this.isCorrect == true){
+          return "text-success";
+        }else if(this.isCorrect == false){
+          return "text-danger";
+        }else{
+          return "";
+        }
+      },
     },
 
     watch: {
@@ -149,8 +191,11 @@
             this.choices[3].pressed == this.choices[3].isAnswer
           ){
             this.isCorrect = true;
+            this.correct += 1;
+            this.total += 1;            
           }else{
             this.isCorrect = false;
+            this.total += 1;
           }
         }else{
           this.isCorrect = null;
@@ -169,26 +214,27 @@
     
     methods: {
 
-      clickButton() {
-        console.log(location.hostname);
+      clickStart() {
+        console.log("START pressed");
+        this.status = "LOADING";        
+        this.setRandom();        
+      },
+
+      clickButton(n) {
         console.log("pressed");
 
 
-        this.recordLearn();
+        this.recordLearn(n);
         this.status = "LOADING";        
-        console.log("recorded");
         this.setRandom();
       },
 
-      async recordLearn() {
-        console.log(this.status);
-        console.log(this.isCorrect);
-        console.log(this.answer);
+      async recordLearn(n) {
         const response = await axios.post(this.endpoint_to_record_learn,
         {
           name: this.answer,
           result: this.isCorrect, 
-          easiness: 3,
+          easiness: n,
         }
         ).then(response => {
           console.log('status:', response.status); // 200

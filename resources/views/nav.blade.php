@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark navbar-expand blue-gradient ">
+<nav class="navbar navbar-dark navbar-expand orange lighten-1 ">
 
   <a class="navbar-brand" href="/"><i class="far fa-sticky-note mr-1"></i>　</a>
 
