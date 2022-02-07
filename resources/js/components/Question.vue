@@ -1,17 +1,19 @@
-//ユーザーレベルや履歴を元に単語選定
-
+//テスト実装
+//サーバにアップロード
 //Ｎ+1問題。
 //いつも出ているvueのエラーを修正。
 //レベル選定はゲージで。modalで。
 //単語読み上げ
 //各ページの色を修正・統一。
+//学習完了の判定条件。
+//学習単語がなくなった時の処理と、今日の学習完了の判定条件。とメッセージ。
 //ユーザーページ表示
+//レベル別習熟度を常に隅っこに表示。
 //考えてる間にデータロード。
 //WordControllerのupdate、create、importの共通部分をまとめたい。
 //クリックしてほしい箇所をテカらせる。
 //時間切れ status=timeout の実装。
-//レベル別習熟度を常に隅っこに表示。
-
+//時刻はどの場所の時刻になるのか、ぶれないように確認必要。
 //代入には$setを使う。
 
 
@@ -25,6 +27,7 @@
         <span class="h4">{{answer}}</span>
       </span>
     </div>
+
     <div v-if=" status==='ANSWERED' "  style="text-align:center">
       <span class="pt-2 text-nowrap;" v-bind:class="result_text_color" style = "min-width:70px; text-align:center;">
         {{result_text}}
@@ -37,19 +40,7 @@
         </span>
       </span>
     </div>    
-    <!-- <div v-if=" status==='ANSWERED' " class="d-flex flex-row mx-auto " style=" height: 55px;">
-      <div class="pt-2 text-nowrap;" v-bind:class="result_text_color" style = "min-width:70px; text-align:center;">
-        {{result_text}}
-      </div>
-      <div v-for="i in zeroToThree" style = " text-align:center;">
-        <div v-if=" isCorrect===true || i===0">
-          <button @click="clickButton(i)" type="button" v-bind:class="button_properties[i].color" class="btn btn-info rounded pt-1 pb-1 btn-sm text-nowrap"style="min-height:40px; max-width: 120px; font-size: 1rem;">
-            {{button_properties[i].text}}
-          </button>
-        </div>
-      </div>
-      
-    </div> -->
+
     <div v-if="status==='PROMPT' || status==='LOADING'" style=" text-align:center; height: 55px;">
       <span>
         {{message}}
@@ -217,7 +208,7 @@
       clickStart() {
         console.log("START pressed");
         this.status = "LOADING";        
-        this.setRandom();        
+        this.getWords();        
       },
 
       clickButton(n) {
@@ -226,7 +217,7 @@
 
         this.recordLearn(n);
         this.status = "LOADING";        
-        this.setRandom();
+        this.getWords();
       },
 
       async recordLearn(n) {
@@ -244,9 +235,10 @@
         console.log(response);
       },
       
-      async setRandom() {
+      async getWords() {
         const response = await axios.get(this.endpoint_to_get_word, {
-          params:{ level: this.level }
+          params:{ level: this.level,
+                    previous: this.answer }
         });
         //本来はきれいなjsonできてほしいが、dataの頭に全角スペースが入ることもあるため、どちらでもいいように場合分けしている。
         let jsoned;
