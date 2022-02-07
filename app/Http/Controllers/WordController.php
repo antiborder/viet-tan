@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Word;
 use App\Tag;
 use App\Kanji;
+use App\Learn;
 use App\Http\Requests\WordRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use Goodby\CSV\Import\Standard\LexerConfig;
 use Goodby\CSV\Import\Standard\Lexer;
@@ -513,11 +516,53 @@ class WordController extends Controller
         return view('words.learn');
     }
     
-    public function random(Request $request)
-    {
-        $answer = Word::Where('level', $request->level)->inRandomOrder()->first();
+    public function getWords(Request $request){
+
+        $learned_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')//学習レコードから、単語ごとに最新のものを取り出す。
+        ->where('words.level', $request->level )    
+        ->where('learns.user_id', Auth::id())
+        ->select('learns.word_id',DB::raw("MAX(learns.id) as latest_id"))               
+        ->groupby('learns.word_id') // ここでlatest_idのみを配列で取り出せたら早くなるが、selectでなぜかエラーが出る。
+        ->get()->toArray();
+    
+        $learned_ids=[];//学習idを単なる配列に変換
+        foreach($learned_words as $learned_word){
+            $learned_ids[] = $learned_word['latest_id']; 
+        }
+
+        $delayed_word_count=Learn::wherein('learns.id', $learned_ids) ->where('next_time','<',date("Y-m-d H:i:s")) ->count();
+        if($delayed_word_count <= 20){
+            $delay_degree= 1 - $delayed_word_count*0.025;
+        }else{
+            $delay_degree= 10 / $delayed_word_count;
+        }
+
+
+        if( mt_rand() / mt_getrandmax() > $delay_degree ) {
+            $next_word_id = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
+            ->where('words.level', $request->level )    
+            ->where('learns.user_id', '!=', Auth::id()) ->orWhereNull('learns.user_id')
+            ->select('words.id')
+            ->groupby('words.id')
+            ->inRandomOrder()
+            ->first()->id;
+        }else{
+
+            $next_words=Learn::wherein('learns.id', $learned_ids)//学習目標日が最も早いものを取得
+                ->orderby('next_time','asc')
+                ->join('words','learns.word_id','=','words.id')
+                ->take(2)->get()->toArray();
+            if($next_words[0]['name'] !== $request->previous){
+                $next_word_id = $next_words[0]['id'];
+            }else{
+                $next_word_id = $next_words[1]['id'];
+            }
+        }
+
+        $answer = Word::where('id',$next_word_id)->first();
+        // $answer = Word::Where('level', $request->level)->inRandomOrder()->first();
         $similar_pronunciations =  Word::where('level', '<=', $answer->level)->where('level', '>=', $answer->level - 2)->where('simplified', $answer->simplified)->where('name', '!=', $answer->name)->inRandomOrder()->get()->all();
-        $dissimilar_pronunciations = Word::where('level', '<=', $answer->level)->where('level', '>=', $answer->level - 2)->where('simplified', '!=', $answer->simplified)->inRandomOrder()->get()->all();
+        $dissimilar_pronunciations = Word::where('level', '<=', $answer->level)->where('simplified', '!=', $answer->simplified)->inRandomOrder()->get()->all();
 
         $candidates = array_slice(array_merge($similar_pronunciations, $dissimilar_pronunciations),0,10);
         shuffle($candidates);

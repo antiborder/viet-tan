@@ -26,5 +26,5 @@ Route::post('/clear', 'WordController@clear')->name('clear');
 Route::post('/trim', 'WordController@trim')->name('trim');
 Route::get('/learn', 'WordController@learn')->name('words.learn');
 
-Route::get('/learn/random', 'WordController@random')->name('learn.random');
+Route::get('/learn/random', 'WordController@getWords')->name('learn.random');
 Route::post('/learn/record', 'LearnController@store')->name('learn.record');
