@@ -12,9 +12,9 @@ class WordControllerTest extends TestCase
     
     public function testIndex()
     {
-        // $response = $this->get(route('words.index'));
+        $response = $this->get(route('words.index'));
 
-        // $response->assertStatus(200)
-        //     ->assertViewIs('words.index');
+        $response->assertStatus(200)
+            ->assertViewIs('words.index');
     }
 }
