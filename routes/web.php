@@ -12,7 +12,7 @@
 */
 
 Auth::routes(); //-- この行を追加
-Route::get('/', 'WordController@index')->name('words.index');
+Route::get('/index/{level}', 'WordController@index')->name('words.index');
 Route::resource('/words', 'WordController')->except(['index'])->middleware('auth');
 Route::resource('/words', 'WordController')->only(['show']);
 

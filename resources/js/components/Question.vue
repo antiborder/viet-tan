@@ -1,7 +1,9 @@
+//カードの見栄えをもう少しきれいに
 //テスト実装
 //サーバにアップロード
 //Ｎ+1問題。
 //いつも出ているvueのエラーを修正。
+//レベルが入力されてないデータはアップロード直後に削除する。
 //レベル選定はゲージで。modalで。
 //単語読み上げ
 //各ページの色を修正・統一。
@@ -18,7 +20,7 @@
 
 
 <template>
-  <div>
+  <div class="mx-auto" style="text-align:center; max-width:800px;">
     <div>
       Lv.:{{level}}　正解率: {{correct}} / {{total}}
     </div>
@@ -28,13 +30,13 @@
       </span>
     </div>
 
-    <div v-if=" status==='ANSWERED' "  style="text-align:center">
-      <span class="pt-2 text-nowrap;" v-bind:class="result_text_color" style = "min-width:70px; text-align:center;">
+    <div v-if=" status==='ANSWERED' "  style="text-align:left; max-width:650px">
+      <span class="pt-2 text-nowrap;" v-bind:class="result_text_color" style = "min-width:70px; text-align:center; font-size: 1.4rem; font-weight: bold;">
         {{result_text}}
       </span>
       <span v-for="i in zeroToThree" style = " text-align:center;">
         <span v-if=" isCorrect===true || i===0">
-          <button @click="clickButton(i)" type="button" v-bind:class="button_properties[i].color" class="btn btn-info rounded pt-1 pb-1 btn-sm text-nowrap"style="min-height:40px; max-width: 120px; font-size: 1rem;">
+          <button @click="clickButton(i)" type="button" v-bind:class="button_properties[i].color" class="btn btn-info rounded pt-1 pb-1 btn-sm text-nowrap"style="min-height:40px; max-width: 100px; font-size: 1rem;">
             {{button_properties[i].text}}
           </button>
         </span>
@@ -55,7 +57,7 @@
       </div>
     </div>      
 
-    <div class="mx-auto" style="width:545px">
+    <div class="mx-auto" style="width:545px"> <!-- 選択肢の配列。別ファイルに分けたい。 -->
     <div v-for="i in zeroToThree">
       <div v-if="status==='PROMPT' || status === 'ANSWERED'" class="" >
         <div class="d-flex flex-row" >
@@ -173,7 +175,7 @@
     },
 
     watch: {
-      status: function(val) {
+      status: function(val) { //一つ目を選択した瞬間に正誤が決まり、その後は変わらないようにしている。
         if(val=="ANSWERED"){
           if(
             this.choices[0].pressed == this.choices[0].isAnswer &&
@@ -205,13 +207,13 @@
     
     methods: {
 
-      clickStart() {
+      clickStart() { //学習開始のボタンをクリック
         console.log("START pressed");
         this.status = "LOADING";        
         this.getWords();        
       },
 
-      clickButton(n) {
+      clickButton(n) { //次の単語に進むボタンをクリック
         console.log("pressed");
 
 
@@ -220,7 +222,7 @@
         this.getWords();
       },
 
-      async recordLearn(n) {
+      async recordLearn(n) { //学習を記録
         const response = await axios.post(this.endpoint_to_record_learn,
         {
           name: this.answer,
@@ -235,7 +237,7 @@
         console.log(response);
       },
       
-      async getWords() {
+      async getWords() { //次の単語を取得
         const response = await axios.get(this.endpoint_to_get_word, {
           params:{ level: this.level,
                     previous: this.answer }
@@ -282,11 +284,9 @@
         }       
       },
 
-
-      arrayShuffle(array) {
+      arrayShuffle(array) { // 要素を並び替える
         for(var i = (array.length - 1); 0 < i; i--){
           var r = Math.floor(Math.random() * (i + 1));
-          // 要素の並び替えを実行
           var tmp = array[i];
           array[i] = array[r];
           array[r] = tmp;
@@ -294,11 +294,11 @@
         return array;
       },
       
-      turnPressed(n){
+      turnPressed(n){  //選択肢がクリックされた時のアクション
         this.$set(this.choices[n],'pressed', true)
         console.log(this.choices[n].pressed)
         this.status = "ANSWERED";
-        this.choices.splice();
+        this.choices.splice(); //配列の変更を反映するためにこの一行が必要。
 
       }
     },  
