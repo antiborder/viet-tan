@@ -23,11 +23,12 @@ class WordController extends Controller
         $this->authorizeResource(Word::class, 'word');
     }
 
-    public function index()
+    public function index(int $level = null)
     {
-
-        $words = Word::all()->sortByDesc('created_at');
-
+        if( $level === null ){
+            $level = 1;
+        }
+        $words = Word::all()->where('level',$level)->sortByDesc('created_at');
         return view('words.index', ['words' => $words]);
     }    
 
@@ -517,49 +518,55 @@ class WordController extends Controller
     }
     
     public function getWords(Request $request){
-
-        $learned_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')//学習レコードから、単語ごとに最新のものを取り出す。
-        ->where('words.level', $request->level )    
-        ->where('learns.user_id', Auth::id())
-        ->select('learns.word_id',DB::raw("MAX(learns.id) as latest_id"))               
-        ->groupby('learns.word_id') // ここでlatest_idのみを配列で取り出せたら早くなるが、selectでなぜかエラーが出る。
-        ->get()->toArray();
-    
-        $learned_ids=[];//学習idを単なる配列に変換
-        foreach($learned_words as $learned_word){
-            $learned_ids[] = $learned_word['latest_id']; 
-        }
-
-        $delayed_word_count=Learn::wherein('learns.id', $learned_ids) ->where('next_time','<',date("Y-m-d H:i:s")) ->count();
-        if($delayed_word_count <= 20){
-            $delay_degree= 1 - $delayed_word_count*0.025;
-        }else{
-            $delay_degree= 10 / $delayed_word_count;
-        }
-
-
-        if( mt_rand() / mt_getrandmax() > $delay_degree ) {
-            $next_word_id = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
+        if(Auth::check() === false){ //ログイン未の場合
+            $answer = Word::where('level', $request->level)->inRandomOrder()->first();
+        }else{ //ログイン済の場合
+            $learned_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')//学習レコードから、単語ごとに最新のものを取り出す。
             ->where('words.level', $request->level )    
-            ->where('learns.user_id', '!=', Auth::id()) ->orWhereNull('learns.user_id')
-            ->select('words.id')
-            ->groupby('words.id')
-            ->inRandomOrder()
-            ->first()->id;
-        }else{
-
-            $next_words=Learn::wherein('learns.id', $learned_ids)//学習目標日が最も早いものを取得
-                ->orderby('next_time','asc')
-                ->join('words','learns.word_id','=','words.id')
-                ->take(2)->get()->toArray();
-            if($next_words[0]['name'] !== $request->previous){
-                $next_word_id = $next_words[0]['id'];
-            }else{
-                $next_word_id = $next_words[1]['id'];
+            ->where('learns.user_id', Auth::id())
+            ->select('learns.word_id',DB::raw("MAX(learns.id) as latest_id"))               
+            ->groupby('learns.word_id') // ここでlatest_idのみを配列で取り出せたら早くなるが、selectでなぜかエラーが出る。
+            ->get()->toArray();
+        
+            $learned_ids=[];//学習idを単なる配列に変換
+            foreach($learned_words as $learned_word){
+                $learned_ids[] = $learned_word['latest_id']; 
             }
+
+            $delayed_word_count=Learn::wherein('learns.id', $learned_ids) ->where('next_time','<',date("Y-m-d H:i:s")) ->count();
+            if($delayed_word_count <= 20){
+                $delay_degree= $delayed_word_count*0.025;
+            }else{
+                $delay_degree= 1- 10 / $delayed_word_count;
+            }
+
+            if( count($learned_ids) < 2 ){
+                $delay_degree = 0;
+            }
+
+            if( mt_rand() / mt_getrandmax() > $delay_degree ) { //未習の単語から一つ選択
+                $next_word_id = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
+                ->where('words.level', $request->level )    
+                ->where('learns.user_id', '!=', Auth::id()) ->orWhereNull('learns.user_id')
+                ->select('words.id')
+                ->groupby('words.id')
+                ->inRandomOrder()
+                ->first()->id;
+            }else{  //既習の単語から一つ選択
+                $next_words=Learn::wherein('learns.id', $learned_ids)//学習目標日が最も早いものを取得
+                    ->orderby('next_time','asc')
+                    ->join('words','learns.word_id','=','words.id')
+                    ->take(2)->get()->toArray();
+                if($next_words[0]['name'] !== $request->previous){
+                    $next_word_id = $next_words[0]['id'];
+                }else{
+                    $next_word_id = $next_words[1]['id'];
+                }
+            }
+
+            $answer = Word::where('id',$next_word_id)->first();
         }
 
-        $answer = Word::where('id',$next_word_id)->first();
         // $answer = Word::Where('level', $request->level)->inRandomOrder()->first();
         $similar_pronunciations =  Word::where('level', '<=', $answer->level)->where('level', '>=', $answer->level - 2)->where('simplified', $answer->simplified)->where('name', '!=', $answer->name)->inRandomOrder()->get()->all();
         $dissimilar_pronunciations = Word::where('level', '<=', $answer->level)->where('simplified', '!=', $answer->simplified)->inRandomOrder()->get()->all();
@@ -576,6 +583,7 @@ class WordController extends Controller
                 $this->formatWord($others[2]),                                
             ],
         ];
+        
     }    
 
     public function formatWord(Word $word){
