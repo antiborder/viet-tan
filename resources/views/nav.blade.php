@@ -8,7 +8,7 @@
     <div class="input-group input-group-lg">
       <div class="form-group">
         <div class="">
-          <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control rounded-0" placeholder="検索">
+          <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control rounded-0" placeholder="検索" style="width:100px">
         </div>
       </div>
       <input type="submit" value="&#xf002;" class="fas text-white border-white rounded-right shadow-none" style="background:transparent;">
@@ -29,7 +29,7 @@
       
     @auth {{--この行を追加--}}
     <li class="nav-item">
-      <a class="nav-link" href="{{ route('words.create') }}"><i class="fas fa-pen mr-1"></i>投稿する</a>
+      <a class="nav-link" href="{{ route('words.create') }}"><i class="fas fa-pen mr-1"></i>投稿</a>
     </li>
     @endauth {{--この行を追加--}}
     

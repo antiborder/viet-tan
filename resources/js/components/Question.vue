@@ -1,4 +1,7 @@
 //レベルが入力されてないデータはアップロード直後に削除する。
+//カードサイズ調整
+//文字のサイズを見やすく
+//すまほでも見える漢字フォントに。
 //カードの見栄えをもう少しきれいに
 //git ログインでのパスワード入力を省略
 //テスト実装
@@ -23,29 +26,33 @@
 
 <template>
   <div class="mx-auto" style="text-align:center; max-width:800px;">
-    <div>
+    <div style="text-align:left">
       Lv.:{{level}}　正解率: {{correct}} / {{total}}
     </div>
-    <div class="mt-5" style="text-align:center; height: 55px;">
-      <span v-if="status==='ANSWERED' || status==='PROMPT'  "class="card mx-auto white rounded w-50" >
-        <span class="h4">{{answer}}</span>
-      </span>
+    <div class="mt-1 d-flex flex-row" style=" height: 40px;">
+      <div v-bind:class="result_text_color" class="text-nowrap pt-1" style="width:20%; font-size: 1.2rem; font-weight: bold; "> 
+        {{result_text}}
+      </div>
+      <div v-if="status==='ANSWERED' || status==='PROMPT' "class="card white rounded"  style="width:60%">
+        <!--   "class=" mx-auto "  -->
+        <span class="h4 mt-1">{{answer}}</span>
+      </div>
     </div>
 
-    <div v-if=" status==='ANSWERED' "  style="text-align:left; max-width:650px">
-      <span class="pt-2 text-nowrap;" v-bind:class="result_text_color" style = "min-width:70px; text-align:center; font-size: 1.4rem; font-weight: bold;">
-        {{result_text}}
-      </span>
+    <div v-if=" status==='ANSWERED' " class="mt-1 mb-1" style="text-align:left; max-width:650px">
+      <span class="pt-2 text-nowrap;" style = "min-width:70px; text-align:left; font-size: 0.9rem;">
+        覚えた？
+      </span>      
       <span v-for="i in zeroToThree" style = " text-align:center;">
         <span v-if=" isCorrect===true || i===0">
-          <button @click="clickButton(i)" type="button" v-bind:class="button_properties[i].color" class="btn btn-info rounded pt-1 pb-1 btn-sm text-nowrap"style="min-height:40px; max-width: 100px; font-size: 1rem;">
+          <button @click="clickButton(i)" type="button" v-bind:class="button_properties[i].color" class="btn btn-info rounded pt-1 pb-1 px-2 btn-sm text-nowrap"style="min-height:40px; max-width: 100px; font-size: 0.9em;">
             {{button_properties[i].text}}
           </button>
         </span>
       </span>
     </div>    
 
-    <div v-if="status==='PROMPT' || status==='LOADING'" style=" text-align:center; height: 55px;">
+    <div v-if="status==='PROMPT' || status==='LOADING'" class="pt-2" style=" text-align:center; height: 55px;">
       <span>
         {{message}}
       </span>
@@ -63,17 +70,17 @@
     <div v-for="i in zeroToThree">
       <div v-if="status==='PROMPT' || status === 'ANSWERED'" class="" >
         <div class="d-flex flex-row" >
-          <div style ="width:10%">
+          <div style ="width:7%">
             <span v-if= "choices[i].pressed && choices[i].isAnswer" >
-              <i class="mt-2 text-success fas fa-3x fa-check"></i>
+              <i class="mt-2 text-success fas fa-2x fa-check"></i>
             </span>
             <span v-else-if= "choices[i].pressed && !choices[i].isAnswer" >
-              <span  class="m-0 p-0 text-danger" style="font-size:300%;"> ✖ </span>
+              <span  class="m-0 p-0 text-danger" style="font-size:200%;"> ✖ </span>
             </span>
           </div>
-          <div style="width:90%">
-            <div @click="turnPressed(i)" class="card mt-0 mb-2 pt-1 pb-1 pl-3 pr-3 white rounded d-flex flex-row" style="height:90px; max-width: 500px;">
-              <div class = "h6" style ="width:40%; white-space: pre-line;">
+          <div style="width:93%">
+            <div @click="turnPressed(i)" class="card mt-0 mb-2 pt-1 pb-1 pl-3 pr-3 white rounded d-flex flex-row" style="min-height:90px; max-width: 500px;">
+              <div class = "h6" style ="width:40%; white-space: pre-line; text-align:left">
                 {{choices[i].word.jp}}
               </div>                          
               <div class = "border-left border-light pl-2" style ="width:60%">
@@ -125,8 +132,8 @@
         correct:0,
         isCorrect: null,
         button_properties:[
-          { text:"まだまだ"  , color:"pink lighten-2" },
-          { text:"難しい…"  , color: "red lighten-2" },
+          { text:"いいえ"  , color:"pink lighten-2" },
+          { text:"ぎりぎり..."  , color: "red lighten-2" },
           { text:"覚えた!"  , color: "deep-orange lighten-2" },
           { text:"余裕♪"  , color: "orange lighten-2" },
         ]
