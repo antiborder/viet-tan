@@ -486,10 +486,17 @@ class WordController extends Controller
                         $word->anto_followers()->attach($antonym);                    
                     }                
                 }
-            }            
-            $count++;
+            }
+            if($word->level !== null){            
+                $count++;
+            }
         }
-        
+
+        $words = Word::whereNull('level')->get();
+        foreach($words as $word){
+            $word->delete();
+        }
+
         return redirect()->action('WordController@index')->with('flash_message', '単語を' . $count . '個登録しました！');
     }
 
@@ -521,7 +528,7 @@ class WordController extends Controller
         if(Auth::check() === false){ //ログイン未の場合
             $answer = Word::where('level', $request->level)->inRandomOrder()->first();
         }else{ //ログイン済の場合
-            $learned_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')//学習レコードから、単語ごとに最新のものを取り出す。
+            $learned_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')//学習レコードから、単語ごとに最新のものを取り出す。 ここもDB::rawにした方が短くなる。
             ->where('words.level', $request->level )    
             ->where('learns.user_id', Auth::id())
             ->select('learns.word_id',DB::raw("MAX(learns.id) as latest_id"))               
@@ -543,15 +550,17 @@ class WordController extends Controller
             if( count($learned_ids) < 2 ){
                 $delay_degree = 0;
             }
+            
+            if( mt_rand() / mt_getrandmax() > 0 ) { //未習の単語から一つ選択
+                $next_word_id = collect(DB::select(DB::raw("
+                    select words.id, max(learns.id) as latest_id 
+                    from words left join learns 
+                    on words.id = learns.word_id 
+                    where (learns.user_id is null or learns.user_id =".Auth::id().") and words.level =". $request->level. "
+                    group by words.id having max(learns.id) is null
+                    ")))
+                ->random()->id;
 
-            if( mt_rand() / mt_getrandmax() > $delay_degree ) { //未習の単語から一つ選択
-                $next_word_id = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
-                ->where('words.level', $request->level )    
-                ->where('learns.user_id', '!=', Auth::id()) ->orWhereNull('learns.user_id')
-                ->select('words.id')
-                ->groupby('words.id')
-                ->inRandomOrder()
-                ->first()->id;
             }else{  //既習の単語から一つ選択
                 $next_words=Learn::wherein('learns.id', $learned_ids)//学習目標日が最も早いものを取得
                     ->orderby('next_time','asc')
@@ -567,7 +576,6 @@ class WordController extends Controller
             $answer = Word::where('id',$next_word_id)->first();
         }
 
-        // $answer = Word::Where('level', $request->level)->inRandomOrder()->first();
         $similar_pronunciations =  Word::where('level', '<=', $answer->level)->where('level', '>=', $answer->level - 2)->where('simplified', $answer->simplified)->where('name', '!=', $answer->name)->inRandomOrder()->get()->all();
         $dissimilar_pronunciations = Word::where('level', '<=', $answer->level)->where('simplified', '!=', $answer->simplified)->inRandomOrder()->get()->all();
 
