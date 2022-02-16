@@ -130,7 +130,7 @@
         isCorrect: null,
         button_properties:[
           { text:"いいえ"  , color:"pink lighten-2" },
-          { text:"ぎりぎり..."  , color: "red lighten-2" },
+          { text:"びみょう..."  , color: "red lighten-2" },
           { text:"覚えた!"  , color: "deep-orange lighten-2" },
           { text:"余裕♪"  , color: "orange lighten-2" },
         ]
