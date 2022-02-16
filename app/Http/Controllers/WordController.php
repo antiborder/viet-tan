@@ -551,7 +551,7 @@ class WordController extends Controller
                 $delay_degree = 0;
             }
             
-            if( mt_rand() / mt_getrandmax() > 0 ) { //未習の単語から一つ選択
+            if( mt_rand() / mt_getrandmax() > $delay_degree ) { //未習の単語から一つ選択
                 $next_word_id = collect(DB::select(DB::raw("
                     select words.id, max(learns.id) as latest_id 
                     from words left join learns 
