@@ -27,7 +27,7 @@
 
     </div>
 
-    <div class="card mt-3 mb-1 pl-2 pr-2 cyan lighten-1 text-white" style="color: white; max-width: 30rem;">
+    <div class="card mt-3 mb-1 pl-2 pr-2 orange lighten-1 text-white" style="color: white; max-width: 30rem;">
       @foreach($word->synonyms() as $synonym)
         @if($loop->first)
           同義語
@@ -36,7 +36,7 @@
       @endforeach    
     </div>
 
-    <div class="card mt-3 mb-1 pl-2 pr-2 teal lighten-1 text-white" style="color: white; max-width: 30rem;">
+    <div class="card mt-3 mb-1 pl-2 pr-2 orange lighten-1 text-white" style="color: white; max-width: 30rem;">
       @foreach($word->antonyms() as $antonym)
         @if($loop->first)
           対義語
@@ -45,7 +45,7 @@
       @endforeach
     </div>
 
-    <div class="card mt-3 mb-1 pl-2 pr-2 green lighten-1 text-white" style="color: white; max-width: 30rem;">        
+    <div class="card mt-3 mb-1 pl-2 pr-2 orange lighten-1 text-white" style="color: white; max-width: 30rem;">        
       @foreach($similar_pronuciations as $similar_pronuciation)
         @if($loop->first)
           発音が類似
@@ -54,7 +54,7 @@
       @endforeach        
     </div>
 
-    <div class="card mt-3 mb-1 pl-2 pr-2 light-green lighten-1 text-white" style="color: white; max-width: 30rem;">    
+    <div class="card mt-3 mb-1 pl-2 pr-2 orange lighten-1 text-white" style="color: white; max-width: 30rem;">    
       @foreach($common_syllables as $common_syllable)
         @if($loop->first)
           音節が一致
