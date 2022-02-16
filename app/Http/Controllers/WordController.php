@@ -576,8 +576,8 @@ class WordController extends Controller
             $answer = Word::where('id',$next_word_id)->first();
         }
 
-        $similar_pronunciations =  Word::where('level', '<=', $answer->level)->where('level', '>=', $answer->level - 2)->where('simplified', $answer->simplified)->where('name', '!=', $answer->name)->inRandomOrder()->get()->all();
-        $dissimilar_pronunciations = Word::where('level', '<=', $answer->level)->where('simplified', '!=', $answer->simplified)->inRandomOrder()->get()->all();
+        $similar_pronunciations =  Word::where('level', '<=', $answer->level)->where('simplified', $answer->simplified)->where('name', '!=', $answer->name)->inRandomOrder()->get()->all();
+        $dissimilar_pronunciations = Word::where('level', '<=', $answer->level)->where('level', '>=', $answer->level - 2)->where('simplified', '!=', $answer->simplified)->inRandomOrder()->get()->all();
 
         $candidates = array_slice(array_merge($similar_pronunciations, $dissimilar_pronunciations),0,5);
         shuffle($candidates);
