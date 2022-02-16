@@ -8,7 +8,7 @@
     <div class="input-group input-group-lg">
       <div class="form-group">
         <div class="">
-          <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control rounded-0" placeholder="検索" style="width:100px">
+          <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control rounded-0" placeholder="検索" style="max-width:150px; min-width:80px">
         </div>
       </div>
       <input type="submit" value="&#xf002;" class="fas text-white border-white rounded-right shadow-none" style="background:transparent;">

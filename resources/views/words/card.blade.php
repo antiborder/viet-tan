@@ -19,7 +19,8 @@
                 $kanji_n = 'kanji' . $i;  
               @endphp        
               @if($word->$kanji_n != '')
-              <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="p-1 mr-1 mt-1 text-muted" style='font-family:"UD デジタル 教科書体 N-R", "BIZ UDゴシック Regular"; font-size:1.5rem'>
+              <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="p-1 mr-1 mt-1 text-muted" style=' font-size:1.5rem'> 
+                <!-- font-family:"UD デジタル 教科書体 N-R", "BIZ UDゴシック Regular"; -->
                 {{$word->$kanji_n}}
               </a>          
               @endif

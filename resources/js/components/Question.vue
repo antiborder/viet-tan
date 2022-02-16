@@ -1,13 +1,10 @@
 //レベルが入力されてないデータはアップロード直後に削除する。
-//カードサイズ調整
-//文字のサイズを見やすく
-//すまほでも見える漢字フォントに。
+//スマホでも見える漢字フォントに。
 //カードの見栄えをもう少しきれいに
 //git ログインでのパスワード入力を省略
 //テスト実装
 //レベル選定はゲージで。modalで。
 //単語読み上げ
-//各ページの色を修正・統一。
 //学習完了の判定条件。
 //ユーザーページ表示
 //レベル別習熟度を常に隅っこに表示。
@@ -30,7 +27,7 @@
       Lv.:{{level}}　正解率: {{correct}} / {{total}}
     </div>
     <div class="mt-1 d-flex flex-row" style=" height: 40px;">
-      <div v-bind:class="result_text_color" class="text-nowrap pt-1" style="width:20%; font-size: 1.2rem; font-weight: bold; "> 
+      <div v-bind:class="result_text_color" class="text-nowrap pt-1" style="text-align:left;   width:20%; font-size: 1.0rem; font-weight: ; "> 
         {{result_text}}
       </div>
       <div v-if="status==='ANSWERED' || status==='PROMPT' "class="card white rounded"  style="width:60%">
@@ -87,10 +84,10 @@
                 <div v-if="choices[i].pressed">
                   <div class="d-flex flex-row">
                     <div v-for="j in zeroToSeven">
-                      <div class="h5 card-title mr-2">
+                      <div class="h5 card-title mr-2 mb-0">
                         {{ choices[i].word.syllables[j] }}
                       </div>
-                      <div class="px-auto" >
+                      <div class="px-auto pr-2 mt-0 text-muted" style="font-size:1.3em" >
                         {{ choices[i].word.kanjis[j] }}
                       </div>
                     </div>
