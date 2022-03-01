@@ -1,22 +1,24 @@
-//レベルが入力されてないデータはアップロード直後に削除する。
-//一文字違いも選択肢に入りやすく。
-//正解を選ばないと次に進めない
 //git ログインでのパスワード入力を省略
-//レベル選定はゲージで。modalで。
-//単語読み上げ
-//テスト実装
-//学習完了の判定条件。
-//ユーザーページ表示
+//時間切れ status=timeout の実装。
+//クリックしてほしい箇所をテカらせる。場所は時間次第で変わる。
+//単語毎の熟練度。その平均値をレベル別にユーザー頁に表示。
+//Googleadsense
+//学習履歴と学習予定をユーザーページに表示
 //レベル別習熟度を常に隅っこに表示。
+//前の単語を隅っこに表示。
+//レベル選定はゲージで。modalで。
+//googleログイン
+//単語読み上げ
+//url取得
+//テスト実装
 //様々なパラメータを定数化。単語の音節数とか、タグ数とか、問題の選択肢の数だとか。
 //Ｎ+1問題。
 //いつも出ているvueのエラーを修正。
+//学習完了メッセージとその後のrouteをもっと真面目にやる。おすすめレベルなど。
 //ベトナム語検索結果を部分一致と全体一致に分ける。表示順序や表示数もちょうせい。
 //学習単語がなくなった時の処理と、今日の学習完了の判定条件。とメッセージ。
 //考えてる間にデータロード。
 //WordControllerのupdate、create、importの共通部分をまとめたい。
-//クリックしてほしい箇所をテカらせる。
-//時間切れ status=timeout の実装。
 //時刻はどの場所の時刻になるのか、ぶれないように確認必要。
 //代入には$setを使う。
 
@@ -24,13 +26,19 @@
 <template>
   <div class="mx-auto" style="text-align:center; max-width:800px;">
     <div style="text-align:left">
-      Lv.:{{level}}　正解率: {{correct}} / {{total}}
+      Lv.:{{level}}　正解率: {{correct}} / {{total}} {{status}} {{isCorrect}}
     </div>
+    <div v-if="status==='CLEARED'" class="card white rounded mt-5 mx-auto" style="width:200px">
+      cleared!!
+      <a href="learn">
+        back
+      </a>
+    </div>    
     <div class="mt-1 d-flex flex-row" style=" height: 40px;">
       <div v-bind:class="result_text_color" class="text-nowrap pt-1" style="text-align:left;   width:20%; font-size: 1.0rem; font-weight: ; "> 
         {{result_text}}
       </div>
-      <div v-if="status==='ANSWERED' || status==='PROMPT' "class="card white rounded"  style="width:60%">
+      <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' "class="card white rounded"  style="width:60%">
         <!--   "class=" mx-auto "  -->
         <span class="h4 mt-1">{{answer}}</span>
       </div>
@@ -49,7 +57,7 @@
       </span>
     </div>    
 
-    <div v-if="status==='PROMPT' || status==='LOADING'" class="pt-2" style=" text-align:center; height: 55px;">
+    <div v-if="status==='LOADING' || status==='PROMPT' || status==='JUDGED' " class="pt-2" style=" text-align:center; height: 60px;">
       <span>
         {{message}}
       </span>
@@ -65,7 +73,7 @@
 
     <div class="mx-auto" style="max-width:545px"> <!-- 選択肢の配列。別ファイルに分けたい。 -->
     <div v-for="i in zeroToThree">
-      <div v-if="status==='PROMPT' || status === 'ANSWERED'" class="" >
+      <div v-if="status==='PROMPT' || status === 'JUDGED' || status ==='ANSWERED'" class="" >
         <div class="d-flex flex-row" >
           <div style ="width:7%">
             <span v-if= "choices[i].pressed && choices[i].isAnswer" >
@@ -145,7 +153,7 @@
           return "";
         }else if(this.status==="PROMPT"){
           return "";
-        }else if(this.status==="ANSWERED"){
+        }else if(this.status==="JUDGED"){
           return "NEXT ▶";
         }
       },
@@ -154,7 +162,7 @@
           return "";
         }else if(this.status==="LOADING"){
           return "Now Loading";
-        }else if(this.status==="PROMPT"){
+        }else if(this.status==="PROMPT" || this.status==="JUDGED"){
           return "単語の意味を選んでください";
         }else if(this.status==="ANSWERED"){
           return "";
@@ -182,7 +190,8 @@
 
     watch: {
       status: function(val) { //一つ目を選択した瞬間に正誤が決まり、その後は変わらないようにしている。
-        if(val=="ANSWERED"){
+
+        if( (val==="JUDGED" || val==="ANSWERED") && this.isCorrect === null){
           if(
             this.choices[0].pressed == this.choices[0].isAnswer &&
             this.choices[1].pressed == this.choices[1].isAnswer &&
@@ -196,7 +205,7 @@
             this.isCorrect = false;
             this.total += 1;
           }
-        }else{
+        }else if(val==="LOADING"){
           this.isCorrect = null;
         }
       },
@@ -248,7 +257,11 @@
           params:{ level: this.level,
                     previous: this.answer }
         });
-        //本来はきれいなjsonできてほしいが、dataの頭に全角スペースが入ることもあるため、どちらでもいいように場合分けしている。
+        //本来はきれいなjsonで来てほしいが、dataの頭に全角スペースが入ることもあるため、どちらでもいいように場合分けしている。
+        if(response.data === "CLEARED"){
+          this.status = "CLEARED";
+          return;
+        }
         let jsoned;
         if(String(response.data).substr(0,1) == '　'){
           let trimed = response.data.replace(/　+/g,'');
@@ -303,7 +316,12 @@
       turnPressed(n){  //選択肢がクリックされた時のアクション
         this.$set(this.choices[n],'pressed', true)
         console.log(this.choices[n].pressed)
-        this.status = "ANSWERED";
+        if(this.status == "PROMPT"){
+          this.status = "JUDGED";  
+        }      
+        if(this.choices[n].isAnswer){
+          this.status = "ANSWERED"
+        }
         this.choices.splice(); //配列の変更を反映するためにこの一行が必要。
 
       }

@@ -28,3 +28,7 @@ Route::get('/learn', 'WordController@learn')->name('words.learn');
 
 Route::get('/learn/random', 'WordController@getWords')->name('learn.random');
 Route::post('/learn/record', 'LearnController@store')->name('learn.record');
+
+Route::prefix('users')->name('users.')->group(function () {
+    Route::get('/{name}', 'UserController@show')->name('show');
+});
