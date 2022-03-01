@@ -528,19 +528,45 @@ class WordController extends Controller
         if(Auth::check() === false){ //ログイン未の場合
             $answer = Word::where('level', $request->level)->inRandomOrder()->first();
         }else{ //ログイン済の場合
+
+            //未学習の単語をカウント //ここはuserControllerの一部をコピペしてきたから、本気出せば関数化して共用できる。
+            $unlearned_word_counts = DB::select(DB::raw("
+            select  level, count(*)
+            from (
+                select words.id, words.level, max(learns.id) as latest_id 
+                from words left join learns 
+                on words.id = learns.word_id 
+                where learns.user_id is null or learns.user_id =".Auth::id()."
+                group by words.id 
+            ) as words
+            where latest_id is null
+            group by level
+            "));
+
+            $unlearned_word_has_this_level = false; //未学習の単語が一つでもあるかないか
+            foreach($unlearned_word_counts as $unlearned_word_count){
+                if($unlearned_word_count->level === (int)$request->level){
+                    $unlearned_word_has_this_level=true;
+                }
+            }
+
+           //学習待ちの単語をカウント
             $learned_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')//学習レコードから、単語ごとに最新のものを取り出す。 ここもDB::rawにした方が短くなる。
             ->where('words.level', $request->level )    
             ->where('learns.user_id', Auth::id())
             ->select('learns.word_id',DB::raw("MAX(learns.id) as latest_id"))               
             ->groupby('learns.word_id') // ここでlatest_idのみを配列で取り出せたら早くなるが、selectでなぜかエラーが出る。
             ->get()->toArray();
-        
             $learned_ids=[];//学習idを単なる配列に変換
             foreach($learned_words as $learned_word){
                 $learned_ids[] = $learned_word['latest_id']; 
             }
-
             $delayed_word_count=Learn::wherein('learns.id', $learned_ids) ->where('next_time','<',date("Y-m-d H:i:s")) ->count();
+
+            if(!$unlearned_word_has_this_level && $delayed_word_count === 0){//単語が尽きたときはここでreturn
+                return "CLEARED";
+            }
+
             if($delayed_word_count <= 20){
                 $delay_degree= $delayed_word_count*0.025;
             }else{
@@ -581,8 +607,8 @@ class WordController extends Controller
         $semi_similar_str = substr($answer->simplified,0,$length-2);
 
         $similar_pronunciations =  Word::where('level', '<=', $answer->level+1)->where('simplified', 'like', "$similar_str%")->where('name', '!=', $answer->name)->inRandomOrder()->get()->all();
-        $semi_similar_pronunciations =  Word::where('level', '<=', $answer->level+1)->where('simplified', 'like', "$semi_similar_str%")->where('name', '!=', $answer->name)->inRandomOrder()->get()->all();
-        $dissimilar_pronunciations = Word::where('level', '<=', $answer->level+1)->where('level', '>=', $answer->level - 2)->where('simplified', '!=', $answer->simplified)->inRandomOrder()->get()->all();
+        $semi_similar_pronunciations =  Word::where('level', '<=', $answer->level+1)->where('simplified', 'like', "$semi_similar_str%")->where('simplified', 'not like', "$similar_str%")->where('name', '!=', $answer->name)->inRandomOrder()->get()->all();
+        $dissimilar_pronunciations = Word::where('level', '<=', $answer->level+1)->where('level', '>=', $answer->level - 2)->where('simplified', 'not like', "$semi_similar_str%")->inRandomOrder()->get()->all();
 
         $candidates = array_slice(array_merge($similar_pronunciations, $semi_similar_pronunciations, $dissimilar_pronunciations),0,5);
         shuffle($candidates);
