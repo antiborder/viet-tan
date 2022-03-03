@@ -117,6 +117,8 @@ class LearnController extends Controller
                     ")))
                 ->random()->id;
 
+
+                
             }else{  //既習の単語から一つ選択
                 $next_words=Learn::wherein('learns.id', $learned_ids)//1.easinessが低い者 2.学習目標日が早いものの順で取得
                     ->orderby('easiness','asc')
