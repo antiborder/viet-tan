@@ -90,9 +90,9 @@ class LearnController extends Controller
             if(!$unlearned_word_has_this_level && $delayed_word_count === 0){//単語が尽きたときはここでreturn
                 return "CLEARED";
             }else if(!$unlearned_word_has_this_level){
-                $delay_degree = 0;
-            }else if($delayed_word_count === 0){
                 $delay_degree = 1;
+            }else if($delayed_word_count === 0){
+                $delay_degree = 0;
             }else{
 
                 if($delayed_word_count <= 20){
