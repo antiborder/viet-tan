@@ -6,6 +6,8 @@
 //学習履歴と学習予定をユーザーページに表示
 //レベル別習熟度を常に隅っこに表示。
 //前の単語を隅っこに表示。
+//選択肢からanswerの類義語を取り除く
+//他のユーザーや非ログインユーザの挙動が影響しないようにチェック
 //レベル選定はゲージで。modalで。
 //googleログイン
 //単語読み上げ
@@ -21,7 +23,6 @@
 //WordControllerのupdate、create、importの共通部分をまとめたい。
 //時刻はどの場所の時刻になるのか、ぶれないように確認必要。
 //代入には$setを使う。
-
 
 <template>
   <div class="mx-auto" style="text-align:center; max-width:800px;">
@@ -72,43 +73,44 @@
     </div>      
 
     <div class="mx-auto" style="max-width:545px"> <!-- 選択肢の配列。別ファイルに分けたい。 -->
-    <div v-for="i in zeroToThree">
-      <div v-if="status==='PROMPT' || status === 'JUDGED' || status ==='ANSWERED'" class="" >
-        <div class="d-flex flex-row" >
-          <div style ="width:7%">
-            <span v-if= "choices[i].pressed && choices[i].isAnswer" >
-              <i class="mt-2 text-success fas fa-2x fa-check"></i>
-            </span>
-            <span v-else-if= "choices[i].pressed && !choices[i].isAnswer" >
-              <span  class="m-0 p-0 text-danger" style="font-size:200%;"> ✖ </span>
-            </span>
-          </div>
-          <div style="width:93%">
-            <div @click="turnPressed(i)" class="card mt-0 mb-2 pt-1 pb-1 pl-3 pr-3 white rounded d-flex flex-row" style="min-height:90px; max-width: 500px;">
-              <div class = "h6" style ="width:40%; white-space: pre-line; text-align:left">
-                {{choices[i].word.jp}}
-              </div>                          
-              <div class = "border-left border-light pl-2" style ="width:60%">
-                <div v-if="choices[i].pressed">
-                  <div class="d-flex flex-row">
-                    <div v-for="j in zeroToSeven">
-                      <div class="h5 card-title mr-2 mb-0">
-                        {{ choices[i].word.syllables[j] }}
+      <div v-for="i in zeroToThree">
+        <div v-if="status==='PROMPT' || status === 'JUDGED' || status ==='ANSWERED'" class="" >
+          <div class="d-flex flex-row" >
+            <div style ="width:7%">
+              <span v-if= "choices[i].pressed && choices[i].isAnswer" >
+                <i class="mt-2 text-success fas fa-2x fa-check"></i>
+              </span>
+              <span v-else-if= "choices[i].pressed && !choices[i].isAnswer" >
+                <span  class="m-0 p-0 text-danger" style="font-size:200%;"> ✖ </span>
+              </span>
+            </div>
+            <div style="width:93%">
+              <div @click="turnPressed(i)" class="card mt-0 mb-2 pt-1 pb-1 pl-3 pr-3 white rounded d-flex flex-row" style="min-height:90px; max-width: 500px;">
+                <div class = "h6" style ="width:40%; white-space: pre-line; text-align:left">
+                  {{choices[i].word.jp}}
+                </div>                          
+                <div class = "border-left border-light pl-2" style ="width:60%">
+                  <div v-if="choices[i].pressed">
+                    <div class="d-flex flex-row">
+                      <div v-for="j in zeroToSeven">
+                        <div class="h5 card-title mr-2 mb-0">
+                          {{ choices[i].word.syllables[j] }}
+                        </div>
+                        <div class="px-auto pr-2 mt-0 text-muted" style="font-size:1.3em" >
+                          {{ choices[i].word.kanjis[j] }}
+                        </div>
                       </div>
-                      <div class="px-auto pr-2 mt-0 text-muted" style="font-size:1.3em" >
-                        {{ choices[i].word.kanjis[j] }}
-                      </div>
+                      <a v-bind:href="'/words/'+choices[i].word.id" target=”_blank” class="text-info mr-2" style="margin:0 0 0 auto">
+                        詳細
+                      </a>                  
                     </div>
-                    <a v-bind:href="'/words/'+choices[i].word.id" target=”_blank” class="text-info mr-2" style="margin:0 0 0 auto">
-                      詳細
-                    </a>                  
+                    <div class="d-flex align-items-end">
+                      Lv.{{ choices[i].word.level }}
+                    </div>
                   </div>
-                  <div class="d-flex align-items-end">
-                    Lv.{{ choices[i].word.level }}
+                  <div v-else class="" style="text-align:center">
+                    <i class="mt-3 text-muted fas fa-3x fa-question "></i>
                   </div>
-                </div>
-                <div v-else class="" style="text-align:center">
-                  <i class="mt-3 text-muted fas fa-3x fa-question "></i>
                 </div>
               </div>
             </div>
@@ -116,6 +118,8 @@
         </div>
       </div>
     </div>
+    <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' " style="text-align:center">
+      {{sec}}
     </div>
   </div>
 </template>
@@ -130,6 +134,9 @@
         zeroToSeven:[0,1,2,3,4,5,6,7],
         answer:" ",
         status : "INITIAL",
+        sec: 0,
+        timerOn: false, 
+        timerObj: null,
         choices:[],
         // input:"1",
         level:1,
@@ -192,6 +199,8 @@
       status: function(val) { //一つ目を選択した瞬間に正誤が決まり、その後は変わらないようにしている。
 
         if( (val==="JUDGED" || val==="ANSWERED") && this.isCorrect === null){
+          this.stopTimer();
+
           if(
             this.choices[0].pressed == this.choices[0].isAnswer &&
             this.choices[1].pressed == this.choices[1].isAnswer &&
@@ -230,8 +239,7 @@
 
       clickButton(n) { //次の単語に進むボタンをクリック
         console.log("pressed");
-
-
+        this.sec = 0;        
         this.recordLearn(n);
         this.status = "LOADING";        
         this.getWords();
@@ -286,6 +294,7 @@
         this.answer = this.formatWord(jsoned.answer).syllables.join(" ");
         this.choices = this.arrayShuffle(this.choices)
         this.status = "PROMPT";        
+        this.startTimer();        
       },
       
       formatWord(word) {
@@ -324,6 +333,21 @@
         }
         this.choices.splice(); //配列の変更を反映するためにこの一行が必要。
 
+      },
+
+      count(){
+        this.sec++;
+      },
+
+      startTimer(){
+        let self = this;        
+        this.timerObj = setInterval(function() {self.count()},1000)
+        this.timerOn = true;
+      },
+
+      stopTimer(){
+        clearInterval(this.timerObj);
+        this.timerOn = false;
       }
     },  
     
