@@ -32,8 +32,9 @@ class LearnController extends Controller
                     $interval = 1024;
                     break;                
             }
-            $deviation = (2*mt_rand() - mt_getrandmax())/mt_getrandmax() * 0.3;
-            $interval = $interval * (1 + $deviation);
+
+            $deviation = (2 * mt_rand() / mt_getrandmax() - 1) * 0.3;
+            $interval = round( $interval * (1 + $deviation), 4);
             $interval_text ="now +".$interval." hours";
 
             $learn = Learn::create([
@@ -116,8 +117,11 @@ class LearnController extends Controller
                     ")))
                 ->random()->id;
 
+
+                
             }else{  //既習の単語から一つ選択
-                $next_words=Learn::wherein('learns.id', $learned_ids)//学習目標日が最も早いものを取得
+                $next_words=Learn::wherein('learns.id', $learned_ids)//1.easinessが低い者 2.学習目標日が早いものの順で取得
+                    ->orderby('easiness','asc')
                     ->orderby('next_time','asc')
                     ->join('words','learns.word_id','=','words.id')
                     ->take(2)->get()->toArray();
