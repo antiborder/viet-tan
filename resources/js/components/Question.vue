@@ -1,15 +1,16 @@
 //git ログインでのパスワード入力を省略
 //時間切れ status=timeout の実装。
 //クリックしてほしい箇所をテカらせる。場所は時間次第で変わる。
-//単語毎の熟練度。その平均値をレベル別にユーザー頁に表示。
+//単語毎の熟練度。その平均値をレベル別にユーザー頁に表示
+//toppage作成
 //Googleadsense
+//googleログイン
 //学習履歴と学習予定をユーザーページに表示
 //レベル別習熟度を常に隅っこに表示。
 //前の単語を隅っこに表示。
 //選択肢からanswerの類義語を取り除く
 //他のユーザーや非ログインユーザの挙動が影響しないようにチェック
 //レベル選定はゲージで。modalで。
-//googleログイン
 //単語読み上げ
 //学習を記録できないことが結構ある
 //url取得
@@ -28,7 +29,7 @@
 <template>
   <div class="mx-auto" style="text-align:center; max-width:800px;">
     <div style="text-align:left">
-      Lv.:{{level}}　正解率: {{correct}} / {{total}} {{status}} {{isCorrect}}
+      Lv.:{{level}}　正解率: {{correct}} / {{total}} {{status}} {{isCorrect}} {{recommendation}}
     </div>
     <div v-if="status==='CLEARED'" class="card white rounded mt-5 mx-auto" style="width:200px">
       cleared!!
@@ -37,11 +38,10 @@
       </a>
     </div>    
     <div class="mt-1 d-flex flex-row" style=" height: 40px;">
-      <div v-bind:class="result_text_color" class="text-nowrap pt-1" style="text-align:left;   width:20%; font-size: 1.0rem; font-weight: ; "> 
+      <div v-bind:class="result_text_color" class="text-nowrap pt-1" style="text-align:left;   width:20%; font-size: 1.0rem;  "> 
         {{result_text}}
       </div>
-      <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' "class="card white rounded"  style="width:60%">
-        <!--   "class=" mx-auto "  -->
+      <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' "class="card white rounded bounceIn"  style="width:60%">
         <span class="h4 mt-1">{{answer}}</span>
       </div>
     </div>
@@ -52,7 +52,7 @@
       </span>      
       <span v-for="i in zeroToThree" style = " text-align:center;">
         <span v-if=" isCorrect===true || i===0">
-          <button @click="clickButton(i)" type="button" v-bind:class="button_properties[i].color" class="btn btn-info rounded pt-1 pb-1 px-2 btn-sm text-nowrap"style="min-height:40px; max-width: 100px; font-size: 0.9em;">
+          <button @click="clickButton(i)" type="button" v-bind:class="colors[i]" class="btn btn-info rounded pt-1 pb-1 px-2 text-nowrap"style="min-height:40px; max-width: 100px; font-size: 0.9em;">
             {{button_properties[i].text}}
           </button>
         </span>
@@ -67,7 +67,7 @@
     <div v-if="status==='INITIAL'" style=" text-align:center;">
       <input v-model="level" placeholder="Choose level">
       <div class="" style = "text-align:center; height: 80px;">
-        <button @click="clickStart()" type="button" class="btn btn-info orange m-5 lighten-1 rounded pb-1 btn-sm text-nowrap"style="max-width: 240px; font-size: 1.6rem;">
+        <button @click="clickStart()" type="button" class="btn btn-info orange m-5 lighten-1 rounded pb-1 text-nowrap"style="max-width: 240px; font-size: 1.6rem;">
           START
         </button>
       </div>
@@ -78,7 +78,7 @@
         <div v-if="status==='PROMPT' || status === 'JUDGED' || status ==='ANSWERED'" class="" >
           <div class="d-flex flex-row" >
             <div style ="width:7%">
-              <span v-if= "choices[i].pressed && choices[i].isAnswer" >
+              <span v-if= "choices[i].pressed && choices[i].isAnswer" class="bounceIn">
                 <i class="mt-2 text-success fas fa-2x fa-check"></i>
               </span>
               <span v-else-if= "choices[i].pressed && !choices[i].isAnswer" >
@@ -88,7 +88,9 @@
             <div style="width:93%">
               <div @click="turnPressed(i)" class="card mt-0 mb-2 pt-1 pb-1 pl-3 pr-3 white rounded d-flex flex-row" style="min-height:90px; max-width: 500px;">
                 <div class = "h6" style ="width:40%; white-space: pre-line; text-align:left">
-                  {{choices[i].word.jp}}
+                  <div v-if="sec >= 1" class="bounceIn">
+                    {{choices[i].word.jp}}
+                  </div>
                 </div>                          
                 <div class = "border-left border-light pl-2" style ="width:60%">
                   <div v-if="choices[i].pressed">
@@ -139,16 +141,15 @@
         timerOn: false, 
         timerObj: null,
         choices:[],
-        // input:"1",
         level:1,
         total:0,
         correct:0,
         isCorrect: null,
         button_properties:[
-          { text:"いいえ"  , color:"pink lighten-2" },
-          { text:"びみょう..."  , color: "red lighten-2" },
-          { text:"覚えた!"  , color: "deep-orange lighten-2" },
-          { text:"余裕♪"  , color: "orange lighten-2" },
+          { text:"いいえ"},
+          { text:"びみょう..."},
+          { text:"覚えた!"},
+          { text:"余裕♪"},
         ]
       }
     },
@@ -180,7 +181,11 @@
         if(this.isCorrect == true){
           return "正解";
         }else if(this.isCorrect == false){
-          return "不正解";
+          if(this.sec<10){
+            return "不正解";
+          }else{
+            return "時間切れ";
+          }
         }else{
           return "";
         }
@@ -194,6 +199,36 @@
           return "";
         }
       },
+      recommendation: function(){
+        if(this.status === "JUDGED" || this.status==="ANSWERED"){
+          if(this.isCorrect){
+            if(this.sec < 2){
+              return 3;
+            }else if(this.sec <4){
+              return 2;
+            }else{
+              return 1;
+            }
+          }else{
+            return 0;
+          }
+        }else{
+          return null;
+        }
+
+      },
+      colors: function(){
+        const baseColors = ["pink", "red", "deep-orange", "orange"];
+        let colors = [];
+        for(let i=0;i<=3;i++){
+          if(i === this.recommendation){
+            colors.push(baseColors[i]+" lighten-2 animated bounceIn ");
+          }else{
+            colors.push("grey"+" lighten-1");
+          }
+        }
+      return colors;
+      },
     },
 
     watch: {
@@ -201,7 +236,6 @@
 
         if( (val==="JUDGED" || val==="ANSWERED") && this.isCorrect === null){
           this.stopTimer();
-
           if(
             this.choices[0].pressed == this.choices[0].isAnswer &&
             this.choices[1].pressed == this.choices[1].isAnswer &&
@@ -219,6 +253,16 @@
           this.isCorrect = null;
         }
       },
+
+      sec: function(val) { //制限時間を過ぎたら不正解
+        if( val>=10 && this.status === "PROMPT"){
+          this.stopTimer();
+          this.status = "JUDGED";
+          this.isCorrect = false;
+          this.total +=1;  
+        }
+      },
+      
     },
 
     props: {
