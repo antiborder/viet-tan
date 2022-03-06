@@ -15,46 +15,24 @@ class UserController extends Controller
         $user = User::where('name', $name)->first();
         $status = Word::select('level',DB::raw('count(*) as total'))->groupBy('level')->orderBy('level')->get()->toArray();
       
-        $unlearned_words = DB::select(DB::raw("
-        select  level, count(*)
-        from (
-            select words.id, words.level, max(learns.id) as latest_id 
-            from words left join learns 
-            on words.id = learns.word_id 
-            where learns.user_id is null or learns.user_id =".Auth::id()."
-            group by words.id 
-        ) as words
-        where latest_id is null
-        group by level
-        "));
+        $unlearned_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
+        ->whereNull('learns.user_id')
+        ->select('words.level',DB::raw('count(*) as count'))
+        ->groupBy('words.level')
+        ->get();
 
-        $learned_words = DB::select(DB::raw("
-        select  level, count(*)
-        from (
-            select words.id, words.level, max(learns.id) as latest_id 
-            from words left join learns 
-            on words.id = learns.word_id 
-            where learns.user_id is null or learns.user_id =".Auth::id()."
-            group by words.id 
-        ) as words
-        where latest_id is not null
-        group by level
-        "));
+        $learned_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
+        ->where('learns.user_id',Auth::id())
+        ->select('words.level',DB::raw('count(*) as count'))
+        ->groupBy('words.level')
+        ->get();
 
-        $ready_words = DB::select(DB::raw("
-        select tmp.level, count(*)
-        from (
-            select words.id, words.level, max(learns.id) as latest_id 
-            from words left join learns 
-            on words.id = learns.word_id 
-            where learns.user_id is null or learns.user_id =".Auth::id()."
-            group by words.id 
-        ) as tmp 
-        left join learns
-        on tmp.latest_id = learns.id
-        where learns.next_time < '".date("Y-m-d H:i:s")."' 
-        group by tmp.level
-        "));
+        $ready_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
+        ->where('learns.user_id',Auth::id())
+        ->where('learns.next_time', '<', date("Y-m-d H:i:s"))
+        ->select('words.level',DB::raw('count(*) as count'))
+        ->groupBy('words.level')
+        ->get();
 
         $levels = [];
         foreach($status as $s){

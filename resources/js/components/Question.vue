@@ -1,18 +1,17 @@
 //git ログインでのパスワード入力を省略
-//時間切れ status=timeout の実装。
-//クリックしてほしい箇所をテカらせる。場所は時間次第で変わる。
 //単語毎の熟練度。その平均値をレベル別にユーザー頁に表示
+//正解のカードは緑。不正解はピンク
 //toppage作成
 //Googleadsense
 //googleログイン
 //学習履歴と学習予定をユーザーページに表示
 //レベル別習熟度を常に隅っこに表示。
+//レベルをclearしたときに単語ロードで一回エラーが出る。
 //前の単語を隅っこに表示。
 //選択肢からanswerの類義語を取り除く
 //他のユーザーや非ログインユーザの挙動が影響しないようにチェック
 //レベル選定はゲージで。modalで。
 //単語読み上げ
-//学習を記録できないことが結構ある
 //url取得
 //テスト実装
 //様々なパラメータを定数化。単語の音節数とか、タグ数とか、問題の選択肢の数だとか。
@@ -41,8 +40,8 @@
       <div v-bind:class="result_text_color" class="text-nowrap pt-1" style="text-align:left;   width:20%; font-size: 1.0rem;  "> 
         {{result_text}}
       </div>
-      <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' "class="card white rounded bounceIn"  style="width:60%">
-        <span class="h4 mt-1">{{answer}}</span>
+      <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' "class="card white rounded"  style="width:60%">
+        <span class="h4 mt-1 bounceIn">{{answer}}</span>
       </div>
     </div>
 
@@ -88,7 +87,7 @@
             <div style="width:93%">
               <div @click="turnPressed(i)" class="card mt-0 mb-2 pt-1 pb-1 pl-3 pr-3 white rounded d-flex flex-row" style="min-height:90px; max-width: 500px;">
                 <div class = "h6" style ="width:40%; white-space: pre-line; text-align:left">
-                  <div v-if="sec >= 1" class="bounceIn">
+                  <div v-if="sec >= 1">
                     {{choices[i].word.jp}}
                   </div>
                 </div>                          
@@ -292,17 +291,18 @@
 
       async recordLearn(n) { //学習を記録
         const response = await axios.post(this.endpoint_to_record_learn,
-        {
-          name: this.answer,
-          result: this.isCorrect, 
-          easiness: n,
-        }
+          {
+            name: this.answer,
+            result: this.isCorrect, 
+            easiness: n,
+          }
         ).then(response => {
           console.log('status:', response.status); // 200
+          console.log('data:', response.data); //
         }).catch(err => {
           console.log('err:', err);
         });        
-        console.log(response);
+        // console.log("post_response:" + response.status);
       },
       
       async getWords() { //次の単語を取得

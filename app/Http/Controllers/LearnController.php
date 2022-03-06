@@ -20,115 +20,93 @@ class LearnController extends Controller
             $interval = 0;
             switch ($request->easiness) {
                 case 0:
-                    $interval = 0.11;
+                    $min = 7;
                     break;
                 case 1:
-                    $interval = 16;
+                    $min = 16 *60; //= 24 * 2/3
                     break;
                 case 2:
-                    $interval = 128;
+                    $min = 112*60; //= 24*7* 2/3
                     break;
                 case 3:
-                    $interval = 1024;
+                    $min = 784*60; //= 24*7*7* 2/3
                     break;                
             }
-
+            
             $deviation = (2 * mt_rand() / mt_getrandmax() - 1) * 0.3;
-            $interval = round( $interval * (1 + $deviation), 4);
-            $interval_text ="now +".$interval." hours";
+            $min = round( $min * (1 + $deviation),0);
+            $interval_text ="now +".$min." minutes";
 
-            $learn = Learn::create([
-                'user_id'=> $user_id,
-                'word_id'=> $word_id,
+            $learn = Learn::firstOrNew([ 'user_id'=> $user_id, 'word_id'=> $word_id,]);
+            $learn -> fill([
                 'result'=> $request->result,
                 'easiness' => $request->easiness,
                 'next_time'=> date("Y-m-d H:i:s",strtotime($interval_text)),
             ]);
+            $learn->save();
+            return $learn;
 
             return $word;
         }
     }
     public function getWords(Request $request){
+
         if(Auth::check() === false){ //ログイン未の場合
             $answer = Word::where('level', $request->level)->inRandomOrder()->first();
         }else{ //ログイン済の場合
 
-            //未学習の単語をカウント //ここはuserControllerの一部をコピペしてきたから、本気出せば関数化して共用できる。
-            $unlearned_word_counts = DB::select(DB::raw("
-            select  level, count(*)
-            from (
-                select words.id, words.level, max(learns.id) as latest_id 
-                from words left join learns 
-                on words.id = learns.word_id 
-                where learns.user_id is null or learns.user_id =".Auth::id()."
-                group by words.id 
-            ) as words
-            where latest_id is null
-            group by level
-            "));
-
-            $unlearned_word_has_this_level = false; //未学習の単語が一つでもあるかないか
-            foreach($unlearned_word_counts as $unlearned_word_count){
-                if($unlearned_word_count->level === (int)$request->level){
-                    $unlearned_word_has_this_level=true;
-                }
-            }
+            //未学習の単語をカウント
+            $unlearned_word_ids = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
+            ->whereNull('learns.user_id')
+            ->where('words.level',$request->level)
+            ->select('words.id')
+            ->get();
+            $unlearned_word_count = $unlearned_word_ids -> count();
 
            //学習待ちの単語をカウント
-            $learned_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')//学習レコードから、単語ごとに最新のものを取り出す。 ここもDB::rawにした方が短くなる。
-            ->where('words.level', $request->level )    
-            ->where('learns.user_id', Auth::id())
-            ->select('learns.word_id',DB::raw("MAX(learns.id) as latest_id"))               
-            ->groupby('learns.word_id') // ここでlatest_idのみを配列で取り出せたら早くなるが、selectでなぜかエラーが出る。
-            ->get()->toArray();
-            $learned_ids=[];//学習idを単なる配列に変換
-            foreach($learned_words as $learned_word){
-                $learned_ids[] = $learned_word['latest_id']; 
-            }
-            $delayed_word_count=Learn::wherein('learns.id', $learned_ids) ->where('next_time','<',date("Y-m-d H:i:s")) ->count();
+           $delayed_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
+           ->where('learns.user_id', Auth::id())
+           ->where('words.level',$request->level)
+           ->where('learns.next_time', '<', date("Y-m-d H:i:s"))
+           ->get();
+           $delayed_word_count = $delayed_words->count();
 
             //delay_degreeの計算
-            if(!$unlearned_word_has_this_level && $delayed_word_count === 0){//単語が尽きたときはここでreturn
+            if($unlearned_word_count===0 && $delayed_word_count === 0){//単語が尽きたときはここでreturn
                 return "CLEARED";
-            }else if(!$unlearned_word_has_this_level){
+            }else if($unlearned_word_count===0){
                 $delay_degree = 1;
             }else if($delayed_word_count === 0){
                 $delay_degree = 0;
             }else{
 
-                if($delayed_word_count <= 20){
-                    $delay_degree= $delayed_word_count*0.025;
+                if($delayed_word_count <= 10){
+                    $delay_degree= $delayed_word_count*0.05;
                 }else{
-                    $delay_degree= 1- 10 / $delayed_word_count;
+                    $delay_degree= 1.0 - 5 / $delayed_word_count;
                 }
 
-                if( count($learned_ids) < 2 ){
+                if( $unlearned_word_count < 2 ){
                     $delay_degree = 0;
                 }
             }
             
             if( mt_rand() / mt_getrandmax() > $delay_degree ) { //未習の単語から一つ選択
-                $next_word_id = collect(DB::select(DB::raw("
-                    select words.id, max(learns.id) as latest_id 
-                    from words left join learns 
-                    on words.id = learns.word_id 
-                    where (learns.user_id is null or learns.user_id =".Auth::id().") and words.level =". $request->level. "
-                    group by words.id having max(learns.id) is null
-                    ")))
-                ->random()->id;
 
-
+                $next_word_id = $unlearned_word_ids ->random()->id;
                 
             }else{  //既習の単語から一つ選択
-                $next_words=Learn::wherein('learns.id', $learned_ids)//1.easinessが低い者 2.学習目標日が早いものの順で取得
-                    ->orderby('easiness','asc')
-                    ->orderby('next_time','asc')
-                    ->join('words','learns.word_id','=','words.id')
-                    ->take(2)->get()->toArray();
+
+                $next_words= $delayed_words
+                ->sortBy('next_time')
+                ->sortBy('easiness')
+                ->values()
+                ->take(2);
+
                 if($next_words[0]['name'] !== $request->previous){
-                    $next_word_id = $next_words[0]['id'];
+                    $next_word_id = $next_words[0]['word_id'];
                 }else{
-                    $next_word_id = $next_words[1]['id'];
+                    $next_word_id = $next_words[1]['word_id'];
                 }
             }
 
