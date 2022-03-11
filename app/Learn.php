@@ -12,5 +12,6 @@ class Learn extends Model
         'result',
         'easiness',
         'next_time',
+        'progress',
     ];
 }

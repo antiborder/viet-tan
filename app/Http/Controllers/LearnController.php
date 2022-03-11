@@ -17,24 +17,52 @@ class LearnController extends Controller
             $now = date("Y-m-d H:i:s");
             $word = Word::where('name',$request->name)->first();
             $word_id = $word->id;
-            $interval = 0;
-            switch ($request->easiness) {
-                case 0:
-                    $min = 7;
-                    break;
-                case 1:
-                    $min = 16 *60; //= 24 * 2/3
-                    break;
-                case 2:
-                    $min = 112*60; //= 24*7* 2/3
-                    break;
-                case 3:
-                    $min = 784*60; //= 24*7*7* 2/3
-                    break;                
-            }
+            $previous_learn = Learn::where('user_id', $user_id)->where('word_id', $word_id)->first();
+
+            // $interval = 0;
+            // switch ($request->easiness) {
+            //     case 0:
+            //         $min = 7;
+            //         break;
+            //     case 1:
+            //         $min = 16 *60; //= 24 * 2/3
+            //         break;
+            //     case 2:
+            //         $min = 112*60; //= 24*7* 2/3
+            //         break;
+            //     case 3:
+            //         $min = 784*60; //= 24*7*7* 2/3
+            //         break;                
+            // }
             
-            $deviation = (2 * mt_rand() / mt_getrandmax() - 1) * 0.3;
-            $min = round( $min * (1 + $deviation),0);
+            // $deviation = (2 * mt_rand() / mt_getrandmax() - 1) * 0.3;
+            // $min = round( $min * (1 + $deviation),0);
+            // $interval_text ="now +".$min." minutes";
+
+            // calculate point
+            if($previous_learn === null){
+                $interval_point = 0;
+            }else{
+                $interval_point = $this->getIntervalPoint($previous_learn->updated_at, $previous_learn->next_time);
+            }
+            $easiness_point = $this->getEasinessPoint($request->easiness);
+            $point = ($easiness_point+ $interval_point)/2;
+
+            //calculate progress
+            if($previous_learn === null){
+                $previous_progress = 0;
+            }else{
+                $previous_progress = $previous_learn->progress === null ? 0 : $previous_learn->progress;
+            }
+            $progress =  ($point + 2 * $previous_progress) / 3;
+
+            //calculate interval
+            if($request->easiness === 0){
+                $min = 7;
+            }else{
+                $min = round( $this->getInterval($point), 0);
+            }
+            $min = round($min,0);
             $interval_text ="now +".$min." minutes";
 
             $learn = Learn::firstOrNew([ 'user_id'=> $user_id, 'word_id'=> $word_id,]);
@@ -42,13 +70,46 @@ class LearnController extends Controller
                 'result'=> $request->result,
                 'easiness' => $request->easiness,
                 'next_time'=> date("Y-m-d H:i:s",strtotime($interval_text)),
+                'progress'=> $progress,
             ]);
             $learn->save();
-            return $learn;
 
-            return $word;
         }
     }
+
+    public function getIntervalPoint($updated_at, $next_time){
+        $min = ( strtotime($next_time) - strtotime($updated_at) )/60;
+        if ($min < 360){
+            $interval_point = 0;
+        }else{
+            $interval_point = log( $min/(6*60) , 2)/8;
+        }
+        return $interval_point;
+    }
+    
+    public function getEasinessPoint($easiness){
+        switch ($easiness) {
+            case 0:
+                $easiness_point = 0.15;
+                break;
+            case 1:
+                $easiness_point = 0.35;
+                break;
+            case 2:
+                $easiness_point = 0.55;
+                break;
+            case 3:
+                $easiness_point = 0.75;
+                break;                
+        }
+        return $easiness_point;
+    }
+
+    public function getInterval($point){
+        $min = 6 * 60 * 2**(8*$point);
+        return $min;
+    }
+    
     public function getWords(Request $request){
 
         if(Auth::check() === false){ //ログイン未の場合
