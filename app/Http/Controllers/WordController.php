@@ -23,6 +23,11 @@ class WordController extends Controller
         $this->authorizeResource(Word::class, 'word');
     }
 
+    public function top()
+    {
+        return view('top');
+    }    
+
     public function index(int $level = null)
     {
         if( $level === null ){
@@ -30,6 +35,7 @@ class WordController extends Controller
         }
         $words = Word::all()->where('level',$level)->sortByDesc('created_at');
         return view('words.index', ['words' => $words]);
+
     }    
 
     public function create()

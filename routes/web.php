@@ -1,4 +1,4 @@
-　<?php
+<?php
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +12,9 @@
 */
 
 Auth::routes(); //-- この行を追加
-Route::get('/index/{level}', 'WordController@index')->name('words.index');
+// Route::get('/top', "WordController@top")->name('top');
+Route::get('/index/{level}', 'WordController@index　'//は後で治す
+)->name('words.index');
 Route::resource('/words', 'WordController')->except(['index'])->middleware('auth');
 Route::resource('/words', 'WordController')->only(['show']);
 
