@@ -1,26 +1,31 @@
-//git ログインでのパスワード入力を省略
-//単語毎の熟練度。その平均値をレベル別にユーザー頁に表示
-//正解のカードは緑。不正解はピンク
 //toppage作成
+//google画像検索へのリンク
 //Googleadsense
 //googleログイン
-//学習履歴と学習予定をユーザーページに表示
 //レベル別習熟度を常に隅っこに表示。
+//単語読み上げ
+//ユーザ管理
+//個人ページは本人と管理者しか見れないように。
+//課金システム
+//単語毎の熟練度。などの表示をもっときれいに　単語内訳は0,1,2,3とunlearned。
+//学習履歴と学習予定をユーザーページに表示。
+//level11でエラーが出る単語：紺色とスポンジ。
+//意味⇒単語の実装。
 //レベルをclearしたときに単語ロードで一回エラーが出る。
 //前の単語を隅っこに表示。
+//復習オンリーモード実装
 //選択肢からanswerの類義語を取り除く
 //他のユーザーや非ログインユーザの挙動が影響しないようにチェック
+//ユーザー名は英数字のみに。
 //レベル選定はゲージで。modalで。
-//単語読み上げ
 //url取得
 //テスト実装
 //様々なパラメータを定数化。単語の音節数とか、タグ数とか、問題の選択肢の数だとか。
 //Ｎ+1問題。
-//いつも出ているvueのエラーを修正。
+//いつも出ているvueのWARNINGを修正。
 //学習完了メッセージとその後のrouteをもっと真面目にやる。おすすめレベルなど。
 //ベトナム語検索結果を部分一致と全体一致に分ける。表示順序や表示数もちょうせい。
 //学習単語がなくなった時の処理と、今日の学習完了の判定条件。とメッセージ。
-//考えてる間にデータロード。
 //WordControllerのupdate、create、importの共通部分をまとめたい。
 //時刻はどの場所の時刻になるのか、ぶれないように確認必要。
 //代入には$setを使う。
@@ -85,7 +90,7 @@
               </span>
             </div>
             <div style="width:93%">
-              <div @click="turnPressed(i)" class="card mt-0 mb-2 pt-1 pb-1 pl-3 pr-3 white rounded d-flex flex-row" style="min-height:90px; max-width: 500px;">
+              <div @click="turnPressed(i)" v-bind:class="cardColor(i)" class="card mt-0 mb-2 pt-1 pb-1 pl-3 pr-3 rounded d-flex flex-row" style="min-height:90px; max-width: 500px;">
                 <div class = "h6" style ="width:40%; white-space: pre-line; text-align:left">
                   <div v-if="sec >= 1">
                     {{choices[i].word.jp}}
@@ -136,6 +141,7 @@
         zeroToSeven:[0,1,2,3,4,5,6,7],
         answer:" ",
         status : "INITIAL",
+        initialChoice: null,
         sec: 0,
         timerOn: false, 
         timerObj: null,
@@ -149,7 +155,7 @@
           { text:"びみょう..."},
           { text:"覚えた!"},
           { text:"余裕♪"},
-        ]
+        ],
       }
     },
 
@@ -170,8 +176,10 @@
           return "";
         }else if(this.status==="LOADING"){
           return "Now Loading";
-        }else if(this.status==="PROMPT" || this.status==="JUDGED"){
+        }else if(this.status==="PROMPT"){
           return "単語の意味を選んでください";
+        }else if(this.status==="JUDGED"){
+          return "正解を選んでください";
         }else if(this.status==="ANSWERED"){
           return "";
         }        
@@ -203,7 +211,7 @@
           if(this.isCorrect){
             if(this.sec < 2){
               return 3;
-            }else if(this.sec <4){
+            }else if(this.sec <3){
               return 2;
             }else{
               return 1;
@@ -250,6 +258,7 @@
           }
         }else if(val==="LOADING"){
           this.isCorrect = null;
+          this.initialChoice = null;
         }
       },
 
@@ -371,7 +380,8 @@
         this.$set(this.choices[n],'pressed', true)
         console.log(this.choices[n].pressed)
         if(this.status == "PROMPT"){
-          this.status = "JUDGED";  
+          this.status = "JUDGED";
+          this.initialChoice = n;  
         }      
         if(this.choices[n].isAnswer){
           this.status = "ANSWERED"
@@ -393,7 +403,21 @@
       stopTimer(){
         clearInterval(this.timerObj);
         this.timerOn = false;
-      }
+      },
+
+      cardColor(i){
+
+          if(this.initialChoice === i){
+            if(this.choices[i].isAnswer === true){
+              return "green lighten-5";
+            }else if (this.choices[i].isAnswer === false){
+              return "red lighten-5";
+            }
+          }else{
+            return "white";
+          }
+
+      },
     },  
     
   }
