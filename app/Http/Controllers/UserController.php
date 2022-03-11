@@ -14,7 +14,12 @@ class UserController extends Controller
     public function show(String $name){
         $user = User::where('name', $name)->first();
         $status = Word::select('level',DB::raw('count(*) as total'))->groupBy('level')->orderBy('level')->get()->toArray();
-      
+
+        $level_averages = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
+        ->select('words.level',DB::raw('avg(progress) as progress'))
+        ->groupBy('words.level')
+        ->get();
+
         $unlearned_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
         ->whereNull('learns.user_id')
         ->select('words.level',DB::raw('count(*) as count'))
@@ -42,6 +47,7 @@ class UserController extends Controller
         $learned=array();
         $unlearned=array();
         $ready =array();
+        $progress = array();
 
         foreach($levels as $l){
             foreach($learned_words as $learned_word){
@@ -67,6 +73,15 @@ class UserController extends Controller
                 }
                 $ready[$l] = 0;
             }
+
+            foreach($level_averages as $level_average){
+                if($l===$level_average->level){
+                    $progress[$l] = round(( $level_average->progress * $learned[$l] ) / ( $learned[$l] + $unlearned[$l] )*100);
+                    break;
+                }
+
+            }
+
         }
 
         return view('users.show', [
@@ -74,7 +89,8 @@ class UserController extends Controller
             'status' => $status,
             'ready' => $ready,
             'learned' => $learned,
-            'unlearned' => $unlearned
+            'unlearned' => $unlearned,
+            'progress' => $progress,
 
         ]);
 

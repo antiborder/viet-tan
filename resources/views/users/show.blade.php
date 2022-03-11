@@ -14,29 +14,21 @@
             </a>
         </h2>
       </div>
-      <div class="card-body">
-        <div class="card-text">
-          <a href="" class="text-muted">
-            10 フォロー
-          </a>
-          <a href="" class="text-muted">
-            10 フォロワー
-          </a>
-        </div>
-      </div>
     </div>
     <div class="card mt-3">
         <table>
           <tr>
-            <th>Level</th><th>Ready</th><th>Learned</th><th>Unlearned</th><th>Total</th>
+            <th>Level</th><th>Progress</th><th>Ready</th><th>Learned</th><th>Unlearned</th><th>Total</th>
           </tr>
           @foreach($status as $s)
           <tr>
             <td>{{$s['level']}}</td>
+            <td>{{$progress[$s['level']]}} &#037; </td>                       
             <td>{{$ready[$s['level']]}}</td>            
             <td>{{$learned[$s['level']]}}</td>
             <td>{{$unlearned[$s['level']]}}</td>
             <td>{{$s['total']}}</td>           
+
           </tr>           
           @endforeach
         </table>
