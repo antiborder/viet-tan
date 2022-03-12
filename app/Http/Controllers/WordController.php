@@ -23,19 +23,18 @@ class WordController extends Controller
         $this->authorizeResource(Word::class, 'word');
     }
 
-    public function top()
+    public function index()
     {
-        return view('top');
+        return view('index');
     }    
 
-    public function index(int $level = null)
+    public function level(int $level = null)
     {
         if( $level === null ){
             $level = 1;
         }
         $words = Word::all()->where('level',$level)->sortByDesc('created_at');
-        return view('words.index', ['words' => $words]);
-
+        return view('words.level', ['words' => $words]);
     }    
 
     public function create()
