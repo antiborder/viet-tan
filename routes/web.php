@@ -12,9 +12,8 @@
 */
 
 Auth::routes(); //-- この行を追加
-// Route::get('/top', "WordController@top")->name('top');
-Route::get('/index/{level}', 'WordController@index　'//は後で治す
-)->name('words.index');
+Route::get('/level/{level}', 'WordController@level')->name('words.level');
+Route::get('/', 'WordController@index')->name('index');
 Route::resource('/words', 'WordController')->except(['index'])->middleware('auth');
 Route::resource('/words', 'WordController')->only(['show']);
 

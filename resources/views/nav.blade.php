@@ -29,7 +29,7 @@
       
     @auth {{--この行を追加--}}
     <li class="nav-item">
-      <a class="nav-link" href="{{ route('words.create') }}"><i class="fas fa-pen mr-1"></i>投稿</a>
+      <a class="nav-link" href="{{ route('users.show', ['name'=>Auth::user()->name]) }}" ><i class="fas fa-pen mr-1"></i>学習状況</a>
     </li>
     @endauth {{--この行を追加--}}
     

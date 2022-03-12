@@ -116,14 +116,28 @@ class LearnController extends Controller
             $answer = Word::where('level', $request->level)->inRandomOrder()->first();
         }else{ //ログイン済の場合
 
-            //未学習の単語をカウント
-            $unlearned_word_ids = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
-            ->whereNull('learns.user_id')
+            $total_count = Word::where('words.level',$request->level)->get()->count();
+
+            //既習語取得
+            $learned_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
+            ->where('learns.user_id',Auth::id())
             ->where('words.level',$request->level)
             ->select('words.id')
-            ->get();
-            $unlearned_word_count = $unlearned_word_ids -> count();
+            ->get()->toArray();
+            $learned_word_ids = array_map(
+                function ($element) { 
+                    return $element['id']; 
+                },
+                $learned_words
+            );
+            $learned_word_count = count($learned_word_ids);
 
+            //未習語を取得
+            $unlearned_words = Word::where('words.level',$request->level)
+            ->whereNotIn('id',$learned_word_ids)->
+            select('id')->get();
+            $unlearned_word_count = $unlearned_words->count();
+            
            //学習待ちの単語をカウント
            $delayed_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
            ->where('learns.user_id', Auth::id())
@@ -154,7 +168,7 @@ class LearnController extends Controller
             
             if( mt_rand() / mt_getrandmax() > $delay_degree ) { //未習の単語から一つ選択
 
-                $next_word_id = $unlearned_word_ids ->random()->id;
+                $next_word_id = $unlearned_words ->random()->id;
                 
             }else{  //既習の単語から一つ選択
 
@@ -195,7 +209,9 @@ class LearnController extends Controller
             ],
         ];
         
-    }    
+    }   
+    
+
 
     public function formatWord(Word $word){
         return [
