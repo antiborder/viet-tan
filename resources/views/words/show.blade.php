@@ -24,7 +24,6 @@
           </span>        
         @endif
       @endforeach      
-
     </div>
 
     <div class="card mt-3 mb-1 pl-2 pr-2 orange lighten-1 text-white" style="color: white; max-width: 30rem;">
@@ -62,4 +61,5 @@
         @include('words.card',['word'=>$common_syllable])
       @endforeach        
     </div>
-  @endsection
+  </div>
+@endsection
