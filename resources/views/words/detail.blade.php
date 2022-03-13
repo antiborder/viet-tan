@@ -33,6 +33,12 @@
       <div class="text-dark card-text" style="white-space: pre-line;">
         {{ $word->jp }}
       </div>
+      <div>
+        @php
+          $search_word = implode("+", explode(" ", $word->name, 8) );
+        @endphp
+        <a href={{'https://www.google.co.jp/search?q='.$search_word.'&tbm=isch'}} target="_blank" rel="noopener noreferrer">単語のイメージを確認</a>
+      </div>
     </div>
   </div>
  
@@ -43,9 +49,9 @@
     <div class="text-dark small ml-4 card-text">
       符号なし: {{ $word->no_diacritic }}
     </div>      
-    <div class="text-dark small ml-4 card-text">
+    <!-- <div class="text-dark small ml-4 card-text">
       simplified: {{ $word->simplified }}
-    </div>      
+    </div>       -->
   </div>    
   <div class="d-flex flex-row">
     <div class="text-dark small ml-4 card-text">
@@ -102,9 +108,9 @@
 
 </div>
 
-<style>
+<!-- <style>
   .name-table{
     border-collapse: separate;
     border-spacing: 10px  0px;
   }
-</style>
+</style> -->

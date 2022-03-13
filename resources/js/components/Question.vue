@@ -1,29 +1,25 @@
-
-//google画像検索へのリンク
 //Googleadsense
 //googleログイン
 //レベル別習熟度を常に隅っこに表示。
-//学習ページから登録できない。
+//学習履歴と学習予定をユーザーページに表示。
 //単語読み上げ
-//ユーザ管理
-//個人ページは本人と管理者しか見れないように。
+//ユーザ管理。権限レベル毎に管理。個人ページは本人と管理者しか見れないように。
 //課金システム
 //単語毎の熟練度。などの表示をもっときれいに　単語内訳は0,1,2,3とunlearned。
-//学習履歴と学習予定をユーザーページに表示。
-//level11でエラーが出る単語：紺色とスポンジ。
+//level11でエラーが出る単語：紺色とスポンジ。意味が???になる単語：劇
 //意味⇒単語の実装。
 //レベルをclearしたときに単語ロードで一回エラーが出る。
 //前の単語を隅っこに表示。
 //復習オンリーモード実装
 //選択肢からanswerの類義語を取り除く
-//他のユーザーや非ログインユーザの挙動が影響しないようにチェック
 //ユーザー名は英数字のみに。
 //レベル選定はゲージで。modalで。
+//toppageにはお知らせ。
+//toppageにアプリ説明。
 //url取得
 //テスト実装
 //様々なパラメータを定数化。単語の音節数とか、タグ数とか、問題の選択肢の数だとか。
 //Ｎ+1問題。
-//いつも出ているvueのWARNINGを修正。
 //学習完了メッセージとその後のrouteをもっと真面目にやる。おすすめレベルなど。
 //ベトナム語検索結果を部分一致と全体一致に分ける。表示順序や表示数もちょうせい。
 //学習単語がなくなった時の処理と、今日の学習完了の判定条件。とメッセージ。
@@ -108,7 +104,7 @@
                           {{ choices[i].word.kanjis[j] }}
                         </div>
                       </div>
-                      <a v-bind:href="'/words/'+choices[i].word.id" target=”_blank” class="text-info mr-2" style="margin:0 0 0 auto">
+                      <a v-bind:href="'/words/'+choices[i].word.id" target="_blank" rel="noopener noreferrer" class="text-info mr-2" style="margin:0 0 0 auto">
                         詳細
                       </a>                  
                     </div>
@@ -292,7 +288,6 @@
       },
 
       clickButton(n) { //次の単語に進むボタンをクリック
-        console.log("pressed");
         this.sec = 0;        
         this.recordLearn(n);
         this.status = "LOADING";        
@@ -312,7 +307,6 @@
         }).catch(err => {
           console.log('err:', err);
         });        
-        // console.log("post_response:" + response.status);
       },
       
       async getWords() { //次の単語を取得
@@ -379,7 +373,6 @@
       
       turnPressed(n){  //選択肢がクリックされた時のアクション
         this.$set(this.choices[n],'pressed', true)
-        console.log(this.choices[n].pressed)
         if(this.status == "PROMPT"){
           this.status = "JUDGED";
           this.initialChoice = n;  

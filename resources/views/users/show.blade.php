@@ -7,31 +7,44 @@
   <div class="container">
     <div class="card mt-3">
       <div class="card-body">
-        <h2 class="h5 card-title m-0">
-            ユーザーID　：　
-            <a href="{{ route('users.show', ['name' => $user->name]) }}" class="text-dark">
-                {{ $user->name }}
-            </a>
-        </h2>
+        <div class="h5 card-title m-0">
+            ユーザーID　：　{{ $user->name }}
+        </div>
+        <br>
+        <div>
+          登録emailアドレス　：　{{ $user->email}}
+        </div>
       </div>
     </div>
     <div class="card mt-3">
         <table>
           <tr>
-            <th>Level</th><th>Progress</th><th>Ready</th><th>Learned</th><th>Unlearned</th><th>Total</th>
+            <th style="font-size:1.0rem;">Level</th>
+            <th style="font-size:1.0rem;">進捗率</th>
+            <th style="font-size:1.0rem;">復習可</th>
+            <th style="font-size:1.0rem;">既習</th>
+            <th style="font-size:1.0rem;">未習</th>
+            <th style="font-size:1.0rem;">合計</th>
           </tr>
           @foreach($status as $s)
           <tr>
-            <td>{{$s['level']}}</td>
-            <td>{{$progress[$s['level']]}} &#037; </td>                       
-            <td>{{$ready[$s['level']]}}</td>            
-            <td>{{$learned[$s['level']]}}</td>
-            <td>{{$unlearned[$s['level']]}}</td>
-            <td>{{$s['total']}}</td>           
+            <td style="font-size:1.1rem;">{{$s['level']}}</td>
+            <td style="font-size:1.1rem;">{{$progress[$s['level']]}} &#037; </td>                       
+            <td style="font-size:1.1rem;">{{$ready[$s['level']]}}</td>            
+            <td style="font-size:0.8rem;">{{$learned[$s['level']]}}</td>
+            <td style="font-size:0.8rem;">{{$unlearned[$s['level']]}}</td>
+            <td style="font-size:0.8rem;">{{$s['total']}}</td>           
 
           </tr>           
           @endforeach
         </table>
     </div>
+    <a href="/learn" >
+      <div class="card mt-3 px-2 py-2 orange lighten-1 text-white" style="color: white; max-width:200px; font-size:1.2rem; text-align:center; margin-left:auto; font-family:ＭＳ Ｐゴシック;">
+        <div >
+            単語学習に進む ▶
+        </div>
+      </div>
+    </a>    
   </div>
 @endsection

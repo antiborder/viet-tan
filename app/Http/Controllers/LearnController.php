@@ -19,26 +19,6 @@ class LearnController extends Controller
             $word_id = $word->id;
             $previous_learn = Learn::where('user_id', $user_id)->where('word_id', $word_id)->first();
 
-            // $interval = 0;
-            // switch ($request->easiness) {
-            //     case 0:
-            //         $min = 7;
-            //         break;
-            //     case 1:
-            //         $min = 16 *60; //= 24 * 2/3
-            //         break;
-            //     case 2:
-            //         $min = 112*60; //= 24*7* 2/3
-            //         break;
-            //     case 3:
-            //         $min = 784*60; //= 24*7*7* 2/3
-            //         break;                
-            // }
-            
-            // $deviation = (2 * mt_rand() / mt_getrandmax() - 1) * 0.3;
-            // $min = round( $min * (1 + $deviation),0);
-            // $interval_text ="now +".$min." minutes";
-
             // calculate point
             if($previous_learn === null){
                 $interval_point = 0;
@@ -49,10 +29,11 @@ class LearnController extends Controller
             $point = ($easiness_point+ $interval_point)/2;
 
             //calculate progress
+            $initial_progress = 0.1;
             if($previous_learn === null){
-                $previous_progress = 0;
+                $previous_progress = $initial_progress;
             }else{
-                $previous_progress = $previous_learn->progress === null ? 0 : $previous_learn->progress;
+                $previous_progress = $previous_learn->progress === null ? $initial_progress : $previous_learn->progress;
             }
             $progress =  ($point + 2 * $previous_progress) / 3;
 
@@ -90,16 +71,16 @@ class LearnController extends Controller
     public function getEasinessPoint($easiness){
         switch ($easiness) {
             case 0:
-                $easiness_point = 0.15;
+                $easiness_point = 0.11;
                 break;
             case 1:
-                $easiness_point = 0.35;
+                $easiness_point = 0.33;
                 break;
             case 2:
-                $easiness_point = 0.55;
+                $easiness_point = 0.56;
                 break;
             case 3:
-                $easiness_point = 0.75;
+                $easiness_point = 0.78;
                 break;                
         }
         return $easiness_point;
