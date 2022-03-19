@@ -1,22 +1,25 @@
-//Googleadsense
 //googleログイン
 //レベル別習熟度を常に隅っこに表示。
 //学習履歴と学習予定をユーザーページに表示。
-//単語読み上げ
+//*** 単語読み上げ
 //ユーザ管理。権限レベル毎に管理。個人ページは本人と管理者しか見れないように。
-//課金システム
+//*** 課金システム
 //単語毎の熟練度。などの表示をもっときれいに　単語内訳は0,1,2,3とunlearned。
-//level11でエラーが出る単語：紺色とスポンジ。意味が???になる単語：劇
-//意味⇒単語の実装。
-//レベルをclearしたときに単語ロードで一回エラーが出る。
+//熟練度にtimeの影響も反映。
+//level11でエラーが出る単語：紺色とスポンジ。意味が???になる単語：劇 この他に、詳細が出ない単語が結構ある。
+//** 復習オンリーモード実装
+//** 意味⇒単語の実装。
+//エクスポート機能
+//レベルをclearしたときに単語ロードで一回エラーが出る。二回同じ単語が続くときがある。前の単語を引数としてチェックしてるはずなのに、何故だ？
 //前の単語を隅っこに表示。
-//復習オンリーモード実装
 //選択肢からanswerの類義語を取り除く
 //ユーザー名は英数字のみに。
-//レベル選定はゲージで。modalで。
+//レベル選定はゲージで。modalで。総復習モードも実装。
 //toppageにはお知らせ。
 //toppageにアプリ説明。
 //url取得
+//ssl認証
+//Googleadsense
 //テスト実装
 //様々なパラメータを定数化。単語の音節数とか、タグ数とか、問題の選択肢の数だとか。
 //Ｎ+1問題。
@@ -26,16 +29,17 @@
 //WordControllerのupdate、create、importの共通部分をまとめたい。
 //時刻はどの場所の時刻になるのか、ぶれないように確認必要。
 //代入には$setを使う。
+//.emvのAPP_URLは最終的には製品版のURLを入れる。教材6-5「パスワード再設定メール(テキスト版)のテンプレートの作成」
 
 <template>
   <div class="mx-auto" style="text-align:center; max-width:800px;">
     <div style="text-align:left">
-      Lv.:{{level}}　正解率: {{correct}} / {{total}} {{status}} {{isCorrect}} {{recommendation}}
+      Lv.:{{level}}　正解率: {{correct}} / {{total}} {{status}} {{isCorrect}} {{recommendation}}{{user_name}}
     </div>
     <div v-if="status==='CLEARED'" class="card white rounded mt-5 mx-auto" style="width:200px">
       cleared!!
-      <a href="learn">
-        back
+      <a v-bind:href="'/users/'+user_name">
+        学習状況を確認
       </a>
     </div>    
     <div class="mt-1 d-flex flex-row" style=" height: 40px;">
@@ -127,7 +131,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
   export default {
@@ -275,6 +278,9 @@
         type: String,
       },
       endpoint_to_record_learn: {
+        type: String,
+      },
+      user_name: {
         type: String,
       },      
     },

@@ -33,6 +33,8 @@
       <div class="text-dark card-text" style="white-space: pre-line;">
         {{ $word->jp }}
       </div>
+      <br>
+      <br>
       <div>
         @php
           $search_word = implode("+", explode(" ", $word->name, 8) );
