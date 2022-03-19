@@ -6,7 +6,7 @@ use DB;
 use App\Word;
 use App\Tag;
 use App\Kanji;
-use App\Learn;
+use App\User;
 use App\Http\Requests\WordRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -524,10 +524,6 @@ class WordController extends Controller
         return redirect()->action('WordController@index')->with('flash_message', 'level未登録の単語を削除しました！');
     }    
 
-    public function learn()
-    {
-        return view('words.learn');
-    }
     
     public function simplify_vowel($str){
 
