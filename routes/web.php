@@ -12,6 +12,14 @@
 */
 
 Auth::routes(); //-- この行を追加
+Route::prefix('login')->name('login.')->group(function () {
+    Route::get('/{provider}', 'Auth\LoginController@redirectToProvider')->name('{provider}');
+    Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('{provider}.callback');
+});
+Route::prefix('register')->name('register.')->group(function () {
+    Route::get('/{provider}', 'Auth\RegisterController@showProviderUserRegistrationForm')->name('{provider}');
+    Route::post('/{provider}', 'Auth\RegisterController@registerProviderUser')->name('{provider}');    
+});
 Route::get('/level/{level}', 'WordController@level')->name('words.level');
 Route::get('/', 'WordController@index')->name('index');
 Route::resource('/words', 'WordController')->except(['index'])->middleware('auth');
@@ -32,4 +40,5 @@ Route::post('/learn/record', 'LearnController@store')->name('learn.record');
 
 Route::prefix('users')->name('users.')->group(function () {
     Route::get('/{name}', 'UserController@show')->name('show');
+    
 });
