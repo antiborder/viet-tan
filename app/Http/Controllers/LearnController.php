@@ -14,7 +14,8 @@ class LearnController extends Controller
 
     public function learn()
     {
-        $user_name = User::where('id',Auth::id())->first()->name;
+        $user = User::where('id',Auth::id())->first();
+        $user_name = $user !== null ? $user->name : null;
         return view('words.learn',['user_name' => $user_name]);
     }
 
