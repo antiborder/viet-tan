@@ -43,7 +43,7 @@ class LearnController extends Controller
             }else{
                 $previous_progress = $previous_learn->progress === null ? $initial_progress : $previous_learn->progress;
             }
-            $progress =  ($point + 2 * $previous_progress) / 3;
+            $progress =  ($point + 2 * $previous_progress) / 2;
 
             //calculate interval
             if($request->easiness === 0){
