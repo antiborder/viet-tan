@@ -5,11 +5,19 @@ namespace App\Http\Controllers;
 use DB;
 use App\Learn;
 use App\Word;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LearnController extends Controller
 {
+
+    public function learn()
+    {
+        $user_name = User::where('id',Auth::id())->first()->name;
+        return view('words.learn',['user_name' => $user_name]);
+    }
+
     public function store(Request $request)
     {
         if(Auth::check()){

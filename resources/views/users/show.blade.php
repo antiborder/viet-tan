@@ -12,7 +12,7 @@
         </div>
         <br>
         <div>
-          登録emailアドレス　：　{{ $user->email}}
+          email　：　{{ $user->email}}
         </div>
       </div>
     </div>
