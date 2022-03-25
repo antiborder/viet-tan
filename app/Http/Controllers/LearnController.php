@@ -12,11 +12,15 @@ use Illuminate\Support\Facades\Auth;
 class LearnController extends Controller
 {
 
-    public function learn()
+    public function learn(...$level)
     {
         $user = User::where('id',Auth::id())->first();
         $user_name = $user !== null ? $user->name : null;
-        return view('words.learn',['user_name' => $user_name]);
+        if(count($level) === 0){
+            $level[0]=1;
+        }
+
+        return view('words.learn',['user_name' => $user_name, 'level'=> $level[0]]);
     }
 
     public function store(Request $request)
