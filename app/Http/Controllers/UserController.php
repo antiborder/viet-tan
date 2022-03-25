@@ -66,7 +66,7 @@ class UserController extends Controller
             ->get();
 
             //学習予定      //現在時刻はnow() - cast ('9 hours' as interval)。　now()で求まるGMTを日本時刻に変換している。
-            $day_counts = DB::select("
+            $schedule_counts = DB::select("
                 select day, count(*) as count
                 from (
                     select extract( day from (next_time - now() - cast ('9 hours' as interval) ))+1 as day 
@@ -84,13 +84,24 @@ class UserController extends Controller
             ->where('learns.next_time', '<', date("Y-m-d H:i:s"))
             ->get()->count();
 
+            //学習実績
+            $history_counts = DB::select("
+                select day, count(*) as count
+                from (
+                    select extract( day from (  now() + cast ('9 hours' as interval) - updated_at  ))+1 as day 
+                    from learns 
+                    where user_id = " . $user->id . "
+                ) 
+                as diff
+                group by day
+            ");
 
             //viewに渡す変数の準備
             $levels = [];
             $total = array();
             foreach($status as $s){
-            $levels[] = $s['level'];
-            $total[$s['level']] = $s['total'];
+                $levels[] = $s['level'];
+                $total[$s['level']] = $s['total'];
             }
 
             $learned=array();
@@ -98,10 +109,6 @@ class UserController extends Controller
             $ready =array();
             $progress = array();
             $learned_0=array();
-
-
-
-
 
             //viewに渡す値の計算
             foreach($levels as $l){
@@ -167,12 +174,22 @@ class UserController extends Controller
             $schedule = array();
             for($i=1;$i<=60;$i++){
                 $schedule[$i] = 0;                
-                foreach($day_counts as $day_count){
-                    if($i === (int)$day_count->day){
-                        $schedule[$i] = $day_count->count;
+                foreach($schedule_counts as $schedule_count){
+                    if($i === (int)$schedule_count->day){
+                        $schedule[$i] = $schedule_count->count;
                     }
                 }                
             }
+            //viewに渡す学習実績
+            $history = array();
+            for($i=1;$i<=60;$i++){
+                $history[$i] = 0;                
+                foreach($history_counts as $history_count){
+                    if($i === (int)$history_count->day){
+                        $history[$i] = $history_count->count;
+                    }
+                }                
+            }            
 
            return view('users.show', [
                 'user' => $user,
@@ -189,6 +206,7 @@ class UserController extends Controller
 
                 'schedule' =>$schedule,
                 'ready_total' =>$ready_total,
+                'history' =>$history,
             ]);
         }else{
             return view('index');

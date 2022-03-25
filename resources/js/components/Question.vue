@@ -1,5 +1,3 @@
-//学習履歴と学習予定をユーザーページに表示。単語毎の熟練度。などの表示をもっときれいに　単語内訳は0,1,2,3とunlearned。
-//learn開くときにレベルを渡し、学習状況からジャンプ可能に。
 //** 意味⇒単語の実装。
 //熟練度にtimeの影響も反映。
 //** 総復習モードも実装。 レベル選定はゲージで。modalで。
@@ -9,17 +7,16 @@
 //学習中にレベル別習熟度を表示。
 //ユーザ管理。権限レベル毎に管理。個人ページは本人と管理者しか見れないように。
 //***課金システム
+//toppageにはお知らせ。
+//toppageにアプリ説明。
 //10語毎に一息入れる。連続で正解すると何か出る。
 //レベルをclearしたときに単語ロードで一回エラーが出る。二回同じ単語が続くときがある。前の単語を引数としてチェックしてるはずなのに、何故だ？
-//level11でエラーが出る単語：紺色とスポンジ。意味が???になる単語：劇 この他に、詳細が出ない単語が結構ある。
+//level11でエラーが出る単語：紺色とスポンジ。意味が???になる単語：劇 この他に、詳細が出ない単語が結構ある。level7でエラーが出る単語：インド、紫、枕。
 //Googleadsense
 //エクスポート機能
 //前の単語を隅っこに表示。
 //選択肢からanswerの類義語を取り除く
 //ユーザー名は英数字のみに。
-//toppageにはお知らせ。
-//toppageにアプリ説明。
-//url取得
 //ssl認証
 //Googleadsense
 //テスト実装
@@ -59,7 +56,7 @@
       </span>      
       <span v-for="i in zeroToThree" style = " text-align:center;">
         <span v-if=" isCorrect===true || i===0">
-          <button @click="clickButton(i)" type="button" v-bind:class="colors[i]" class="btn btn-info rounded pt-1 pb-1 px-2 text-nowrap"style="min-height:40px; max-width: 100px; font-size: 0.9em;">
+          <button @click="clickButton(i)" type="button" v-bind:class="colors[i]" class="btn btn-sm rounded pt-1 pb-1 px-2 text-nowrap"style="min-height:40px; max-width: 100px; font-size: 0.9em;">
             {{button_properties[i].text}}
           </button>
         </span>
@@ -148,7 +145,7 @@
         timerOn: false, 
         timerObj: null,
         choices:[],
-        level:1,
+        level: this.initial_level,
         total:0,
         correct:0,
         isCorrect: null,
@@ -227,13 +224,13 @@
 
       },
       colors: function(){
-        const baseColors = ["pink", "red", "deep-orange", "orange"];
+        const baseColors = ["yellow accent-1", "lime accent-2", "light-green accent-3", "green accent-3"];
         let colors = [];
         for(let i=0;i<=3;i++){
           if(i === this.recommendation){
-            colors.push(baseColors[i]+" lighten-2 animated bounceIn ");
+            colors.push(baseColors[i]+" animated bounceIn");
           }else{
-            colors.push("grey"+" lighten-1");
+            colors.push("grey"+" lighten-2");
           }
         }
       return colors;
@@ -284,7 +281,10 @@
       },
       user_name: {
         type: String,
-      },      
+      },  
+      initial_level:{
+        type: String,
+      }    
     },
     
     methods: {
