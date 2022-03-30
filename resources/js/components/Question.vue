@@ -10,7 +10,6 @@
 //toppageにはお知らせ。
 //toppageにアプリ説明。
 //10語毎に一息入れる。連続で正解すると何か出る。
-//レベルをclearしたときに単語ロードで一回エラーが出る。二回同じ単語が続くときがある。前の単語を引数としてチェックしてるはずなのに、何故だ？
 //level11でエラーが出る単語：紺色とスポンジ。意味が???になる単語：劇 この他に、詳細が出ない単語が結構ある。level7でエラーが出る単語：インド、紫、枕。
 //Googleadsense
 //エクスポート機能
@@ -19,12 +18,14 @@
 //ユーザー名は英数字のみに。
 //ssl認証
 //Googleadsense
-//テスト実装
+//ユーザ権限を考慮したランダムモード実装
 //様々なパラメータを定数化。単語の音節数とか、タグ数とか、問題の選択肢の数だとか。
 //Ｎ+1問題。
 //学習単語がなくなった時の処理と、今日の学習完了の判定条件。とメッセージ。学習完了メッセージとその後のrouteをもっと真面目にやる。おすすめレベルなど。
+//タグ一覧
 //ベトナム語検索結果を部分一致と全体一致に分ける。表示順序や表示数もちょうせい。
 //WordControllerのupdate、create、importの共通部分をまとめたい。
+//テスト実装
 //時刻はどの場所の時刻になるのか、ぶれないように確認必要。
 //代入には$setを使う。
 //.emvのAPP_URLは最終的には製品版のURLを入れる。教材6-5「パスワード再設定メール(テキスト版)のテンプレートの作成」
@@ -54,7 +55,7 @@
       <span class="pt-2 text-nowrap;" style = "min-width:70px; text-align:left; font-size: 0.9rem;">
         覚えた？
       </span>      
-      <span v-for="i in zeroToThree" style = " text-align:center;">
+      <span v-for="i in [0,1,2,3]" style = " text-align:center;">
         <span v-if=" isCorrect===true || i===0">
           <button @click="clickButton(i)" type="button" v-bind:class="colors[i]" class="btn btn-sm rounded pt-1 pb-1 px-2 text-nowrap"style="min-height:40px; max-width: 100px; font-size: 0.9em;">
             {{button_properties[i].text}}
@@ -77,51 +78,12 @@
       </div>
     </div>      
 
-    <div class="mx-auto" style="max-width:545px"> <!-- 選択肢の配列。別ファイルに分けたい。 -->
-      <div v-for="i in zeroToThree">
-        <div v-if="status==='PROMPT' || status === 'JUDGED' || status ==='ANSWERED'" class="" >
-          <div class="d-flex flex-row" >
-            <div style ="width:7%">
-              <span v-if= "choices[i].pressed && choices[i].isAnswer" class="bounceIn">
-                <i class="mt-2 text-success fas fa-2x fa-check"></i>
-              </span>
-              <span v-else-if= "choices[i].pressed && !choices[i].isAnswer" >
-                <span  class="m-0 p-0 text-danger" style="font-size:200%;"> ✖ </span>
-              </span>
-            </div>
-            <div style="width:93%">
-              <div @click="turnPressed(i)" v-bind:class="cardColor(i)" class="card mt-0 mb-2 pt-1 pb-1 pl-3 pr-3 rounded d-flex flex-row" style="min-height:90px; max-width: 500px;">
-                <div class = "h6" style ="width:40%; white-space: pre-line; text-align:left">
-                  <div v-if="sec >= 1">
-                    {{choices[i].word.jp}}
-                  </div>
-                </div>                          
-                <div class = "border-left border-light pl-2" style ="width:60%">
-                  <div v-if="choices[i].pressed">
-                    <div class="d-flex flex-row">
-                      <div v-for="j in zeroToSeven">
-                        <div class="h5 card-title mr-2 mb-0">
-                          {{ choices[i].word.syllables[j] }}
-                        </div>
-                        <div class="px-auto pr-2 mt-0 text-muted" style="font-size:1.3em" >
-                          {{ choices[i].word.kanjis[j] }}
-                        </div>
-                      </div>
-                      <a v-bind:href="'/words/'+choices[i].word.id" target="_blank" rel="noopener noreferrer" class="text-info mr-2" style="margin:0 0 0 auto">
-                        詳細
-                      </a>                  
-                    </div>
-                    <div class="d-flex align-items-end">
-                      Lv.{{ choices[i].word.level }}
-                    </div>
-                  </div>
-                  <div v-else class="" style="text-align:center">
-                    <i class="mt-3 text-muted fas fa-3x fa-question "></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div v-if="status==='PROMPT' || status === 'JUDGED' || status ==='ANSWERED'" class="" >    
+      <div class="mx-auto" style="max-width:545px">
+        <div v-for="i in [0,1,2,3]">
+
+          <Choice :word = "choices[i].word" :isAnswer = "choices[i].isAnswer" :status = "status" :sec = "sec" v-on:pressed = "turnPressed(i)"/>
+
         </div>
       </div>
     </div>
@@ -132,15 +94,17 @@
 </template>
 
 <script>
+  import Choice from './Choice.vue'
   export default {
+
+    components: {
+      Choice
+    },
     data(){
       return {
         rootURL:location.hostname,
-        zeroToThree:[0,1,2,3],
-        zeroToSeven:[0,1,2,3,4,5,6,7],
         answer:" ",
         status : "INITIAL",
-        initialChoice: null,
         sec: 0,
         timerOn: false, 
         timerObj: null,
@@ -150,7 +114,7 @@
         correct:0,
         isCorrect: null,
         button_properties:[
-          { text:"いいえ"},
+          { text:"まだ。"},
           { text:"びみょう..."},
           { text:"覚えた!"},
           { text:"余裕♪"},
@@ -224,7 +188,7 @@
 
       },
       colors: function(){
-        const baseColors = ["yellow accent-1", "lime accent-2", "light-green accent-3", "green accent-3"];
+        const baseColors = [" yellow accent-1", " yellow accent-2", "yellow accent-3", "yellow accent-4"];
         let colors = [];
         for(let i=0;i<=3;i++){
           if(i === this.recommendation){
@@ -238,29 +202,6 @@
     },
 
     watch: {
-      status: function(val) { //一つ目を選択した瞬間に正誤が決まり、その後は変わらないようにしている。
-
-        if( (val==="JUDGED" || val==="ANSWERED") && this.isCorrect === null){
-          this.stopTimer();
-          if(
-            this.choices[0].pressed == this.choices[0].isAnswer &&
-            this.choices[1].pressed == this.choices[1].isAnswer &&
-            this.choices[2].pressed == this.choices[2].isAnswer &&
-            this.choices[3].pressed == this.choices[3].isAnswer
-          ){
-            this.isCorrect = true;
-            this.correct += 1;
-            this.total += 1;            
-          }else{
-            this.isCorrect = false;
-            this.total += 1;
-          }
-        }else if(val==="LOADING"){
-          this.isCorrect = null;
-          this.initialChoice = null;
-        }
-      },
-
       sec: function(val) { //制限時間を過ぎたら不正解
         if( val>=10 && this.status === "PROMPT"){
           this.stopTimer();
@@ -269,7 +210,6 @@
           this.total +=1;  
         }
       },
-      
     },
 
     props: {
@@ -292,6 +232,7 @@
       clickStart() { //学習開始のボタンをクリック
         console.log("START pressed");
         this.status = "LOADING";        
+        this.isCorrect = null;
         this.getWords();        
       },
 
@@ -299,6 +240,7 @@
         this.sec = 0;        
         this.recordLearn(n);
         this.status = "LOADING";        
+        this.isCorrect = null;
         this.getWords();
       },
 
@@ -339,13 +281,11 @@
           this.choices[i] = {
             'word':this.formatWord(jsoned.others[i]),
             'isAnswer':false,
-            'pressed':false,
           }
         }
         this.choices[3] = {
           'word':this.formatWord(jsoned.answer), 
           'isAnswer':true,
-          'pressed':false
         }        
 
         this.answer = this.formatWord(jsoned.answer).syllables.join(" ");
@@ -380,16 +320,22 @@
       },
       
       turnPressed(n){  //選択肢がクリックされた時のアクション
-        this.$set(this.choices[n],'pressed', true)
-        if(this.status == "PROMPT"){
-          this.status = "JUDGED";
-          this.initialChoice = n;  
-        }      
-        if(this.choices[n].isAnswer){
-          this.status = "ANSWERED"
-        }
-        this.choices.splice(); //配列の変更を反映するためにこの一行が必要。
 
+        if(this.status === "PROMPT"){
+          this.stopTimer();
+          if(this.choices[n].isAnswer === true){
+            this.isCorrect = true
+            this.status = 'ANSWERED'
+          }else if(this.choices[n].isAnswer === false){
+            this.isCorrect = false
+            this.status = 'JUDGED'
+          }
+          
+        }else if(this.status === "JUDGED"){
+          if(this.choices[n].isAnswer === true){
+            this.status = "ANSWERED"
+          }
+        }
       },
 
       count(){
@@ -405,20 +351,6 @@
       stopTimer(){
         clearInterval(this.timerObj);
         this.timerOn = false;
-      },
-
-      cardColor(i){
-
-          if(this.initialChoice === i){
-            if(this.choices[i].isAnswer === true){
-              return "green lighten-5";
-            }else if (this.choices[i].isAnswer === false){
-              return "red lighten-5";
-            }
-          }else{
-            return "white";
-          }
-
       },
     },  
     

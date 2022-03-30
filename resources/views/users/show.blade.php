@@ -49,16 +49,15 @@
               $label = "label".$s['level'];
             @endphp
 
-            <a type="button" class="text-success border  border-success rounded px-1 pt-1 
-              @if( $learned[$s['level']] ===0) 
-                text-success border-success 
-              @else
-                text-muted border-muted
-              @endif
-            " data-toggle="modal" data-target="{{'#'.$modal}}" style="font-size:1.0rem; height:30px;max-width:60px">
-            &nbsp;詳細&nbsp;
-            </a>
-
+            @if($learned[$s['level']] !==0)
+              <a type="button" class="border text-success border-success rounded px-1 pt-1 " data-toggle="modal" data-target="{{'#'.$modal}}" style="font-size:1.0rem; height:30px;max-width:60px">
+              &nbsp;詳細&nbsp;
+              </a>
+            @else 
+            <a type="button" class="border text-muted border-muted rounded px-1 pt-1 " style="font-size:1.0rem; height:30px;max-width:60px">
+              &nbsp;詳細&nbsp;
+              </a>
+            @endif
 
           </td>
           <td style="font-size:0.8rem; max-width:45px ;">           
@@ -88,18 +87,18 @@
                       $width_unlearned = "width:" . (int)($unlearned[$s['level']] / $s['total'] * 100) . "%; height: 30px;";
                     @endphp
 
-                    <div class="progress-bar text-dark green accent-3" role="progressbar" style="{{$width_3}}"  aria-valuemin="0" aria-valuemax="100">{{$learned_3[$s['level']]}}</div>                    
-                    <div class="progress-bar text-dark light-green accent-3" role="progressbar" style="{{$width_2}}" aria-valuemin="0" aria-valuemax="100">{{$learned_2[$s['level']]}}</div>                    
-                    <div class="progress-bar text-dark lime accent-2"   role="progressbar" style="{{$width_1}}" aria-valuemin="0" aria-valuemax="100">{{$learned_1[$s['level']]}}</div>                                        
+                    <div class="progress-bar text-dark yellow accent-4" role="progressbar" style="{{$width_3}}"  aria-valuemin="0" aria-valuemax="100">{{$learned_3[$s['level']]}}</div>                    
+                    <div class="progress-bar text-dark yellow accent-3" role="progressbar" style="{{$width_2}}" aria-valuemin="0" aria-valuemax="100">{{$learned_2[$s['level']]}}</div>                    
+                    <div class="progress-bar text-dark yellow accent-2"   role="progressbar" style="{{$width_1}}" aria-valuemin="0" aria-valuemax="100">{{$learned_1[$s['level']]}}</div>                                        
                     <div class="progress-bar text-dark yellow accent-1"  role="progressbar" style="{{$width_0}}"  aria-valuemin="0" aria-valuemax="100">{{$learned_0[$s['level']]}}</div>                     
                     <div class="progress-bar text-dark grey lighten-1"  role="progressbar" style="{{$width_unlearned}}" aria-valuemin="0" aria-valuemax="100">{{$unlearned[$s['level']]}}</div>
 
                   </div>
-                  <div><span class="btn btn-info rounded p-1 m-1 text-dark green accent-3" style="width:60px; height:25px" >余裕♪</span>：　{{$learned_3[$s['level']]}}語</div>                  
-                  <div><span class="btn btn-info rounded p-1 m-1 text-dark light-green accent-3"style="width:60px; height:25px" >覚えた!</span>：　{{$learned_2[$s['level']]}}語</div>                  
-                  <div><span class="btn btn-info rounded p-1 m-1 text-dark lime accent-2" style="width:60px; height:25px">びみょ～</span>：　{{$learned_1[$s['level']]}}語</div>
-                  <div><span class="btn btn-info rounded p-1 m-1 text-dark yellow accent-1" style="width:60px; height:25px">いいえ</span>：　{{$learned_0[$s['level']]}}語</div>                  
-                  <div><span class="btn btn-info rounded p-1 m-1 text-dark lighten-1 grey" style="width:60px; height:25px">未習</span>：　{{$unlearned[$s['level']]}}語</div>  
+                  <div><span class="btn btn-info rounded p-1 m-1 text-dark yellow accent-4" style="width:65px; height:25px" >余裕♪</span>：　{{$learned_3[$s['level']]}}語</div>                  
+                  <div><span class="btn btn-info rounded p-1 m-1 text-dark yellow accent-3"style="width:65px; height:25px" >覚えた!</span>：　{{$learned_2[$s['level']]}}語</div>                  
+                  <div><span class="btn btn-info rounded p-1 m-1 text-dark yellow accent-2" style="width:65px; height:25px">びみょ～</span>：　{{$learned_1[$s['level']]}}語</div>
+                  <div><span class="btn btn-info rounded p-1 m-1 text-dark yellow accent-1" style="width:65px; height:25px">まだ。</span>：　{{$learned_0[$s['level']]}}語</div>                  
+                  <div><span class="btn btn-info rounded p-1 m-1 text-dark lighten-1 grey" style="width:65px; height:25px">未習</span>：　{{$unlearned[$s['level']]}}語</div>  
                   <hr>                  
                   <div>合計：　{{$s['total']}}語</div>
                   <div>進捗率：　{{$progress[$s['level']]}}&#037;</div>                  
@@ -117,14 +116,6 @@
         @endforeach
       </table>
     </div>
-    <a href="/learn" >
-      <div class="card mt-3 px-2 py-2 orange lighten-1 text-white" style="color: white; max-width:200px; font-size:1.2rem; text-align:center; margin-left:auto; font-family:ＭＳ Ｐゴシック;">
-        <div >
-            単語学習に進む ▶
-        </div>
-      </div>
-    </a>    
-
 
     <div class="card mt-3">
       <div class="h5 card-title  mt-1 ml-1">学習予定</div>
@@ -165,7 +156,7 @@
       </div>
     </div>
 
-    <div class="card mt-3">
+    <!-- <div class="card mt-3">
 
       <div class="h5 card-title mt-1 ml-1">学習実績</div>
       <div class="card-body">      
@@ -207,7 +198,16 @@
           </div>
         </div>
       </div>
-    </div>    
+    </div>     -->
+    <a href="/learn" >
+      <div class="card mt-3 px-2 py-2 orange lighten-1 text-white" style="color: white; max-width:200px; font-size:1.2rem; text-align:center; margin-left:auto; font-family:ＭＳ Ｐゴシック;">
+        <div >
+            単語学習に進む ▶
+        </div>
+      </div>
+    </a>    
+
   </div>
+  
 
 @endsection
