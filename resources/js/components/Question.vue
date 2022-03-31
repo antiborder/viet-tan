@@ -34,7 +34,7 @@
 <template>
   <div class="mx-auto" style="text-align:center; max-width:800px;">
     <div style="text-align:left">
-      Lv.:{{level}}　正解率: {{correct}} / {{total}} {{status}} {{isCorrect}} {{recommendation}}{{user_name}}
+      Lv.:{{level}}　正解率: {{correct}} / {{total}} {{status}} {{isCorrect}}
     </div>
     <div v-if="status==='CLEARED'" class="card white rounded mt-5 mx-auto" style="width:200px">
       cleared!!
@@ -42,12 +42,13 @@
         学習状況を確認
       </a>
     </div>    
-    <div class="mt-1 d-flex flex-row" style=" height: 40px;">
+    <div class="mt-1 d-flex flex-row" style=" height: 55px;">
       <div v-bind:class="result_text_color" class="text-nowrap pt-1" style="text-align:left;   width:20%; font-size: 1.0rem;  "> 
         {{result_text}}
       </div>
-      <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' "class="card white rounded"  style="width:60%">
-        <span class="h4 mt-1 bounceIn">{{answer}}</span>
+      <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' "class="card white rounded"  style="width:60%; display:table;">
+        <span v-if="mode === 'VtoM'" class="h4 mt-1 bounce" style="vertical-align:middle; display:table-cell;">{{answer}}</span>
+        <span v-if="mode === 'MtoV'" class="h5 mt-1 bounce" style="white-space: pre-line; vertical-align:middle; display:table-cell;">{{answer_M}}</span>
       </div>
     </div>
 
@@ -82,7 +83,7 @@
       <div class="mx-auto" style="max-width:545px">
         <div v-for="i in [0,1,2,3]">
 
-          <Choice :word = "choices[i].word" :isAnswer = "choices[i].isAnswer" :status = "status" :sec = "sec" v-on:pressed = "turnPressed(i)"/>
+          <Choice :mode ="mode" :word = "choices[i].word" :isAnswer = "choices[i].isAnswer" :status = "status" :sec = "sec" v-on:pressed = "turnPressed(i)"/>
 
         </div>
       </div>
@@ -103,7 +104,9 @@
     data(){
       return {
         rootURL:location.hostname,
-        answer:" ",
+        mode: "MtoV",
+        answer: " ",
+        answer_M: " ",
         status : "INITIAL",
         sec: 0,
         timerOn: false, 
@@ -288,7 +291,16 @@
           'isAnswer':true,
         }        
 
+        let random = 0
+        if(this.mode = "VtoM"){
+          random = Math.floor( Math.random() + 0.2)
+        }else if(this.mode = "MtoV"){
+          random = Math.floor( Math.random() + 0.8)
+        }
+        this.mode = ["VtoM", "MtoV"][random]
+
         this.answer = this.formatWord(jsoned.answer).syllables.join(" ");
+        this.answer_M = this.formatWord(jsoned.answer).jp;
         this.choices = this.arrayShuffle(this.choices)
         this.status = "PROMPT";        
         this.startTimer();        
