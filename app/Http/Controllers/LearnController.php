@@ -150,10 +150,10 @@ class LearnController extends Controller
                 ->take(2);
                 if($next_words[0]['name'] !== $request->previous){
                     $next_word_id = $next_words[0]['word_id'];
-                    $mode = $next_words[0]['next_mode'];
+                    $mode = $next_words[0]['next_mode']===null ? "FM" : $next_words[0]['next_mode'];
                 }else{
                     $next_word_id = $next_words[1]['word_id'];
-                    $mode = $next_words[1]['next_mode'];
+                    $mode = $next_words[1]['next_mode']===null ? "FM" : $next_words[1]['next_mode'];
                 }                
 
             }else{
@@ -223,10 +223,10 @@ class LearnController extends Controller
 
                     if($next_words[0]['name'] !== $request->previous){
                         $next_word_id = $next_words[0]['word_id'];
-                        $mode = $next_words[0]['next_mode'];
+                        $mode = $next_words[0]['next_mode']===null ? "FM" : $next_words[0]['next_mode'];
                     }else{
                         $next_word_id = $next_words[1]['word_id'];
-                        $mode = $next_words[1]['next_mode'];
+                        $mode = $next_words[1]['next_mode']===null ? "FM" : $next_words[1]['next_mode'] ;
                     }
                 }
             }
