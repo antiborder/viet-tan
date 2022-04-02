@@ -9,43 +9,80 @@
             </span>
         </div>
         <div style="width:93%">
-            <div @click="turnPressed()" :class="cardColor()" class="card mt-0 mb-2 pt-1 pb-1 pl-3 pr-3 rounded d-flex flex-row" style="min-height:90px; max-width: 500px;"> 
-                <div class = "h6 ml-0" style ="width:40%; white-space: pre-line; text-align:left">
-                    <div v-if="isPressed || mode==='VtoM'" >
-                        <div v-if="sec >= 1">
-                            {{word.jp}}
+            <div v-if="mode==='FM'">
+                <div @click="turnPressed()" :class="cardColor()" class="card mt-0 mb-2 pt-1 pb-1 pl-2 pr-2 rounded d-flex flex-row" style="min-height:90px; max-width: 500px;"> 
+                    <div class = "h6 ml-0" style ="width:40%; white-space: pre-line; text-align:left">
+                        <div>
+                            <div v-if="sec >= 1">
+                                {{word.jp}}
+                            </div>
                         </div>
-                    </div>
-                    <div v-else class="" style="text-align:center">
-                        <i class="mt-3 text-muted fas fa-3x fa-question "></i>
-                    </div>
-                </div>                          
-                <div class = "border-left border-light pl-2" style ="width:60%">
-                    <div v-if="isPressed || mode==='MtoV' ">
-                        <div class="d-flex flex-row">
-                            <div v-for="j in 8">
-                                <div v-if="isPressed || mode==='MtoV'" class="h4 card-title mr-2 mb-0">
-                                    <div v-if="sec >= 1">
-                                        {{ word.syllables[j-1] }}
+                    </div>                          
+                    <div class = "border-left border-light pl-2" style ="width:60%">
+                        <div v-if="isPressed">
+                            <div class="d-flex flex-row">
+                                <div v-for="j in 8">
+                                    <div v-if="isPressed" class="h4 card-title mr-2 mb-0">
+                                        <div v-if="sec >= 1">
+                                            {{ word.syllables[j-1] }}
+                                        </div>
+                                    </div>
+                                    <div v-if="isPressed" class="px-auto pr-2 mt-0 text-muted" style="font-size:1.3em" >
+                                    {{ word.kanjis[j-1] }}
                                     </div>
                                 </div>
-                                <div v-if="isPressed" class="px-auto pr-2 mt-0 text-muted" style="font-size:1.3em" >
-                                {{ word.kanjis[j-1] }}
-                                </div>
+                                <a v-if="isPressed" v-bind:href="'/words/'+word.id" target="_blank" rel="noopener noreferrer" class="text-info mr-2" style="margin:0 0 0 auto">
+                                    詳細
+                                </a>                  
                             </div>
-                            <a v-if="isPressed" v-bind:href="'/words/'+word.id" target="_blank" rel="noopener noreferrer" class="text-info mr-2" style="margin:0 0 0 auto">
-                                詳細
-                            </a>                  
+                            <div v-if="isPressed" class="d-flex align-items-end">
+                            Lv.{{ word.level }}
+                            </div>
                         </div>
-                        <div v-if="isPressed" class="d-flex align-items-end">
-                        Lv.{{ word.level }}
+                        <div v-else class="" style="text-align:center">
+                            <i class="mt-3 text-muted fas fa-3x fa-question "></i>
                         </div>
-                    </div>
-                    <div v-else class="" style="text-align:center">
-                        <i class="mt-3 text-muted fas fa-3x fa-question "></i>
                     </div>
                 </div>
             </div>
+
+            <div v-if="mode==='MF'">
+                <div @click="turnPressed()" :class="cardColor()" class="card mt-0 mb-2 pt-1 pb-1 pl-2 pr-2 rounded d-flex flex-row" style="min-height:90px; max-width: 500px;"> 
+                    <div class = "ml-0 pl-0" style ="width:60%">
+                        <div>
+                            <div class="d-flex flex-row">
+                                <div v-for="j in 8">
+                                    <div  class="h4 card-title mr-2 mb-0">
+                                        <div v-if="sec >= 1">
+                                            {{ word.syllables[j-1] }}
+                                        </div>
+                                    </div>
+                                    <div v-if="isPressed" class="px-auto pr-2 mt-0 text-muted" style="font-size:1.3em" >
+                                    {{ word.kanjis[j-1] }}
+                                    </div>
+                                </div>
+                                <a v-if="isPressed" v-bind:href="'/words/'+word.id" target="_blank" rel="noopener noreferrer" class="text-info mr-2" style="margin:0 0 0 auto">
+                                    詳細
+                                </a>                  
+                            </div>
+                            <div v-if="isPressed" class="d-flex align-items-end">
+                            Lv.{{ word.level }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class = "h6 pl-2 border-left border-light" style ="width:40%; white-space: pre-line; text-align:left">
+                        <div v-if="isPressed" >
+                            <div v-if="sec >= 1">
+                                {{word.jp}}
+                            </div>
+                        </div>
+                        <div v-else class="" style="text-align:center">
+                            <i class="mt-3 text-muted fas fa-3x fa-question "></i>
+                        </div>
+                    </div>                          
+
+                </div>
+            </div>            
         </div>
     </div>
 </template>
@@ -56,7 +93,7 @@ export default {
     props:{
         'mode':{
             type: String,
-            default: "VtoM",
+            default: "FM",
         },
         'word':Object,
         'isAnswer':{
