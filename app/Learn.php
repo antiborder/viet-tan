@@ -13,5 +13,7 @@ class Learn extends Model
         'easiness',
         'next_time',
         'progress',
+        'progress_MF',
+        'next_mode',
     ];
 }

@@ -35,7 +35,7 @@ class UserController extends Controller
             //レベル毎progressを計算
             $level_averages = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
             ->where('learns.user_id',$user->id)        
-            ->select('words.level',DB::raw('avg(progress) as progress'))
+            ->select('words.level',DB::raw('avg((progress+"progress_MF")/2) as progress'))
             ->groupBy('words.level')
             ->get();        
 

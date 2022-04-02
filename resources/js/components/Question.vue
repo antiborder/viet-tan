@@ -1,18 +1,16 @@
-//** 意味⇒単語の実装。
-//熟練度にtimeの影響も反映。
-//** 総復習モードも実装。 レベル選定はゲージで。modalで。
+// レベル選定はゲージで。modalで。
 //ドメイン登録。 sendgrid実装。
+//choiceの並び方最適化
 //** 単語読み上げ
 //本番環境でもgoogleログインできるように。
-//学習中にレベル別習熟度を表示。
 //ユーザ管理。権限レベル毎に管理。個人ページは本人と管理者しか見れないように。
 //***課金システム
 //toppageにはお知らせ。
+//エクスポート機能
 //toppageにアプリ説明。
 //10語毎に一息入れる。連続で正解すると何か出る。
-//level11でエラーが出る単語：紺色とスポンジ。意味が???になる単語：劇 この他に、詳細が出ない単語が結構ある。level7でエラーが出る単語：インド、紫、枕。
+//level11でエラーが出る単語：紺色とスポンジ。意味が???になる単語：劇 この他に、詳細が出ない単語が結構ある。level7でエラーが出る単語：インド、紫、枕。初回clearでエラーが出る。
 //Googleadsense
-//エクスポート機能
 //前の単語を隅っこに表示。
 //選択肢からanswerの類義語を取り除く
 //ユーザー名は英数字のみに。
@@ -34,7 +32,7 @@
 <template>
   <div class="mx-auto" style="text-align:center; max-width:800px;">
     <div style="text-align:left">
-      Lv.:{{level}}　正解率: {{correct}} / {{total}} {{status}} {{isCorrect}}
+      Lv.:{{level}}　正解率: {{correct}} / {{total}} {{status}} {{isCorrect}}{{mode}}
     </div>
     <div v-if="status==='CLEARED'" class="card white rounded mt-5 mx-auto" style="width:200px">
       cleared!!
@@ -47,8 +45,8 @@
         {{result_text}}
       </div>
       <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' "class="card white rounded"  style="width:60%; display:table;">
-        <span v-if="mode === 'VtoM'" class="h4 mt-1 bounce" style="vertical-align:middle; display:table-cell;">{{answer}}</span>
-        <span v-if="mode === 'MtoV'" class="h5 mt-1 bounce" style="white-space: pre-line; vertical-align:middle; display:table-cell;">{{answer_M}}</span>
+        <span v-if="mode === 'FM'" class="h4 mt-1 bounce" style="vertical-align:middle; display:table-cell;">{{answer_F}}</span>
+        <span v-if="mode === 'MF'" class="h5 mt-1 bounce" style="white-space: pre-line; vertical-align:middle; display:table-cell;">{{answer_M}}</span>
       </div>
     </div>
 
@@ -104,8 +102,8 @@
     data(){
       return {
         rootURL:location.hostname,
-        mode: "MtoV",
-        answer: " ",
+        mode: "MF",
+        answer_F: " ",
         answer_M: " ",
         status : "INITIAL",
         sec: 0,
@@ -191,7 +189,7 @@
 
       },
       colors: function(){
-        const baseColors = [" yellow accent-1", " yellow accent-2", "yellow accent-3", "yellow accent-4"];
+        const baseColors = [" green accent-1", " green accent-2", "green accent-3", "green accent-4 text-white"];
         let colors = [];
         for(let i=0;i<=3;i++){
           if(i === this.recommendation){
@@ -250,9 +248,11 @@
       async recordLearn(n) { //学習を記録
         const response = await axios.post(this.endpoint_to_record_learn,
           {
-            name: this.answer,
+            name: this.answer_F,
             result: this.isCorrect, 
             easiness: n,
+            sec: this.sec,
+            mode: this.mode,
           }
         ).then(response => {
           console.log('status:', response.status); // 200
@@ -265,7 +265,7 @@
       async getWords() { //次の単語を取得
         const response = await axios.get(this.endpoint_to_get_word, {
           params:{ level: this.level,
-                    previous: this.answer }
+                    previous: this.answer_F }
         });
         //本来はきれいなjsonで来てほしいが、dataの頭に全角スペースが入ることもあるため、どちらでもいいように場合分けしている。
         if(response.data === "CLEARED"){
@@ -291,15 +291,8 @@
           'isAnswer':true,
         }        
 
-        let random = 0
-        if(this.mode = "VtoM"){
-          random = Math.floor( Math.random() + 0.2)
-        }else if(this.mode = "MtoV"){
-          random = Math.floor( Math.random() + 0.8)
-        }
-        this.mode = ["VtoM", "MtoV"][random]
-
-        this.answer = this.formatWord(jsoned.answer).syllables.join(" ");
+        this.mode = jsoned.mode
+        this.answer_F = this.formatWord(jsoned.answer).syllables.join(" ");
         this.answer_M = this.formatWord(jsoned.answer).jp;
         this.choices = this.arrayShuffle(this.choices)
         this.status = "PROMPT";        
@@ -338,6 +331,8 @@
           if(this.choices[n].isAnswer === true){
             this.isCorrect = true
             this.status = 'ANSWERED'
+            this.total++
+            this.correct++
           }else if(this.choices[n].isAnswer === false){
             this.isCorrect = false
             this.status = 'JUDGED'
@@ -346,6 +341,7 @@
         }else if(this.status === "JUDGED"){
           if(this.choices[n].isAnswer === true){
             this.status = "ANSWERED"
+            this.total++            
           }
         }
       },

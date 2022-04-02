@@ -87,27 +87,24 @@
                       $width_unlearned = "width:" . (int)($unlearned[$s['level']] / $s['total'] * 100) . "%; height: 30px;";
                     @endphp
 
-                    <div class="progress-bar text-dark yellow accent-4" role="progressbar" style="{{$width_3}}"  aria-valuemin="0" aria-valuemax="100">{{$learned_3[$s['level']]}}</div>                    
-                    <div class="progress-bar text-dark yellow accent-3" role="progressbar" style="{{$width_2}}" aria-valuemin="0" aria-valuemax="100">{{$learned_2[$s['level']]}}</div>                    
-                    <div class="progress-bar text-dark yellow accent-2"   role="progressbar" style="{{$width_1}}" aria-valuemin="0" aria-valuemax="100">{{$learned_1[$s['level']]}}</div>                                        
-                    <div class="progress-bar text-dark yellow accent-1"  role="progressbar" style="{{$width_0}}"  aria-valuemin="0" aria-valuemax="100">{{$learned_0[$s['level']]}}</div>                     
+                    <div class="progress-bar text-dark green accent-4 text-white" role="progressbar" style="{{$width_3}}"  aria-valuemin="0" aria-valuemax="100">{{$learned_3[$s['level']]}}</div>                    
+                    <div class="progress-bar text-dark green accent-3" role="progressbar" style="{{$width_2}}" aria-valuemin="0" aria-valuemax="100">{{$learned_2[$s['level']]}}</div>                    
+                    <div class="progress-bar text-dark green accent-2"   role="progressbar" style="{{$width_1}}" aria-valuemin="0" aria-valuemax="100">{{$learned_1[$s['level']]}}</div>                                        
+                    <div class="progress-bar text-dark green accent-1"  role="progressbar" style="{{$width_0}}"  aria-valuemin="0" aria-valuemax="100">{{$learned_0[$s['level']]}}</div>                     
                     <div class="progress-bar text-dark grey lighten-1"  role="progressbar" style="{{$width_unlearned}}" aria-valuemin="0" aria-valuemax="100">{{$unlearned[$s['level']]}}</div>
 
                   </div>
-                  <div><span class="btn btn-info rounded p-1 m-1 text-dark yellow accent-4" style="width:65px; height:25px" >余裕♪</span>：　{{$learned_3[$s['level']]}}語</div>                  
-                  <div><span class="btn btn-info rounded p-1 m-1 text-dark yellow accent-3"style="width:65px; height:25px" >覚えた!</span>：　{{$learned_2[$s['level']]}}語</div>                  
-                  <div><span class="btn btn-info rounded p-1 m-1 text-dark yellow accent-2" style="width:65px; height:25px">びみょ～</span>：　{{$learned_1[$s['level']]}}語</div>
-                  <div><span class="btn btn-info rounded p-1 m-1 text-dark yellow accent-1" style="width:65px; height:25px">まだ。</span>：　{{$learned_0[$s['level']]}}語</div>                  
+                  <div><span class="btn btn-info rounded p-1 m-1 text-dark green accent-4 text-white" style="width:65px; height:25px" >余裕♪</span>：　{{$learned_3[$s['level']]}}語</div>                  
+                  <div><span class="btn btn-info rounded p-1 m-1 text-dark green accent-3"style="width:65px; height:25px" >覚えた!</span>：　{{$learned_2[$s['level']]}}語</div>                  
+                  <div><span class="btn btn-info rounded p-1 m-1 text-dark green accent-2" style="width:65px; height:25px">びみょ～</span>：　{{$learned_1[$s['level']]}}語</div>
+                  <div><span class="btn btn-info rounded p-1 m-1 text-dark green accent-1" style="width:65px; height:25px">まだ。</span>：　{{$learned_0[$s['level']]}}語</div>                  
                   <div><span class="btn btn-info rounded p-1 m-1 text-dark lighten-1 grey" style="width:65px; height:25px">未習</span>：　{{$unlearned[$s['level']]}}語</div>  
                   <hr>                  
                   <div>合計：　{{$s['total']}}語</div>
                   <div>進捗率：　{{$progress[$s['level']]}}&#037;</div>                  
 
                 </div>
-                <!-- <div class="modal-footer" style="height:50px">
 
-                  <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Close</button>
-                </div> -->
               </div>
             </div>
           </div>
@@ -156,53 +153,10 @@
       </div>
     </div>
 
-    <!-- <div class="card mt-3">
-
-      <div class="h5 card-title mt-1 ml-1">学習実績</div>
-      <div class="card-body">      
-        <div class="overflow-auto" style="display:flex">
-          <div class="label-vertical">
-            <div class="label" style="font-size: 12px;  line-height: 26px;  text-align: right;  padding-right: 10px;">[語]</div>
-            <div class="label" style="font-size: 12px;  line-height: 26px;  text-align: right;  padding-right: 10px;">500</div>
-            <div class="label" style="font-size: 12px;  line-height: 26px;  text-align: right;  padding-right: 10px;">400</div>
-            <div class="label" style="font-size: 12px;  line-height: 26px;  text-align: right;  padding-right: 10px;">300</div>
-            <div class="label" style="font-size: 12px;  line-height: 26px;  text-align: right;  padding-right: 10px;">200</div>
-            <div class="label" style="font-size: 12px;  line-height: 26px;  text-align: right;  padding-right: 10px;">100</div>
-            <div class="label" style="font-size: 12px;  line-height: 26px;  text-align: right;  padding-right: 10px;">0</div>
-
-          </div>
-          <div class="inner" style="display:flex; flex-flow: column;">
-            <div class="graph" style=" height:150x; width:350px; border:1px solid #F0F0F0; position:relative; margin-top:13px;">
-              <hr style="top: 25px; border: none;  position: absolute;  width: 100%;  height: 1px;  margin: 0 auto;  background: #F0F0F0;">
-              <hr style="top: 50px; border: none;  position: absolute;  width: 100%;  height: 1px;  margin: 0 auto;  background: #F0F0F0;">
-              <hr style="top: 75px; border: none;  position: absolute;  width: 100%;  height: 1px;  margin: 0 auto;  background: #F0F0F0;">
-              <hr style="top: 100px;border: none;  position: absolute;  width: 100%;  height: 1px;  margin: 0 auto;  background: #F0F0F0;">
-              <hr style="top: 125px;border: none;  position: absolute;  width: 100%;  height: 1px;  margin: 0 auto;  background: #F0F0F0;">
-              <hr style="top: 150px;border: none;  position: absolute;  width: 100%;  height: 1px;  margin: 0 auto;  background: #F0F0F0;">
-
-              
-              <div class="bar blue lighten-3" style="height: {{$history[$i]/4}}px; margin-top: {{150-$history[$i]/4}}px; float: left;  text-align: center;  position: relative;  margin-left: 5px;  width: 15px;  background-color: #006400;" ></div>
-              @for($i=14;$i>=1;$i--)
-                <div class="bar blue lighten-3" style="height: {{$history[$i]/4}}px; margin-top: {{150-$history[$i]/4}}px; float: left;  text-align: center;  position: relative;  margin-left: 5px;  width: 15px;  background-color: #006400;" ></div>
-              @endfor
-
-            </div>
-            <div class="label-horizontal pb-0 mb-0"style="display: flex;">
-
-              @for($i=15;$i>=1;$i--)
-                <div class="label" style="font-size: 12px; margin-left: 5px;  width: 15px; line-height:14px; text-align: center;  padding-top: 6px;">{{$i}} @if($i===15) 日前 @endif </div>
-              @endfor
-
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>     -->
-    <a href="/learn" >
-      <div class="card mt-3 px-2 py-2 orange lighten-1 text-white" style="color: white; max-width:200px; font-size:1.2rem; text-align:center; margin-left:auto; font-family:ＭＳ Ｐゴシック;">
+    <a href="/learn/REVIEW_ALL" >
+      <div class="card mt-3 px-2 py-2 orange lighten-1 text-white" style="color: white; max-width:230px; font-size:1.2rem; text-align:center; margin-left:auto; font-family:ＭＳ Ｐゴシック;">
         <div >
-            単語学習に進む ▶
+            復習のみでStart ▶
         </div>
       </div>
     </a>    
