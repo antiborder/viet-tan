@@ -49,10 +49,18 @@ class LearnController extends Controller
             $point = $point -0.03 * ($request->sec -5); //解答速度の考慮
             if($request->mode === "FM"){
                 $progress = $point;
-                $progress_MF = $previous_progress_MF;
+                if($previous_progress_MF <= 0.5*$point){ //相方が少なすぎる場合には底上げ
+                    $progress_MF = 0.5*$point;
+                }else{
+                    $progress_MF = $previous_progress_MF; //相方が少なすぎなければ前回を引き継ぎ
+                }
             }else if($request->mode === "MF"){
-                $progress = $previous_progress;
                 $progress_MF = $point;
+                if($previous_progress <= 0.5*$point){ //相方が少なすぎる場合には底上げ
+                    $previous_progress = 0.5*$point;
+                }else{
+                    $progress = $previous_progress; //相方が少なすぎなければ前回を引き継ぎ
+                }
             }
 
             //select next mode
@@ -67,8 +75,9 @@ class LearnController extends Controller
             if($request->easiness === 0){
                 $min = 5;
             }else{
+                $random_factor=(mt_rand() / mt_getrandmax() - 0.5)/5;
                 if($next_mode = "MF"){
-                    $min = round( $this->getInterval($progress_MF), 0);
+                    $min = round( $this->getInterval($progress_MF + $random_factor), 0);
                 }else if($next_mode = "FM"){
                     $min = round( $this->getInterval($progress), 0);
                 }
@@ -151,13 +160,14 @@ class LearnController extends Controller
                     $next_word_id = $next_words[0]['word_id'];
                     $mode = $next_words[0]['next_mode']===null ? "FM" : $next_words[0]['next_mode'];
                 }else{
+                    if($delayed_word_count === 1){//単語が尽きたときはここでreturn
+                        return "CLEARED";
+                    }
                     $next_word_id = $next_words[1]['word_id'];
                     $mode = $next_words[1]['next_mode']===null ? "FM" : $next_words[1]['next_mode'];
                 }                
 
             }else{
-
-                // $total_count = Word::where('words.level',$request->level)->get()->count();
 
                 //既習語取得
                 $learned_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
@@ -224,6 +234,9 @@ class LearnController extends Controller
                         $next_word_id = $next_words[0]['word_id'];
                         $mode = $next_words[0]['next_mode']===null ? "FM" : $next_words[0]['next_mode'];
                     }else{
+                        if($unlearned_word_count + $delayed_word_count === 1){//単語が尽きたときはここでreturn
+                            return "CLEARED";
+                        }
                         $next_word_id = $next_words[1]['word_id'];
                         $mode = $next_words[1]['next_mode']===null ? "FM" : $next_words[1]['next_mode'] ;
                     }
