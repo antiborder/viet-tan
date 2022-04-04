@@ -1,7 +1,4 @@
-
-// レベル選定はゲージで。modalで。
 //ドメイン登録。 sendgrid実装。
-//choiceの並び方最適化
 //** 単語読み上げ
 //本番環境でもgoogleログインできるように。
 //ユーザ管理。権限レベル毎に管理。個人ページは本人と管理者しか見れないように。
@@ -9,8 +6,8 @@
 //toppageにはお知らせ。
 //エクスポート機能
 //toppageにアプリ説明。
-//10語毎に一息入れる。連続で正解すると何か出る。
-//level11でエラーが出る単語：紺色とスポンジ。意味が???になる単語：劇 この他に、詳細が出ない単語が結構ある。level7でエラーが出る単語：インド、紫、枕。初回clearでエラーが出る。
+//10語毎にまとめと復習を入れる。
+//level11でエラーが出る単語：紺色とスポンジ。意味が???になる単語：劇 この他に、詳細が出ない単語が結構ある。level7でエラーが出る単語：インド、紫、枕。
 //Googleadsense
 //前の単語を隅っこに表示。
 //選択肢からanswerの類義語を取り除く
@@ -70,13 +67,27 @@
         {{message}}
       </span>
     </div>
-    <div v-if="status==='INITIAL'" style=" text-align:center;">
-      <input v-model="level" placeholder="Choose level">
-      <div class="" style = "text-align:center; height: 80px;">
-        <button @click="clickStart()" type="button" class="btn btn-info orange m-5 lighten-1 rounded pb-1 text-nowrap"style="max-width: 240px; font-size: 1.6rem;">
-          START
-        </button>
+    <div v-if="status==='INITIAL'" class="mx-auto" style=" text-align:center;max-width:400px">
+      
+      <div class="card white rounded" style="max-width: 400px;">
+        <div class="card-body" style = "text-align:center;">
+          <div class="m-2 p-2" style="font-size:1.2rem">
+            レベルを選択：
+            <select size="1" v-model= "level" class="m-2" style="width:100px;">
+              <option v-for="i in 12" >{{i}}</option>
+              <option value="REVIEW_ALL">復習のみ</option>
+            </select> 
+          </div>
+
+          <div class="m-2 p-1">
+            <button @click="clickStart()" type="button" class="btn btn-info orange lighten-1 rounded pb-1 text-nowrap"style="max-width: 240px; font-size: 1.6rem;">
+              START
+            </button>
+          </div>
+        </div>
+        
       </div>
+
     </div>      
 
     <div v-if="status==='PROMPT' || status === 'JUDGED' || status ==='ANSWERED'" class="" >    
