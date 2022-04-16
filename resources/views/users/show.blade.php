@@ -138,13 +138,13 @@
 
               
               <div class="bar pink lighten-3" style="height: {{$ready_total/4}}px; margin-top: {{150-$ready_total/4}}px; float: left;  text-align: center;  position: relative;  margin-left: 5px;  width: 15px;  background-color: #006400;"></div>
-              @for($i=1;$i<=30;$i++)
+              @for($i=1;$i<=60;$i++)
                 <div class="bar pink lighten-3" style="height: {{$schedule[$i]/4}}px; margin-top: {{150-$schedule[$i]/4}}px; float: left;  text-align: center;  position: relative;  margin-left: 5px;  width: 15px;  background-color: #006400;" ></div>
               @endfor
             </div>
             <div class="label-horizontal"style="display: flex;">
               <div class="label" style="font-size: 12px;  margin-left: 5px; line-height:14px; width: 15px;  text-align: center;  padding-top: 6px;">現在</div>
-              @for($i=1;$i<=30;$i++)
+              @for($i=1;$i<=60;$i++)
                 <div class="label" style="font-size: 12px;  margin-left: 5px; line-height:14px; width: 15px;  text-align: center;  padding-top: 6px;">{{$i}} @if($i===1) 日後 @endif</div>
               @endfor
             </div>
