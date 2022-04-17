@@ -1,16 +1,13 @@
-//sendgrid実装。
-//level67を678にする。
-//** 単語読み上げ
 //本番環境でもgoogleログインできるように。
-//復習のみモードの説明をレベル選択の下に表示。
+//** 単語読み上げ
 //ユーザ管理。権限レベル毎に管理。個人ページは本人と管理者しか見れないように。
 //問い合わせフォーム
 //***課金システム
 //toppageにはお知らせ。
 //エクスポート機能
 //toppageにアプリ説明。
+//10語毎にまとめと復習を入れる。  
 //学習計画からレベルごとに非表示する機能。レベルごとに履歴消去の機能。未習後でも同じ単語が連続しないように変更。
-//10語毎にまとめと復習を入れる。
 //level11でエラーが出る単語：紺色とスポンジ。意味が???になる単語：劇 この他に、詳細が出ない単語が結構ある。level7でエラーが出る単語：インド、紫、枕。
 //検索ワードの声調記号などを消してから検索。頭にドットがあるやつがヒットしないけど何故？
 //Googleadsense
@@ -28,6 +25,7 @@
 //ベトナム語検索結果を部分一致と全体一致に分ける。表示順序や表示数もちょうせい。
 //WordControllerのupdate、create、importの共通部分をまとめたい。
 //テスト実装
+
 //時刻はどの場所の時刻になるのか、ぶれないように確認必要。
 //代入には$setを使う。
 //.emvのAPP_URLは最終的には製品版のURLを入れる。教材6-5「パスワード再設定メール(テキスト版)のテンプレートの作成」
@@ -83,12 +81,17 @@
               <option value="REVIEW_ALL">復習のみ</option>
             </select> 
           </div>
-
           <div class="m-2 p-1">
             <button @click="clickStart()" type="button" class="btn btn-info orange lighten-1 rounded pb-1 text-nowrap"style="max-width: 240px; font-size: 1.6rem;">
               START
             </button>
           </div>
+          <div class="text-primary" style="height:50px;">
+            <span v-if="level==='REVIEW_ALL'">
+              「復習のみ」では、復習可能語が<br>
+              すべてのレベルから出題されます。
+            </span>            
+          </div>          
         </div>
         
       </div>

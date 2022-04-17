@@ -10,9 +10,9 @@
         <div class="card mt-3">
           <div class="card-body text-center">
             <h2 class="h3 card-title text-center mt-2">ユーザー登録</h2>
-            <!-- <a href="{{ route('login.{provider}', ['provider' => 'google']) }}" class="btn btn-block btn-danger">
+            <a href="{{ route('login.{provider}', ['provider' => 'google']) }}" class="btn btn-block btn-danger">
               <i class="fab fa-google mr-1"></i>Googleで登録
-            </a> -->
+            </a>
             @include('error_card_list') {{--この行を追加--}}
             <div class="card-text">
               {{--ここから--}}
