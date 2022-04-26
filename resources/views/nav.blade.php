@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark navbar-expand orange lighten-1 ">
+<nav class="navbar navbar-dark navbar-expand orange lighten-1 pb-0">
 
   <a class="navbar-brand" href="/"><i class="far fa-sticky-note mr-1"></i>　</a>
 
@@ -6,12 +6,12 @@
 
   <form class="form-inline mr-4" action="{{url('/search')}}">
     <div class="input-group input-group-lg">
-      <div class="form-group">
+      <div class="form-group mb-2">
         <div class="">
-          <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control rounded-0" placeholder="検索" style="max-width:150px; min-width:80px">
+          <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control rounded-0" placeholder="検索" style="max-width:100px; min-width:50px">
         </div>
       </div>
-      <input type="submit" value="&#xf002;" class="fas text-white border-white rounded-right shadow-none" style="background:transparent;">
+      <input type="submit" value="&#xf002;" class="fas text-white border-white rounded-right shadow-none" style="background:transparent; height:40px">
     </div>
   </form>  
 

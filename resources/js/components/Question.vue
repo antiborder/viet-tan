@@ -1,28 +1,30 @@
-//本番環境でもgoogleログインできるように。
+//エクスポート機能
 //** 単語読み上げ
+//詳細が表示されない不具合
+//10語毎にまとめと復習を入れる。
+//ロゴ
+//toppageにアプリ説明。と学習の使い方。
+//toppageにはお知らせ。
 //ユーザ管理。権限レベル毎に管理。個人ページは本人と管理者しか見れないように。
 //問い合わせフォーム
+//ssl認証
+//ベトナム語検索結果を部分一致と全体一致に分ける。表示順序や表示数もちょうせい。
 //***課金システム
-//toppageにはお知らせ。
-//エクスポート機能
-//toppageにアプリ説明。
-//10語毎にまとめと復習を入れる。  
-//学習計画からレベルごとに非表示する機能。レベルごとに履歴消去の機能。未習後でも同じ単語が連続しないように変更。
+//googleSearchConsoleなど。
+//未習後でも同じ単語が連続しないように変更。正解すると学習がデータベースに登録されずにまた出題されるエラー？
 //level11でエラーが出る単語：紺色とスポンジ。意味が???になる単語：劇 この他に、詳細が出ない単語が結構ある。level7でエラーが出る単語：インド、紫、枕。
 //検索ワードの声調記号などを消してから検索。頭にドットがあるやつがヒットしないけど何故？
 //Googleadsense
 //選択肢からanswerの類義語を取り除く
 //ユーザー名は英数字のみに。
-//ssl認証
 //過去24時間以内で生まれた学習計画
 //理解度ボタンにおおよその時間数日数を表示。
-//ユーザ権限を考慮したランダムモード実装
+//ユーザ権限を考慮したランダムモード実装。学習計画からレベルごとに非表示する機能。レベルごとに履歴消去の機能。
 //様々なパラメータを定数化。単語の音節数とか、タグ数とか、問題の選択肢の数だとか。
 //Ｎ+1問題。
 //学習単語がなくなった時の処理と、今日の学習完了の判定条件。とメッセージ。学習完了メッセージとその後のrouteをもっと真面目にやる。おすすめレベルなど。
 //タグ一覧
 //単語力測定
-//ベトナム語検索結果を部分一致と全体一致に分ける。表示順序や表示数もちょうせい。
 //WordControllerのupdate、create、importの共通部分をまとめたい。
 //テスト実装
 
@@ -126,6 +128,7 @@
         mode: "MF",
         answer_F: " ",
         answer_M: " ",
+        answer_id: 0,
         status : "INITIAL",
         sec: 0,
         timerOn: false, 
@@ -313,11 +316,25 @@
         }        
 
         this.mode = jsoned.mode
-        this.answer_F = this.formatWord(jsoned.answer).syllables.join(" ");
-        this.answer_M = this.formatWord(jsoned.answer).jp;
+        var formated = this.formatWord(jsoned.answer)
+        this.answer_F = formated.syllables.join(" ");
+        this.answer_M = formated.jp;
+        this.answer_id = formated.id;
+        // const question_sound = new Audio('/sound/word/4.mp3');
+        if(this.mode === "MF"){
+          var question_sound = new Audio('/sound/question1.mp3');
+          question_sound.volume = 0.1;
+          question_sound.play();
+        }else if(this.mode ==="FM"){
+          var question_sound = new Audio('/sound/word/' + this.answer_id + '.mp3');
+          question_sound.volume = 0.5;          
+          question_sound.play();
+        }
         this.choices = this.arrayShuffle(this.choices)
-        this.status = "PROMPT";        
-        this.startTimer();        
+        setTimeout(() => {
+          this.status = "PROMPT";        
+          this.startTimer();        
+        },300)
       },
       
       formatWord(word) {
