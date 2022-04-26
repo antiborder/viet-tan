@@ -320,21 +320,20 @@
         this.answer_F = formated.syllables.join(" ");
         this.answer_M = formated.jp;
         this.answer_id = formated.id;
-        // const question_sound = new Audio('/sound/word/4.mp3');
         if(this.mode === "MF"){
           var question_sound = new Audio('/sound/question1.mp3');
-          question_sound.volume = 0.1;
+          question_sound.volume = 0.3;
           question_sound.play();
         }else if(this.mode ==="FM"){
           var question_sound = new Audio('/sound/word/' + this.answer_id + '.mp3');
-          question_sound.volume = 0.5;          
+          question_sound.volume = 0.7;
           question_sound.play();
         }
         this.choices = this.arrayShuffle(this.choices)
         setTimeout(() => {
           this.status = "PROMPT";        
           this.startTimer();        
-        },300)
+        },200)
       },
       
       formatWord(word) {
