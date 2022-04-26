@@ -128,7 +128,7 @@
             <div class="label" style="font-size: 12px;  line-height: 26px;  text-align: right;  padding-right: 10px;">0</div>  
           </div>
           <div class="inner" style="display:flex; flex-flow: column;">
-            <div class="graph" style=" height:150x; width:1300px; border:1px solid #F0F0F0; position:relative; margin-top:13px;">
+            <div class="graph" style=" height:150x; width:1240px; border:1px solid #F0F0F0; position:relative; margin-top:13px;">
               <hr style="top: 25px; border: none;  position: absolute;  width: 100%;  height: 1px;  margin: 0 auto;  background: #F0F0F0;">
               <hr style="top: 50px; border: none;  position: absolute;  width: 100%;  height: 1px;  margin: 0 auto;  background: #F0F0F0;">
               <hr style="top: 75px; border: none;  position: absolute;  width: 100%;  height: 1px;  margin: 0 auto;  background: #F0F0F0;">
