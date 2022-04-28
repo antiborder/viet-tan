@@ -34,7 +34,7 @@ class WordController extends Controller
             $level = 1;
         }
         $words = Word::all()->where('level',$level)->sortByDesc('created_at');
-        return view('words.level', ['words' => $words]);
+        return view('words.level', ['words' => $words, 'count' => $words->count()]);
     }    
 
     public function create()
@@ -504,6 +504,27 @@ class WordController extends Controller
 
         return redirect()->action('WordController@index')->with('flash_message', '単語を' . $count . '個登録しました！');
     }
+
+    public function export(Request $request){
+        $task = new Word;
+        $table = $task->getTable();
+        $columns = $task->getConnection()->getSchemaBuilder()->getColumnListing($table);
+        $header = collect($columns)->implode(",");
+        // return $header;
+        $selectStr = collect($columns)->map(function($item) {
+            return $item;//"ifnull({$item}, '')";            
+        })->implode(", ',' ,");
+
+        $words = DB::table('words')
+        ->select(DB::raw("concat({$selectStr}) as record"))
+         ->pluck("record");
+        // ヘッダーとデータを加えて改行コードでつなげて１つの文字列にする
+        $text = $words->prepend($header)->implode("\r\n");
+        $text = str_replace(array("\n"), ' ', $text);
+
+        return $text;
+
+    }    
 
     public function clear(Request $request)
     {

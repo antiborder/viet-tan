@@ -76,10 +76,10 @@ class LearnController extends Controller
                 $min = 5;
             }else{
                 $random_factor=(mt_rand() / mt_getrandmax() - 0.5)/5;
-                if($next_mode = "MF"){
+                if($next_mode === "MF"){ //20220426に=を===に修正した箇所
                     $min = round( $this->getInterval($progress_MF + $random_factor), 0);
-                }else if($next_mode = "FM"){
-                    $min = round( $this->getInterval($progress), 0);
+                }else if($next_mode === "FM"){ //20220426に=を===に修正した箇所
+                    $min = round( $this->getInterval($progress + $random_factor), 0);
                 }
             }
             

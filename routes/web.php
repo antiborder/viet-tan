@@ -33,13 +33,12 @@ Route::get('/choose', 'WordController@choose')->name('choose');
 Route::post('/import', 'WordController@import')->name('import');
 Route::post('/clear', 'WordController@clear')->name('clear');
 Route::post('/trim', 'WordController@trim')->name('trim');
-
+Route::get('/export', 'WordController@export')->name('export');
 
 Route::get('/learn', 'LearnController@learn')->name('learn');
 Route::get('/learn/random', 'LearnController@getWords')->name('learn.random');
 Route::post('/learn/record', 'LearnController@store')->name('learn.record');
 Route::get('/learn/{level}', 'LearnController@learn')->name('learn.level');
-
 
 Route::prefix('users')->name('users.')->group(function () {
     Route::get('/{name}', 'UserController@show')->name('show');
