@@ -1,15 +1,16 @@
-//エクスポート機能
 //** 単語読み上げ
 //詳細が表示されない不具合
 //10語毎にまとめと復習を入れる。
+//詳細ページレイアウト
 //ロゴ
+//***課金システム。terms of use。privacy policy。
+//音声ファイルが無い時は効果音を鳴らす。チョイスのスピーカーマークで音声再生。
 //toppageにアプリ説明。と学習の使い方。
 //toppageにはお知らせ。
 //ユーザ管理。権限レベル毎に管理。個人ページは本人と管理者しか見れないように。
 //問い合わせフォーム。
 //ssl認証
 //ベトナム語検索結果を部分一致と全体一致に分ける。表示順序や表示数もちょうせい。
-//***課金システム。terms of use。privacy policy。
 //googleSearchConsoleなど。
 //未習後でも同じ単語が連続しないように変更。正解すると学習がデータベースに登録されずにまた出題されるエラー？
 //level11でエラーが出る単語：紺色とスポンジ。意味が???になる単語：劇 この他に、詳細が出ない単語が結構ある。level7でエラーが出る単語：インド、紫、枕。level4でエラーが出る単語：黄色。
@@ -322,7 +323,7 @@
         this.answer_id = formated.id;
         if(this.mode === "MF"){
           let question_sound = new Audio('/sound/question1.mp3');
-          question_sound.volume = 0.3;
+          question_sound.volume = 0.5;
           question_sound.play();
         }else if(this.mode ==="FM"){
           let answer_voice = new Audio('/sound/word/' + this.answer_id + '.mp3');
