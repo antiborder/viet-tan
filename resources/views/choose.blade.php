@@ -20,3 +20,5 @@
 		<button class="btn btn-success">delete data with no level</button>
 	</div>
 </form>
+
+<a href="{{route('export')}}" download="export.csv">csvのダウンロード</a>

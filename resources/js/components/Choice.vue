@@ -125,16 +125,16 @@ export default {
             if(this.status === "PROMPT" || this.status === "JUDGED"){
                 if( !this.isPressed){
                     if(this.isAnswer === true){
-                        var correct_sound = new Audio('/sound/correct1.mp3');
+                        let correct_sound = new Audio('/sound/correct1.mp3');
                         correct_sound.volume = 0.3;
                         correct_sound.play();
-                        var answer_sound = new Audio('/sound/word/' + this.word.id + '.mp3');
-                        answer_sound.volume = 0.3;
-                        answer_sound.play();                        
+                        let question_voice = new Audio('/sound/word/' + this.word.id + '.mp3');
+                        question_voice.volume = 0.7;
+                        question_voice.play();                        
 
                     }else{
-                        var wrong_sound = new Audio('/sound/wrong1.mp3');
-                        wrong_sound.volume = 0.1;
+                        let wrong_sound = new Audio('/sound/wrong1.mp3');
+                        wrong_sound.volume = 0.3;
                         wrong_sound.play();
                     }
                 }
