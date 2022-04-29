@@ -9,6 +9,19 @@
       単語詳細
       @include('words.detail')
 
+      @foreach($word->tags as $tag)
+        @if($loop->first)
+          <span>
+            関連タグ&ensp;
+        @endif
+
+            <a class="text-dark white pl-1 pr-1 mr-2 rounded" href="{{ route('tags.show', ['name' => $tag->name]) }}" class="border p-1 mr-1 mt-1 text-muted">
+              {{ $tag->name }}
+            </a>
+        @if($loop->last)
+          </span>        
+        @endif
+      @endforeach            
 
     </div>
 
