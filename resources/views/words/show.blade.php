@@ -5,26 +5,7 @@
 @section('content')
   @include('nav')
   <div class="container">
-    <div class="card mt-3 mb-0 pb-1 pl-2 pr-2 light-blue lighten-1  text-white">
-      単語詳細
-      @include('words.detail')
 
-      @foreach($word->tags as $tag)
-        @if($loop->first)
-          <span>
-            関連タグ&ensp;
-        @endif
-        @if($loop->first)
-
-        @endif
-            <a class="text-dark white pl-1 pr-1 mr-2 rounded" href="{{ route('tags.show', ['name' => $tag->name]) }}" class="border p-1 mr-1 mt-1 text-muted">
-              {{ $tag->name }}
-            </a>
-        @if($loop->last)
-          </span>        
-        @endif
-      @endforeach      
-    </div>
 
     <div class="card mt-3 mb-1 pl-2 pr-2 orange lighten-1 text-white" style="color: white; max-width: 30rem;">
       @foreach($word->synonyms() as $synonym)

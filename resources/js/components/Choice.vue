@@ -126,11 +126,13 @@ export default {
                 if( !this.isPressed){
                     if(this.isAnswer === true){
                         let correct_sound = new Audio('/sound/correct1.mp3');
-                        correct_sound.volume = 0.3;
+                        correct_sound.volume = 0.1;
                         correct_sound.play();
-                        let question_voice = new Audio('/sound/word/' + this.word.id + '.mp3');
-                        question_voice.volume = 0.7;
-                        question_voice.play();                        
+                        if(this.mode === "MF"){
+                            let question_voice = new Audio('/sound/word/' + this.word.id + '.mp3');
+                            question_voice.volume = 1.0;
+                            question_voice.play(); 
+                        }                       
 
                     }else{
                         let wrong_sound = new Audio('/sound/wrong1.mp3');
