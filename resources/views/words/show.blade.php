@@ -5,7 +5,12 @@
 @section('content')
   @include('nav')
   <div class="container">
+    <div class="card mt-3 mb-0 pb-1 pl-2 pr-2 light-blue lighten-1  text-white">
+      単語詳細
+      @include('words.detail')
 
+
+    </div>
 
     <div class="card mt-3 mb-1 pl-2 pr-2 orange lighten-1 text-white" style="color: white; max-width: 30rem;">
       @foreach($word->synonyms() as $synonym)
