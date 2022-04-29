@@ -33,7 +33,8 @@ Route::get('/choose', 'WordController@choose')->name('choose');
 Route::post('/import', 'WordController@import')->name('import');
 Route::post('/clear', 'WordController@clear')->name('clear');
 Route::post('/trim', 'WordController@trim')->name('trim');
-Route::get('/export', 'WordController@export')->name('export');
+Route::get('/export_words', 'WordController@export_words')->name('export_words');
+Route::get('/export_tags', 'WordController@export_tags')->name('export_tags');
 
 Route::get('/learn', 'LearnController@learn')->name('learn');
 Route::get('/learn/random', 'LearnController@getWords')->name('learn.random');
