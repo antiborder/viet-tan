@@ -1,10 +1,9 @@
-//** 単語読み上げ
+//音声ファイルが無い時は効果音を鳴らす。チョイスのスピーカーマークで音声再生。FMのとき選択時の声は鳴らさない。
 //詳細が表示されない不具合
 //10語毎にまとめと復習を入れる。
 //詳細ページレイアウト
 //ロゴ
 //***課金システム。terms of use。privacy policy。
-//音声ファイルが無い時は効果音を鳴らす。チョイスのスピーカーマークで音声再生。
 //toppageにアプリ説明。と学習の使い方。
 //toppageにはお知らせ。
 //ユーザ管理。権限レベル毎に管理。個人ページは本人と管理者しか見れないように。
@@ -327,7 +326,7 @@
           question_sound.play();
         }else if(this.mode ==="FM"){
           let answer_voice = new Audio('/sound/word/' + this.answer_id + '.mp3');
-          answer_voice.volume = 0.7;
+          answer_voice.volume = 1.0;
           answer_voice.play();
         }
         this.choices = this.arrayShuffle(this.choices)
