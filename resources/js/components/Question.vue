@@ -35,6 +35,7 @@
   <div class="mx-auto" style="text-align:center; max-width:700px;">
     <div style="text-align:left">
       Lv.:{{level}}　正解率: {{correct}} / {{total}}
+      {{user_name}}
     </div>
 
     <!-- 最初の画面 -->
@@ -45,7 +46,7 @@
             レベルを選択：
             <select size="1" v-model= "level" class="m-2" style="width:100px;">
               <option v-for="i in 12" >{{i}}</option>
-              <option value="REVIEW_ALL">復習のみ</option>
+              <option v-if="user_name!==''"value="REVIEW_ALL">復習のみ</option>
             </select> 
           </div>
           <div class="mt-4 p-1">
