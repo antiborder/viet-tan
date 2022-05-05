@@ -111,8 +111,8 @@
       <div class="card-body" >
         <table style="margin:auto; border-collapse: separate; border-spacing: 0px 0px; min-width:90%">
           <tr >
-            <th>No.</th>
-            <th style="min-width:50%">単語</th>
+            <th></th>
+            <th style="min-width:70%">単語</th>
             <th>level</th>
             <th>結果</th>
             <th></th>                                                
@@ -120,14 +120,19 @@
           <tr v-for="e in this.history">
             <td>{{e.No}}</td>
             <td style="font-size:1.3rem">&nbsp;{{e.name}}&nbsp;</td>
-            <td style="font-size:1.1rem">{{e.level}}</td>
+            <td v-if="e.level==='REVIEW_ALL'" style="font-size:1.0rem">
+              復習
+            </td>
+            <td v-else style="font-size:1.0em">
+              {{e.level}}
+            </td>
             <td>
-              <button type="button" v-bind:class="baseColors[e.easiness]" class="btn btn-sm rounded pt-1 pb-1 px-2 text-nowrap shadow-none"style="height:30px; max-width: 100px; font-size: 0.9rem;">
+              <button type="button" v-bind:class="baseColors[e.easiness]" class="btn btn-sm rounded pt-1 pb-1 px-2 text-nowrap shadow-none"style="height:27px; max-width: 100px; font-size: 0.8rem;">
                 {{button_properties[e.easiness].text}}
               </button>
             </td>            
             <td>
-              <a v-bind:href="'/words/'+e.id" type="button" class="text-primary border border-primary rounded px-1 pt-1 text-nowrap" target="_blank" rel="noopener noreferrer" style="font-size:1.0rem; height:30px;max-width:60px">
+              <a v-bind:href="'/words/'+e.id" type="button" class="text-primary border border-primary rounded px-1 pt-1 text-nowrap" target="_blank" rel="noopener noreferrer" style="font-size:0.9rem; height:27px;max-width:60px">
                 &nbsp;詳細&nbsp;
               </a>
             </td>
@@ -158,8 +163,8 @@
         <div v-if="total > 0" class="mb-2">
           <table style="margin:auto; border-collapse: separate; border-spacing: 0px 0px; min-width:90%">
             <tr >
-              <th>No.</th>
-              <th style="min-width:50%">単語</th>
+              <th></th>
+              <th style="min-width:70%">単語</th>
               <th>level</th>
               <th>結果</th>
               <th></th>                                                
@@ -167,14 +172,19 @@
             <tr v-for="e in this.history">
               <td>{{e.No}}</td>
               <td style="font-size:1.3rem">&nbsp;{{e.name}}&nbsp;</td>
-              <td style="font-size:1.1rem">{{e.level}}</td>
+              <td v-if="e.level==='REVIEW_ALL'" style="font-size:1.0rem">
+                復習
+              </td>
+              <td v-else style="font-size:1.0em">
+                {{e.level}}
+              </td>
               <td>
-                <button type="button" v-bind:class="baseColors[e.easiness]" class="btn btn-sm rounded pt-1 pb-1 px-2 text-nowrap shadow-none"style="height:30px; max-width: 100px; font-size: 0.9rem;">
+                <button type="button" v-bind:class="baseColors[e.easiness]" class="btn btn-sm rounded pt-1 pb-1 px-2 text-nowrap shadow-none"style="height:27px; max-width: 100px; font-size: 0.8rem;">
                   {{button_properties[e.easiness].text}}
                 </button>
               </td>            
               <td>
-                <a v-bind:href="'/words/'+e.id" type="button" class="text-primary border border-primary rounded px-1 pt-1 text-nowrap" target="_blank" rel="noopener noreferrer" style="font-size:1.0rem; height:30px;max-width:60px">
+                <a v-bind:href="'/words/'+e.id" type="button" class="text-primary border border-primary rounded px-1 pt-1 text-nowrap" target="_blank" rel="noopener noreferrer" style="font-size:0.9rem; height:27px;max-width:60px">
                   &nbsp;詳細&nbsp;
                 </a>
               </td>
@@ -430,7 +440,7 @@
         this.answer_id = formated.id;
 
         let question_sound = new Audio('/sound/question1.mp3');
-        question_sound.volume = 0.5;
+        question_sound.volume = 0.3;
         question_sound.play();
 
         if(this.mode ==="FM"){

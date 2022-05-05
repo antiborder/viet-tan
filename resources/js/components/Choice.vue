@@ -129,7 +129,7 @@ export default {
                 if( !this.isPressed){
                     if(this.isAnswer === true){
                         let correct_sound = new Audio('/sound/correct1.mp3');
-                        correct_sound.volume = 0.05;
+                        correct_sound.volume = 0.04;
                         correct_sound.play();
                         if(this.mode === "MF"){
                             let question_voice = new Audio('/sound/word/' + this.word.id + '.mp3');
