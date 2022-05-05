@@ -16,7 +16,7 @@
 
 
     <a href="search" >
-      <div class="card mt-5 mb-1 px-2 py-4 h2 orange lighten-1 text-white" style="color: white; width: 200px;  text-align:center;  margin:0 auto; font-family:MS UI Gothic;">
+      <div class="card mt-5 mb-1 px-2 py-4 h4 orange lighten-1 text-white" style="color: white; width: 200px;  text-align:center;  margin:0 auto; font-family:MS UI Gothic;">
         <div >
             あいまい検索
         </div>

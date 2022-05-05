@@ -360,7 +360,7 @@
         this.sec = 0;
         this.history.push({'No':this.total, 'name':this.answer_F, 'easiness':n, 'level':this.level, 'id':this.answer_id});
         this.recordLearn(n);
-        if(this.total >= 2){
+        if(this.total >= 10){
           this.status = "RESULT"
           this.isCorrect = null;
 
