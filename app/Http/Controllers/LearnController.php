@@ -46,7 +46,7 @@ class LearnController extends Controller
             $easiness_point = $this->getEasinessPoint($request->easiness);
             $point = ($easiness_point+ $interval_point)/2;
 
-            $point = $point -0.03 * ($request->sec -5); //解答速度の考慮
+            $point = $point - 0.15 * 2/config('const.TIME_LIMIT') * ($request->sec - config('const.TIME_LIMIT')/2 ); //解答速度の考慮
             if($request->mode === "FM"){
                 $progress = $point;
                 if($previous_progress_MF <= 0.5*$point){ //相方が少なすぎる場合には底上げ
@@ -246,13 +246,18 @@ class LearnController extends Controller
             $answer = Word::where('id',$next_word_id)->first();
         }
 
+        $synonyms = [];
+        foreach($answer->synonyms() as $synonym ){
+                $synonyms[] = $synonym->name;
+        }
+        
         $length = strlen($answer->simplified);
         $similar_str = substr($answer->simplified,0,$length-1);
         $semi_similar_str = substr($answer->simplified,0,$length-2);
 
-        $similar_pronunciations =  Word::where('level', '<=', $answer->level+1)->where('simplified', 'like', "$similar_str%")->where('name', '!=', $answer->name)->inRandomOrder()->get()->all();
-        $semi_similar_pronunciations =  Word::where('level', '<=', $answer->level+1)->where('simplified', 'like', "$semi_similar_str%")->where('simplified', 'not like', "$similar_str%")->where('name', '!=', $answer->name)->inRandomOrder()->get()->all();
-        $dissimilar_pronunciations = Word::where('level', '<=', $answer->level+1)->where('level', '>=', $answer->level - 2)->where('simplified', 'not like', "$semi_similar_str%")->inRandomOrder()->get()->all();
+        $similar_pronunciations =  Word::where('level', '<=', $answer->level+1)->where('simplified', 'like', "$similar_str%")->where('name', '!=', $answer->name)->whereNotIn('name', $synonyms)->inRandomOrder()->get()->all();
+        $semi_similar_pronunciations =  Word::where('level', '<=', $answer->level+1)->where('simplified', 'like', "$semi_similar_str%")->where('simplified', 'not like', "$similar_str%")->where('name', '!=', $answer->name)->whereNotIn('name', $synonyms)->inRandomOrder()->get()->all();
+        $dissimilar_pronunciations = Word::where('level', '<=', $answer->level+1)->where('level', '>=', $answer->level - 2)->where('simplified', 'not like', "$semi_similar_str%")->whereNotIn('name', $synonyms)->inRandomOrder()->get()->all();
 
         $candidates = array_slice(array_merge($similar_pronunciations, $semi_similar_pronunciations, $dissimilar_pronunciations),0,5);
         shuffle($candidates);
