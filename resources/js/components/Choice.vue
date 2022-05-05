@@ -1,5 +1,4 @@
 
-
 <template>
     <div class="d-flex flex-row" >
         <div style ="width:7%">
@@ -33,13 +32,15 @@
                                     {{ word.kanjis[j-1] }}
                                     </div>
                                 </div>
-                                <a v-if="isPressed" v-bind:href="'/words/'+word.id" target="_blank" rel="noopener noreferrer" class="text-info mr-2" style="margin:0 0 0 auto">
-                                    詳細
-                                </a>                  
                             </div>
-                            <div v-if="isPressed" class="d-flex align-items-end">
+                            <div v-if="isPressed" class="d-flex align-items-end" style="float:left" >
                             Lv.{{ word.level }}
                             </div>
+                            <div>
+                                <a type="button" v-if="isPressed" v-bind:href="'/words/'+word.id" class="text-primary border border-primary rounded px-1 pt-1" target="_blank" rel="noopener noreferrer" style="font-size:1.0rem; height:30px;max-width:60px; float:right">
+                                    &nbsp;詳細&nbsp;
+                                </a>                  
+                            </div>                                
                         </div>
                         <div v-else class="" style="text-align:center">
                             <i class="mt-3 text-muted fas fa-3x fa-question "></i>
@@ -63,13 +64,15 @@
                                     {{ word.kanjis[j-1] }}
                                     </div>
                                 </div>
-                                <a v-if="isPressed" v-bind:href="'/words/'+word.id" target="_blank" rel="noopener noreferrer" class="text-info mr-2" style="margin:0 0 0 auto">
-                                    詳細
-                                </a>                  
                             </div>
-                            <div v-if="isPressed" class="d-flex align-items-end">
+                            <div v-if="isPressed" class="d-flex align-items-end" style="float:left">
                             Lv.{{ word.level }}
                             </div>
+                            <div>
+                                <a type="button" v-if="isPressed" v-bind:href="'/words/'+word.id" class="text-primary border border-primary rounded px-1 pt-1" target="_blank" rel="noopener noreferrer" style="font-size:1.0rem; height:30px;max-width:60px; float:right">
+                                    &nbsp;詳細&nbsp;
+                                </a>                                                  
+                            </div>                            
                         </div>
                     </div>
                     <div class = "h6 pl-2 border-left border-light" style ="width:40%; white-space: pre-line; text-align:left">
@@ -126,7 +129,7 @@ export default {
                 if( !this.isPressed){
                     if(this.isAnswer === true){
                         let correct_sound = new Audio('/sound/correct1.mp3');
-                        correct_sound.volume = 0.1;
+                        correct_sound.volume = 0.05;
                         correct_sound.play();
                         if(this.mode === "MF"){
                             let question_voice = new Audio('/sound/word/' + this.word.id + '.mp3');
@@ -136,7 +139,7 @@ export default {
 
                     }else{
                         let wrong_sound = new Audio('/sound/wrong1.mp3');
-                        wrong_sound.volume = 0.3;
+                        wrong_sound.volume = 0.1;
                         wrong_sound.play();
                     }
                 }

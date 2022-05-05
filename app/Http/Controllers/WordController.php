@@ -316,26 +316,59 @@ class WordController extends Controller
     public function search(Request $request)
     {
         $keyword = $request->input('keyword');
-        $query_name = Word::query();
-        $query_jp = Word::query();
-        $query_kanji = Word::query();
-        $query_tag = Tag::query();
+        $keyword = preg_replace("/　|・|「|」|、|。|,|\.|:|;|\/|\\|／|￥/"," ",$keyword);
 
-        if(!empty($keyword)){
-            $query_name->where('no_diacritic','like','%'.mb_strtolower($keyword).'%');
-            $query_jp->where('jp','like','%'.$keyword.'%');
-            $query_kanji->where('kanji0','like','%'.$keyword.'%');
+        if(strlen(str_replace(" ","",$keyword)) > 0){
+
+            //完全一致
+            $query_name_exact = Word::where('name', $keyword);
+            $exact_list = $this->get_name_list($query_name_exact);
+            $words_name_exact = $query_name_exact->paginate(20)->sortBy('level');
+
+            //だいたい同じ
+            $query_name_similar = Word::where('no_diacritic',mb_strtolower($this->simplify_vowel($keyword)))->whereNotIn('name', $exact_list);
+            $words_name_similar = $query_name_similar->paginate(20)->sortBy('level');            
+            $similar_list = array_merge($exact_list, $this->get_name_list($query_name_similar));
+            
+            //なんか似てる
+            $query_name_simplified = Word::where('simplified',mb_strtoupper($this->simplify_word($this->simplify_vowel($keyword))))->whereNotIn('name',$exact_list)->whereNotIn('name',$similar_list);
+            $words_name_simplified = $query_name_simplified->paginate(20)->sortBy('level');
+            $simplified_list = array_merge($similar_list, $this->get_name_list($query_name_simplified));
+
+            //音節が一致
+            $keyword_syllables = explode(' ', $keyword, 5);
+            $query_name_syllables = Word::where(function($query) use ($keyword_syllables) {
+                foreach($keyword_syllables as $keyword_syllable){
+                    for($n=0; $n<8; $n++){
+                        $name_n = 'name' . $n;                    
+                        $query->Orwhere($name_n, $keyword_syllable);
+                    }
+                }
+            });
+            $query_name_syllables = $query_name_syllables->whereNotIn('name',$exact_list)->whereNotIn('name',$similar_list)->whereNotIn('name',$simplified_list);
+            $words_name_syllables = $query_name_syllables->paginate(20)->sortBy('level');
+
+            //意味が該当
+            $query_jp = Word::where('jp','like','%'.$keyword.'%');
+            $words_jp = $query_jp->paginate(20)->sortBy('level');
+
+            //漢字が該当
+            $query_kanji = Word::where('kanji0','like','%'.$keyword.'%');
                 for($i=1;$i<8;$i++){
                     $query_kanji->orWhere('kanji'. $i, 'like', '%'.$keyword.'%');
                 }
-            $query_tag->where('name','like','%'.$keyword.'%');
+            $words_kanji = $query_kanji->paginate(20)->sortBy('level');        
 
-            $words_name = $query_name->paginate(20);
-            $words_jp = $query_jp->paginate(20);        
-            $words_kanji = $query_kanji->paginate(20);        
+            //タグが該当
+            $query_tag = Tag::where('name','like','%'.$keyword.'%');
             $tags = $query_tag->paginate(20);           
+
             $msg = '「' . $keyword . '」の検索結果';  
         }else{
+            $words_name_exact = [];
+            $words_name_similar = [];
+            $words_name_simplified = [];
+            $words_name_syllables = [];
             $words_name = [];
             $words_jp = [];
             $words_kanji = [];
@@ -343,8 +376,25 @@ class WordController extends Controller
             $msg = '検索キーワードを入力してください。';
         }
         
-        return view('words.search')->with('keyword',$keyword)->with('words_name',$words_name)->with('words_jp',$words_jp)->with('words_kanji',$words_kanji)->with('tags',$tags)->with('msg', $msg);
+        return view('words.search')->with('keyword',$keyword)->
+        with('words_name_exact',$words_name_exact)->
+        with('words_name_similar',$words_name_similar)->
+        with('words_name_simplified',$words_name_simplified)->
+        with('words_name_syllables',$words_name_syllables)->
+        with('words_jp',$words_jp)->
+        with('words_kanji',$words_kanji)->
+        with('tags',$tags)->with('msg', $msg);
 
+    }
+
+    public function get_name_list($query_name) {
+        $name_list = array_map(
+            function ($element) { 
+                return $element['name']; 
+            },
+            $query_name->get()->toArray()
+        );
+        return $name_list;
     }
 
     public function choose(){

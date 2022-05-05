@@ -1,14 +1,19 @@
-<div class="card-plain mb-2  pt-0 pb-1 pl-1 pr-3 white rounded">
-  <div class="card-body d-flex flex-row">
-    <div style ="width:50%">
-    <div class="d-flex flex-row">
+<div class="text-dark card-plain mb-2  pt-0 pb-1 pl-1 pr-3 white shadow rounded">
+  <div class=" card-body pl-0 d-flex flex-row">
+    <div style ="">
+      <div class="d-flex flex-row">
+        <div class="text-nowrap" style ="">
+          <div style="height:40px"><p style="line-height: 40px;text-align:right;width:70px;font-size:0.7rem">ベトナム語：&nbsp;</p></div>  
+          <div style="height:40px"><p style="line-height: 40px;text-align:right;width:70px;font-size:0.8rem">漢字：&nbsp;</p></div>  
+        </div>
         @foreach(array(0,1,2,3,4,5,6,7) as $i)
+          @php
+            $name = "name" . $i;
+          @endphp        
+          @if($word->$name!==null)
           <div>
-            <div class="mx-auto pr-2" style="width:100%">
-              @php
-                $name = "name" . $i;
-              @endphp
-              <span class="card-title" style="font-size:2em">      
+            <div class="mx-auto pr-2" style="height:40px; width:100%">
+              <span class="card-title" style="height:40px; font-size:2rem">      
                 <a class="text-dark" href="{{ route('words.show', ['word' => $word]) }}">
                   {{$word->$name}}
                 </a>
@@ -26,46 +31,60 @@
               @endif
             </div>
           </div>
-        @endforeach    
+          @endif
+        @endforeach   
       </div>
-    </div>
-    <div class="card-body pt-0" style="width:50%">
-      <div class="text-dark card-text" style="white-space: pre-line;">
-        {{ $word->jp }}
-      </div>
-      <br>
-      <br>
-      <div>
-        @php
-          $search_word = implode("+", explode(" ", $word->name, 8) );
-        @endphp
-        <a href={{'https://www.google.co.jp/search?q='.$search_word.'&tbm=isch'}} target="_blank" rel="noopener noreferrer">単語のイメージを確認</a>
-      </div>
+
+      @php
+        $file_name = '/sound/word/'.$word->id.'.mp3';
+      @endphp      
+      @if(file_exists(public_path().$file_name))
+        <div class="m-2 pl-1 border border-primary rounded" style="width:320px">
+          <div class="text-primary mb-0 pb-0" style="text-align:left;font-size:0.8rem">発音を確認</div>
+          <div class="ml-3 mt-0 pt-0" style="">
+              <audio controls src={{$file_name}} class="ml-2" style="height:30px;width:280px;"><audio>
+          </div>      
+        </div>
+      @endif
+      <div class="d-flex flex-row mt-2" style="white-space: pre-line;">
+        <div class="pt-2" style="width:70px;text-align:right;font-size:0.8rem">意味：&nbsp;</div>
+        <div style="font-size:1.2rem">{{ $word->jp }}</div>
+      </div>      
+
+      @php
+        $search_word = implode("+", explode(" ", $word->name, 8) );
+      @endphp
+      <div class="mt-2 mb-2" style="width:190px">
+        <a href={{'https://www.google.co.jp/search?q='.$search_word.'&tbm=isch'}} class="text-success" target="_blank" rel="noopener noreferrer">
+          <div class="ml-2 mt-2 pl-1 d-flex flex-row border border-success rounded" style="width:180px">
+            <div>
+              <span class="mt-0 pt-0" style="font-size:0.8rem">単語のイメージを確認</span>
+            </div>
+            <div class="ml-2"> 
+              <i class="fas fa-image" style="font-size:2.0rem"></i> 
+            </div>
+          </div>
+          <div class="text-black-50" style=" font-size:0.8rem;float:right;">※画像検索が開きます</div>                
+        </a>        
+      </div>      
+      <div class="d-flex flex-row pt-3" style="">
+        <div class="pt-1" style="width:50px;text-align:right;font-size:0.8rem">Level：&nbsp;</div>
+        <div style="font-size:1.0rem">{{ $word->level }}</div>
+      </div>      
     </div>
   </div>
  
   <div class="card-body pt-0" >
-    <div class="text-dark card-text">
+    <div class="">
       {{ $word->detail }}
     </div>
-    <div class="text-dark small ml-4 card-text">
-      符号なし: {{ $word->no_diacritic }}
-    </div>      
-    <!-- <div class="text-dark small ml-4 card-text">
-      simplified: {{ $word->simplified }}
-    </div>       -->
   </div>    
-  <div class="d-flex flex-row">
-    <div class="text-dark small ml-4 card-text">
-      Lv.{{ $word->level }}
-    </div>
-
+  <div class=" d-flex flex-row">
     @if( Auth::id() === $word->user_id )
       <!-- dropdown -->
-      <div class="ml-auto card-text d-flex flex-column-reverse">
-        
+      <div class="ml-auto d-flex flex-column-reverse">
         <div class="dropdown">
-          <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="text-black-50" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-ellipsis-v"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right">

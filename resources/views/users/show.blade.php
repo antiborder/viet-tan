@@ -50,7 +50,7 @@
             @endphp
 
             @if($learned[$s['level']] !==0)
-              <a type="button" class="border text-success border-success rounded px-1 pt-1 " data-toggle="modal" data-target="{{'#'.$modal}}" style="font-size:1.0rem; height:30px;max-width:60px">
+              <a type="button" class="text-primary border border-primary rounded px-1 pt-1 " data-toggle="modal" data-target="{{'#'.$modal}}" style="font-size:1.0rem; height:30px;max-width:60px">
               &nbsp;詳細&nbsp;
               </a>
             @else 
@@ -61,7 +61,7 @@
 
           </td>
           <td style="font-size:0.8rem; max-width:45px ;">           
-            <a type="button" class="text-primary border border-primary rounded px-1 pt-1"  href="{{'/learn/'.$s['level']}}" style="font-size:0.8rem; height:30px;text-align:left">
+            <a type="button" class="text-info border border-info rounded px-1 pt-1"  href="{{'/learn/'.$s['level']}}" style="font-size:1.0rem; height:30px;text-align:left">
             &nbsp;&nbsp;&nbsp;▶&nbsp;&nbsp;&nbsp;
             </a>            
           </td>

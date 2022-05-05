@@ -5,17 +5,17 @@
 @section('content')
   @include('nav')
   <div class="container">
-    <div class="card mt-3 mb-0 pb-1 pl-2 pr-2 light-blue lighten-1  text-white">
-      単語詳細
+    <div class="card mt-3 mb-0 pb-2 pl-2 pr-2 border-warning bg-transparent text-warning" style="border-width:2px">
+      <span style=";font-size:1.2rem">単語詳細</span>
       @include('words.detail')
 
       @foreach($word->tags as $tag)
         @if($loop->first)
-          <span>
-            関連タグ&ensp;
+          <span class="mt-1">
+          <span style=";font-size:1.2rem">関連タグ&ensp;</span>
         @endif
 
-            <a class="text-dark white pl-1 pr-1 mr-2 rounded" href="{{ route('tags.show', ['name' => $tag->name]) }}" class="border p-1 mr-1 mt-1 text-muted">
+            <a class="text-dark white p-1 mr-2 rounded shadow" href="{{ route('tags.show', ['name' => $tag->name]) }}" style="font-size:1.2rem">
               {{ $tag->name }}
             </a>              
 
@@ -23,43 +23,51 @@
           </span>        
         @endif
       @endforeach            
-
     </div>
 
-    <div class="card mt-3 mb-1 pl-2 pr-2 orange lighten-1 text-white" style="color: white; max-width: 30rem;">
-      @foreach($word->synonyms() as $synonym)
-        @if($loop->first)
-          同義語
-        @endif      
-        @include('words.card',['word'=>$synonym])
-      @endforeach    
-    </div>
+    @foreach($word->synonyms() as $synonym)
+      @if($loop->first)
+        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-primary bg-transparent text-primary" style="color: white; max-width: 30rem;border-width:2px">        
+        <span style=";font-size:1.2rem">類義語</span>
+      @endif      
+      @include('words.card',['word'=>$synonym])
+      @if($loop->last)
+        </div>
+      @endif
+    @endforeach    
+    
+    @foreach($word->antonyms() as $antonym)
+      @if($loop->first)
+        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-danger bg-transparent text-danger" style="color: white; max-width: 30rem;border-width:2px">        
+        <span style=";font-size:1.2rem">対義語</span>
+      @endif
+      @include('words.card',['word'=>$antonym])
+      @if($loop->last)
+        </div>
+      @endif
+    @endforeach
+    
+    @foreach($similar_pronuciations as $similar_pronuciation)
+      @if($loop->first)
+        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-info bg-transparent text-info" style="color: white; max-width: 30rem;border-width:2px">
+          <span style=";font-size:1.2rem">似てる単語</span>
+      @endif
+      @include('words.card',['word'=>$similar_pronuciation])
+      @if($loop->last)
+        </div>
+      @endif
+    @endforeach        
 
-    <div class="card mt-3 mb-1 pl-2 pr-2 orange lighten-1 text-white" style="color: white; max-width: 30rem;">
-      @foreach($word->antonyms() as $antonym)
-        @if($loop->first)
-          対義語
-        @endif
-        @include('words.card',['word'=>$antonym])
-      @endforeach
-    </div>
-
-    <div class="card mt-3 mb-1 pl-2 pr-2 orange lighten-1 text-white" style="color: white; max-width: 30rem;">        
-      @foreach($similar_pronuciations as $similar_pronuciation)
-        @if($loop->first)
-          発音が類似
-        @endif
-        @include('words.card',['word'=>$similar_pronuciation])
-      @endforeach        
-    </div>
-
-    <div class="card mt-3 mb-1 pl-2 pr-2 orange lighten-1 text-white" style="color: white; max-width: 30rem;">    
-      @foreach($common_syllables as $common_syllable)
-        @if($loop->first)
-          音節が一致
-        @endif
-        @include('words.card',['word'=>$common_syllable])
-      @endforeach        
-    </div>
+    @foreach($common_syllables as $common_syllable)
+      @if($loop->first)
+      <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-success bg-transparent text-success" style="color: white; max-width: 30rem;border-width:2px">
+      <span style=";font-size:1.2rem">同じ音節を含む単語</span>
+      @endif
+      @include('words.card',['word'=>$common_syllable])
+      @if($loop->last)
+        </div>
+      @endif
+    @endforeach        
+    
   </div>
 @endsection
