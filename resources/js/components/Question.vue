@@ -3,13 +3,13 @@
 //類義語対義語の数を20個くらいに増やす。
 //toppageにアプリ説明。と学習の使い方。トップページとナビバーレイアウト。ロゴ。
 //toppageにはお知らせ。レベル表。
-//単語detailの表示
+//学習：自己評価ボタンのテキストと色を変更し、定数化。学習結果の「単語をクリックすると詳細ページに飛びます。」
 //問い合わせフォーム。
 //検索機能：音節が類似も載せたい。
 //loadingのときのグルグルマーク
 //ユーザー名は英数字のみに。
 //ユーザ管理。権限レベル毎に管理。個人ページは本人と管理者しか見れないように。検索結果の表示をレベル毎に変える。
-//理解度ボタンにおおよその時間数日数を表示。おすすめレベル
+//理解度ボタンにおおよその時間数日数を表示。おすすめレベル。RESULTとCLEARは表示を共有する。表示位置を上に移動する。
 //Googleadsense
 //過去24時間以内で生まれた学習計画
 //チョイスのスピーカーマークで音声再生。
@@ -17,6 +17,7 @@
 //単語力測定
 //例文のデータベース
 //正解すると学習がデータベースに登録されずにまた出題されるエラー？
+//数字集中トレーニング。
 //level11でエラーが出る単語：紺色とスポンジ。意味が???になる単語：劇 この他に、詳細が出ない単語が結構ある。level7でエラーが出る単語：インド、紫、枕。level4でエラーが出る単語：黄色。
 //ユーザ権限を考慮したランダムモード実装。学習計画からレベルごとに非表示する機能。レベルごとに履歴消去の機能。
 //様々なパラメータを定数化。単語の音節数とか、タグ数とか、問題の選択肢の数だとか。類義語などの数を増やす。
@@ -35,7 +36,6 @@
   <div class="mx-auto" style="text-align:center; max-width:700px;">
     <div style="text-align:left">
       Lv.:{{level}}　正解率: {{correct}} / {{total}}
-      {{user_name}}
     </div>
 
     <!-- 最初の画面 -->
@@ -173,10 +173,10 @@
             <tr v-for="e in this.history">
               <td>{{e.No}}</td>
               <td style="font-size:1.3rem">&nbsp;{{e.name}}&nbsp;</td>
-              <td v-if="e.level==='REVIEW_ALL'" style="font-size:1.0rem">
+              <!-- <td v-if="e.level==='REVIEW_ALL'" style="font-size:1.0rem">
                 復習
-              </td>
-              <td v-else style="font-size:1.0em">
+              </td> -->
+              <td style="font-size:1.0em">
                 {{e.level}}
               </td>
               <td>
@@ -193,7 +193,7 @@
           </table>
           <div style="text-align:right">正解率： {{correct}}/{{total}}</div>
         </div> 
-        <div class="mt-1 mb-1" v-if="level===REVIEW_ALL">
+        <div class="mt-1 mb-1" v-if="level==='REVIEW_ALL'">
           現時点で復習可能な単語は以上です。
         </div>
         <div v-else class="mt-1 mb-1">
@@ -229,6 +229,7 @@
         answer_F: " ",
         answer_M: " ",
         answer_id: 0,
+        answer_level: 1,
         status : "INITIAL",
         sec: 0,
         timerOn: false, 
@@ -369,7 +370,7 @@
 
       clickButton(n) { //次の単語に進むボタンをクリック
         this.sec = 0;
-        this.history.push({'No':this.total, 'name':this.answer_F, 'easiness':n, 'level':this.level, 'id':this.answer_id});
+        this.history.push({'No':this.total, 'name':this.answer_F, 'easiness':n, 'level':this.answer_level, 'id':this.answer_id});
         this.recordLearn(n);
         if(this.total >= 10){
           this.status = "RESULT"
@@ -439,6 +440,7 @@
         this.answer_F = formated.syllables.join(" ");
         this.answer_M = formated.jp;
         this.answer_id = formated.id;
+        this.answer_level = formated.level;
 
         let question_sound = new Audio('/sound/question1.mp3');
         question_sound.volume = 0.3;
