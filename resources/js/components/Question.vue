@@ -1,19 +1,18 @@
-//***課金システム。terms of use。privacy policy。
-//googleSearchConsoleなど。
 //類義語対義語の数を20個くらいに増やす。
+//googleSearchConsoleなど。
+//ssl認証
+//***課金システム。terms of use。privacy policy。
 //toppageにアプリ説明。と学習の使い方。トップページとナビバーレイアウト。ロゴ。
 //toppageにはお知らせ。レベル表。
-//学習：自己評価ボタンのテキストと色を変更し、定数化。学習結果の「単語をクリックすると詳細ページに飛びます。」
 //問い合わせフォーム。
 //検索機能：音節が類似も載せたい。
 //loadingのときのグルグルマーク
 //ユーザー名は英数字のみに。
 //ユーザ管理。権限レベル毎に管理。個人ページは本人と管理者しか見れないように。検索結果の表示をレベル毎に変える。
-//理解度ボタンにおおよその時間数日数を表示。おすすめレベル。RESULTとCLEARは表示を共有する。表示位置を上に移動する。
+//理解度ボタンにおおよその時間数日数を表示。おすすめレベル。
 //Googleadsense
 //過去24時間以内で生まれた学習計画
 //チョイスのスピーカーマークで音声再生。
-//ssl認証
 //単語力測定
 //例文のデータベース
 //正解すると学習がデータベースに登録されずにまた出題されるエラー？
@@ -25,6 +24,7 @@
 //学習単語がなくなった時の処理と、今日の学習完了の判定条件。とメッセージ。学習完了メッセージとその後のrouteをもっと真面目にやる。
 //タグ一覧
 //WordControllerのupdate、create、importの共通部分をまとめたい。
+//単語力測定結果をtwitterに報告。facebookに報告。レベル上昇も報告。
 //テスト実装
 
 //時刻はどの場所の時刻になるのか、ぶれないように確認必要。
@@ -35,7 +35,7 @@
 <template>
   <div class="mx-auto" style="text-align:center; max-width:700px;">
     <div style="text-align:left">
-      Lv.:{{level}}　正解率: {{correct}} / {{total}}
+      Lv.:{{level}}　正解率: {{correct}} / {{total}} {{status}}
     </div>
 
     <!-- 最初の画面 -->
@@ -65,7 +65,7 @@
     </div>          
 
     <!-- 出題画面 -->        
-    <div class="mt-1 d-flex flex-row" style=" height: 55px;">
+    <div v-if="status!=='RESULT' && status!=='CLEARED'" class="mt-1 d-flex flex-row" style=" height: 55px;">
       <div v-bind:class="result_text_color" class="text-nowrap pt-1" style="text-align:left; width:20%; font-size: 1.0rem;"> 
         {{result_text}}
       </div>
@@ -107,110 +107,73 @@
       {{sec}}
     </div>
 
-    <!-- 結果表示 -->
-    <div v-if="status==='RESULT'" class="card white rounded mt-5 mx-auto" style="text-align:center; max-width:400px; font-size: 1.2 rem;">
-      <div class="card-body" >
-        <table style="margin:auto; border-collapse: separate; border-spacing: 0px 0px; min-width:90%">
-          <tr >
-            <th></th>
-            <th style="min-width:70%">単語</th>
-            <th>level</th>
-            <th>結果</th>
-            <th></th>                                                
-          </tr >          
-          <tr v-for="e in this.history">
-            <td>{{e.No}}</td>
-            <td style="font-size:1.3rem">&nbsp;{{e.name}}&nbsp;</td>
-            <td v-if="e.level==='REVIEW_ALL'" style="font-size:1.0rem">
-              復習
-            </td>
-            <td v-else style="font-size:1.0em">
-              {{e.level}}
-            </td>
-            <td>
-              <button type="button" v-bind:class="baseColors[e.easiness]" class="btn btn-sm rounded pt-1 pb-1 px-2 text-nowrap shadow-none"style="height:27px; max-width: 100px; font-size: 0.8rem;">
-                {{button_properties[e.easiness].text}}
-              </button>
-            </td>            
-            <td>
-              <a v-bind:href="'/words/'+e.id" type="button" class="text-primary border border-primary rounded px-1 pt-1 text-nowrap" target="_blank" rel="noopener noreferrer" style="font-size:0.9rem; height:27px;max-width:60px">
-                &nbsp;詳細&nbsp;
-              </a>
-            </td>
-          </tr>
-        </table>
-        <div style="text-align:right">正解率： {{correct}}/{{total}}</div>
-        <div>
-          <button @click="clickStart()" type="button" class="btn btn-info light-blue accent-4 rounded p-1 mt-3 text-nowrap" style="width: 240px; font-size: 1.3rem;">
-            続ける ▶
-          </button>
-        </div>        
-        <div v-if="this.user_name===''">
-          <a type="button" href="/" class="btn btn-info orange lighten-1 rounded p-1 mt-2 text-nowrap" style="width: 240px; font-size: 1.3rem;">
-            Topページに戻る
-          </a>
-        </div>
-        <div v-else >
-          <a type="button" class="btn btn-info teal accent-4 rounded p-1 mt-2 text-nowrap" style="width: 240px; font-size: 1.3rem;" v-bind:href="'/users/'+user_name">
-            学習状況を確認
-          </a>
-        </div>
-      </div>
-    </div>    
-
-    <!-- CLEAR -->    
-    <div v-if="status==='CLEARED'" class="card white rounded mt-5 mx-auto" style="text-align:center; max-width:400px; font-size: 1.2 rem;">
+    <!-- 結果表示 RESULT and CLEARED-->
+    <div v-if="status==='RESULT' || status==='CLEARED' " class="card white rounded mt-5 mx-auto" style="text-align:center; max-width:400px; font-size: 1.2 rem;">
       <div class="card-body" >
         <div v-if="total > 0" class="mb-2">
-          <table style="margin:auto; border-collapse: separate; border-spacing: 0px 0px; min-width:90%">
+          <div class="text-muted" style="font-size:0.8rem">単語をクリックすると詳細ページが開きます。</div>
+          <table class="blue-grey lighten-5 rounded" style="margin:auto; border-collapse: separate; border-spacing: 0px 0px; min-width:90%">
             <tr >
               <th></th>
               <th style="min-width:70%">単語</th>
               <th>level</th>
               <th>結果</th>
-              <th></th>                                                
             </tr >          
             <tr v-for="e in this.history">
               <td>{{e.No}}</td>
-              <td style="font-size:1.3rem">&nbsp;{{e.name}}&nbsp;</td>
-              <!-- <td v-if="e.level==='REVIEW_ALL'" style="font-size:1.0rem">
+              <td style="font-size:1.3rem">
+                <a v-bind:href="'/words/'+e.id" class="white text-dark rounded" type="button" target="_blank" rel="noopener noreferrer">
+                &nbsp;{{e.name}}&nbsp;
+                </a>
+              </td>
+              <td v-if="e.level==='REVIEW_ALL'" style="font-size:1.0rem">
                 復習
-              </td> -->
-              <td style="font-size:1.0em">
+              </td>
+              <td v-else style="font-size:1.0em">
                 {{e.level}}
               </td>
               <td>
-                <button type="button" v-bind:class="baseColors[e.easiness]" class="btn btn-sm rounded pt-1 pb-1 px-2 text-nowrap shadow-none"style="height:27px; max-width: 100px; font-size: 0.8rem;">
+                <button type="button" v-bind:class="baseColors[e.easiness]" class="btn btn-sm rounded pt-1 pb-1 px-2 text-dark text-nowrap shadow-none"style="height:27px; max-width: 100px; font-size: 0.8rem;">
                   {{button_properties[e.easiness].text}}
                 </button>
               </td>            
-              <td>
-                <a v-bind:href="'/words/'+e.id" type="button" class="text-primary border border-primary rounded px-1 pt-1 text-nowrap" target="_blank" rel="noopener noreferrer" style="font-size:0.9rem; height:27px;max-width:60px">
-                  &nbsp;詳細&nbsp;
-                </a>
-              </td>
             </tr>
           </table>
           <div style="text-align:right">正解率： {{correct}}/{{total}}</div>
-        </div> 
-        <div class="mt-1 mb-1" v-if="level==='REVIEW_ALL'">
-          現時点で復習可能な単語は以上です。
         </div>
-        <div v-else class="mt-1 mb-1">
-          レベル{{level}}の単語は以上です。
+        
+        <div v-if="status==='CLEARED'">
+          <div v-if="level==='REVIEW_ALL'" class="mt-1 mb-1" >
+            現時点で復習可能な単語は以上です。
+          </div>
+          <div v-else class="mt-1 mb-1">
+            レベル{{level}}の単語は以上です。
+          </div>
         </div>
-        <div>
-          <a type="button" class="btn btn-info teal accent-4 rounded p-1 mt-2 text-nowrap" style="width: 240px; font-size: 1.3rem;" v-bind:href="'/users/'+user_name">
+        <div v-if="status==='RESULT' ">
+          <button @click="clickStart()" type="button" class="btn btn-info light-blue accent-4 rounded p-1 mt-3 text-nowrap" style="width: 240px; font-size: 1.3rem;">
+            続ける ▶
+          </button>
+        </div>
+        <div v-if="status==='RESULT'">
+          <div v-if="this.user_name===''">
+            <a type="button" href="/" class="btn btn-info orange lighten-1 rounded p-1 mt-2 text-nowrap" style="width: 240px; font-size: 1.3rem;">
+              Topページに戻る
+            </a>
+          </div>
+        </div>
+        <div v-if="this.user_name!==''">
+          <a type="button" class="btn btn-info orange lighten-1 rounded p-1 mt-2 text-nowrap" style="width: 240px; font-size: 1.3rem;" v-bind:href="'/users/'+user_name">
             学習状況を確認
           </a>
         </div>
-        <div>
+        <div v-if="status==='CLEARED' ">
           <button @click="initialize()" type="button" class="btn btn-info light-blue accent-4 rounded p-1 mt-2 text-nowrap" style="width: 240px; font-size: 1.3rem;">
             レベルを変更
           </button>
-        </div>      
+        </div>              
       </div>
-    </div>        
+    </div>    
 
   </div>
 </template>
@@ -241,12 +204,12 @@
         isCorrect: null,
         button_properties:[
           { text:"まだ。"},
-          { text:"びみょう..."},
+          { text:"びみょう"},
           { text:"覚えた!"},
           { text:"余裕♪"},
         ],
         history:[],
-        baseColors:[" green accent-1", " green accent-2", "green accent-3", "green accent-4 text-white"],
+        baseColors:[" red lighten-4", " yellow lighten-4", " green lighten-4", " blue lighten-4"],
       }
     },
 
@@ -398,6 +361,7 @@
         ).then(response => {
           console.log('status:', response.status); // 200
           console.log('data:', response.data); //
+          console.log('response:', response); //
         }).catch(err => {
           console.log('err:', err);
         });        
