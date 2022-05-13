@@ -37,13 +37,13 @@
 
 <div class="form-group">
   <label>類義語</label> <br>
-  @for($i = 0; $i < 5 ; $i++)
+  @for($i = 0; $i < config('const.SYNONYM_MAX') ; $i++)
     <input class="mb-1" type="text" name="{{'synonym'. $i}}" class="form-control" value="{{$synonyms[$i]}}">
   @endfor
 </div>
 <div class="form-group">
   <label>対義語</label> <br>
-  @for($i = 0; $i < 5 ; $i++)
+  @for($i = 0; $i < config('const.ANTONYM_MAX') ; $i++)
     <input class="mb-1" type="text" name="{{'antonym'. $i}}" class="form-control" value="{{$antonyms[$i]}}">
   @endfor
 </div>

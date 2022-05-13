@@ -1,12 +1,10 @@
-//類義語対義語の数を20個くらいに増やす。
-//googleSearchConsoleなど。
 //ssl認証
+//googleSearchConsoleなど。
 //***課金システム。terms of use。privacy policy。
 //toppageにアプリ説明。と学習の使い方。トップページとナビバーレイアウト。ロゴ。
 //toppageにはお知らせ。レベル表。
 //問い合わせフォーム。
 //検索機能：音節が類似も載せたい。
-//loadingのときのグルグルマーク
 //ユーザー名は英数字のみに。
 //ユーザ管理。権限レベル毎に管理。個人ページは本人と管理者しか見れないように。検索結果の表示をレベル毎に変える。
 //理解度ボタンにおおよその時間数日数を表示。おすすめレベル。
@@ -14,6 +12,7 @@
 //過去24時間以内で生まれた学習計画
 //チョイスのスピーカーマークで音声再生。
 //単語力測定
+//topページカルーセル
 //例文のデータベース
 //正解すると学習がデータベースに登録されずにまた出題されるエラー？
 //数字集中トレーニング。
@@ -21,11 +20,13 @@
 //ユーザ権限を考慮したランダムモード実装。学習計画からレベルごとに非表示する機能。レベルごとに履歴消去の機能。
 //様々なパラメータを定数化。単語の音節数とか、タグ数とか、問題の選択肢の数だとか。類義語などの数を増やす。
 //Ｎ+1問題。
+//exportに類義語と対義語を入れる。
 //学習単語がなくなった時の処理と、今日の学習完了の判定条件。とメッセージ。学習完了メッセージとその後のrouteをもっと真面目にやる。
 //タグ一覧
 //WordControllerのupdate、create、importの共通部分をまとめたい。
 //単語力測定結果をtwitterに報告。facebookに報告。レベル上昇も報告。
 //テスト実装
+
 
 //時刻はどの場所の時刻になるのか、ぶれないように確認必要。
 //代入には$setを使う。
@@ -35,7 +36,7 @@
 <template>
   <div class="mx-auto" style="text-align:center; max-width:700px;">
     <div style="text-align:left">
-      Lv.:{{level}}　正解率: {{correct}} / {{total}} {{status}}
+      Lv.:{{level}}　正解率: {{correct}} / {{total}}
     </div>
 
     <!-- 最初の画面 -->
@@ -89,6 +90,9 @@
     </div>    
 
     <!-- メッセージ -->
+    <div v-if="status==='LOADING' " class="spinner-border text-muted " role="status" style="width: 3rem; height: 3rem;">
+      <span class="sr-only">Loading...</span>
+    </div>    
     <div v-if="status==='LOADING' || status==='PROMPT' || status==='JUDGED' " class="pt-2" style=" text-align:center; height: 60px;">
       <span>
         {{message}}
@@ -218,7 +222,7 @@
         if(this.status==="INITIAL"){
           return "";
         }else if(this.status==="LOADING"){
-          return "Now Loading";
+          return "";//"Now Loading";
         }else if(this.status==="PROMPT"){
           return "単語の意味を選んでください";
         }else if(this.status==="JUDGED"){
