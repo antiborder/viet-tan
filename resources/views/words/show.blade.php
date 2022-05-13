@@ -14,7 +14,6 @@
           <span class="mt-1">
           <span style=";font-size:1.2rem">関連タグ&ensp;</span>
         @endif
-
             <a class="text-dark white p-1 mr-2 rounded shadow" href="{{ route('tags.show', ['name' => $tag->name]) }}" style="font-size:1.2rem">
               {{ $tag->name }}
             </a>              

@@ -45,11 +45,11 @@ class WordController extends Controller
         });
 
         $synonyms = [];
-        for($i=0; $i<5; $i++){
+        for($i=0; $i<config('const.SYNONYM_MAX'); $i++){
             $synonyms[] = "";
         }
         $antonyms = [];
-        for($i=0; $i<5; $i++){
+        for($i=0; $i<config('const.ANTONYM_MAX'); $i++){
             $antonyms[] = "";
         }        
 
@@ -105,7 +105,7 @@ class WordController extends Controller
         //synonym
         $word -> syno_followings() -> detach();        
         $word -> syno_followers() -> detach();        
-        for($i=0;$i<5;$i++){
+        for($i=0;$i<config('const.SYNONYM_MAX');$i++){
             $synonym_n = "synonym" . $i;
             if($request->$synonym_n != '')
             {
@@ -131,7 +131,7 @@ class WordController extends Controller
         //antonym
         $word -> anto_followings() -> detach();        
         $word -> anto_followers() -> detach();        
-        for($i=0;$i<5;$i++){
+        for($i=0;$i<config('const.ANTONYM_MAX');$i++){
             $antonym_n = "antonym" . $i;
             if($request->$antonym_n != '')
             {
@@ -154,7 +154,7 @@ class WordController extends Controller
             }
         }
 
-        return redirect()->route('words.index');
+        return redirect()->route('index');
     }
     public function edit(Word $word)
     {
@@ -166,7 +166,7 @@ class WordController extends Controller
         });
 
         $synonyms = [];
-        for($i=0; $i<5; $i++){
+        for($i=0; $i<config('const.SYNONYM_MAX'); $i++){
             $synonym= $word->synonyms()->get($i);
             if($synonym !== null){
                 $synonyms[] = $synonym->name;
@@ -175,7 +175,7 @@ class WordController extends Controller
             }
         }
         $antonyms = [];
-        for($i=0; $i<5; $i++){
+        for($i=0; $i<config('const.ANTONYM_MAX'); $i++){
             $antonym= $word->antonyms()->get($i);
             if($antonym !== null){
                 $antonyms[] = $antonym->name;
@@ -239,7 +239,7 @@ class WordController extends Controller
         //synonym
         $word -> syno_followings() -> detach();        
         $word -> syno_followers() -> detach();        
-        for($i=0;$i<5;$i++){
+        for($i=0;$i<config('const.SYNONYM_MAX');$i++){
             $synonym_n = "synonym" . $i;
             if($request->$synonym_n != '')
             {
@@ -265,7 +265,7 @@ class WordController extends Controller
         //antonym
         $word -> anto_followings() -> detach();        
         $word -> anto_followers() -> detach();        
-        for($i=0;$i<5;$i++){
+        for($i=0;$i<config('const.ANTONYM_MAX');$i++){
             $antonym_n = "antonym" . $i;
             if($request->$antonym_n != '')
             {
@@ -288,12 +288,12 @@ class WordController extends Controller
             }
         }
 
-        return redirect()->route('words.index');
+        return redirect()->route('index');
     }
     public function destroy(Word $word)
     {
         $word->delete();
-        return redirect()->route('words.index');
+        return redirect()->route('index');
     }
     public function show(Word $word)
     {
@@ -435,6 +435,9 @@ class WordController extends Controller
         // 登録処理
         $count = 0;
         foreach($dataList as $row){
+            if($row[0]===''){
+            break;
+            }
             $word = Word::firstOrNew(['name' => $row[0]]);
             $word->fill([
                 'jp' => $row[1],
@@ -492,7 +495,7 @@ class WordController extends Controller
             //synonym
             $word -> syno_followings() -> detach();        
             $word -> syno_followers() -> detach();        
-            for($i=0;$i<5;$i++){
+            for($i=0;$i<config('const.SYNONYM_MAX');$i++){
                 $synonym_n = "synonym" . $i;
                 $synonym_name = $row[13 + $i];
                 if($synonym_name != '')
@@ -519,9 +522,9 @@ class WordController extends Controller
             //antonym
             $word -> anto_followings() -> detach();        
             $word -> anto_followers() -> detach();        
-            for($i=0;$i<5;$i++){
+            for($i=0;$i<config('const.ANTONYM_MAX');$i++){
                 $antonym_n = "antonym" . $i;
-                $antonym_name = $row[18 + $i];
+                $antonym_name = $row[ 13+config('const.SYNONYM_MAX') + $i];
                 if($antonym_name != '')
                 {
                     $antonym = Word::where('name',$antonym_name)->first();
