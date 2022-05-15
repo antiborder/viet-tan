@@ -82,7 +82,7 @@
 
                   <!-- learned_nを配列にすれば少しきれいになる。 -->
                     @php
-                      $individual = [0=>"red lighten-4", 1=>"yellow lighten-4", 2=>"green lighten-4", 3=>"blue lighten-4", -1=>"blue-grey lighten-5"];
+                      $individual = [0=>"red lighten-4", 1=>"amber lighten-4", 2=>"lime lighten-4", 3=>"green lighten-4", -1=>"blue-grey lighten-5"];
                     @endphp
 
                     <div class="{{'progress-bar text-dark '.$individual[3]}}" role="progressbar" style="{{'width:' . (int)($learned_3[$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}"  aria-valuemin="0" aria-valuemax="100">{{$learned_3[$s['level']]}}</div>                    

@@ -298,18 +298,19 @@ class WordController extends Controller
     public function show(Word $word)
     {
         $target_words = Word::all();        
-        $common_syllables = [];
+        $common_syllables = collect([]);
         for($m=0; $m<8; $m++){
             for($n=0; $n<8; $n++){            
                 $name_n = 'name' . $n;
                 if($word->$name_n !== null){
-                    $addition = $target_words->where('name' . $m, $word->$name_n)->Where('name', '!==', $word->name)->all();
-                    $common_syllables = array_merge($common_syllables, $addition);
+                    $addition = Word::all()->where('name' . $m, $word->$name_n)->Where('name', '!==', $word->name);
+                    $common_syllables = $common_syllables->merge($addition);
                 }
             }
         }
-        $common_syllables = array_unique($common_syllables);        
-        $similar_pronuciations = Word::all()->where('no_diacritic', $word->no_diacritic)->where('name', '!==', $word->name)->all();        
+        $common_syllables = $common_syllables->unique();
+
+        $similar_pronuciations = Word::all()->where('no_diacritic', $word->no_diacritic)->where('name', '!==', $word->name)->sortBy('level');//->all()        
         return view('words.show', ['word' => $word, 'common_syllables' => $common_syllables, 'similar_pronuciations' => $similar_pronuciations]);
     }   
     

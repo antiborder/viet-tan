@@ -1,4 +1,3 @@
-//詳細ページの関連語もレベル順にソート。
 //googleSearchConsoleなど。
 //***課金システム。terms of use。privacy policy。
 //toppageにアプリ説明。と学習の使い方。トップページとナビバーレイアウト。ロゴ。
@@ -213,7 +212,7 @@
           { text:"余裕♪"},
         ],
         history:[],
-        baseColors:[" red lighten-4", " yellow lighten-4", " green lighten-4", " blue lighten-4"],
+        baseColors:[" red lighten-4", " amber lighten-4", " lime lighten-4", " green lighten-4"],
       }
     },
 
@@ -272,7 +271,7 @@
 
       },
       colors: function(){
-        // const baseColors = [" green accent-1", " green accent-2", "green accent-3", "green accent-4 text-white"];
+
         let colors = [];
         for(let i=0;i<=3;i++){
           if(i === this.recommendation){
