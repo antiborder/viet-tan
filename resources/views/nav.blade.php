@@ -1,6 +1,6 @@
 <nav class="navbar navbar-dark navbar-expand orange lighten-1 pb-0">
 
-  <a class="navbar-brand" href="/"><i class="far fa-sticky-note mr-1"></i>　</a>
+  <a class="navbar-brand" href="/"><i class="fas fa-bars"></i></a>
 
   <ul class="navbar-nav ml-auto">
 

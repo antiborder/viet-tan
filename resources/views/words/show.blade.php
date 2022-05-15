@@ -24,7 +24,7 @@
       @endforeach            
     </div>
 
-    @foreach($word->synonyms() as $synonym)
+    @foreach($word->synonyms()->sortBy('level') as $synonym)
       @if($loop->first)
         <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-primary bg-transparent text-primary" style="color: white; max-width: 30rem;border-width:2px">        
         <span style=";font-size:1.2rem">類義語</span>
@@ -35,7 +35,7 @@
       @endif
     @endforeach    
     
-    @foreach($word->antonyms() as $antonym)
+    @foreach($word->antonyms()->sortBy('level') as $antonym)
       @if($loop->first)
         <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-danger bg-transparent text-danger" style="color: white; max-width: 30rem;border-width:2px">        
         <span style=";font-size:1.2rem">対義語</span>

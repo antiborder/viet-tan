@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', '検索')
+@section('title', 'べとらん')
 
 @section('content')
   @include('nav')
