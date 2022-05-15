@@ -1,4 +1,4 @@
-//ssl認証
+//詳細ページの関連語もレベル順にソート。
 //googleSearchConsoleなど。
 //***課金システム。terms of use。privacy policy。
 //toppageにアプリ説明。と学習の使い方。トップページとナビバーレイアウト。ロゴ。
