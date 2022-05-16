@@ -308,7 +308,7 @@ class WordController extends Controller
                 }
             }
         }
-        $common_syllables = $common_syllables->unique();
+        $common_syllables = $common_syllables->unique()->sortBy('level');
 
         $similar_pronuciations = Word::all()->where('no_diacritic', $word->no_diacritic)->where('name', '!==', $word->name)->sortBy('level');//->all()        
         return view('words.show', ['word' => $word, 'common_syllables' => $common_syllables, 'similar_pronuciations' => $similar_pronuciations]);
