@@ -1,62 +1,71 @@
-<nav class="navbar navbar-dark navbar-expand orange lighten-1 pb-0">
+<nav class="navbar navbar-dark navbar-expand-md orange lighten-1 p-1 pb-0">
 
-  <a class="navbar-brand" href="/"><i class="fas fa-bars"></i></a>
-
-  <ul class="navbar-nav ml-auto">
-
-  <form class="form-inline mr-4" action="{{url('/search')}}">
-    <div class="input-group input-group-lg">
-      <div class="form-group mb-2">
-        <div class="">
-          <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control rounded-0" placeholder="検索" style="max-width:100px; min-width:50px">
+   <!-- Logo -->
+  <a href="/" class="navbar-brand ml-2  " style="font-size:1.1rem">vietnamese-learn.net</a>
+  
+  <!-- 検索 -->
+  <ul class="navbar-nav ml-0 d-flex flex-row ">
+    <li>
+      <form class="form-inline pt-2" action="{{url('/search')}}">
+        <div class="input-group input-group-lg">
+          <div class="form-group ml-0 mb-2">
+            <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control rounded-0" placeholder="検索" style="max-width:90px; min-width:50px">
+          </div>
+          <input type="submit" value="&#xf002;" class="fas text-white border-white rounded-right shadow-none" style="background:transparent; height:40px">
         </div>
-      </div>
-      <input type="submit" value="&#xf002;" class="fas text-white border-white rounded-right shadow-none" style="background:transparent; height:40px">
-    </div>
-  </form>  
+      </form>
+    </li>
 
-    @guest {{--この行を追加--}}
-    <li class="nav-item">
-      <a class="nav-link" href="{{ route('register') }}">ユーザー登録</a> {{--この行を変更--}}
-    </li>
-    @endguest {{--この行を追加--}}
+    </ul>     
+  <!--Humberger -->
+    <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon border border-muted border-2 rounded px-2 py-1 "></span>
+    </button>  
 
-    @guest {{--この行を追加--}}
-    <li class="nav-item">
-       <a class="nav-link" href="{{ route('login') }}">ログイン</a> {{--この行を編集--}}
-    </li>
-    @endguest {{--この行を追加--}}
-      
-    @auth {{--この行を追加--}}
-    <li class="nav-item">
-      <a class="nav-link" href="{{ route('users.show', ['name'=>Auth::user()->name]) }}" ><i class="fas fa-pen mr-1"></i>学習状況</a>
-    </li>
-    @endauth {{--この行を追加--}}
-    
-    @auth {{--この行を追加--}}
-    <!-- Dropdown -->
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-         aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-user-circle"></i>
-      </a>
-      <div class="dropdown-menu dropdown-menu-right dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-        <button class="dropdown-item" type="button"
-                onclick="location.href=''">
-          マイページ
-        </button>
-        <div class="dropdown-divider"></div>
-        <button form="logout-button" class="dropdown-item" type="submit">
-          ログアウト
-        </button>
-      </div>
-    </li>
-    <form id="logout-button" method="POST" action="{{ route('logout') }}"> {{--この行を編集--}}
-      @csrf {{--この行を追加--}}
-    </form>
-    <!-- Dropdown -->
-    @endauth {{--この行を追加--}}
+  
 
-  </ul>
+  <!-- menu list-->
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" style="width:300px;margin: 0 auto;">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="learn" >単語学習</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="search">あいまい検索</a>
+      </li>
+
+      @guest
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('login') }}">ログイン</a>
+        </li>
+      @endguest
+
+      @guest
+      <li class="nav-item">
+        <span class="">
+          <a href="{{ route('register')}}"class="text-white border border-white rounded px-2 py-1 mt-2 ml-1" style="font-size:1.0rem">無料登録</a>
+        </span>
+      </li>
+      @endguest      
+
+      @auth
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('users.show', ['name'=>Auth::user()->name]) }}">学習状況</a>
+        </li>
+        <li class="nav-item">
+          <button form="logout-button" class="nav-item bg-transparent border border-0 text-white" type="submit">
+            ログアウト
+          </button>
+          <form id="logout-button" method="POST" action="{{ route('logout') }}">
+            @csrf
+          </form>        
+        </li>      
+      @endauth
+
+    </ul>
+  </div>  
+
+
+
 
 </nav>

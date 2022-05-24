@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Cashier\Cashier;
 use Stripe\Stripe;
 use Stripe\Charge;
-use App\Models\User;
+use App\User;
 
 class StripeController extends Controller
 {
@@ -16,12 +16,10 @@ class StripeController extends Controller
     public function subscription(Request $request){
         $user=Auth::user();
           return view('post.subscription',  [
+            'user' => $user,
             'intent' => $user->createSetupIntent()
         ]);
     }
-
-
-
 
     public function afterpay(Request $request){
         // ログインユーザーを$userとする
@@ -44,4 +42,13 @@ class StripeController extends Controller
         // return redirect()->route('ルート設定');
         return back();    
     }
+
+    public function cancelsubscription(User $user, Request $request){
+        $user->subscription('default')->cancelNow();
+        return back();
+     }
+
+    public function portalsubscription(User $user, Request $request){
+        return $request->user()->redirectToBillingPortal("https://vietnamese-learn.net");
+    }     
 }

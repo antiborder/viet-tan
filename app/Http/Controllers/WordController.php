@@ -364,7 +364,7 @@ class WordController extends Controller
             $query_tag = Tag::where('name','like','%'.$keyword.'%');
             $tags = $query_tag->paginate(20);           
 
-            $msg = '「' . $keyword . '」の検索結果';  
+            $msg = '「' . $keyword . '」のあいまい検索結果';  
         }else{
             $words_name_exact = [];
             $words_name_similar = [];

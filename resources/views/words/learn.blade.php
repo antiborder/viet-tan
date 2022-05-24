@@ -13,6 +13,7 @@
         user_name = "{{ $user_name }}"
         initial_level = "{{$level}}"
         time_limit = "{{config('const.TIME_LIMIT')}}"
+        max_level = "{{config('const.MAX_LEVEL')}}"
       >
       </question>
     </div>

@@ -2,7 +2,7 @@
   <div class=" card-body pl-0 d-flex flex-row">
     <div style ="">
       <div class="d-flex flex-row">
-        <div class="text-nowrap" style ="">
+        <div class="text-nowrap mr-1" style ="">
           <div style="height:40px"><p style="line-height: 40px;text-align:right;width:70px;font-size:0.7rem">ベトナム語：&nbsp;</p></div>  
           <div style="height:40px"><p style="line-height: 40px;text-align:right;width:70px;font-size:0.8rem">漢字：&nbsp;</p></div>  
         </div>
@@ -14,7 +14,7 @@
           <div>
             <div class="mx-auto pr-2" style="height:40px; width:100%">
               <span class="card-title" style="height:40px; font-size:2rem">      
-                <a class="text-dark" href="{{ route('words.show', ['word' => $word]) }}">
+                <a href="{{ route('words.show', ['word' => $word]) }}" class="text-dark yellow lighten-3 px-2 mx-n2 " style="border-radius: 10px">
                   {{$word->$name}}
                 </a>
               </span>
@@ -24,7 +24,7 @@
                 $kanji_n = 'kanji' . $i;  
               @endphp        
               @if($word->$kanji_n != '')
-              <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="p-1 mr-1 mt-1 text-muted" style=' font-size:1.5rem'>
+              <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="p-1 mr-1 mt-1 blue-text" style=' font-size:1.5rem'>
               <!-- font-family:"UD デジタル 教科書体 N-R", "BIZ UDゴシック Regular"; -->
                 {{$word->$kanji_n}}
               </a>          
@@ -39,8 +39,8 @@
         $file_name = '/sound/word/'.$word->id.'.mp3';
       @endphp      
       @if(file_exists(public_path().$file_name))
-        <div class="m-2 pl-1 border border-primary rounded" style="width:320px">
-          <div class="text-primary mb-0 pb-0" style="text-align:left;font-size:0.8rem">発音を確認</div>
+        <div class="m-2 pl-1 border border-secondary rounded" style="width:320px">
+          <div class="text-secondary mb-0 pb-0" style="text-align:left;font-size:0.8rem">発音を確認</div>
           <div class="ml-3 mt-0 pt-0" style="">
               <audio controls src={{$file_name}} class="ml-2" style="height:30px;width:280px;"><audio>
           </div>      

@@ -1,23 +1,28 @@
-
-//***課金システム。
-//toppageにアプリ説明。と学習の使い方。トップページとナビバーレイアウト。ロゴ。
-//toppageにはお知らせ。レベル表。
-//サイトマップ登録。
-//問い合わせフォーム。
+//googleSearchConsole。GoogleAnalytics
+//toppageのアプリ説明とレイアウト。
+//スニペット作成。
+//Googleadsense
+//ご意見箱
+//ログイン状態により表示を変える。
 //検索機能：音節が類似も載せたい。
 //ユーザー名は英数字のみに。
-//スニペット作成。
-//googleSearchConsole。GoogleAnalytics
-//ユーザ管理。権限レベル毎に管理。個人ページは本人と管理者しか見れないように。検索結果の表示をレベル毎に変える。
+//stripeポータルカスタマイズ
+//toppageにはお知らせ。レベル表。学習の使い方。
+//タグ一覧機能
+//*課金プラン変更。
+//タグ編集機能
+//正解すると学習がデータベースに登録されずにまた出題されるエラー？
+//ユーザ管理。課金状態で表示を変える。個人ページは本人と管理者しか見れないように。検索結果の表示をレベル毎に変える。
+//*課金関係のwebhookを用いたユーザー管理
 //理解度ボタンにおおよその時間数日数を表示。おすすめレベル。
-//Googleadsense
 //過去24時間以内で生まれた学習計画
+//実際に課金してみるテスト
 //terms of use。privacy policy。自動更新のチェックボックスや注意書きは必要なのか？
 //チョイスのスピーカーマークで音声再生。
 //単語力測定
 //topページカルーセル。
+//課金解禁
 //例文のデータベース
-//正解すると学習がデータベースに登録されずにまた出題されるエラー？
 //数字集中トレーニング。
 //level11でエラーが出る単語：紺色とスポンジ。意味が???になる単語：劇 この他に、詳細が出ない単語が結構ある。level7でエラーが出る単語：インド、紫、枕。level4でエラーが出る単語：黄色。
 //ユーザ権限を考慮したランダムモード実装。学習計画からレベルごとに非表示する機能。レベルごとに履歴消去の機能。
@@ -39,7 +44,7 @@
 <template>
   <div class="mx-auto" style="text-align:center; max-width:700px;">
     <div style="text-align:left">
-      Lv.:{{level}}　正解率: {{correct}} / {{total}}
+      Lv.:{{level}}　正解率: {{correct}} / {{total}} {{max_level}}
     </div>
 
     <!-- 最初の画面 -->
@@ -49,7 +54,7 @@
           <div class="m-2 p-2" style="font-size:1.2rem">
             レベルを選択：
             <select size="1" v-model= "level" class="m-2" style="width:100px;">
-              <option v-for="i in 12" >{{i}}</option>
+              <option v-for="i in Number(max_level)" >{{i}}</option>
               <option v-if="user_name!==''"value="REVIEW_ALL">復習のみ</option>
             </select> 
           </div>
@@ -119,7 +124,7 @@
       <div class="card-body" >
         <div v-if="total > 0" class="mb-2">
           <div class="text-muted" style="font-size:0.8rem">単語をクリックすると詳細ページが開きます。</div>
-          <table class="blue-grey lighten-5 rounded" style="margin:auto; border-collapse: separate; border-spacing: 0px 0px; min-width:90%">
+          <table class="blue-grey lighten-5 rounded rounded-4" style="margin:auto; border-collapse: separate; border-spacing: 0px 0px; min-width:90%">
             <tr >
               <th></th>
               <th style="min-width:70%">単語</th>
@@ -129,7 +134,7 @@
             <tr v-for="e in this.history">
               <td>{{e.No}}</td>
               <td style="font-size:1.3rem">
-                <a v-bind:href="'/words/'+e.id" class="white text-dark rounded" type="button" target="_blank" rel="noopener noreferrer">
+                <a v-bind:href="'/words/'+e.id" class="white text-dark rounded rounded-4" type="button" target="_blank" rel="noopener noreferrer">
                 &nbsp;{{e.name}}&nbsp;
                 </a>
               </td>
@@ -315,6 +320,9 @@
       time_limit:{
         type: String,
       },
+      max_level:{
+        type: String,
+      },      
     },
     
     methods: {

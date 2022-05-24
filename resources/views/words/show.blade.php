@@ -49,7 +49,7 @@
     @foreach($similar_pronuciations as $similar_pronuciation)
       @if($loop->first)
         <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-info bg-transparent text-info" style="color: white; max-width: 30rem;border-width:2px">
-          <span style=";font-size:1.2rem">似てる単語</span>
+          <span style=";font-size:1.2rem">発音が似てる単語</span>
       @endif
       @include('words.card',['word'=>$similar_pronuciation])
       @if($loop->last)

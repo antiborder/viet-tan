@@ -20,9 +20,18 @@
     <button class="btn btn-primary" id="card-button" data-secret="{{ $intent->client_secret }}">送信する</button>
  
 </form>
+
+    契約のキャンセルはこちらから
+	<form method="POST" action="{{route('stripe.cancel', $user) }}">
+		@csrf
+		<button class="btn btn-success mt-2">キャンセルする</button>
+	</form>
+
 </div>
 
-
+<form action="{{route('stripe.portalsubscription', $user) }}">
+	<button class="btn btn-primary mb-3">Stripeポータルサイト</button>
+</form>
 
 <script src="https://js.stripe.com/v3/"></script>
 
