@@ -1,31 +1,34 @@
-<div class="card mt-0 mb-1 pt-1 pb-1 pl-3 pr-3  white rounded" style="max-width: 30rem;">
+<div class="card mt-0 mb-1 pt-1 pb-1 pl-2 pr-3  white rounded" style="max-width: 30rem;">
   <div class="d-flex flex-row">
-    <div style ="width:50%">
+    <div class="pl-1" style ="width:50%">
       <div class="d-flex flex-row">
         @foreach(array(0,1,2,3,4,5,6,7) as $i)
-          <div>
-            <div class="mx-auto pr-2" style="width:100%">
-              @php
-                $name = "name" . $i;
-              @endphp
-              <span class="h4 card-title">      
-                <a class="text-dark" href="{{ route('words.show', ['word' => $word]) }}">
-                  {{$word->$name}}
-                </a>
-              </span>
+          @php
+            $name = "name" . $i;
+          @endphp
+          @if($word->$name!==null)
+            <div class="pt-1">
+              <div class="mx-auto" style="width:100%">
+
+                <span class="h4 card-title">      
+                  <a class="text-dark yellow lighten-3 px-2 mx-n1" style="border-radius: 8px" href="{{ route('words.show', ['word' => $word]) }}">
+                    {{$word->$name}}
+                  </a>
+                </span>
+              </div>
+              <div class="mx-auto " style="width:2.5rem">
+                @php
+                  $kanji_n = 'kanji' . $i;  
+                @endphp        
+                @if($word->$kanji_n != '')
+                <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="p-1 mr-1 mt-1 blue-text" style=' font-size:1.5rem'> 
+                  <!-- font-family:"UD デジタル 教科書体 N-R", "BIZ UDゴシック Regular"; -->
+                  {{$word->$kanji_n}}
+                </a>          
+                @endif
+              </div>
             </div>
-            <div class="mx-auto" style="width:2.5rem">
-              @php
-                $kanji_n = 'kanji' . $i;  
-              @endphp        
-              @if($word->$kanji_n != '')
-              <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="p-1 mr-1 mt-1 text-muted" style=' font-size:1.5rem'> 
-                <!-- font-family:"UD デジタル 教科書体 N-R", "BIZ UDゴシック Regular"; -->
-                {{$word->$kanji_n}}
-              </a>          
-              @endif
-            </div>
-          </div>
+          @endif
         @endforeach    
       </div>
       <div class="d-flex flex-column-reverse" >

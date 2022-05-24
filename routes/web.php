@@ -48,3 +48,9 @@ Route::prefix('users')->name('users.')->group(function () {
 
 Route::get('/subscription', 'StripeController@subscription')->name('stripe.subscription');
 Route::post('/subscription/afterpay', 'StripeController@afterpay')->name('stripe.afterpay');
+Route::post('/subscription/cancel/{user}', 'StripeController@cancelsubscription')->name('stripe.cancel');
+Route::get('/subscription/portal/{user}', 'StripeController@portalsubscription')->name('stripe.portalsubscription');
+
+// Route::get('stripe/webhook', 'WebhookController@handleWebhook');
+Route::post('stripe/webhook', 'WebhookController@handleWebhook');
+
