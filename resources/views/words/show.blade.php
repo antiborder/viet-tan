@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', '単語詳細')
+@section('title', $word->name.'の意味・発音・関連語')
 
 @section('content')
   @include('nav')

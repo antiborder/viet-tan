@@ -364,7 +364,8 @@ class WordController extends Controller
             $query_tag = Tag::where('name','like','%'.$keyword.'%');
             $tags = $query_tag->paginate(20);           
 
-            $msg = '「' . $keyword . '」のあいまい検索結果';  
+            $msg = '「' . $keyword . '」の検索結果';  
+            $title = $keyword . 'の検索結果';
         }else{
             $words_name_exact = [];
             $words_name_similar = [];
@@ -375,6 +376,8 @@ class WordController extends Controller
             $words_kanji = [];
             $tags = [];
             $msg = '検索キーワードを入力してください。';
+            $title = "あいまい検索";
+
         }
         
         return view('words.search')->with('keyword',$keyword)->
@@ -384,7 +387,7 @@ class WordController extends Controller
         with('words_name_syllables',$words_name_syllables)->
         with('words_jp',$words_jp)->
         with('words_kanji',$words_kanji)->
-        with('tags',$tags)->with('msg', $msg);
+        with('tags',$tags)->with('msg', $msg)->with('title', $title);
 
     }
 
@@ -785,29 +788,57 @@ class WordController extends Controller
     }
 
     public function simplify_word($str){
-        $str = preg_replace("/^gi|^d|^th|^r|^l/", "T", $str);
-        $str = preg_replace("/\sgi|\sd|\sth|\sr|\sl/", " T", $str);
-        $str = preg_replace("/^ngh|^ng|^gh/", "G", $str);
-        $str = preg_replace("/\sngh|\sng|\sgh/", " G", $str);
-        $str = preg_replace("/^tr|^ch/", "CH", $str);
-        $str = preg_replace("/\str|\sch/", " CH", $str);
-        $str = preg_replace("/^kh|^h|^q|^c|^q/", "K", $str);
-        $str = preg_replace("/\skh|\sh|\sq|\sc|\sq/", " K", $str);
-        $str = preg_replace("/^nh|^m/", "N", $str);
-        $str = preg_replace("/\snh|\sm/", " N", $str);
-        $str = preg_replace("/^ph|^p|^v/", "B", $str);
-        $str = preg_replace("/\sph|\sp|\sv/", " B", $str);
-        $str = preg_replace("/^x/", "S", $str);
-        $str = preg_replace("/\sx/", " S", $str);                
-        $str = preg_replace("/^y/", "I", $str);        
-        $str = preg_replace("/\sy/", " I", $str);
 
-        $str = preg_replace("/nh$|m$|ng$/", "N", $str);
-        $str = preg_replace("/nh\s|m\s|ng\s/", "N ", $str);
-        $str = preg_replace("/p$/", "B", $str);
-        $str = preg_replace("/p\s/", "B ", $str);
-        $str = preg_replace("/k$|q$/", "C", $str);
-        $str = preg_replace("/k\s|q\s/", "C ", $str);        
+        $str = mb_strtoupper($str);
+
+        $str = preg_replace("/^GI|^D|^TH|^R|^L/", "T", $str);
+        $str = preg_replace("/\sGI|\sD|\sTH|\sR|\sL/", " T", $str);
+        $str = preg_replace("/^NGH|^NG|^GH/", "G", $str);
+        $str = preg_replace("/\sNGH|\sNG|\sGH/", " G", $str);
+        $str = preg_replace("/^TR|^CH/", "CH", $str);
+        $str = preg_replace("/\sTR|\sCH/", " CH", $str);
+        $str = preg_replace("/^KH|^H|^Q|^C|^Q/", "K", $str);
+        $str = preg_replace("/\sKH|\sH|\sQ|\sC|\sQ/", " K", $str);
+        $str = preg_replace("/^NH|^M/", "N", $str);
+        $str = preg_replace("/\sNH|\sM/", " N", $str);
+        $str = preg_replace("/^PH|^P|^V/", "B", $str);
+        $str = preg_replace("/\sPH|\sP|\sV/", " B", $str);
+        $str = preg_replace("/^X/", "S", $str);
+        $str = preg_replace("/\sX/", " S", $str);                
+        $str = preg_replace("/^Y/", "I", $str);        
+        $str = preg_replace("/\sY/", " I", $str);
+
+        $str = preg_replace("/NH$|M$|NG$/", "N", $str);
+        $str = preg_replace("/NH\s|M\s|NG\s/", "N ", $str);
+        $str = preg_replace("/P$/", "B", $str);
+        $str = preg_replace("/P\s/", "B ", $str);
+        $str = preg_replace("/K$|Q$/", "C", $str);
+        $str = preg_replace("/K\s|Q\s/", "C ", $str);        
+
+
+        // $str = preg_replace("/^gi|^d|^th|^r|^l/", "T", $str);
+        // $str = preg_replace("/\sgi|\sd|\sth|\sr|\sl/", " T", $str);
+        // $str = preg_replace("/^ngh|^ng|^gh/", "G", $str);
+        // $str = preg_replace("/\sngh|\sng|\sgh/", " G", $str);
+        // $str = preg_replace("/^tr|^ch/", "CH", $str);
+        // $str = preg_replace("/\str|\sch/", " CH", $str);
+        // $str = preg_replace("/^kh|^h|^q|^c|^q/", "K", $str);
+        // $str = preg_replace("/\skh|\sh|\sq|\sc|\sq/", " K", $str);
+        // $str = preg_replace("/^nh|^m/", "N", $str);
+        // $str = preg_replace("/\snh|\sm/", " N", $str);
+        // $str = preg_replace("/^ph|^p|^v/", "B", $str);
+        // $str = preg_replace("/\sph|\sp|\sv/", " B", $str);
+        // $str = preg_replace("/^x/", "S", $str);
+        // $str = preg_replace("/\sx/", " S", $str);                
+        // $str = preg_replace("/^y/", "I", $str);        
+        // $str = preg_replace("/\sy/", " I", $str);
+
+        // $str = preg_replace("/nh$|m$|ng$/", "N", $str);
+        // $str = preg_replace("/nh\s|m\s|ng\s/", "N ", $str);
+        // $str = preg_replace("/p$/", "B", $str);
+        // $str = preg_replace("/p\s/", "B ", $str);
+        // $str = preg_replace("/k$|q$/", "C", $str);
+        // $str = preg_replace("/k\s|q\s/", "C ", $str);        
         
         return $str;
     }

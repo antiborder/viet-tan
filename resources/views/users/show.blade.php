@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', $user->name)
+@section('title', $user->name."の学習状況")
 
 @section('content')
   @include('nav')
