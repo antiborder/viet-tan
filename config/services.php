@@ -39,6 +39,10 @@ return [
     'stripe' => [
         'pb_key'=>env('STRIPE_KEY'),
         'st_key'=>env('STRIPE_SECRET'),
+        'webhook'=>[
+            'secret'=>env('STRIPE_WEBHOOK'),
+            'tolerance'=>env('STRIPE_WEBHOOK_TOLERANCE',300),
+        ],
         'basic_plan_id'=>env('STRIPE_BASIC_ID')
     ],
 
