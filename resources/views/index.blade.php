@@ -35,7 +35,7 @@
           </h3>
         </div>
         <p style="text-align:center;font-size:calc(1.2rem + ((1vw - 0.64rem) * 0.7143))">1日10分でOK。忙しい人にもおすすめ。</p>
-        <div style="display:flex; overflow:scroll ">
+        <div style="display:flex; overflow-x:auto ">
           <div style="display:flex; align-items:center;margin:auto" >
             <img src="image/learn-image.png"style="height:250px;">
             <img src="image/result-image.png"style="height:250px;">
@@ -61,7 +61,7 @@
           </h3>
         </div>
         <p style="text-align:center; font-size:calc(1.2rem + ((1vw - 0.64rem) * 0.7143))">単語間を関連付けて覚えるから忘れにくい。<br>よく使う重要な単語から習得するので、<br>無駄がなく効率的。</p>
-        <div style="display:flex; overflow:scroll ">
+        <div style="display:flex; overflow-x:scroll ">
           <div style="display:flex; align-items:center;margin:auto" >
             <img src="image/connection-image.png"style="height:250px;">
             <img src="image/related-image.png"style="height:250px;">

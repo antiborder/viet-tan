@@ -26,6 +26,8 @@ Route::resource('/words', 'WordController')->except(['index'])->middleware('auth
 Route::resource('/words', 'WordController')->only(['show']);
 
 Route::get('/tags/{name}', 'TagController@show')->name('tags.show');
+Route::get('/category','TagController@category')->name('tags.category');
+
 Route::get('/kanjis/{name}', 'KanjiController@show')->name('kanjis.show');
 Route::get('/search', 'WordController@search')->name('words.search');
 
@@ -46,11 +48,17 @@ Route::prefix('users')->name('users.')->group(function () {
     
 });
 
+//stripe
 Route::get('/subscription', 'StripeController@subscription')->name('stripe.subscription');
 Route::post('/subscription/afterpay', 'StripeController@afterpay')->name('stripe.afterpay');
 Route::post('/subscription/cancel/{user}', 'StripeController@cancelsubscription')->name('stripe.cancel');
 Route::get('/subscription/portal/{user}', 'StripeController@portalsubscription')->name('stripe.portalsubscription');
-
-// Route::get('stripe/webhook', 'WebhookController@handleWebhook');
 Route::post('stripe/webhook', 'WebhookController@handleWebhook');
+
+//Contact
+Route::get('/contact', 'ContactController@index')->name('contact.index');
+Route::post('/contact/confirm', 'ContactController@confirm')->name('contact.confirm');
+Route::post('/contact/thanks', 'ContactController@send')->name('contact.send');
+
+//tag
 
