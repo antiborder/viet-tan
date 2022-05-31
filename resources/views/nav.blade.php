@@ -32,6 +32,9 @@
       <li class="nav-item">
         <a class="nav-link" href="search">あいまい検索</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="category">関連タグ</a>
+      </li>
 
       @guest
         <li class="nav-item">
