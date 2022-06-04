@@ -61,7 +61,7 @@
       @foreach($common_syllables as $i => $common_syllable)
         @if($loop->first)
         <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-success bg-transparent text-success" style="color: white; max-width: 30rem;border-width:2px">
-        <span style=";font-size:1.2rem">同じ音節を含む単語</span> (全{{$common_syllables->count()}}件
+        <span style=";font-size:1.2rem">同じ音節を含む単語</span> (全{{$common_syllables->count()}}件)
         @endif
         @include('words.card',['word'=>$common_syllable])
         @if($loop->last)

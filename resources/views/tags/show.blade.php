@@ -29,7 +29,7 @@
         @endforeach
         @if( $tag->words->count() > config('const.TAG_WORD_TRIAL'))
           <div class="mt-2" data-toggle="modal" data-target="#recommend-normal" style="">
-          <button class="primary-color text-white border border-0 px-2 py-1 rounded">「{{ $tag->name }}」の関連語をもっと見る</button>
+          <button class="success-color text-white border border-0 px-2 py-1 rounded">「{{ $tag->name }}」の関連語をもっと見る</button>
           </div>
         @endif     
       @endif
@@ -43,7 +43,7 @@
       @endforeach
       @if( $tag->words->count() > config('const.TAG_WORD_GUEST'))
         <div class="mt-2" data-toggle="modal" data-target="#recommend-trial" style="">
-          <button class="primary-color text-white border border-0 px-2 py-1 rounded">「{{ $tag->name }}」の関連語をもっと見る</button>
+          <button class="success-color text-white border border-0 px-2 py-1 rounded">「{{ $tag->name }}」の関連語をもっと見る</button>
         </div>
       @endif
     @endguest
