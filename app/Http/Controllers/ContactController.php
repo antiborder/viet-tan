@@ -61,7 +61,9 @@ class ContactController extends Controller
             $request->session()->regenerateToken();
 
             //送信完了ページのviewを表示
-            return view('contact.thanks');        
+            return view('contact.thanks', [
+                'inputs' => $inputs,
+            ]);        
         }      
     }
 }

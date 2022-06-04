@@ -8,7 +8,7 @@ use App\Word;
 
 class KanjiController extends Controller
 {
-    public function show(string $name)
+    public function show(Request $request,string $name)
     {
         $kanji = Kanji::where('name', $name) -> first();
         $words = Word::where('kanji0',$name);
@@ -17,7 +17,7 @@ class KanjiController extends Controller
         }
         $words = $words ->get();
 
-        return view('kanjis.show', ['kanji' => $kanji, 'words' => $words]);
+        return view('kanjis.show', ['kanji' => $kanji, 'words' => $words, 'request' => $request]);
     }
 
     public function kanji_filter($words, $name, $i){

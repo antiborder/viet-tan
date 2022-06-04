@@ -8,16 +8,31 @@
     <div class="card mt-3">
       <div class="card-body">
         <div class="h5 card-title m-0">
-            ユーザーID　：　{{ $user->name }}
+            ユーザーID ：　{{ $user->name }}
         </div>
         <br>
-        <div>
-          email　：　{{ $user->email}}
+        <div class="my-2" style="font-size:1.1rem" >
+          　　Eメール ：　{{ $user->email}}
         </div>
+        @php
+        if($subscription === 'NORMAL'){
+           $membership = '通常会員';
+        }else if($subscription === 'TRIAL'){
+          $membership = 'お試し会員';
+        }
+        @endphp
+        <div style="font-size:1.1rem; line-height:200%">
+          　　会員プラン ：　{{$membership}}
+          @if( $subscription === "TRIAL")
+            <span class="m-3" style="text-align:center; font-size:1.2rem" >
+              <a href="{{ route('stripe.subscription')}}" class="info-color text-white text-nowrap rounded ml-2 px-2 py-1" >通常会員に登録</a>
+            </span>            
+          @endif
+        </div>        
       </div>
     </div>
     <div class="card mt-3">
-    <div class="h5 card-title  mt-1 ml-1">学習状況</div>
+      <div class="h5 card-title  mt-1 ml-1">学習状況</div>
       <table class="mt=0 mb-1">
         <tr>
           <th style="font-size:1.0rem; text-align:center">Level</th>
@@ -50,7 +65,7 @@
             @endphp
 
             @if($learned[$s['level']] !==0)
-              <a type="button" class="text-primary border border-primary rounded px-1 pt-1 " data-toggle="modal" data-target="{{'#'.$modal}}" style="font-size:1.0rem; height:30px;max-width:60px">
+              <a type="button" class="text-success border border-success rounded px-1 pt-1 " data-toggle="modal" data-target="{{'#'.$modal}}" style="font-size:1.0rem; height:30px;max-width:60px">
               &nbsp;詳細&nbsp;
               </a>
             @else 
@@ -61,7 +76,7 @@
 
           </td>
           <td style="font-size:0.8rem; max-width:45px ;">           
-            <a type="button" class="text-info border border-info rounded px-1 pt-1"  href="{{'/learn/'.$s['level']}}" style="font-size:1.0rem; height:30px;text-align:left">
+            <a type="button" class="text-primary border border-primary rounded px-1 pt-1"  href="{{'/learn/'.$s['level']}}" style="font-size:1.0rem; height:30px;text-align:left">
             &nbsp;&nbsp;&nbsp;▶&nbsp;&nbsp;&nbsp;
             </a>            
           </td>
@@ -152,12 +167,24 @@
     </div>
 
     <a href="/learn/REVIEW_ALL" >
-      <div class="card mt-3 px-2 py-2 orange lighten-1 text-white" style="color: white; max-width:230px; font-size:1.2rem; text-align:center; margin-left:auto; font-family:ＭＳ Ｐゴシック;">
+      <div class="card mt-3 px-2 py-2 primary-color text-white" style="color: white; max-width:230px; font-size:1.2rem; text-align:center; margin-left:auto; font-family:ＭＳ Ｐゴシック;">
         <div >
             復習のみでStart ▶
         </div>
       </div>
-    </a>    
+    </a>
+
+    @if($subscription === 'NORMAL')
+    <div class="card mt-3">
+      <div class="card-body">
+        <div class="h5 card-title  mt-1 ml-1">支払情報</div>
+          <a href="{{route('stripe.portalsubscription', $user) }}" style="text-align:right;">
+	          <div class="btn text-info border border-info shadow-none px-2 py-1" style="font-size:1.0rem" >お支払い情報確認</div>
+          </a>    
+      </div>
+    </div>
+
+    @endif
 
   </div>
   

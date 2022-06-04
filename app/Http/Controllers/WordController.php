@@ -310,8 +310,19 @@ class WordController extends Controller
         }
         $common_syllables = $common_syllables->unique()->sortBy('level');
 
+        $user = User::where('id',Auth::id())->first();
+        if( $user !== null ){
+            if($user->subscribed('default')){
+                $subscription = "NORMAL";
+            }else{
+                $subscription = "TRIAL";
+            }
+        }else{
+            $subscription = "GUEST";
+        }
+
         $similar_pronuciations = Word::all()->where('no_diacritic', $word->no_diacritic)->where('name', '!==', $word->name)->sortBy('level');//->all()        
-        return view('words.show', ['word' => $word, 'common_syllables' => $common_syllables, 'similar_pronuciations' => $similar_pronuciations]);
+        return view('words.show', ['word' => $word, 'common_syllables' => $common_syllables, 'similar_pronuciations' => $similar_pronuciations, 'subscription'=>$subscription]);
     }   
     
     public function search(Request $request)

@@ -35,12 +35,12 @@ class StripeController extends Controller
         $plan=config('services.stripe.basic_plan_id');
         
         // 上記のプランと支払方法で、サブスクを新規作成する
-        $user->newSubscription('default', $plan)
+        $user->newSubscription( 'default', $plan)
         ->create($paymentMethod);
  
         // 処理後に'ルート設定'にページ移行
         // return redirect()->route('ルート設定');
-        return back();    
+        return redirect()->route('index');
     }
 
     public function cancelsubscription(User $user, Request $request){

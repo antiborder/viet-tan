@@ -16,6 +16,7 @@ class UserController extends Controller
 
         if(Auth::id() === $user->id || Auth::id() === 1 ){
             $status = Word::select('level',DB::raw('count(*) as total'))->groupBy('level')->orderBy('level')->get()->toArray();
+            $subscription = $this->getSubscription($user);
 
             //既習語数を取得
             $learned_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
@@ -193,6 +194,7 @@ class UserController extends Controller
 
            return view('users.show', [
                 'user' => $user,
+                'subscription' => $subscription,
                 'status' => $status,
                 'ready' => $ready,
                 'learned' => $learned,
@@ -212,4 +214,17 @@ class UserController extends Controller
             return view('index');
         }
     }
+
+    public function getSubscription(User $user) {
+        if( $user !== null ){
+            if($user->subscribed('default')){
+                $subscription = "NORMAL";
+            }else{
+                $subscription = "TRIAL";
+            }
+        }else{
+            $subscription = "NONE";
+        }        
+        return $subscription;
+    }           
 }
