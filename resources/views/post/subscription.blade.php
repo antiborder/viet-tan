@@ -1,37 +1,41 @@
-{{-- ヘッダー部分の設定 --}}
 @extends('app')
+
+@section('title', '通常会員ご登録')
+
 @section('content')
- 
-<div class="container py-3">
-  <h3 class="mb-3">ご登録フォーム</h3>
- 
-{{-- フォーム部分 --}}
-<form action="{{route('stripe.afterpay')}}" method="post" id="payment-form">
-  @csrf
-  
-    <label for="exampleInputEmail1">お名前</label>
-    <input type="test" class="form-control col-sm-5" id="card-holder-name" required>
- 
-    <label for="exampleInputPassword1">カード番号</label>
-    <div class="form-group MyCardElement col-sm-5" id="card-element"></div>
- 
-    <div id="card-errors" role="alert" style='color:red'></div>
- 
-    <button class="btn btn-primary" id="card-button" data-secret="{{ $intent->client_secret }}">送信する</button>
- 
-</form>
 
-    契約のキャンセルはこちらから
-	<form method="POST" action="{{route('stripe.cancel', $user) }}">
-		@csrf
-		<button class="btn btn-success mt-2">キャンセルする</button>
-	</form>
-
-</div>
-
-<form action="{{route('stripe.portalsubscription', $user) }}">
-	<button class="btn btn-primary mb-3">Stripeポータルサイト</button>
-</form>
+<div class="container">
+    <div class="row">
+      <div class="mx-auto col col-12 col-sm-11 col-md-9 col-lg-7 col-xl-6">
+        <h1 class="text-center"><a class="text-dark" href="/">べとらん</a></h1>
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h3 card-title text-center mt-2">ご登録フォーム</h2>
+            <div class="card-text">
+			<form action="{{route('stripe.afterpay')}}" method="post" id="payment-form">
+				@csrf
+							
+				<label for="exampleInputEmail1" class="">お名前</label>
+				<input type="text" class="form-control col-sm-12 mb-3" id="card-holder-name" required >
+			
+				<label for="exampleInputPassword1">カード番号</label>
+				<div class="form-group MyCardElement col-sm-12 border" id="card-element" ></div>
+			
+				<div id="card-errors" role="alert" style='color:red'></div>
+			
+				<button class="btn btn-block btn-info mt-2 mb-2" id="card-button" style="font-size:1.1rem" data-secret="{{ $intent->client_secret }}">送信する</button>
+			</form>				
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <form action="{{route('stripe.portalsubscription', $user) }}">
+     <button class="btn btn-primary">Stripeポータルサイト</button>
+   </form> -->
+ 
 
 <script src="https://js.stripe.com/v3/"></script>
 

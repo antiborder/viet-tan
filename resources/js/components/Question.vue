@@ -1,27 +1,20 @@
-//ご意見箱
-//タグ一覧(categories)。単語カードをいくつか。
-//ログイン状態により表示を変える。ログイン中ならば、登録ボタンを表示しない。未ログインならユーザーページはログインに誘導。
-//単語詳細の高レベルの関連語は課金ユーザーのみとする。単語学習の高レベルは課金ユーザーのみとする。
-//ユーザー名は英数字のみに。
-//stripeポータルカスタマイズ。
-//検索機能：音節が類似も載せたい。
-//toppageにはお知らせ。レベル表。学習の使い方。広告設置。メニューアイコン。
-//メール認証
-//FAQ 漢越について、レベルについて、運営者について、支払いについて、不具合について　料金はいくらですか？　いつでもキャンセルできますか？
-//タグ一覧機能。検索のヒント。検索の表示について。レベルが低いほど一般的な言葉。
+//メール認証。自動メール送信元のアドレスを設定。問い合わせのメールも自分に来るように。
+//ボトムバー
+//カテゴリ別のページ。検索のヒント。検索の表示について。レベルが低いほど一般的な言葉。
+//toppageにはお知らせ。レベル表。学習の使い方。広告設置。メニューアイコン。単語カードをいくつか。
 //単語力測定
-//*課金プラン変更。
+//割引プラン実装。
+//FAQ 漢越について、レベルについて、運営者について、支払いについて、不具合について　料金はいくらですか？　いつでもキャンセルできますか？
 //タグ編集機能
 //正解すると学習がデータベースに登録されずにまた出題されるエラー？
-//ユーザ管理。課金状態で表示を変える。個人ページは本人と管理者しか見れないように。
-//*課金関係のwebhookを用いたユーザー管理
 //理解度ボタンにおおよその時間数日数を表示。おすすめレベル。
 //過去24時間以内で生まれた学習計画
-//実際に課金してみるテスト
+//実際に課金してみるテスト //課金関係のwebhookを用いたユーザー管理
 //terms of use。privacy policy。自動更新のチェックボックスや注意書きは必要なのか？
-//チョイスのスピーカーマークで音声再生。
 //ロゴ配置。メニューアイコン
 //課金解禁
+//チョイスのスピーカーマークで音声再生。
+//resultの結果次第でメッセージ。
 //例文のデータベース
 //user毎の利用状況を一覧できる画面。
 //数字集中トレーニング。
@@ -29,6 +22,7 @@
 //ユーザ権限を考慮したランダムモード実装。学習計画からレベルごとに非表示する機能。レベルごとに履歴消去の機能。
 //Ｎ+1問題。
 //exportに類義語と対義語を入れる。
+//検索機能：音節が類似も載せたい。
 //タグ一覧
 //WordControllerのupdate、create、importの共通部分をまとめたい。
 //単語力測定結果をtwitterに報告。facebookに報告。レベル上昇も報告。
@@ -43,7 +37,7 @@
 <template>
   <div class="mx-auto" style="text-align:center; max-width:700px;">
     <div style="text-align:left">
-      Lv.:{{level}}　正解率: {{correct}} / {{total}} {{max_level}}
+      Lv.:{{level}}　正解率: {{correct}} / {{total}} {{subscription}}{{status}}
     </div>
 
     <!-- 最初の画面 -->
@@ -71,6 +65,65 @@
         </div>
       </div>
     </div>          
+
+    <!-- 無料登録を勧める -->
+    <div v-if="status==='WARN_RANDOM'" class="mx-auto" style=" text-align:center;max-width:400px">
+      <div class="card white rounded" style="max-width: 400px;">
+        <div class="card-body" style = "text-align:center;">
+          <div class="m-2 p-2" style="font-size:1.0rem">
+            ログインしていないため、ランダムに出題されます。<br><br>
+            <span class="text-primary">無料登録すれば、単語毎の学習スケジュールに基づいて出題されます。</span>
+          </div>
+          <div class="mb-3" style="text-align:center; font-size:1.3rem" >
+            <a href="register" class="info-color text-white rounded px-4 py-2" >無料登録する</a>
+          </div>
+          <div class="m-3" style="text-align:center; font-size:1.3rem" >
+            <a href="login" class="border border-warning text-warning rounded px-4 py-2" >ログインする</a>
+          </div>          
+          <button @click="load()" type="button" class="btn btn-info light-blue accent-4 rounded px-3 py-2 mt-3 text-nowrap"style="font-size: 1.0rem;">
+            ランダムでStart ▶
+          </button>
+        </div>
+      </div>
+    </div>              
+
+    <!-- 通常会員登録を勧める -->
+    <div v-if="status==='RECOMMEND_NORMAL'" class="mx-auto" style=" text-align:center;max-width:400px">
+      <div class="card white rounded" style="max-width: 400px;">
+        <div class="card-body" style = "text-align:center;">
+          <div class="m-2 p-2" style="font-size:1.2rem">
+            レベル{{Number(trial_level)+1}}以上は通常会員専用です。
+          </div>
+          <div class="m-3" style="text-align:center; font-size:1.3rem" >
+            <a href="subscription" class="info-color text-white rounded px-5 py-2" >登録画面へ</a>
+          </div>            
+          <div class="m-3" style="text-align:center;" >
+            <button @click="initialize()" type="button" class="btn btn-info light-blue accent-4 rounded px-5 py-1 mt-2 text-nowrap" style=" font-size: 1.3rem;">
+              レベルを変更
+            </button>
+          </div>                      
+        </div>
+      </div>
+    </div>              
+
+    <!-- お試し会員登録を勧める -->
+    <div v-if="status==='RECOMMEND_TRIAL'" class="mx-auto" style=" text-align:center;max-width:400px">
+      <div class="card white rounded" style="max-width: 400px;">
+        <div class="card-body" style = "text-align:center;">
+          <div class="m-2 p-2" style="font-size:1.2rem">
+            レベル{{Number(guest_level)+1}}以上は会員専用です。
+          </div>
+          <div class="m-3" style="text-align:center; font-size:1.3rem" >
+            <a href="register" class="info-color text-white rounded px-5 py-2" >無料登録する</a>
+          </div>            
+          <div class="m-3" style="text-align:center;" >
+            <button @click="initialize()" type="button" class="btn btn-info light-blue accent-4 rounded px-5 py-1 mt-2 text-nowrap" style=" font-size: 1.3rem;">
+              レベルを変更
+            </button>
+          </div>                      
+        </div>
+      </div>
+    </div>              
 
     <!-- 出題画面 -->        
     <div v-if="status!=='RESULT' && status!=='CLEARED'" class="mt-1 d-flex flex-row" style=" height: 55px;">
@@ -313,6 +366,9 @@
       user_name: {
         type: String,
       },
+      subscription: {
+        type: String,
+      },
       initial_level:{
         type: String,
       },
@@ -321,20 +377,45 @@
       },
       max_level:{
         type: String,
-      },      
+      },
+      trial_level:{
+        type: String,
+      },
+      guest_level:{
+        type: String,
+      },            
     },
     
     methods: {
 
       clickStart() { //学習開始のボタンをクリック
         console.log("START pressed");
+        if(this.subscription === 'GUEST'){
+          if(this.level <= this.guest_level){
+            this.status = "WARN_RANDOM"
+            return;
+          }else{
+            this.status = "RECOMMEND_TRIAL";
+            return;
+          }
+        }else if(this.subscription === 'TRIAL'){
+          if( this.level > this.trial_level){
+            this.status = "RECOMMEND_NORMAL"
+            return;
+          }
+        }
+        this.load();
+      },
+
+      load() { //学習開始のボタンをクリック
+        console.log("start LOADING");      
         this.status = "LOADING";        
         this.isCorrect = null;
         this.total = 0;
         this.history = [];
         this.correct = 0;
         this.getWords();        
-      },
+      },      
 
       initialize(){ //最初の画面に戻る
         console.log("initialize");

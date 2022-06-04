@@ -1,7 +1,7 @@
-<nav class="navbar navbar-dark navbar-expand-md orange lighten-1 p-1 pb-0">
+<nav class="navbar navbar-dark navbar-expand-lg orange lighten-1 p-1 pb-0">
 
    <!-- Logo -->
-  <a href="/" class="navbar-brand ml-1  " style="font-size:1.0rem">vietnamese-learn.net</a>
+  <a href="{{route('index')}}" class="navbar-brand ml-1  " style="font-size:1.0rem">vietnamese-learn.net</a>
   
   <!-- 検索 -->
   <form class="form-inline pt-2" action="{{url('/search')}}">
@@ -27,13 +27,28 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent" style="width:300px;margin: 0 auto;">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="learn" >単語学習</a>
+        <a class="nav-link" href="{{route('learn')}}" >単語学習</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="search">あいまい検索</a>
+        <a class="nav-link" href="{{route('words.search')}}">あいまい検索</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="category">関連タグ</a>
+        <a class="nav-link" href="{{route('tags.category')}}">タグから探す</a>
+      </li>
+      @auth
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('users.show', ['name'=>Auth::user()->name]) }}">学習状況</a>
+        </li>
+      @endauth
+
+      @guest
+        <li class="nav-item" data-toggle="modal" data-target="#signup-modal">
+          <a class="nav-link">学習状況</a>
+        </li>
+      @endguest
+
+      <li class="nav-item" data-toggle="modal" data-target="#contact">
+        <a class="nav-link" >ご意見・お問い合せ</a>
       </li>
 
       @guest
@@ -52,9 +67,6 @@
 
       @auth
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('users.show', ['name'=>Auth::user()->name]) }}">学習状況</a>
-        </li>
-        <li class="nav-item">
           <button form="logout-button" class="py-2 bg-transparent border border-0 text-white" type="submit">
             ログアウト
           </button>
@@ -65,9 +77,74 @@
       @endauth
 
     </ul>
+
+
+      <!-- signup-modal -->
+      <div class="modal fade rounded" id="signup-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body"> 
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button><br>
+              <div class="m-2" style="text-align:center; font-size:1.2rem">この機能は会員専用です。</div>
+              <div class="m-3" style="text-align:center; font-size:1.2rem" >
+                <a href="{{ route('register')}}" class="border border-info text-info rounded px-3 py-2" >無料登録する</a>
+              </div>
+              <div class="m-4" style="text-align:center; font-size:1.2rem">
+                <a href="{{ route('login') }}" class="border border-warning text-warning rounded px-3 py-2" >ログインする</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- contact-modal -->
+      <div class="modal fade rounded" id="contact" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body"> 
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button><br>
+              Viet-Learnをご利用頂きありがとうございます。<br>
+              ご不明点やご意見がございましたら、フォームよりご連絡ください。                 
+            <form method="POST" action="{{ route('contact.send') }}">
+              @csrf
+              <input
+                  class="mt-2"
+                  name="email"
+                  value="{{ old('email') }}"
+                  placeholder="メールアドレス"
+                  type="text"
+                  style="width:100%">
+              @if ($errors->has('email'))
+                  <p class="error-message">{{ $errors->first('email') }}</p>
+              @endif
+              <br>
+              <input class="mt-2" name="title" value="{{ old('title') }}" type="text" placeholder="タイトル" style="width:100%">
+              @if ($errors->has('title'))
+                  <p class="error-message">{{ $errors->first('title') }}</p>
+              @endif              
+
+              <textarea class=" my-2" name="body" placeholder="メッセージ" style="width:100%; height:200px">
+                {{ old('body') }}
+              </textarea>
+              @if ($errors->has('body'))
+                  <p class="error-message">{{ $errors->first('body') }}</p>
+              @endif
+              <br>
+
+              <button class="btn btn-success py-1 px-2" type="submit" name="action" value="submit" style="font-size:1.0rem">
+                  送信
+              </button>
+            </form>
+      
+            </div>
+          </div>
+        </div>
+      </div>
+
   </div>  
-
-
-
 
 </nav>

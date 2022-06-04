@@ -15,11 +15,21 @@ class LearnController extends Controller
     {
         $user = User::where('id',Auth::id())->first();
         $user_name = $user !== null ? $user->name : null;
+        if( $user !== null ){
+            if($user->subscribed('default')){
+                $subscription = "NORMAL";
+            }else{
+                $subscription = "TRIAL";
+            }
+        }else{
+            $subscription = "GUEST";
+        }
+
         if(count($level) === 0){
             $level[0]=1;
         }
 
-        return view('words.learn',['user_name' => $user_name, 'level'=> $level[0]]);
+        return view('words.learn',['user_name'=>$user_name, 'subscription'=>$subscription, 'level'=>$level[0]]);
     }
 
     public function store(Request $request)
