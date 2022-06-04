@@ -3,13 +3,14 @@
 //カテゴリ別のページ。検索のヒント。検索の表示について。レベルが低いほど一般的な言葉。
 //toppageにはお知らせ。レベル表。学習の使い方。広告設置。メニューアイコン。単語カードをいくつか。
 //単語力測定
-//割引プラン実装。
 //FAQ 漢越について、レベルについて、運営者について、支払いについて、不具合について　料金はいくらですか？　いつでもキャンセルできますか？
 //タグ編集機能
 //正解すると学習がデータベースに登録されずにまた出題されるエラー？
 //理解度ボタンにおおよその時間数日数を表示。おすすめレベル。
 //過去24時間以内で生まれた学習計画
-//実際に課金してみるテスト //課金関係のwebhookを用いたユーザー管理
+//webhookに頼らない実装。前回更新日や次回更新日の連絡も。二重契約にならないように。
+//実際に課金してみるテスト 
+//割引プラン実装。
 //terms of use。privacy policy。自動更新のチェックボックスや注意書きは必要なのか？
 //ロゴ配置。メニューアイコン
 //課金解禁
@@ -37,7 +38,7 @@
 <template>
   <div class="mx-auto" style="text-align:center; max-width:700px;">
     <div style="text-align:left">
-      Lv.:{{level}}　正解率: {{correct}} / {{total}} {{subscription}}{{status}}
+      Lv.:{{level}}　正解率: {{correct}} / {{total}}
     </div>
 
     <!-- 最初の画面 -->
@@ -399,7 +400,7 @@
             return;
           }
         }else if(this.subscription === 'TRIAL'){
-          if( this.level > this.trial_level){
+          if( this.level > this.trial_level && this.level !== 'REVIEW_ALL'){
             this.status = "RECOMMEND_NORMAL"
             return;
           }

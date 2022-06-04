@@ -24,9 +24,9 @@
         <div style="font-size:1.1rem; line-height:200%">
           　　会員プラン ：　{{$membership}}
           @if( $subscription === "TRIAL")
-            <span class="m-3" style="text-align:center; font-size:1.2rem" >
+            <!-- <span class="m-3" style="text-align:center; font-size:1.2rem" >
               <a href="{{ route('stripe.subscription')}}" class="info-color text-white text-nowrap rounded ml-2 px-2 py-1" >通常会員に登録</a>
-            </span>            
+            </span>             -->
           @endif
         </div>        
       </div>
