@@ -74,7 +74,7 @@
         <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-success bg-transparent text-success" style="color: white; max-width: 30rem;border-width:2px">
         <span style="font-size:1.2rem">同じ音節を含む単語<span class="text-dark" style="font-size:1.0rem"> (全{{$common_syllables->count()}}件)</span></span>
         @endif
-        @if($i < config('const.SAME_SYLABLE_TRIAL'))
+        @if($i < config('const.SAME_SYLLABLE_TRIAL'))
           @include('words.card',['word'=>$common_syllable])
         @endif
         @if($loop->last)
@@ -87,12 +87,12 @@
         @endif
       @endforeach                
     @elseif($subscription === 'GUEST')
-    @foreach($common_syllables as $i => $common_syllable)
+      @foreach($common_syllables as $i => $common_syllable)
         @if($loop->first)
         <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-success bg-transparent text-success" style="color: white; max-width: 30rem;border-width:2px">
         <span style="font-size:1.2rem">同じ音節を含む単語<span class="text-dark" style="font-size:1.0rem"> (全{{$common_syllables->count()}}件)</span></span>
         @endif
-        @if($i < config('const.SAME_SYLABLE_GUEST'))
+        @if($i < config('const.SAME_SYLLABLE_GUEST'))
           @include('words.card',['word'=>$common_syllable])
         @endif
         @if($loop->last)

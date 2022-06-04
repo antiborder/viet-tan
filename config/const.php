@@ -11,7 +11,7 @@
         'KANJI_WORD_TRIAL'=>100,
         'GUEST_LEVEL'=>100,
         'TRIAL_LEVEL'=>100,
-        'SAME_SYLABLE_GUEST'=>100,
-        'SAME_SYLABLE_TRIAL'=>100,
+        'SAME_SYLLABLE_GUEST'=>100,
+        'SAME_SYLLABLE_TRIAL'=>100,
 
     ];
