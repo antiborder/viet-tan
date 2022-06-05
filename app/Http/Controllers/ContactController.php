@@ -55,7 +55,7 @@ class ContactController extends Controller
 
             //入力されたメールアドレスにメールを送信
             \Mail::to($inputs['email'])->send(new ContactSendmail($inputs));
-                        
+            \Mail::to(config('mail.from.address'))->send(new ContactSendmail($inputs));                        
 
             //再送信を防ぐためにトークンを再発行
             $request->session()->regenerateToken();

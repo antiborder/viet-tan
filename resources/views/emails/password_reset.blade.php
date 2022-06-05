@@ -8,4 +8,4 @@
 
 その場合は、このメールは破棄していただいて結構です。
 
-Viet Learn ({{ url(config('app.url')) }})
+べとらん ({{ url(config('app.url')) }})

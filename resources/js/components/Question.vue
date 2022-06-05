@@ -1,5 +1,4 @@
-//メール認証。自動メール送信元のアドレスを設定。問い合わせのメールも自分に来るように。
-//ボトムバー
+//ボトムバー//会員登録をdeep orangeに。
 //カテゴリ別のページ。検索のヒント。検索の表示について。レベルが低いほど一般的な言葉。
 //toppageにはお知らせ。レベル表。学習の使い方。広告設置。メニューアイコン。単語カードをいくつか。
 //単語力測定
@@ -17,6 +16,7 @@
 //チョイスのスピーカーマークで音声再生。
 //resultの結果次第でメッセージ。
 //例文のデータベース
+//メール認証。
 //user毎の利用状況を一覧できる画面。
 //数字集中トレーニング。
 //level11でエラーが出る単語：紺色とスポンジ。意味が???になる単語：劇 この他に、詳細が出ない単語が結構ある。level7でエラーが出る単語：インド、紫、枕。level4でエラーが出る単語：黄色。
@@ -53,7 +53,7 @@
             </select> 
           </div>
           <div class="mt-4 p-1">
-            <button @click="clickStart()" type="button" class="btn btn-info orange lighten-1 rounded p-1 text-nowrap"style="width: 220px; font-size: 1.5rem;">
+            <button @click="clickStart()" type="button" class="btn btn-primary rounded p-1 text-nowrap"style="width: 220px; font-size: 1.5rem;">
               START ▶
             </button>
           </div>
@@ -392,7 +392,7 @@
       clickStart() { //学習開始のボタンをクリック
         console.log("START pressed");
         if(this.subscription === 'GUEST'){
-          if(this.level <= this.guest_level){
+          if(Number(this.level) <= Number(this.guest_level)){
             this.status = "WARN_RANDOM"
             return;
           }else{
@@ -400,7 +400,7 @@
             return;
           }
         }else if(this.subscription === 'TRIAL'){
-          if( this.level > this.trial_level && this.level !== 'REVIEW_ALL'){
+          if( Number(this.level) > Number(this.trial_level) && this.level !== 'REVIEW_ALL'){
             this.status = "RECOMMEND_NORMAL"
             return;
           }
