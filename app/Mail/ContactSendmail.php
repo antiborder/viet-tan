@@ -35,8 +35,8 @@ class ContactSendmail extends Mailable
     public function build()
     {
         return $this
-            ->from(config('mail.from.address'))
-            ->subject('自動送信メール')
+            ->from($address = config('mail.from.address'), $name = config('mail.from.name'))
+            ->subject('[べとらん] ご連絡ありがとうございます')
             ->view('contact.mail')
             ->with([
                 'email' => $this->email,
