@@ -40,7 +40,7 @@ class StripeController extends Controller
  
         // 処理後に'ルート設定'にページ移行
         // return redirect()->route('ルート設定');
-        return redirect()->route('index');
+        return redirect()->route('users.show', ['name'=>Auth::user()->name]);
     }
 
     public function cancelsubscription(User $user, Request $request){
@@ -50,5 +50,7 @@ class StripeController extends Controller
 
     public function portalsubscription(User $user, Request $request){
         return $request->user()->redirectToBillingPortal("https://vietnamese-learn.net");
-    }     
+    }
+    
+    
 }

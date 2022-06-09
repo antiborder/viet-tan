@@ -1,21 +1,24 @@
-//ボトムバー//会員登録をdeep orangeに。
-//カテゴリ別のページ。検索のヒント。検索の表示について。レベルが低いほど一般的な言葉。
-//toppageにはお知らせ。レベル表。学習の使い方。広告設置。メニューアイコン。単語カードをいくつか。
+//サイトマップ。
 //単語力測定
+//articleリスト。漢越語、どの単語から、学習全体マップ。ベトナム語ってどんな言語。覚えるためには繰り返し。習慣化が大事。単語の意味と訳語。
+//学習の使い方。広告設置。単語カードをいくつか。レベル表。
+//単語編集でタグも編集
 //FAQ 漢越について、レベルについて、運営者について、支払いについて、不具合について　料金はいくらですか？　いつでもキャンセルできますか？
-//タグ編集機能
 //正解すると学習がデータベースに登録されずにまた出題されるエラー？
 //理解度ボタンにおおよその時間数日数を表示。おすすめレベル。
 //過去24時間以内で生まれた学習計画
-//webhookに頼らない実装。前回更新日や次回更新日の連絡も。二重契約にならないように。
-//実際に課金してみるテスト 
-//割引プラン実装。
-//terms of use。privacy policy。自動更新のチェックボックスや注意書きは必要なのか？
+//webhookに頼らない実装。前回更新日や次回更新日の連絡も。二重契約にならないように。料金表。決済ページに価格を表示。
+//実際に課金してみるテスト
+//タグアイコンを紺色に。タグ「その他」は他のタグにないものを自動で抽出。各カテゴリとタグのキーワードも表示。
+//terms of use。自動更新のチェックボックスや注意書きは必要なのか？
 //ロゴ配置。メニューアイコン
+//無料会員ならば、navに本登録を表示。//ユーザー一覧用の画面。
 //課金解禁
 //チョイスのスピーカーマークで音声再生。
 //resultの結果次第でメッセージ。
 //例文のデータベース
+//南部を除外する
+//割引プラン実装。
 //メール認証。
 //user毎の利用状況を一覧できる画面。
 //数字集中トレーニング。
@@ -24,7 +27,7 @@
 //Ｎ+1問題。
 //exportに類義語と対義語を入れる。
 //検索機能：音節が類似も載せたい。
-//タグ一覧
+//My単語帳機能。
 //WordControllerのupdate、create、importの共通部分をまとめたい。
 //単語力測定結果をtwitterに報告。facebookに報告。レベル上昇も報告。
 //テスト実装
@@ -38,7 +41,7 @@
 <template>
   <div class="mx-auto" style="text-align:center; max-width:700px;">
     <div style="text-align:left">
-      Lv.:{{level}}　正解率: {{correct}} / {{total}}
+      単語学習　Lv.:{{level}}　正解率: {{correct}} / {{total}}
     </div>
 
     <!-- 最初の画面 -->
@@ -73,15 +76,15 @@
         <div class="card-body" style = "text-align:center;">
           <div class="m-2 p-2" style="font-size:1.0rem">
             ログインしていないため、ランダムに出題されます。<br><br>
-            <span class="text-primary">無料登録すれば、単語毎の学習スケジュールに基づいて出題されます。</span>
+            <span  style="color:#ff7043">無料登録すれば、単語毎の学習スケジュールに基づいて出題されます。</span>
           </div>
           <div class="mb-3" style="text-align:center; font-size:1.3rem" >
-            <a href="register" class="info-color text-white rounded px-4 py-2" >無料登録する</a>
+            <a href="/register" class="deep-orange lighten-1 text-white rounded px-4 py-2" >無料登録する</a>
           </div>
           <div class="m-3" style="text-align:center; font-size:1.3rem" >
-            <a href="login" class="border border-warning text-warning rounded px-4 py-2" >ログインする</a>
+            <a href="login" class="rounded px-4 py-2" style="color:#ffa726;border-color:#ffa726;border-style:solid">ログインする</a>
           </div>          
-          <button @click="load()" type="button" class="btn btn-info light-blue accent-4 rounded px-3 py-2 mt-3 text-nowrap"style="font-size: 1.0rem;">
+          <button @click="load()" type="button" class="btn btn-info light-blue accent-4 rounded px-3 py-2 mt-3 text-nowrap shadow-none "style="font-size: 1.0rem;">
             ランダムでStart ▶
           </button>
         </div>
@@ -96,10 +99,10 @@
             レベル{{Number(trial_level)+1}}以上は通常会員専用です。
           </div>
           <div class="m-3" style="text-align:center; font-size:1.3rem" >
-            <a href="subscription" class="info-color text-white rounded px-5 py-2" >登録画面へ</a>
+            <a href="/subscription" class="deep-orange lighten-1 text-white rounded px-5 py-2" >通常会員に登録</a>
           </div>            
           <div class="m-3" style="text-align:center;" >
-            <button @click="initialize()" type="button" class="btn btn-info light-blue accent-4 rounded px-5 py-1 mt-2 text-nowrap" style=" font-size: 1.3rem;">
+            <button @click="initialize()" type="button" class="btn btn-info light-blue accent-4 rounded px-5 py-1 mt-2 text-nowrap shadow-none" style=" font-size: 1.3rem;">
               レベルを変更
             </button>
           </div>                      
@@ -115,10 +118,10 @@
             レベル{{Number(guest_level)+1}}以上は会員専用です。
           </div>
           <div class="m-3" style="text-align:center; font-size:1.3rem" >
-            <a href="register" class="info-color text-white rounded px-5 py-2" >無料登録する</a>
+            <a href="/register" class="deep-orange lighten-1 text-white rounded px-5 py-2" >無料登録する</a>
           </div>            
           <div class="m-3" style="text-align:center;" >
-            <button @click="initialize()" type="button" class="btn btn-info light-blue accent-4 rounded px-5 py-1 mt-2 text-nowrap" style=" font-size: 1.3rem;">
+            <button @click="initialize()" type="button" class="btn btn-info light-blue accent-4 rounded px-5 py-1 mt-2 text-nowrap shadow-none" style=" font-size: 1.3rem;">
               レベルを変更
             </button>
           </div>                      

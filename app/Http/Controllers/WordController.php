@@ -310,18 +310,9 @@ class WordController extends Controller
         }
         $common_syllables = $common_syllables->unique()->sortBy('level');
 
-        $user = User::where('id',Auth::id())->first();
-        if( $user !== null ){
-            if($user->subscribed('default')){
-                $subscription = "NORMAL";
-            }else{
-                $subscription = "TRIAL";
-            }
-        }else{
-            $subscription = "GUEST";
-        }
-
+        $subscription = User::getSubscription();
         $similar_pronuciations = Word::all()->where('no_diacritic', $word->no_diacritic)->where('name', '!==', $word->name)->sortBy('level');//->all()        
+
         return view('words.show', ['word' => $word, 'common_syllables' => $common_syllables, 'similar_pronuciations' => $similar_pronuciations, 'subscription'=>$subscription]);
     }   
     
@@ -330,6 +321,7 @@ class WordController extends Controller
         $keyword = $request->input('keyword');
         $keyword = preg_replace("/　|・|「|」|、|。|,|\.|:|;|\/|\\|／|￥/"," ",$keyword);
 
+        //keyword有無を判定
         if(strlen(str_replace(" ","",$keyword)) > 0){
 
             //完全一致
@@ -374,15 +366,29 @@ class WordController extends Controller
             //タグが該当
             $query_tag = Tag::where('name','like','%'.$keyword.'%');
             $tags = $query_tag->paginate(20);           
-
-            $msg = '「' . $keyword . '」の検索結果';  
+            
             $title = $keyword . 'の検索結果';
+
+            //該当無しを判定
+            if(count($words_name_exact) === 0 &&
+            count($words_name_similar) === 0 &&
+            count($words_name_simplified) === 0 &&
+            count($words_name_syllables) === 0 &&
+            count($words_jp) === 0 &&
+            count($words_kanji) === 0
+            ){
+                $msg = '検索条件「' . $keyword . '」に該当する情報はありませんでした。';
+                $result = "FAIL";
+            }else{
+                $msg = '「' . $keyword . '」の検索結果';  
+                $result = "SUCCESS";
+            }
         }else{
+            $result = 'FAIL';
             $words_name_exact = [];
             $words_name_similar = [];
             $words_name_simplified = [];
             $words_name_syllables = [];
-            $words_name = [];
             $words_jp = [];
             $words_kanji = [];
             $tags = [];
@@ -398,7 +404,8 @@ class WordController extends Controller
         with('words_name_syllables',$words_name_syllables)->
         with('words_jp',$words_jp)->
         with('words_kanji',$words_kanji)->
-        with('tags',$tags)->with('msg', $msg)->with('title', $title);
+        with('tags',$tags)->with('msg', $msg)->with('title', $title)->
+        with('result',$result);
 
     }
 

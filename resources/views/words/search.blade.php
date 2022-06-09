@@ -11,10 +11,10 @@
         <div class="form-group">
           <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control" placeholder="">
         </div>
-        <input type="submit" value="検索" class="btn btn-info light-blue lighten-1 pt-1 pb-1 btn-sm" style="font-size: large; ">
+        <input type="submit" value="検索" class="btn text-white  pt-1 pb-1 btn-sm" style="font-size: large; background-color:#ffc700;">
       </form>
     </div>
-    <p>{{$msg}}</p>    
+    <p>{{$msg}}</p>
 
     @foreach($words_name_exact ?? null as $word)
       @if($loop->first)
@@ -89,18 +89,34 @@
 
     @foreach($tags as $tag)
       @if($loop->first)
-        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-warning bg-transparent text-warning" style="color: white; max-width: 30rem;border-width:2px;">    
+        <div class="card mt-3 mb-1 pb-2 pl-2 pr-2 border-warning bg-transparent text-warning" style="color: white; max-width: 30rem;border-width:2px;">    
         <span style=";font-size:1.2rem">関連タグ</span>
           <div class="card-text line-height">
       @endif
-            <a class="text-dark white pl-1 pr-1 mr-2 rounded shadow" href="{{ route('tags.show', ['name' => $tag->name]) }}" style="font-size:1.2rem">
-              {{ $tag->name }}
-            </a>
+        <span class="mx-1">
+            @include('tags.card',['tag'=>$tag])
+        </span>
       @if($loop->last)
           </div>
         </div>        
       @endif
     @endforeach      
 
+    <div class=" my-3" style="">
+      <button onclick="location.href='{{route("tags.categories")}}'" class="text-white mx-1 px-3 py-1 border-0 rounded shadow" style="background-color:#ffc700;">
+        <strong>タグから探す</strong>
+      </button>
+    </div>    
+
+    @if($result==='FAIL')
+      <div class="mt-5 white rounded shadow">
+        <div class="text-center">
+          <img src="/image/search1.jpg" style="height:300px; width:300px" alt='あいまい検索 使用例'>
+          <img src="/image/search2.jpg" style="height:300px; width:300px" alt='声調記号などが違ってもヒットします 発音が似ている単語もヒットします 混同しやすい単語の整理にも便利です'>
+          <img src="/image/search3.jpg" style="height:300px; width:300px" alt='ベトナム語だけでなく 日本語 漢越語 関連タグ もヒットします'>
+        </div>
+      </div>
+    @endif        
   </div>
+
 @endsection

@@ -26,7 +26,8 @@ Route::resource('/words', 'WordController')->except(['index'])->middleware('auth
 Route::resource('/words', 'WordController')->only(['show']);
 
 Route::get('/tags/{name}', 'TagController@show')->name('tags.show');
-Route::get('/category','TagController@category')->name('tags.category');
+Route::get('/category','TagController@showCategories')->name('tags.categories');
+Route::get('/category/{name}','TagController@showCategory')->name('tags.category');
 
 Route::get('/kanjis/{name}', 'KanjiController@show')->name('kanjis.show');
 Route::get('/search', 'WordController@search')->name('words.search');
@@ -59,5 +60,5 @@ Route::post('stripe/webhook', 'WebhookController@handleWebhook');
 Route::get('/contact', 'ContactController@index')->name('contact.index');
 Route::post('/contact/thanks', 'ContactController@send')->name('contact.send');
 
-//tag
-
+//privacy policy
+Route::view('/privacy-policy','privacy_policy');

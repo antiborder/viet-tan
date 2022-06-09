@@ -14,28 +14,24 @@
       <span style="font-size:1.4rem"> {{ $tag->words->count() }}</span> 件が該当
     </div>    
 
-    @auth 
+    @if( $subscription==="NORMAL" )
+      @foreach($tag->words->sortBy('level') as $i => $word)
+        @include('words.card')
+      @endforeach
 
-      @if( $request->user()->subscribed('default') )
-        @foreach($tag->words->sortBy('level') as $i => $word)
+    @elseif( $subscription==="TRIAL")
+      @foreach($tag->words->sortBy('level') as $i => $word)
+        @if($i < config('const.TAG_WORD_TRIAL'))
           @include('words.card')
-        @endforeach
-
-      @else
-        @foreach($tag->words->sortBy('level') as $i => $word)
-          @if($i < config('const.TAG_WORD_TRIAL'))
-            @include('words.card')
-          @endif
-        @endforeach
-        @if( $tag->words->count() > config('const.TAG_WORD_TRIAL'))
-          <div class="mt-2" data-toggle="modal" data-target="#recommend-normal" style="">
-          <button class="success-color text-white border border-0 px-2 py-1 rounded">「{{ $tag->name }}」の関連語をもっと見る</button>
-          </div>
-        @endif     
+        @endif
+      @endforeach
+      @if( $tag->words->count() > config('const.TAG_WORD_TRIAL'))
+        <div class="mt-2" data-toggle="modal" data-target="#recommend-normal" style="">
+        <button class="success-color text-white border border-0 px-2 py-1 rounded shadow">「{{ $tag->name }}」の関連語をもっと見る</button>
+        </div>
       @endif
-    @endauth
 
-    @guest
+    @elseif( $subscription==="GUEST" )
       @foreach($tag->words->sortBy('level') as $i => $word)
         @if($i < config('const.TAG_WORD_GUEST'))
           @include('words.card')
@@ -43,33 +39,20 @@
       @endforeach
       @if( $tag->words->count() > config('const.TAG_WORD_GUEST'))
         <div class="mt-2" data-toggle="modal" data-target="#recommend-trial" style="">
-          <button class="success-color text-white border border-0 px-2 py-1 rounded">「{{ $tag->name }}」の関連語をもっと見る</button>
+          <button class="success-color text-white border border-0 px-2 py-1 rounded shadow ">「{{ $tag->name }}」の関連語をもっと見る</button>
         </div>
       @endif
-    @endguest
+    @endif
+    <div class=" my-3" style="">
+      <button onclick="location.href='{{route("tags.categories")}}'" class="text-white px-4 py-1 border-0 rounded shadow" style="background-color:#ffc700; font-family: 'Kosugi Maru', sans-serif;">
+        他のタグも見る
+      </button>
+    </div>
 
 
 
   </div>
-  <!-- recommend-trial modal -->
-  <div class="modal fade rounded" id="recommend-trial" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-body"> 
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button><br>
-          <div class="m-2" style="text-align:center; font-size:1.2rem">この機能は会員専用です。</div>
-          <div class="m-3" style="text-align:center; font-size:1.2rem" >
-            <a href="{{ route('register')}}" class="border border-info text-info rounded px-3 py-2" >まずは無料登録</a>
-          </div>
-          <div class="m-4" style="text-align:center; font-size:1.2rem">
-            <a href="{{ route('login') }}" class="border border-warning text-warning rounded px-3 py-2" >ログインする</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>  
+
 
   <!-- recommend-normal modal -->
   <div class="modal fade rounded" id="recommend-normal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -86,5 +69,7 @@
         </div>
       </div>
     </div>
-  </div>    
+  </div>   
+
+  @include('footer')  
 @endsection
