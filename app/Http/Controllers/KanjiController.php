@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Kanji;
 use App\Word;
+use App\User;
 
 class KanjiController extends Controller
 {
-    public function show(Request $request,string $name)
+    public function show(string $name)
     {
         $kanji = Kanji::where('name', $name) -> first();
         $words = Word::where('kanji0',$name);
@@ -17,7 +18,9 @@ class KanjiController extends Controller
         }
         $words = $words ->get();
 
-        return view('kanjis.show', ['kanji' => $kanji, 'words' => $words, 'request' => $request]);
+        $subscription = User::getSubscription();
+
+        return view('kanjis.show', ['kanji' => $kanji, 'words' => $words, 'subscription' => $subscription]);
     }
 
     public function kanji_filter($words, $name, $i){

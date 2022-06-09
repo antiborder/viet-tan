@@ -10,7 +10,7 @@
         <h1 class="text-center"><a class="text-dark" href="/">べとらん</a></h1>
         <div class="card mt-3">
           <div class="card-body">
-            <h2 class="h3 card-title text-center mt-2">ご登録フォーム</h2>
+            <h2 class="h3 card-title text-center mt-2">通常会員 ご登録</h2>
             <div class="card-text">
 			<form action="{{route('stripe.afterpay')}}" method="post" id="payment-form">
 				@csrf
@@ -23,7 +23,7 @@
 			
 				<div id="card-errors" role="alert" style='color:red'></div>
 			
-				<button class="btn btn-block btn-info mt-2 mb-2" id="card-button" style="font-size:1.1rem" data-secret="{{ $intent->client_secret }}">送信する</button>
+				<button class="btn btn-block btn-info deep-orange lighten-1 mt-2 mb-2" id="card-button" style="font-size:1.1rem" data-secret="{{ $intent->client_secret }}">送信する</button>
 			</form>				
               
             </div>

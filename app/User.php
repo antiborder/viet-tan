@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 use Laravel\Cashier\Billable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -47,5 +48,19 @@ class User extends Authenticatable
     {
         $this->notify(new PasswordResetNotification($token, new BareMail()));
     }
+
+    public static function getSubscription() {
+        $user = Auth::user();
+        if( $user !== null ){
+            if($user->subscribed('default')){
+                $subscription = "NORMAL";
+            }else{
+                $subscription = "TRIAL";
+            }
+        }else{
+            $subscription = "GUEST";
+        }        
+        return $subscription;
+    }           
 
 }
