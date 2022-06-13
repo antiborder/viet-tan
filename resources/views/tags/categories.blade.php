@@ -10,7 +10,7 @@
       <h4 class="pt-3">タグ分類</h4>
       <ul class="inline-block" style="max-width:900px; list-style-type: none; padding-left:0; text-align:center">
 
-        @foreach($categories as $category)
+        @foreach($categories as $i=>$category)
 
           <div class=" white m-2 p-1 rounded shadow text-left" style=" width:250px; height:150px; position:relative; display:inline-block">
             <a class="text-dark" href="{{ route('tags.category', ['name' => $category]) }}" style=" position:absolute; font-size:1.2rem; top: 0; left: 0; width: 100%; height: 100%;">  
@@ -20,6 +20,21 @@
             <img class="mt-2"src="{{'/image/'.config('const.CATEGORIES')[$category]['IMAGES'][0]}}" style="height:100px; position:absolute; top:30px">
           
           </div>
+
+          @if($i===5 || $i===10)
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
+                crossorigin="anonymous"></script>
+            <!-- square -->
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-9067426465896411"
+                data-ad-slot="5284563145"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          @endif
 
         @endforeach     
         
@@ -47,16 +62,4 @@
       
   </div>
   
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
-  crossorigin="anonymous"></script>
-  <!-- Horizontal -->
-  <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-9067426465896411"
-      data-ad-slot="5078046569"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-  <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
 @endsection
