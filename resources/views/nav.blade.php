@@ -29,6 +29,9 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent" style="width:300px;margin: 0 auto;">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
+        <a class="nav-link" href="{{route('index')}}" >Home</a>
+      </li>      
+      <li class="nav-item">
         <a class="nav-link" href="{{route('learn')}}" >単語学習</a>
       </li>
       <li class="nav-item">
