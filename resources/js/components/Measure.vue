@@ -291,7 +291,7 @@
         this.setEstimateLevel();
         this.setLevel();
         this.isCorrect = null;          
-        if(this.total >= 3){
+        if(this.total >= 11){
           this.status = "RESULT"
           this.level = Math.round(this.current_estimate)
           let result_sound = new Audio('/sound/result.mp3');

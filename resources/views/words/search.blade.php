@@ -6,19 +6,27 @@
   @include('nav')
 
   <div class="container">
-    <div class="col-sm-4" style="padding:20px 0; padding-left:0px;">
-      <form class="form-inline" action="{{url('/search')}}">
-        <div class="form-group">
-          <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control" placeholder="">
-        </div>
-        <input type="submit" value="検索" class="btn text-white  pt-1 pb-1 btn-sm" style="font-size: large; background-color:#ffc700;">
-      </form>
+    <div class="card white pl-2 py-2 mt-2 mb-3 text-dark " style="max-width: 40rem;">
+      <div class="pt-1" style="">
+        <form class="form-inline" action="{{url('/search')}}">
+          <div class="form-group">
+            <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control" placeholder="キーワードを入力">
+          </div>
+          <input type="submit" value="検索" class="btn text-white py-1 btn-sm" style="font-size:large; background-color:#ffc700;font-family: 'Kosugi Maru', sans-serif;" >
+          <span data-toggle="modal" data-target="#search-description" class="white border border-success text-success rounded ml-4 py-1 px-2" style="font-family: 'Kosugi Maru', sans-serif;">
+            <small>あいまい検索について</small>
+          </span>                
+        </form>
+      </div>
+      <div class="text-right">
+        
+      </div>
     </div>
-    <p>{{$msg}}</p>
 
+    <p class="pb-0 mb-0">{{$msg}}</p>    
     @foreach($words_name_exact ?? null as $word)
       @if($loop->first)
-        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 orange lighten-1 text-white " style="color: white; max-width: 30rem;border-width:2px">
+        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 orange lighten-1 text-white " style=" max-width: 30rem;border-width:2px">
           <span style=";font-size:1.2rem">ベトナム語が一致</span>
       @endif
       @include('words.card',['word'=>$word])
@@ -102,21 +110,28 @@
       @endif
     @endforeach      
 
-    <div class=" my-3" style="">
-      <button onclick="location.href='{{route("tags.categories")}}'" class="text-white mx-1 px-3 py-1 border-0 rounded shadow" style="background-color:#ffc700;">
-        <strong>タグから探す</strong>
+    <div class="my-3" style="">
+      <button onclick="location.href='{{route("tags.categories")}}'" class="text-white mx-1 px-3 py-1 border-0 rounded shadow" style="background-color:#ffc700; font-family:'Kosugi Maru', sans-serif;">
+        タグから探す
       </button>
     </div>    
 
-    @if($result==='FAIL')
-      <div class="mt-5 white rounded shadow">
-        <div class="text-center">
+  </div>
+
+  <!-- contact-modal -->
+<div class="modal fade rounded p-1" id="search-description" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div style="display:flex; overflow-x:auto ">
+        <div style="display:flex; align-items:center; margin:auto" >
           <img src="/image/search1.jpg" style="height:300px; width:300px" alt='あいまい検索 使用例'>
           <img src="/image/search2.jpg" style="height:300px; width:300px" alt='声調記号などが違ってもヒットします 発音が似ている単語もヒットします 混同しやすい単語の整理にも便利です'>
           <img src="/image/search3.jpg" style="height:300px; width:300px" alt='ベトナム語だけでなく 日本語 漢越語 関連タグ もヒットします'>
         </div>
       </div>
-    @endif        
+    </div>
   </div>
+</div>
+  
 
 @endsection

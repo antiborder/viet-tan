@@ -392,7 +392,7 @@ class WordController extends Controller
             $words_jp = [];
             $words_kanji = [];
             $tags = [];
-            $msg = '検索キーワードを入力してください。';
+            $msg = '';
             $title = "あいまい検索";
 
         }

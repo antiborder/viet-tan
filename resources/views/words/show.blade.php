@@ -23,36 +23,9 @@
       @endforeach            
     </div>
     
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
-     crossorigin="anonymous"></script>
-    <!-- Horizontal -->
-    <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-9067426465896411"
-        data-ad-slot="5078046569"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-
-    @if($subscription === 'GUEST')
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
-          crossorigin="anonymous"></script>
-      <!-- テスト -->
-      <ins class="adsbygoogle"
-          style="display:block"
-          data-ad-client="ca-pub-9067426465896411"
-          data-ad-slot="5078046569"
-          data-ad-format="auto"
-          data-full-width-responsive="true"></ins>
-      <script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>    
-    @endif      
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
-          crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
     <!-- square -->
     <ins class="adsbygoogle"
         style="display:block"
@@ -64,20 +37,6 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 
-    @if($subscription === 'GUEST')
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
-          crossorigin="anonymous"></script>
-      <!-- square -->
-      <ins class="adsbygoogle"
-          style="display:block"
-          data-ad-client="ca-pub-9067426465896411"
-          data-ad-slot="5284563145"
-          data-ad-format="auto"
-          data-full-width-responsive="true"></ins>
-      <script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
-    @endif
 
     @foreach($word->synonyms()->sortBy('level') as $synonym)
       @if($loop->first)
@@ -136,7 +95,7 @@
         @if($loop->last)
           @if($common_syllables->count() > config('const.SAME_SYLLABLE_TRIAL'))
             <div class="mt-2" data-toggle="modal" data-target="#recommend-normal" style="">
-              <button class="success-color text-white border border-0 px-2 py-1 rounded shadow">同じ音節を含む単語をもっと見る</button>
+              <button class="success-color text-white border border-0 px-2 py-1 rounded shadow" style="font-family: 'Kosugi Maru', sans-serif;">同じ音節を含む単語をもっと見る</button>
             </div>          
           @endif        
           </div>
@@ -154,7 +113,7 @@
         @if($loop->last)
           @if($common_syllables->count() > config('const.SAME_SYLLABLE_GUEST'))
             <div class="mt-2" data-toggle="modal" data-target="#recommend-trial" style="">
-              <button class="success-color text-white border border-0 px-2 py-1 rounded shadow">同じ音節を含む単語をもっと見る</button>
+              <button class="success-color text-white border border-0 px-2 py-1 rounded shadow" style="font-family: 'Kosugi Maru', sans-serif;">同じ音節を含む単語をもっと見る</button>
             </div>          
           @endif        
           </div>

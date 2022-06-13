@@ -5,7 +5,7 @@
 @section('content')
   @include('nav')
 
-  <div class="container">
+  <div class="container text-center" >
 
       <h4 class="pt-3">タグ分類</h4>
       <ul class="inline-block" style="max-width:900px; list-style-type: none; padding-left:0; text-align:center">
@@ -24,6 +24,11 @@
         @endforeach     
         
       </ul>
+      <div class=" my-3 text-center" style="">
+        <button onclick="location.href='{{route("tags.categories")}}'" class="text-white mx-1 px-3 py-1 border-0 rounded shadow" style="background-color:#ffc700;">
+          <strong>タグは検索からでも見つかります</strong>
+        </button>
+      </div>          
 
   </div>
   
