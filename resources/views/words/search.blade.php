@@ -18,12 +18,23 @@
           </span>                
         </form>
       </div>
-      <div class="text-right">
-        
-      </div>
     </div>
 
     <p class="pb-0 mb-0">{{$msg}}</p>    
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
+     crossorigin="anonymous"></script>
+    <!-- Horizontal -->
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-9067426465896411"
+        data-ad-slot="5078046569"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    
     @foreach($words_name_exact ?? null as $word)
       @if($loop->first)
         <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 orange lighten-1 text-white " style=" max-width: 30rem;border-width:2px">
@@ -65,6 +76,18 @@
       @include('words.card',['word'=>$word])
       @if($loop->last)
         </div>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
+            crossorigin="anonymous"></script>
+        <!-- Horizontal -->
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-9067426465896411"
+            data-ad-slot="5078046569"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
       @endif
     @endforeach
                 
