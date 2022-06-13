@@ -1,14 +1,14 @@
 import './bootstrap'
 import Vue from 'vue'
 
-
-import Question from './components/Question'
-
+import Measure from './components/Measure'
+import Learn from './components/Learn'
 
 const app = new Vue({
   el: '#app',
   components: {
-    Question,
+    Learn,
+    Measure,    
+  },
 
-  }
 })

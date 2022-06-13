@@ -22,7 +22,7 @@
             <span data-toggle="modal" data-target="#contact"><a class="text-white">ご意見・お問い合せ</a></span><br>
         </div>
     </div>
-    <div class="text-center " style="font-size:0.8rem">
+    <div class="text-center " style="font-size:1.0rem">
         <a href="{{route('index')}}" class="text-muted small" style="width:170px;">
             vietnamese-learn.net
         </a>&nbsp;&nbsp;

@@ -1,17 +1,17 @@
-//単語力測定
-//articleリスト。漢越語、どの単語から、学習全体マップ。ベトナム語ってどんな言語。覚えるためには繰り返し。習慣化が大事。単語の意味と訳語。
 //navからHomeに戻る。タグから検索に行く。広告設置。検索の使い方をモーダルに。レベル表。学習の使い方。単語カードの見方。単語カードをいくつか。
 //単語編集でタグも編集
+//articleリスト。漢越語、どの単語から、学習全体マップ。ベトナム語ってどんな言語。覚えるためには繰り返し。習慣化が大事。単語の意味と訳語。
 //FAQ 漢越について、レベルについて、運営者について、支払いについて、不具合について　料金はいくらですか？　いつでもキャンセルできますか？
 //正解すると学習がデータベースに登録されずにまた出題されるエラー？
-//理解度ボタンにおおよその時間数日数を表示。おすすめレベル。
-//過去24時間以内で生まれた学習計画
 //webhookに頼らない実装。前回更新日や次回更新日の連絡も。二重契約にならないように。料金表。決済ページに価格を表示。
 //実際に課金してみるテスト
+//ユーザー一覧用の画面。
 //タグアイコンを紺色に。タグ「その他」は他のタグにないものを自動で抽出。各カテゴリとタグのキーワードも表示。
 //terms of use。自動更新のチェックボックスや注意書きは必要なのか？
 //ロゴ配置。メニューアイコン
-//無料会員ならば、navに本登録を表示。//ユーザー一覧用の画面。
+//理解度ボタンにおおよその時間数日数を表示。おすすめレベル。
+//過去24時間以内で生まれた学習計画
+//無料会員ならば、navに本登録を表示。
 //課金解禁
 //チョイスのスピーカーマークで音声再生。
 //resultの結果次第でメッセージ。
@@ -39,7 +39,7 @@
 
 <template>
   <div class="mx-auto" style="text-align:center; max-width:700px;">
-    <div style="text-align:left">
+    <div class="mt-1" style="text-align:left">
       単語学習　Lv.:{{level}}　正解率: {{correct}} / {{total}}
     </div>
 
@@ -206,7 +206,7 @@
               </td>            
             </tr>
           </table>
-          <div style="text-align:right">正解率： {{correct}}/{{total}}</div>
+          <div class="px-2" style="text-align:right">正解率： {{correct}}/{{total}}</div>
         </div>
         
         <div v-if="status==='CLEARED'">
@@ -248,7 +248,7 @@
 <script>
   import Choice from './Choice.vue'
   export default {
-
+    name: 'Learn',
     components: {
       Choice
     },
@@ -292,7 +292,7 @@
           return "正解を選んでください";
         }else if(this.status==="ANSWERED"){
           return "";
-        }        
+        }
       },
       result_text: function(){
         if(this.isCorrect == true){

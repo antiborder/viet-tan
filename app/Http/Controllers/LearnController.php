@@ -32,6 +32,27 @@ class LearnController extends Controller
         return view('words.learn',['user_name'=>$user_name, 'subscription'=>$subscription, 'level'=>$level[0]]);
     }
 
+    public function measure(...$level)
+    {
+        $user = User::where('id',Auth::id())->first();
+        $user_name = $user !== null ? $user->name : null;
+        if( $user !== null ){
+            if($user->subscribed('default')){
+                $subscription = "NORMAL";
+            }else{
+                $subscription = "TRIAL";
+            }
+        }else{  
+            $subscription = "GUEST";
+        }
+
+        if(count($level) === 0){
+            $level[0]=1;
+        }
+
+        return view('words.measure',['user_name'=>$user_name, 'subscription'=>$subscription, 'level'=>$level[0]]);
+    }
+
     public function store(Request $request)
     {
         if(Auth::check()){
@@ -142,120 +163,128 @@ class LearnController extends Controller
     }
     
     public function getWords(Request $request){
-
-        if(Auth::check() === false){ //ログイン未の場合
+        if($request->component === 'measure'){
             $answer = Word::where('level', $request->level)->inRandomOrder()->first();
-            $mode = "FM";
-        }else{ //ログイン済の場合
+            if(mt_rand() / mt_getrandmax() < 2/3){
+                $mode = "FM";
+            }else{
+                $mode = "MF";
+            }
+        }else if($request->component === 'learn'){
+        
+            if(Auth::check() === false){ //ログイン未の場合
+                $answer = Word::where('level', $request->level)->inRandomOrder()->first();
+                $mode = "FM";
+            }else{ //ログイン済の場合
 
-            if($request->level==="REVIEW_ALL"){
-                
-                //学習待ちの単語をカウント
-                $delayed_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
-                ->where('learns.user_id', Auth::id())
-                ->where('learns.next_time', '<', date("Y-m-d H:i:s"))
-                ->get();
-                $delayed_word_count = $delayed_words->count();
+                if($request->level==="REVIEW_ALL"){
+                    
+                    //学習待ちの単語をカウント
+                    $delayed_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
+                    ->where('learns.user_id', Auth::id())
+                    ->where('learns.next_time', '<', date("Y-m-d H:i:s"))
+                    ->get();
+                    $delayed_word_count = $delayed_words->count();
 
-                if($delayed_word_count === 0){//単語が尽きたときはここでreturn
-                    return "CLEARED";
-                }
-
-                $next_words= $delayed_words
-                ->sortBy('next_time')
-                ->sortBy('easiness')
-                ->values()
-                ->take(2);
-                if($next_words[0]['name'] !== $request->previous){
-                    $next_word_id = $next_words[0]['word_id'];
-                    $mode = $next_words[0]['next_mode']===null ? "FM" : $next_words[0]['next_mode'];
-                }else{
-                    if($delayed_word_count === 1){//単語が尽きたときはここでreturn
+                    if($delayed_word_count === 0){//単語が尽きたときはここでreturn
                         return "CLEARED";
                     }
-                    $next_word_id = $next_words[1]['word_id'];
-                    $mode = $next_words[1]['next_mode']===null ? "FM" : $next_words[1]['next_mode'];
-                }                
-
-            }else{
-
-                //既習語取得
-                $learned_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
-                ->where('learns.user_id',Auth::id())
-                ->where('words.level',$request->level)
-                ->select('words.id')
-                ->get()->toArray();
-                $learned_word_ids = array_map(
-                    function ($element) { 
-                        return $element['id']; 
-                    },
-                    $learned_words
-                );
-                $learned_word_count = count($learned_word_ids);
-
-                //未習語を取得
-                $unlearned_words = Word::where('words.level',$request->level)
-                ->whereNotIn('id',$learned_word_ids)->
-                select('id')->get();
-                $unlearned_word_count = $unlearned_words->count();
-                
-                //学習待ちの単語をカウント
-                $delayed_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
-                ->where('learns.user_id', Auth::id())
-                ->where('words.level',$request->level)
-                ->where('learns.next_time', '<', date("Y-m-d H:i:s"))
-                ->get();
-                $delayed_word_count = $delayed_words->count();
-
-                //delay_degreeの計算
-                if($unlearned_word_count===0 && $delayed_word_count === 0){//単語が尽きたときはここでreturn
-                    return "CLEARED";
-                }else if($unlearned_word_count===0){
-                    $delay_degree = 1;
-                }else if($delayed_word_count === 0){
-                    $delay_degree = 0;
-                }else{
-
-                    if($delayed_word_count <= 10){
-                        $delay_degree= $delayed_word_count*0.05;
-                    }else{
-                        $delay_degree= 1.0 - 5 / $delayed_word_count;
-                    }
-
-                    if( $unlearned_word_count < 2 ){
-                        $delay_degree = 0;
-                    }
-                }
-                
-                if( mt_rand() / mt_getrandmax() > $delay_degree ) { //未習の単語から一つ選択
-
-                    $next_word_id = $unlearned_words ->random()->id;
-                    $mode = "FM";
-                    
-                }else{  //既習の単語から一つ選択
 
                     $next_words= $delayed_words
                     ->sortBy('next_time')
                     ->sortBy('easiness')
                     ->values()
                     ->take(2);
-
                     if($next_words[0]['name'] !== $request->previous){
                         $next_word_id = $next_words[0]['word_id'];
                         $mode = $next_words[0]['next_mode']===null ? "FM" : $next_words[0]['next_mode'];
                     }else{
-                        if($unlearned_word_count + $delayed_word_count === 1){//単語が尽きたときはここでreturn
+                        if($delayed_word_count === 1){//単語が尽きたときはここでreturn
                             return "CLEARED";
                         }
                         $next_word_id = $next_words[1]['word_id'];
-                        $mode = $next_words[1]['next_mode']===null ? "FM" : $next_words[1]['next_mode'] ;
+                        $mode = $next_words[1]['next_mode']===null ? "FM" : $next_words[1]['next_mode'];
+                    }                
+
+                }else{
+
+                    //既習語取得
+                    $learned_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
+                    ->where('learns.user_id',Auth::id())
+                    ->where('words.level',$request->level)
+                    ->select('words.id')
+                    ->get()->toArray();
+                    $learned_word_ids = array_map(
+                        function ($element) { 
+                            return $element['id']; 
+                        },
+                        $learned_words
+                    );
+                    $learned_word_count = count($learned_word_ids);
+
+                    //未習語を取得
+                    $unlearned_words = Word::where('words.level',$request->level)
+                    ->whereNotIn('id',$learned_word_ids)->
+                    select('id')->get();
+                    $unlearned_word_count = $unlearned_words->count();
+                    
+                    //学習待ちの単語をカウント
+                    $delayed_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
+                    ->where('learns.user_id', Auth::id())
+                    ->where('words.level',$request->level)
+                    ->where('learns.next_time', '<', date("Y-m-d H:i:s"))
+                    ->get();
+                    $delayed_word_count = $delayed_words->count();
+
+                    //delay_degreeの計算
+                    if($unlearned_word_count===0 && $delayed_word_count === 0){//単語が尽きたときはここでreturn
+                        return "CLEARED";
+                    }else if($unlearned_word_count===0){
+                        $delay_degree = 1;
+                    }else if($delayed_word_count === 0){
+                        $delay_degree = 0;
+                    }else{
+
+                        if($delayed_word_count <= 10){
+                            $delay_degree= $delayed_word_count*0.05;
+                        }else{
+                            $delay_degree= 1.0 - 5 / $delayed_word_count;
+                        }
+
+                        if( $unlearned_word_count < 2 ){
+                            $delay_degree = 0;
+                        }
+                    }
+                    
+                    if( mt_rand() / mt_getrandmax() > $delay_degree ) { //未習の単語から一つ選択
+
+                        $next_word_id = $unlearned_words ->random()->id;
+                        $mode = "FM";
+                        
+                    }else{  //既習の単語から一つ選択
+
+                        $next_words= $delayed_words
+                        ->sortBy('next_time')
+                        ->sortBy('easiness')
+                        ->values()
+                        ->take(2);
+
+                        if($next_words[0]['name'] !== $request->previous){
+                            $next_word_id = $next_words[0]['word_id'];
+                            $mode = $next_words[0]['next_mode']===null ? "FM" : $next_words[0]['next_mode'];
+                        }else{
+                            if($unlearned_word_count + $delayed_word_count === 1){//単語が尽きたときはここでreturn
+                                return "CLEARED";
+                            }
+                            $next_word_id = $next_words[1]['word_id'];
+                            $mode = $next_words[1]['next_mode']===null ? "FM" : $next_words[1]['next_mode'] ;
+                        }
                     }
                 }
+
+                $answer = Word::where('id',$next_word_id)->first();
             }
-
-            $answer = Word::where('id',$next_word_id)->first();
         }
-
         $synonyms = [];
         foreach($answer->synonyms() as $synonym ){
                 $synonyms[] = $synonym->name;
