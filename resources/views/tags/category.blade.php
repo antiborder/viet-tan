@@ -5,7 +5,7 @@
 @section('content')
   @include('nav')
 
-  <div class="container text-center" style="line-height:200%; max-width:400px">
+  <div class="container text-center" style="line-height:200%; ">
     <div class=" white my-2 py-2 rounded shadow" style="width:220px; display:inline-block; margin:0 auto;">
       <img src="{{'/image/'.$category['IMAGES'][0]}}" style="height:100px;">
     </div>
@@ -17,7 +17,7 @@
         @include('tags.card',['tag'=>$tag])
         </span><br>
 
-        @if($i===7 || $i=== 13 || $i=== 22 )
+        @if($i===11)
           <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
               crossorigin="anonymous"></script>
           <!-- Horizontal -->
