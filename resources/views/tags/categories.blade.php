@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', '関連タグ一覧')
+@section('title', 'カテゴリ一覧')
 
 @section('content')
   @include('nav')
@@ -29,7 +29,7 @@
                 style="display:block"
                 data-ad-client="ca-pub-9067426465896411"
                 data-ad-slot="5078046569"
-                data-ad-format="auto"
+                data-ad-format="horizontal"
                 data-full-width-responsive="true"></ins>
             <script>
                 (adsbygoogle = window.adsbygoogle || []).push({});
@@ -46,7 +46,7 @@
                   style="display:block"
                   data-ad-client="ca-pub-9067426465896411"
                   data-ad-slot="5284563145"
-                  data-ad-format="auto"
+                  data-ad-format="rectangle"
                   data-full-width-responsive="true"></ins>
               <script>
                   (adsbygoogle = window.adsbygoogle || []).push({});
@@ -71,7 +71,7 @@
           style="display:block"
           data-ad-client="ca-pub-9067426465896411"
           data-ad-slot="5078046569"
-          data-ad-format="auto"
+          data-ad-format="horizontal"
           data-full-width-responsive="true"></ins>
       <script>
           (adsbygoogle = window.adsbygoogle || []).push({});
