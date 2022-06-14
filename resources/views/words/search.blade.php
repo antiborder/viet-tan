@@ -13,10 +13,11 @@
             <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control" placeholder="キーワードを入力">
           </div>
           <input type="submit" value="検索" class="btn text-white py-1 btn-sm" style="font-size:large; background-color:#ffc700;font-family: 'Kosugi Maru', sans-serif;" >
-          <span data-toggle="modal" data-target="#search-description" class="white border border-success text-success rounded ml-4 py-1 px-2" style="font-family: 'Kosugi Maru', sans-serif;">
-            <small>あいまい検索について</small>
-          </span>                
+          
         </form>
+        <button data-toggle="modal" data-target="#search-description" class="white border border-success text-success rounded ml-4 py-1 px-2" style="font-family: 'Kosugi Maru', sans-serif;">
+          <small>あいまい検索について</small>
+        </button>                        
       </div>
     </div>
 
@@ -142,19 +143,27 @@
   </div>
 
   <!-- contact-modal -->
-<div class="modal fade rounded p-1" id="search-description" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div style="display:flex; overflow-x:auto ">
-        <div style="display:flex; align-items:center; margin:auto" >
+<div class="modal fade" id="search-description" tabindex="-1" role="dialog" aria-hidden="true" >
+  <div class="modal-dialog  " style="max-width:950px">
+    <div class="rounded p-1 modal-content text-center" >
+      <div class="text-right">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button><br>
+      </div>
+      <div style="display:inline-block" style="">
           <img src="/image/search1.jpg" style="height:300px; width:300px" alt='あいまい検索 使用例'>
           <img src="/image/search2.jpg" style="height:300px; width:300px" alt='声調記号などが違ってもヒットします 発音が似ている単語もヒットします 混同しやすい単語の整理にも便利です'>
           <img src="/image/search3.jpg" style="height:300px; width:300px" alt='ベトナム語だけでなく 日本語 漢越語 関連タグ もヒットします'>
-        </div>
+      </div>
+      <div class="text-center">
+        <button type="button" class="border border-2 border-muted text-muted  white rounded" data-dismiss="modal" aria-label="Close" style="width:100px; display:inline-block;">
+          <span aria-hidden="true">Close</span>
+        </button>
       </div>
     </div>
   </div>
 </div>
   
-
+  @include('footer')      
 @endsection

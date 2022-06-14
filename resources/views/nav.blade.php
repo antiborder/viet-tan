@@ -35,6 +35,9 @@
         <a class="nav-link" href="{{route('learn')}}" >単語学習</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="{{route('measure')}}" >単語力測定</a>
+      </li>            
+      <li class="nav-item">
         <a class="nav-link" href="{{route('words.search')}}">あいまい検索</a>
       </li>
       <li class="nav-item">
