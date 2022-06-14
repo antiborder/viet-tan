@@ -71,7 +71,7 @@
         <p class="px-5 py-0 m-0 text-center" style="font-size:1.2rem;">{{result_message[1]}}</p>
         <p class="px-5 py-0 m-0 text-right" style="font-size:0.9rem;">{{result_message[2]}}</p>
       </div>
-      <div class="p-1">おすすめレベル：　level {{level}}</div>
+      <div v-if="level>0" class="p-1">おすすめレベル：　level {{level}}</div>
       <div style="text-align:center">
         <a type="button" v-bind:href="'/learn/' + level" class="btn btn-primary rounded p-1 mt-2 text-nowrap" style="width: 240px; font-size: 1.0rem;">
           レベル {{level}}を学習する
@@ -168,7 +168,7 @@
         }        
       },
       result_message: function () {
-        switch(this.level){
+        switch(Math.round(this.current_estimate)){
           case 0:
             return ['あなたの単語力はだいたい','0語～300語','くらいです。'];
           case 1:
@@ -294,6 +294,9 @@
         if(this.total >= 11){
           this.status = "RESULT"
           this.level = Math.round(this.current_estimate)
+          if(this.level <= 0){
+            this.level = 1;
+          }
           let result_sound = new Audio('/sound/result.mp3');
           result_sound.volume = 0.3;
           result_sound.play();
@@ -306,7 +309,7 @@
       setEstimateLevel(){
         if(this.total === 1){
           let correct = this.history[0]['result'] ? 1 : 0;
-          this.current_estimate = this.estimateFromOne( this.history[0]['level'], correct);
+          this.current_estimate = this.estimateFromOne( this.history[0]['level'], correct) - 1;//補正
         }else if(this.total ===3){
           this.updateEstimate(this.total);
         }else if(this.total ===5){
@@ -324,7 +327,7 @@
         let correct = (this.history[index-2]['result'] ? 1 : 0) + (this.history[index-1]['result'] ? 1 : 0);
         let estimate = this.estimateFromTwo( this.history[index-2]['level'], this.history[index-1]['level'], correct, (13-index)/2);
         this.estimate_record.push(estimate);
-        this.current_estimate = this.average(this.estimate_record);
+        this.current_estimate = this.average(this.estimate_record) - 1 ;//補正
       },
 
       setLevel(){

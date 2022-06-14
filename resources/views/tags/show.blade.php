@@ -4,7 +4,7 @@
 
 @section('content')
   @include('nav')
-  <div class="container">
+  <div class="container" >
     <div class="card my-3">
       <div class="card-body">
         <span class="h4 card-title m-0">{{ $tag->name }}</span>　タグに該当
