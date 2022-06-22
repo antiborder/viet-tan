@@ -1,10 +1,10 @@
 @extends('app')
 
-@section('title', '単語レベル一覧')
+@section('title', '漢字表記について')
 
 @section('content')
   @include('nav')
-  <div class="container" style="max-width:800px">
+  <div class="container article" style="max-width:800px">
 
     <div class="card my-3 p-0">    
         <h4 class="p-1 mx-2">漢字表記について　<span class="text-nowrap" style="font-size:0.8rem"></span></h4>        
@@ -56,7 +56,7 @@
 
         <h5 class="p-1 mx-2">わかりやすい字体　<span class="text-nowrap" style="font-size:0.8rem"></span></h5>
         <p class="px-1 mx-2">
-            当サイトではベトナム語の学習効率を上げるために漢字表記を使用してますので、昔使われていた字体と一致しない表記もあります。<br>
+            当サイトではベトナム語の学習効率を上げるために漢字表記を使用しているため、昔使われていた字体と一致しない表記もあります。<br>
             例えば「台湾」の「台」は、昔は「臺」と書かれていました。現代の台湾で使われている繁体字でも「臺」です。これに対し、現代の日本語や中国の簡体字での表記は「台」です。「臺」という字を見てすぐにピンとくる日本人は少ないと思います。<br>
             このような場合に当サイトでは、「台」の方で表記しています。また、表記については主に<a class="text-muted" href="https://en.wiktionary.org/wiki/Wiktionary:Main_Page">Wikitionary(英語版)</a>などを参考にしています。
         </p>
@@ -82,7 +82,7 @@
 @endsection
 
 <style>
-    h5{
+    article h5{
         border-bottom: 1px solid #ffa726;
         border-left: 4px solid #ffa726;
 

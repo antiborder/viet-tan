@@ -25,7 +25,7 @@ class WordController extends Controller
 
     public function index()
     {
-        $word_ids = [354,287,286,283,268,194,0,1,99999];
+        $word_ids = [4984,6333,5180,4358,4917];
 
         $words = Word::wherein('id', $word_ids)->inRandomOrder()->take(3)->get();
 
