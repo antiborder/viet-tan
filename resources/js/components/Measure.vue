@@ -81,7 +81,6 @@
 
     <div v-if="status==='RESULT' " class="card mt-4 white rounded mx-auto" style="text-align:center; max-width:400px; font-size: 1.2 rem;">
       <div class="mb-2">
-        <div class="p-1 text-muted" style="font-size:1.2rem;"> 詳細 </div>
         <div class="text-muted" style="font-size:0.8rem">単語をクリックすると詳細ページが開きます。</div>
         <table class="blue-grey lighten-5 rounded rounded-4" style="margin:auto; border-collapse: separate; border-spacing: 0px 0px; min-width:90%">
           <tr >

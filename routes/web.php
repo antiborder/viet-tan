@@ -46,6 +46,9 @@ Route::post('/learn/record', 'LearnController@store')->name('learn.record');
 Route::get('/learn/{level}', 'LearnController@learn')->name('learn.level');
 Route::get('/measure', 'LearnController@measure')->name('measure');
 
+Route::view('/articles/level-table','articles.level-table')->name('articles.level-table');
+Route::view('/articles/han-nom','articles.han-nom')->name('articles.han-nom');
+
 Route::prefix('users')->name('users.')->group(function () {
     Route::get('/{name}', 'UserController@show')->name('show');
 });
@@ -62,4 +65,4 @@ Route::get('/contact', 'ContactController@index')->name('contact.index');
 Route::post('/contact/thanks', 'ContactController@send')->name('contact.send');
 
 //privacy policy
-Route::view('/privacy-policy','privacy_policy');
+Route::view('/privacy-policy','privacy-policy')->name('privacy-policy');

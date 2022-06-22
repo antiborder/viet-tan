@@ -39,7 +39,7 @@
           {{ session('flash_message') }}
       </div>
   @endif
-  <div id="app" style="position:relative; min-height: 100vh; padding-bottom: 600px; box-sizing: border-box;">
+  <div id="app" style="position:relative; min-height: 100vh; padding-bottom: 400px; box-sizing: border-box;">
     @yield('content')
   </div>
 

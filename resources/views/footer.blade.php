@@ -26,7 +26,7 @@
         <a href="{{route('index')}}" class="text-muted small" style="width:170px;">
             vietnamese-learn.net
         </a>&nbsp;&nbsp;
-        <a href="{{'/privacy-policy'}}" class="text-muted small">privacy policy</a>
+        <a href="{{route('privacy-policy')}}" class="text-muted small">privacy policy</a>
     </div>
 
 </footer>

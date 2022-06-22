@@ -4,8 +4,8 @@
 
 @section('content')
   @include('nav')
-  <div class="container" >
-    <div class="card my-3">
+  <div class="container" style="max-width:800px" >
+    <div class="card my-3" style="max-width:30rem">
       <div class="card-body">
         <span class="h4 card-title m-0">{{ $tag->name }}</span>　タグに該当
       </div>

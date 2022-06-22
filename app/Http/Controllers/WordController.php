@@ -25,39 +25,51 @@ class WordController extends Controller
 
     public function index()
     {
-        return view('index');
+        $word_ids = [354,287,286,283,268,194,0,1,99999];
+
+        $words = Word::wherein('id', $word_ids)->inRandomOrder()->take(3)->get();
+
+        return view('index')->with(['words'=>$words]);
     }    
 
     public function level(int $level = null)
     {
-        if( $level === null ){
-            $level = 1;
-        }
-        $words = Word::all()->where('level',$level)->sortByDesc('created_at');
-        return view('words.level', ['words' => $words, 'count' => $words->count()]);
+        if(Auth::id() === 1 ){
+            if( $level === null ){
+                $level = 1;
+            }
+            $words = Word::all()->where('level',$level)->sortByDesc('created_at');
+            return view('words.level', ['words' => $words, 'count' => $words->count()]);
+        }else{
+            return redirect()->route('index');
+        }            
     }    
 
     public function create()
     {
+        if(Auth::id() === 1 ){
 
-        $allTagNames = Tag::all()->map(function ($tag) {
-            return ['text' => $tag->name];
-        });
+            $allTagNames = Tag::all()->map(function ($tag) {
+                return ['text' => $tag->name];
+            });
 
-        $synonyms = [];
-        for($i=0; $i<config('const.SYNONYM_MAX'); $i++){
-            $synonyms[] = "";
+            $synonyms = [];
+            for($i=0; $i<config('const.SYNONYM_MAX'); $i++){
+                $synonyms[] = "";
+            }
+            $antonyms = [];
+            for($i=0; $i<config('const.ANTONYM_MAX'); $i++){
+                $antonyms[] = "";
+            }        
+
+            return view('words.create', [
+                'allTagNames' => $allTagNames,
+                'synonyms' => $synonyms,
+                'antonyms' => $antonyms,
+            ]);
+        }else{
+            return redirect()->route('index');
         }
-        $antonyms = [];
-        for($i=0; $i<config('const.ANTONYM_MAX'); $i++){
-            $antonyms[] = "";
-        }        
-
-        return view('words.create', [
-            'allTagNames' => $allTagNames,
-            'synonyms' => $synonyms,
-            'antonyms' => $antonyms,
-        ]);
     }
 
     public function store(WordRequest $request, Word $word)
@@ -420,7 +432,11 @@ class WordController extends Controller
     }
 
     public function choose(){
-        return view('choose');
+        if(Auth::id() === 1 ){        
+            return view('choose');
+        }else{
+            return redirect()->route('index');
+        }
     }
 
     public function import(Request $request)
