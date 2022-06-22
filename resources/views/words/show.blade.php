@@ -4,8 +4,8 @@
 
 @section('content')
   @include('nav')
-  <div class="container">
-    <div class="card mt-3 mb-0 pb-2 pl-2 pr-2 border-warning bg-transparent text-warning" style="border-width:2px">
+  <div class="container" style="max-width:800px">
+    <div class="card mt-3 mb-0 pb-2 pl-2 pr-2 border-warning bg-transparent text-warning" style="border-width:2px; max-width:30rem">
       <span style=";font-size:1.2rem">単語詳細</span>
       @include('words.detail')
 

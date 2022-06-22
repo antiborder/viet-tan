@@ -10,7 +10,7 @@
         <h1 class="text-center"><a class="text-dark" href="/">べとらん</a></h1>
         <div class="card mt-3">
           <div class="card-body">
-            <h2 class="h3 card-title text-center mt-2">通常会員 ご登録</h2>
+            <h2 class="h3 card-title text-center mt-2">通常会員 ご登録<br><span class="" style="color:red">【テスト用】</span></h2>
             <div class="card-text">
 			<form action="{{route('stripe.afterpay')}}" method="post" id="payment-form">
 				@csrf

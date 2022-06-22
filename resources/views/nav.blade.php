@@ -1,14 +1,14 @@
-<nav class="navbar navbar-dark navbar-expand-lg orange lighten-1 p-1 pb-0">
+<nav class="navbar navbar-dark navbar-expand-lg orange lighten-1 px-1 pt-1 pb-0" style="">
 
    <!-- Logo -->
-  <a href="{{route('index')}}" class="navbar-brand ml-1  " style="font-size:1.0rem">vietnamese-learn.net</a>
+  <a href="{{route('index')}}" class="navbar-brand ml-1  " style="font-size:1.4rem">べとらん</a>
   
   <!-- 検索 -->
   <form class="form-inline pt-2" action="{{url('/search')}}">
     <div class="input-group input-group-lg">
     
       <div class="form-group ml-0 mb-2">
-        <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control rounded" placeholder="検索" style="max-width:90px; min-width:40px;">
+        <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control rounded" placeholder="検索" style="max-width:100px; min-width:40px;">
       </div>
       <input type="submit" value="&#xf002;" class="fas text-white border border-0 rounded-right " style=" height:38px; position:relative; right:3px; background-color:#ffc700;">                    
       
@@ -27,7 +27,7 @@
 
   <!-- menu list-->
   <div class="collapse navbar-collapse" id="navbarSupportedContent" style="width:300px;margin: 0 auto;">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-auto" style="line-height:18px">
       <li class="nav-item">
         <a class="nav-link" href="{{route('index')}}" >Home</a>
       </li>      
@@ -37,9 +37,6 @@
       <li class="nav-item">
         <a class="nav-link" href="{{route('measure')}}" >単語力測定</a>
       </li>            
-      <li class="nav-item">
-        <a class="nav-link" href="{{route('words.search')}}">あいまい検索</a>
-      </li>
       <li class="nav-item">
         <a class="nav-link" href="{{route('tags.categories')}}">タグから探す</a>
       </li>
@@ -128,7 +125,7 @@
 </div>        
 
 <!-- contact-modal -->
-<div class="modal fade rounded" id="contact" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade rounded" id="contact" tabindex="-1" role="dialog" aria-hidden="true" >
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-body"> 

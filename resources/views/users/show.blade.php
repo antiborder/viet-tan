@@ -4,7 +4,7 @@
 
 @section('content')
   @include('nav')
-  <div class="container">
+  <div class="container" style="max-width:800px">
     <div class="card mt-3">
       <div class="card-body">
         <div class="h5 card-title m-0">
@@ -127,6 +127,19 @@
       </table>
     </div>
 
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
+        crossorigin="anonymous"></script>
+    <!-- Horizontal -->
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-9067426465896411"
+        data-ad-slot="5078046569"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>    
+
     <div class="card mt-3">
       <div class="h5 card-title  mt-1 ml-1">復習予定</div>
       <div class="card-body">      
@@ -165,6 +178,19 @@
         </div>
       </div>
     </div>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
+        crossorigin="anonymous"></script>
+    <!-- Horizontal -->
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-9067426465896411"
+        data-ad-slot="5078046569"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>    
 
     <a href="/learn/REVIEW_ALL" >
       <div class="card mt-3 px-2 py-2 primary-color text-white" style="color: white; max-width:230px; font-size:1.2rem; text-align:center; margin-left:auto; font-family:ＭＳ Ｐゴシック;">

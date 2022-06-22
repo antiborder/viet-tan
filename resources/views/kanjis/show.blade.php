@@ -4,11 +4,16 @@
 
 @section('content')
   @include('nav')
-  <div class="container">
-    <div class="card my-3">
+  <div class="container" style="max-width:800px">
+    <div class="card my-3" style="max-width:30rem">
       <div class="card-body">
-        <span class="h3 card-title m-0" style='font-family:"UD デジタル 教科書体 N-R", "BIZ UDゴシック Regular";'>{{ $kanji->name }}</span>　を含む単語
+        漢字　<span class="h3 card-title m-0" style='font-family:"UD デジタル 教科書体 N-R", "BIZ UDゴシック Regular";'>{{ $kanji->name }}</span>　を含む単語
       </div>
+      <div class="text-right">
+        <a href="{{route('articles.han-nom')}}" class="white border border-success text-success rounded mx-2 mb-2 pb-1 px-2" style="font-family: 'Kosugi Maru', sans-serif; display:inline-block;">
+          <small>漢字表記について</small>
+        </a>                        
+      </div>      
     </div>
     <div class="mb-1 mr-2" style="font-size:1.1rem">
       <span style="font-size:1.4rem">{{ $words->count() }}</span> 件が該当
@@ -51,7 +56,7 @@
             <script>
                 (adsbygoogle = window.adsbygoogle || []).push({});
             </script>        
-        @endif        
+          @endif        
         @endif
       @endforeach
       @if( $words->count() > config('const.KANJI_WORD_TRIAL'))

@@ -4,17 +4,20 @@
 
 @section('content')
   @include('nav')
-  <div class="container">
+  <div class="container" style="max-width:850px">
     <div class="card my-3 p-0">
       <div class="card-body p-1">
         <div class="h5 card-title m-0 py-1">
-          <h1 class="pt-4 mb-3" style="text-align:center;font-size: calc(2.4rem + ((1vw - 0.64rem) * 2.1429)); font-family: 'Kosugi Maru', sans-serif;">
-            初心者から、話せる人に<br>
-            <span style="font-size: calc(1.2rem + ((1vw - 0.64rem) * 0.7143));">
-              ベトナム語学習サービス
-              「 べとらん 」
-            </span>
+          <h1 class="pt-4 mb-3" style="text-align:center; font-size: calc(1.2rem + ((1vw - 0.64rem) * 0.7143)); font-family: 'Kosugi Maru', sans-serif;">
+            初心者から、話せる人に
+            <br>
+            <p class="mt-2" style="font-size: calc(2.4rem + ((1vw - 0.64rem) * 2.1429));">
+              完全無料の<span class="text-nowrap">ベトナム語学習サービス</span><br>
+              <span class="mt-2" style="display:inline-block; font-size: calc(2.4rem + ((1vw - 0.64rem) * 2.1429); color:#ffa726;">べとらん</span>
+            </p>  
           </h1>
+
+          
           @guest
             <a href="{{ route('register')}}" >
               <div class="card mb-3 py-3 px-3 text-white deep-orange lighten-1" style=" font-size:1.1rem; width: 150px;  text-align:center; margin:0 auto; font-family: 'Kosugi Maru', sans-serif;">
@@ -50,7 +53,7 @@
             <div class="white rounded" style="">
               <img src='/image/measure-icon.webp' style="height:120px">
               <div class="white text-dark" style="font-size:1.0rem;  height:70px">
-                2分間で実力チェック。<br>あなたの単語力は<br>????語。
+                2分間で実力チェック。<br>あなたの単語力は<br>????語です。
               </div>
             </div>
           </div>
@@ -73,7 +76,7 @@
       </li>
     </ul>
     
-    <div class="card mt-3 p-0">        
+    <div class="card my-3 p-0">        
       <div class="card-body p-1">      
         <div class="h5 card-title m-0">
           <h3 class="pt-5" style="text-align:center;font-size: calc(1.6rem + ((1vw - 0.64rem) * 0.7143)); font-family: 'Kosugi Maru', sans-serif;">
@@ -106,7 +109,7 @@
             優先順に整理された約5000語
           </h3>
         </div>
-        <p style="text-align:center; font-size:calc(1.2rem + ((1vw - 0.64rem) * 0.7143))">単語を関連付けて覚えるから忘れにくい。<br>よく使う重要な単語から習得するので、<br>無駄がなく効率的。</p>
+        <p style="text-align:center; font-size:calc(1.2rem + ((1vw - 0.64rem) * 0.7143))">単語を関連付けて覚えるから忘れにくい。<br>よく使う重要な単語から学ぶので、<br>無駄がなく効率的。</p>
         <div style="display:flex; overflow-x:auto ">
           <div style="display:flex; align-items:center;margin:auto" >
             <img class="pr-1" src="/image/connection-image.webp"style="height:250px;">
@@ -118,8 +121,87 @@
       </div>
     </div>
 
+    <ul class="inline-block" style="list-style-type: none; padding-left:0; text-align:center" >
+      <li style="display:inline-block">
+        <a href="{{route('tags.categories')}}" >
+          <div class="card orange lighten-1 m-2 p-1 small-icon">
+            <div class="card white rounded shadow-none" style="width:100%; height:100%;">
+              <div class="pb-3" >
+                  タグから探す
+              </div>
+            <!-- <img src='' style="width:90px"> -->
+            </div>
+          </div>
+        </a>
+      </li>    
+      <li style="display:inline-block">
+        <a href="{{route('articles.level-table')}}" >
+          <div class="card orange lighten-1 m-2 p-1 small-icon">
+            <div class="card white rounded shadow-none" style="width:100%; height:100%;">
+              <div class="pb-3" >
+                単語レベル<br>一覧
+              </div>
+              <!-- <img src='' style="width:90px"> -->
+            </div>
+          </div>
+        </a>
+      </li> 
+      @auth
+        <li style="display:inline-block">
+          <a href="{{ route('users.show', ['name'=>Auth::user()->name]) }}" >
+      @endauth
+      @guest
+        <li style="display:inline-block" data-toggle="modal" data-target="#recommend-trial">
+          <a>      
+      @endguest
+         <div class="card orange lighten-1 m-2 p-1 small-icon">
+            <div class="card white rounded shadow-none" style="width:100%; height:100%;">
+                学習状況
+            </div>
+            <!-- <img src='' style="width:90px"> -->
+          </div>
+        </a>
+      </li>       
+      <li style="display:inline-block" data-toggle="modal" data-target="#contact">
+        <a href="/articles/level-table"  >
+        <div class="card orange lighten-1 m-2 p-1 small-icon">
+          <div class="card white rounded shadow-none" style="width:100%; height:100%;">
+                ご意見<br>お問い合わせ
+            </div>
+            <!-- <img src='' style="width:90px"> -->
+          </div>
+        </a>
+      </li>          
+
+    <div class="card my-3 p-0">
+      <div class="card-body text-center p-1">
+        <p class="h4 mt-1" style="text-align:center; font-size:calc(1.4rem + ((1vw - 0.64rem) * 0.8143));">単語カードの見方</p>          
+          <img class="pl-1 mb-2" src="/image/card-image.webp" style="text-align:center; width:calc(280px + ((100vw - 350px) * 0.2))">
+      </div>  
+    </div>
+    <h4 class="text-left"> 単語カードサンプル（clickしてみてください）</h4>
+    @foreach($words as $word)
+    <div>
+    <div class="" style="">
+      @include('words.card')
+    </div>
+    </div>
+    @endforeach
 
   </div>
 
   @include('footer')
 @endsection
+
+<style>
+  .small-icon{
+    color:#ffa726;
+    width:150px; 
+    height:70px; 
+    text-align:center; 
+    margin:0 auto; 
+    font-size:1.3rem;
+    font-family: 'Kosugi Maru', sans-serif; 
+
+  }
+</style>

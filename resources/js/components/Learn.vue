@@ -1,26 +1,26 @@
-//レベル表。学習の使い方。単語カードの見方。単語カードをいくつか。
-//新規作成・import・レベル毎表示は管理者でないとできないように。管理者パスワードも変更。
-//単語編集でタグも編集
-//新しいメールアドレスを取得。ツイッターアカウントを作成。
-//articleリスト。漢越語、どの単語から、学習全体マップ。ベトナム語ってどんな言語。覚えるためには繰り返し。習慣化が大事。単語の意味と訳語。
-//FAQ 漢越について、レベルについて、運営者について、支払いについて、不具合について　料金はいくらですか？　いつでもキャンセルできますか？
-//webhookに頼らない実装。前回更新日や次回更新日の連絡も。二重契約にならないように。料金表。決済ページに価格を表示。
-//実際に課金してみるテスト
-//ユーザー一覧用の画面。//user毎の利用状況を一覧できる画面。
-//スタイルを別ファイルに。
 //vueにadsenseを埋め込む
-//運用開始
+//ツイッタープロファイル作成。
 
-//タグ「その他」は他のタグにないものを自動で抽出。各カテゴリとタグのキーワードも表示。
-//ロゴ配置。メニューアイコン
+//検索Phongでphòng tráchが出るように。
+//topページのスタイルを整理。測定の最後には、Topに戻る。Topに戻るボタンはCSS使いまわしで。ラージアイコンと画像のCSSはひとまとめに。
+//tweet開始
+//ユーザー一覧用の画面。//user毎の利用状況を一覧できる画面。
+//adblock対策//画面が広い時に右側に広告を。
+//単語編集でタグも編集
+//各カテゴリとタグのキーワードも表示。検索にカテゴリも引っかかるように。
+//ロゴ配置。//スモールアイコンの画像。//タグは検索からでも見つかります。「検索で探す」
 //理解度ボタンにおおよその時間数日数を表示。おすすめレベル。
 //過去24時間以内で生まれた学習計画
+//articleリスト。どの単語から、学習全体マップ。ベトナム語ってどんな言語。覚えるためには繰り返し。習慣化が大事。単語の意味と訳語。通じないときの原因は。
+//FAQ レベルについて、運営者について、支払いについて、不具合について　料金はいくらですか？　いつでもキャンセルできますか？
 //南部/北部を除外する
 //resultの結果次第でメッセージ。
 //例文のデータベース
 //数字集中トレーニング。
 //単語力測定結果をtwitterに報告。facebookに報告。レベル上昇も報告。
 //My単語帳機能。
+//webhookに頼らない実装。前回更新日や次回更新日の連絡も。二重契約にならないように。料金表。決済ページに価格を表示。
+//実際に課金してみるテスト
 
 //正解すると学習がデータベースに登録されずにまた出題されるエラー？
 //terms of use。自動更新のチェックボックスや注意書きは必要なのか？
@@ -46,7 +46,12 @@
 <template>
   <div class="mx-auto" style="text-align:center; max-width:700px;">
     <div class="mt-1" style="text-align:left">
-      単語学習　Lv.:{{level}}　正解率: {{correct}} / {{total}}
+      単語Lv.:{{level}}　正解率: {{correct}} / {{total}} 
+      <span>
+        <button data-toggle="modal" data-target="#learn-description" class="border border-success text-success rounded ml-2 my-1 py-0 px-1" style="font-family: 'Kosugi Maru', sans-serif;">
+          <small>単語学習の使い方</small>
+        </button>                        
+      </span>
     </div>
 
     <!-- 最初の画面 -->
@@ -70,6 +75,7 @@
               「復習のみ」では、復習可能語が<br>
               すべてのレベルから出題されます。
             </span>            
+
           </div>          
         </div>
       </div>
@@ -247,8 +253,32 @@
         </div>              
       </div>
     </div>    
+    <!-- about learn -->
+    <div class="modal fade" id="learn-description" tabindex="-1" role="dialog" aria-hidden="true" >
+      <div class="modal-dialog  " style="max-width:700px">
+        <div class="rounded p-1 modal-content text-center" >
+          <div class="text-right">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button><br>
+          </div>
+          <div style="display:inline-block">
+              <img src="/image/learn-description1.webp" class="my-2" style="height:581px; width:300px" alt='スキマ時間にクリックするだけ 単語学習の使い方 1.最初はレベル1を選びましょう 2.STARTボタンを押しましょう'>
+              <img src="/image/learn-description2.webp" class="my-2" style="height:581px; width:300px" alt='3.4択問題が出るので正解を選びましょう 4.記憶の定着度に応じて自己評価ボタンを選びましょう'>
+              <img src="/image/learn-description3.webp" class="my-2" style="height:581px; width:300px" alt='5. 10問解くと結果が表示されるので、ざっと目を通しましょう 6.「学習状況を確認」を選びましょう'>
+              <img src="/image/learn-description4.webp" class="my-2" style="height:581px; width:300px" alt='7.学習状況と復習予定が表示されます 8.自分のペースで次の学習に進みましょう'>
+          </div>
+          <div class="text-center">
+            <button type="button" class="border border-2 border-muted text-muted  white rounded" data-dismiss="modal" aria-label="Close" style="width:100px; display:inline-block;">
+              <span aria-hidden="true">Close</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>      
 
   </div>
+ 
 </template>
 
 <script>
