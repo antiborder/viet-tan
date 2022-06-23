@@ -4,7 +4,7 @@
 
 @section('content')
   @include('nav')
-  <div class="container" style="max-width:800px">
+  <div class="container article" style="max-width:800px">
     <div class="card my-3 p-0">
         <h4 class="p-1 m-2"><span class="">べとらん</span><small>の</small>単語レベル一覧</h5>
 
@@ -82,10 +82,10 @@
             ベトナムに行く方だけでなく、ベトナム人とちょっと話してみたいという方にもおすすめです。
         </p>
 
-        <h5 class="p-1 m-2">初級レベル　<span class="text-nowrap" style="font-size:0.8rem">―最低限覚えておきたい1300語―</span></h5>
+        <h5 class="p-1 m-2">初級レベル　<span class="text-nowrap" style="font-size:0.8rem">―最低限知っておきたい1300語―</span></h5>
         <p class="px-1 mx-2">
             広告、通知、注意書き等の簡単な文はだいぶ読めるようになってきます。<br>
-            ここまでの単語を初級文法で組み合わせるだけでもかなり多様なアウトプットが可能ですので、このレベルが咄嗟に出てくるかどうかで対応力に差が出ます。まずはここら辺を目標にするのもアリです。<br>
+            ここまでの単語を初級文法で組み合わせるだけでもかなり多様なアウトプットが可能ですので、このレベルが咄嗟に出てくるかどうかで対応力に差が出ます。まずはここを目標にしてみるのも良いでしょう。<br>
             仕事等でよく使う単語があれば、初級語彙に加えて別途優先的に学んでおくのがおすすめです。既習の1600語と組み合わせることで、自由度が大きく上がるためです。
         </p>
 
@@ -111,7 +111,7 @@
 
 <style>
 
-    h5{
+    article h5{
         border-bottom: 1px solid #ffa726;
         border-left: 4px solid #ffa726;
 
