@@ -85,7 +85,7 @@
         </div>
       </div>
 
-      <div id="adsgoeshere" style="background: #1d1f29; padding-top:60px; text-align: center;" v-html="adsenseContent"></div>
+      <div id="adsgoeshere" style="" v-html="adsenseContent"></div>
 
     </div>          
 
@@ -192,7 +192,7 @@
     </div>
     <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' " style="text-align:center">
       {{sec}}
-      <div id="adsgoeshere" style="background: #1d1f29; padding-top:60px; text-align: center;" v-html="adsenseContent"></div>
+      <div id="adsgoeshere" style="" v-html="adsenseContent"></div>
     </div>
     
 
