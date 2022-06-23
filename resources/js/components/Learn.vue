@@ -1,9 +1,12 @@
 //vueにadsenseを埋め込む
+//音声ファイル取り直し
 //ツイッタープロファイル作成。
+
 
 //検索Phongでphòng tráchが出るように。
 //topページのスタイルを整理。測定の最後には、Topに戻る。Topに戻るボタンはCSS使いまわしで。ラージアイコンと画像のCSSはひとまとめに。
 //tweet開始
+//wordのnameからrouteでurl取得。
 //漢越のフォントを教科書体に。タグのフォントは丸ゴシックに。
 //タグがない単語に空のタグが登録されるのを防止。
 //ユーザー一覧用の画面。//user毎の利用状況を一覧できる画面。
@@ -82,14 +85,7 @@
         </div>
       </div>
 
-        <!-- Horizontal -->
-        <ins class="adsbygoogle"
-            style="display:block"
-            data-ad-client="ca-pub-9067426465896411"
-            data-ad-slot="5078046569"
-            data-ad-format="horizontal"
-            data-full-width-responsive="true">
-        </ins>
+      <div id="adsgoeshere" style="background: #1d1f29; padding-top:60px; text-align: center;" v-html="adsenseContent"></div>
 
     </div>          
 
@@ -196,7 +192,9 @@
     </div>
     <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' " style="text-align:center">
       {{sec}}
+      <div id="adsgoeshere" style="background: #1d1f29; padding-top:60px; text-align: center;" v-html="adsenseContent"></div>
     </div>
+    
 
     <!-- 結果表示 RESULT and CLEARED-->
     <div v-if="status==='RESULT' || status==='CLEARED' " class="card white rounded mt-5 mx-auto" style="text-align:center; max-width:400px; font-size: 1.2 rem;">
@@ -264,6 +262,7 @@
           </button>
         </div>              
       </div>
+      <div id="adsgoeshere" style="background: #1d1f29; padding-top:60px; text-align: center;" v-html="adsenseContent"></div>    
     </div>    
     <!-- about learn -->
     <div class="modal fade" id="learn-description" tabindex="-1" role="dialog" aria-hidden="true" >
@@ -325,8 +324,13 @@
         ],
         history:[],
         baseColors:[" red lighten-4", " amber lighten-4", " lime lighten-4", " green lighten-4"],
+        adsenseContent: '',
       }
     },
+
+    mounted(){
+      this.adsenseContent = document.getElementById('divadsensedisplaynone').innerHTML;
+    },    
 
     computed: {
       message: function () {
