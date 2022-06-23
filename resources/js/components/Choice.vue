@@ -88,7 +88,6 @@
 
                 </div>
             </div>            
-            <div id="adsgoeshere" style="height:100px" v-html="adsenseContent"></div>
         </div>
     </div>
 
@@ -122,12 +121,8 @@ export default {
         zeroToSeven:[0,1,2,3,4,5,6,7],
         isPressed: false,
         isFirstChoice:false,
-        adsenseContent: '',
       }
     },
-    mounted(){
-      this.adsenseContent = document.getElementById('divadsensedisplaynone').innerHTML;
-    },        
 
     methods:{
         turnPressed(){  //選択肢がクリックされた時のアクション

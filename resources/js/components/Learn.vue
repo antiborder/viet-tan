@@ -85,7 +85,7 @@
         </div>
       </div>
 
-      <div id="adsgoeshere" style="" v-html="adsenseContent"></div>
+      <div id="adsgoeshere1" style="" v-html="adsenseContent1"></div>
 
     </div>          
 
@@ -192,9 +192,9 @@
     </div>
     <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' " style="text-align:center">
       {{sec}}
-      <div id="adsgoeshere" style="" v-html="adsenseContent"></div>
+      <div id="adsgoeshere2" style="" v-html="adsenseContent2"></div>    
     </div>
-    
+
 
     <!-- 結果表示 RESULT and CLEARED-->
     <div v-if="status==='RESULT' || status==='CLEARED' " class="card white rounded mt-5 mx-auto" style="text-align:center; max-width:400px; font-size: 1.2 rem;">
@@ -262,7 +262,7 @@
           </button>
         </div>              
       </div>
-      <div id="adsgoeshere" style="background: #1d1f29; padding-top:60px; text-align: center;" v-html="adsenseContent"></div>    
+
     </div>    
     <!-- about learn -->
     <div class="modal fade" id="learn-description" tabindex="-1" role="dialog" aria-hidden="true" >
@@ -324,12 +324,14 @@
         ],
         history:[],
         baseColors:[" red lighten-4", " amber lighten-4", " lime lighten-4", " green lighten-4"],
-        adsenseContent: '',
+        adsenseContent1: '',
+        adsenseContent2: '',        
       }
     },
 
     mounted(){
-      this.adsenseContent = document.getElementById('divadsensedisplaynone').innerHTML;
+      this.adsenseContent1 = document.getElementById('divadsensedisplaynone1').innerHTML;
+      this.adsenseContent2 = document.getElementById('divadsensedisplaynone2').innerHTML;
     },    
 
     computed: {
