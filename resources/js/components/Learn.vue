@@ -1,9 +1,14 @@
 //vueにadsenseを埋め込む
+//URLを単語idではなくnameに。
 //ツイッタープロファイル作成。
 
+
+
+//カードのサンプルのidはconstに登録。
 //検索Phongでphòng tráchが出るように。
 //topページのスタイルを整理。測定の最後には、Topに戻る。Topに戻るボタンはCSS使いまわしで。ラージアイコンと画像のCSSはひとまとめに。
 //tweet開始
+//タグがない単語に空のタグが登録されるのを防止。
 //ユーザー一覧用の画面。//user毎の利用状況を一覧できる画面。
 //adblock対策//画面が広い時に右側に広告を。
 //単語編集でタグも編集
@@ -79,6 +84,15 @@
           </div>          
         </div>
       </div>
+
+        <!-- Horizontal -->
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-9067426465896411"
+            data-ad-slot="5078046569"
+            data-ad-format="horizontal"
+            data-full-width-responsive="true"></ins>
+
     </div>          
 
     <!-- 無料登録を勧める -->
