@@ -179,7 +179,7 @@
           <img class="pl-1 mb-2" src="/image/card-image.webp" style="text-align:center; width:calc(280px + ((100vw - 350px) * 0.2))">
       </div>  
     </div>
-    <h4 class="h4" style="text-align:left; font-size:calc(1.4rem + ((1vw - 0.64rem) * 0.8143));"> 単語カードサンプル（単語をclick↓）</h4>
+    <h4 class="h4" style="text-align:left; font-size:calc(1.4rem + ((1vw - 0.64rem) * 0.8143));"> 単語カードサンプル<small>（単語をclick↓）</small></h4>
     @foreach($words as $word)
     <div>
     <div class="" style="">
