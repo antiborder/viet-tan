@@ -61,18 +61,7 @@
 
     </div>
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
-        crossorigin="anonymous"></script>
-    <!-- Horizontal -->
-    <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-9067426465896411"
-        data-ad-slot="5078046569"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>    
+    @include('ads.horizontal')
 
     <div class="card my-3 p-0">
         <h5 class="p-1 m-2">入門レベル　<span class="text-nowrap" style="font-size:0.8rem">―基礎となる300語―</span></h5>
@@ -111,7 +100,7 @@
 
 <style>
 
-    article h5{
+    .article h5{
         border-bottom: 1px solid #ffa726;
         border-left: 4px solid #ffa726;
 

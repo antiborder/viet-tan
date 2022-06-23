@@ -24,18 +24,7 @@
       @foreach($words as $i => $word)
         @include('words.card')
         @if($i===9 || $i===21 || $i===35)
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
-                crossorigin="anonymous"></script>
-            <!-- Horizontal -->
-            <ins class="adsbygoogle"
-                style="display:block"
-                data-ad-client="ca-pub-9067426465896411"
-                data-ad-slot="5078046569"
-                data-ad-format="horizontal"
-                data-full-width-responsive="true"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>        
+          @include('ads.horizontal')
         @endif        
       @endforeach
 
@@ -44,18 +33,7 @@
         @if($i < config('const.KANJI_WORD_TRIAL'))
           @include('words.card')
           @if($i===9 || $i===21 || $i===35)
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
-                crossorigin="anonymous"></script>
-            <!-- Horizontal -->
-            <ins class="adsbygoogle"
-                style="display:block"
-                data-ad-client="ca-pub-9067426465896411"
-                data-ad-slot="5078046569"
-                data-ad-format="horizontal"
-                data-full-width-responsive="true"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>        
+            @include('ads.horizontal')
           @endif        
         @endif
       @endforeach
@@ -70,18 +48,7 @@
         @if($i < config('const.KANJI_WORD_GUEST'))
           @include('words.card')
           @if($i===9 || $i===21 || $i===35)
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
-                crossorigin="anonymous"></script>
-            <!-- Horizontal -->
-            <ins class="adsbygoogle"
-                style="display:block"
-                data-ad-client="ca-pub-9067426465896411"
-                data-ad-slot="5078046569"
-                data-ad-format="horizontal"
-                data-full-width-responsive="true"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>        
+            @include('ads.horizontal')
         @endif        
         @endif
       @endforeach
@@ -92,18 +59,7 @@
       @endif
     @endif
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
-        crossorigin="anonymous"></script>
-    <!-- Horizontal -->
-    <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-9067426465896411"
-        data-ad-slot="5078046569"
-        data-ad-format="horizontal"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>            
+    @include('ads.horizontal')
   </div>
 
   

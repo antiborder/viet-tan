@@ -31,19 +31,19 @@
                     </tr>
                 </thead>
                 <tr>
-                    <td><a href="/words/4984" class="yellow lighten-3 text-dark rounded p-1">chú ý</a></td><td>注意</td><td>注意する</td>
+                    <td><a href="/words/10376" class="yellow lighten-3 text-dark rounded p-1">chú ý</a></td><td>注意</td><td>注意する</td>
                 </tr>
                 <tr>
-                    <td><a href="/words/6333" class="yellow lighten-3 text-dark rounded p-1">thiên nhiên</a></td><td>天然</td><td>天然の</td>
+                    <td><a href="/words/11818" class="yellow lighten-3 text-dark rounded p-1">thiên nhiên</a></td><td>天然</td><td>天然の</td>
                 </tr>
                 <tr>
-                    <td><a href="/words/5180" class="yellow lighten-3 text-dark rounded p-1">động vật</a></td><td>動物</td><td>動物</td>
+                    <td><a href="/words/10643" class="yellow lighten-3 text-dark rounded p-1">động vật</a></td><td>動物</td><td>動物</td>
                 </tr>
                 <tr>
-                    <td><a href="/words/4358" class="yellow lighten-3 text-dark rounded p-1">yêu cầu</a></td><td>要求</td><td>要求する</td>
+                    <td><a href="/words/9969" class="yellow lighten-3 text-dark rounded p-1">yêu cầu</a></td><td>要求</td><td>要求する</td>
                 </tr>
                 <tr>
-                    <td><a href="/words/4917" class="yellow lighten-3 text-dark rounded p-1">bảo quản</a></td><td>保管</td><td>保管する</td>
+                    <td><a href="/words/10698" class="yellow lighten-3 text-dark rounded p-1">bảo quản</a></td><td>保管</td><td>保管する</td>
                 </tr>                                                
             </table>                    
         </p>
@@ -62,18 +62,7 @@
         </p>
     </div>          
     
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
-        crossorigin="anonymous"></script>
-    <!-- Horizontal -->
-    <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-9067426465896411"
-        data-ad-slot="5078046569"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>    
+    @include('ads.horizontal')
 
   </div>
 
@@ -82,7 +71,7 @@
 @endsection
 
 <style>
-    article h5{
+    .article h5{
         border-bottom: 1px solid #ffa726;
         border-left: 4px solid #ffa726;
 
