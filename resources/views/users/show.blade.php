@@ -5,7 +5,7 @@
 @section('content')
   @include('nav')
   <div class="container" style="max-width:800px">
-    <div class="card mt-3">
+    <div class="card my-2">
       <div class="card-body">
         <div class="h5 card-title m-0">
             ユーザーID ：　{{ $user->name }}
@@ -31,7 +31,7 @@
         </div>        
       </div>
     </div>
-    <div class="card mt-3">
+    <div class="card my-2">
       <div class="h5 card-title  mt-1 ml-1">学習状況</div>
       <table class="mt=0 mb-1">
         <tr>
@@ -140,7 +140,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>    
 
-    <div class="card mt-3">
+    <div class="card my-2">
       <div class="h5 card-title  mt-1 ml-1">復習予定</div>
       <div class="card-body">      
         <div class="overflow-auto" style="display:flex">
@@ -193,7 +193,7 @@
     </script>    
 
     <a href="/learn/REVIEW_ALL" >
-      <div class="card mt-3 px-2 py-2 primary-color text-white" style="color: white; max-width:230px; font-size:1.2rem; text-align:center; margin-left:auto; font-family:ＭＳ Ｐゴシック;">
+      <div class="card my-2 px-2 py-2 primary-color text-white" style="color: white; max-width:230px; font-size:1.2rem; text-align:center; margin-left:auto; font-family:ＭＳ Ｐゴシック;">
         <div >
             復習のみでStart ▶
         </div>
@@ -201,7 +201,7 @@
     </a>
 
     @if($subscription === 'NORMAL')
-    <div class="card mt-3">
+    <div class="card my-2">
       <div class="card-body">
         <div class="h5 card-title  mt-1 ml-1">支払情報</div>
           <a href="{{route('stripe.portalsubscription', $user) }}" style="text-align:right;">
