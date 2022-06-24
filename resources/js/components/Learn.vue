@@ -85,7 +85,15 @@
         </div>
       </div>
 
-      <div id="adsgoeshere1" style="" v-html="adsenseContent1"></div>
+      <Adsense
+        class="adsbygoogle my-2"
+        style="display:block; min-width:250px"
+        data-ad-client="ca-pub-9067426465896411"
+        data-ad-slot="5078046569"
+        data-ad-format="horizontal"
+        data-full-width-responsive="true"
+      >
+      </Adsense>
 
     </div>          
 
@@ -193,7 +201,7 @@
     <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' " style="text-align:center">
       {{sec}}
       <Adsense
-        class="adsbygoogle"
+        class="adsbygoogle my-2"
         style="display:block; min-width:250px"
         data-ad-client="ca-pub-9067426465896411"
         data-ad-slot="5078046569"
@@ -271,6 +279,15 @@
           </button>
         </div>              
       </div>
+      <Adsense
+        class="adsbygoogle my-2"
+        style="display:block; min-width:250px"
+        data-ad-client="ca-pub-9067426465896411"
+        data-ad-slot="5078046569"
+        data-ad-format="horizontal"
+        data-full-width-responsive="true"
+      >
+      </Adsense>      
 
     </div>    
     <!-- about learn -->
