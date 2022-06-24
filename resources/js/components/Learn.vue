@@ -1,8 +1,3 @@
-//vueにadsenseを埋め込む
-//音声ファイル取り直し
-//ツイッタープロファイル作成。
-
-
 //検索Phongでphòng tráchが出るように。
 //topページのスタイルを整理。測定の最後には、Topに戻る。Topに戻るボタンはCSS使いまわしで。ラージアイコンと画像のCSSはひとまとめに。
 //tweet開始
@@ -280,12 +275,12 @@
         </div>              
       </div>
       <Adsense
-        class="adsbygoogle my-2"
+        class="adsbygoogle"
         style="display:block; min-width:250px"
         data-ad-client="ca-pub-9067426465896411"
         data-ad-slot="5078046569"
         data-ad-format="horizontal"
-        data-full-width-responsive="true"
+        data-full-width-responsive="false"
       >
       </Adsense>      
 
