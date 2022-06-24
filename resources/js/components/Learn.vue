@@ -192,7 +192,16 @@
     </div>
     <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' " style="text-align:center">
       {{sec}}
-      <div id="adsgoeshere2" style="" v-html="adsenseContent2"></div>    
+      <Adsense
+        class="adsbygoogle"
+        style="display:block; min-width:250px"
+        data-ad-client="ca-pub-9067426465896411"
+        data-ad-slot="5078046569"
+        data-ad-format="horizontal"
+        data-full-width-responsive="true"
+      >
+      </Adsense>
+
     </div>
 
 
