@@ -18,7 +18,7 @@
         if($subscription === 'NORMAL'){
            $membership = '通常会員';
         }else if($subscription === 'TRIAL'){
-          $membership = 'お試し会員';
+          $membership = '無料会員';
         }
         @endphp
         <div style="font-size:1.1rem; line-height:200%">
@@ -127,18 +127,7 @@
       </table>
     </div>
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
-        crossorigin="anonymous"></script>
-    <!-- Horizontal -->
-    <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-9067426465896411"
-        data-ad-slot="5078046569"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>    
+    @include('ads.horizontal')
 
     <div class="card my-2">
       <div class="h5 card-title  mt-1 ml-1">復習予定</div>
@@ -179,19 +168,6 @@
       </div>
     </div>
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9067426465896411"
-        crossorigin="anonymous"></script>
-    <!-- Horizontal -->
-    <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-9067426465896411"
-        data-ad-slot="5078046569"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>    
-
     <a href="/learn/REVIEW_ALL" >
       <div class="card my-2 px-2 py-2 primary-color text-white" style="color: white; max-width:230px; font-size:1.2rem; text-align:center; margin-left:auto; font-family:ＭＳ Ｐゴシック;">
         <div >
@@ -199,6 +175,8 @@
         </div>
       </div>
     </a>
+
+    @include('ads.rectangle')    
 
     @if($subscription === 'NORMAL')
     <div class="card my-2">

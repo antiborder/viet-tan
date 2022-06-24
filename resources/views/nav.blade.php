@@ -1,7 +1,7 @@
 <nav class="navbar navbar-dark navbar-expand-lg orange lighten-1 px-1 pt-1 pb-0" style="">
 
    <!-- Logo -->
-  <a href="{{route('index')}}" class="navbar-brand ml-1  " style="font-size:1.4rem">べとらん</a>
+  <a href="{{route('index')}}" class="navbar-brand ml-1  " style="font-size:1.4rem; font-family: 'Kosugi Maru', sans-serif;">べとらん</a>
   
   <!-- 検索 -->
   <form class="form-inline pt-2" action="{{url('/search')}}">
