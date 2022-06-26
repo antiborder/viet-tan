@@ -53,7 +53,7 @@
       @endif
     @endif
     <div class=" my-5 text-center" style="">
-      <button onclick="location.href='{{route("tags.categories")}}'" class="text-white mx-1 px-3 py-1 border-0 rounded shadow" style="background-color:#ffc700; font-family: 'Kosugi Maru', sans-serif;">
+      <button onclick="location.href='{{route("tags.categories")}}'" class="search-button shadow">
         他のタグも見る
       </button>
     </div>    

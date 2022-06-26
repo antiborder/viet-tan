@@ -1,9 +1,9 @@
 <div class="text-dark card-plain mb-2  pt-0 pb-1 pl-1 pr-3 white shadow rounded">
-  <div class=" card-body pl-0 d-flex flex-row">
-    <div style ="">
+  <div class=" card-body pt-2 pb-0 pl-0 d-flex flex-row">
+    <div style ="font-family:'Kosugi Maru', sans-serif;">
       <div class="d-flex flex-row">
         <div class="text-nowrap mr-1" style ="">
-          <div style="height:40px"><p style="line-height: 40px;text-align:right;width:70px;font-size:0.7rem">ベトナム語：&nbsp;</p></div>  
+          <div style="height:40px"><p class="pt-2" style="line-height: 40px;text-align:right;width:70px;font-size:0.7rem">ベトナム語：&nbsp;</p></div>  
           <div style="height:40px"><p style="line-height: 40px;text-align:right;width:70px;font-size:0.8rem">漢字：&nbsp;</p></div>  
         </div>
         @foreach(array(0,1,2,3,4,5,6,7) as $i)
@@ -14,7 +14,7 @@
           <div>
             <div class="mx-auto pr-2" style="height:40px; width:100%">
               <span class="card-title" style="height:40px; font-size:2rem">      
-                <a href="{{ route('words.show', ['word' => $word]) }}" class="text-dark yellow lighten-3 px-2 mx-n2 " style="border-radius: 10px">
+                <a href="{{ route('words.show', ['word' => $word]) }}" class="viet-text text-dark  px-2 mx-n2 " style="font-size:95%; border-radius:10px;">
                   {{$word->$name}}
                 </a>
               </span>
@@ -24,8 +24,7 @@
                 $kanji_n = 'kanji' . $i;  
               @endphp        
               @if($word->$kanji_n != '')
-              <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="p-1 mr-1 mt-1 blue-text" style=' font-size:1.5rem'>
-              <!-- font-family:"UD デジタル 教科書体 N-R", "BIZ UDゴシック Regular"; -->
+              <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="kanji-text p-1 mr-1 mt-1 blue-text" style='font-size:1.5rem;'>
                 {{$word->$kanji_n}}
               </a>          
               @endif
@@ -48,7 +47,7 @@
       @endif
       <div class="d-flex flex-row mt-2" style="white-space: pre-line;">
         <div class="pt-2" style="width:70px;text-align:right;font-size:0.8rem">意味：&nbsp;</div>
-        <div style="font-size:1.2rem">{{ $word->jp }}</div>
+        <div class="normal-text" style="font-size:1.2rem">{{ $word->jp }}</div>
       </div>      
 
       @php
@@ -67,7 +66,7 @@
           <div class="text-black-50" style=" font-size:0.8rem;float:right;">※画像検索が開きます</div>                
         </a>        
       </div>      
-      <div class="d-flex flex-row pt-3" style="">
+      <div class="normal-text d-flex flex-row pt-3">
         <div class="pt-1" style="width:50px;text-align:right;font-size:0.8rem">Level：&nbsp;</div>
         <div style="font-size:1.0rem">{{ $word->level }}</div>
       </div>      
@@ -129,9 +128,14 @@
 
 </div>
 
-<!-- <style>
-  .name-table{
-    border-collapse: separate;
-    border-spacing: 10px  0px;
+<style>
+  .sizable-text-small{
+    font-size: calc(1.2rem + ((1vw - 0.64rem) * 0.7143));
   }
-</style> -->
+  .sizable-text-middle{
+    font-size: calc(1.6rem + ((1vw - 0.64rem) * 1.13));
+  }
+  .sizable-text-large{
+    font-size: calc(2.4rem + ((1vw - 0.64rem) * 2.1429));
+  }  
+</style>

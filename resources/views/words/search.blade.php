@@ -12,7 +12,7 @@
           <div class="form-group">
             <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control" placeholder="キーワードを入力">
           </div>
-          <input type="submit" value="検索" class="btn text-white py-1 btn-sm" style="font-size:large; background-color:#ffc700;font-family: 'Kosugi Maru', sans-serif;" >
+          <input type="submit" value="検索" class="btn text-white py-1 btn-sm" style="font-size:large; background-color:#ffc700; font-family: 'Kosugi Maru', sans-serif;" >
           
         </form>
       </div>
@@ -114,7 +114,7 @@
     @endforeach      
 
     <div class="my-3" style="">
-      <button onclick="location.href='{{route("tags.categories")}}'" class="text-white mx-1 px-3 py-1 border-0 rounded shadow" style="background-color:#ffc700; font-family:'Kosugi Maru', sans-serif;">
+      <button onclick="location.href='{{route("tags.categories")}}'" class="search-button shadow">
         タグから探す
       </button>
     </div> 

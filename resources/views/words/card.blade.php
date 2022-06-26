@@ -1,7 +1,14 @@
-<div class="card mt-0 mb-1 pt-1 pb-1 pl-2 pr-3  white rounded" style="max-width: 30rem;">
+<div class="card mt-0 mb-1 pt-1 pb-1 pl-1 pr-3  white " style="max-width: 30rem; border-radius:8px;">
   <div class="d-flex flex-row">
-    <div class="pl-1" style ="width:50%">
+    <div class="pl-0" style ="width:50%">
       <div class="d-flex flex-row">
+        <!-- 音節数によるfont-size調整 -->
+        @if($word->name3=='')
+          @php $name_font_size = '100%'; @endphp
+        @else
+          @php $name_font_size = '75%'; @endphp
+        @endif
+
         @foreach(array(0,1,2,3,4,5,6,7) as $i)
           @php
             $name = "name" . $i;
@@ -11,18 +18,17 @@
               <div class="mx-auto" style="width:100%">
 
                 <span class="h4 card-title">      
-                  <a class="text-dark yellow lighten-3 px-2 mx-n1" style="border-radius: 8px" href="{{ route('words.show', ['word' => $word]) }}">
+                  <a class="viet-text text-dark yellow lighten-3" style="padding-right:6px; padding-left:6px; margin-right:-6px; border-radius:8px; font-size:{{$name_font_size}}; " href="{{ route('words.show', ['word' => $word]) }}">
                     {{$word->$name}}
                   </a>
                 </span>
               </div>
-              <div class="mx-auto " style="width:2.5rem">
+              <div class="mx-auto text-center" style="width:1.0rem;">
                 @php
                   $kanji_n = 'kanji' . $i;  
                 @endphp        
                 @if($word->$kanji_n != '')
-                <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="p-1 mr-1 mt-1 blue-text" style=' font-size:1.5rem'> 
-                  <!-- font-family:"UD デジタル 教科書体 N-R", "BIZ UDゴシック Regular"; -->
+                <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="kanji-text pt-1 mr-1 mt-1 blue-text" style=' font-size:1.5rem'> 
                   {{$word->$kanji_n}}
                 </a>          
                 @endif
@@ -31,16 +37,19 @@
           @endif
         @endforeach    
       </div>
-      <div class="d-flex flex-column-reverse" >
-        <div class="text-dark small mt-2 ml-0 card-text">
-          Lv.{{$word->level}}
-        </div>
+
+    </div>
+    <div class="pl-2 pt-1 border-left border-light" style="width:50%" >
+      <div class="normal-text text-dark text-left card-text" style="font-size:1.0rem; white-space: pre-line;">{{ $word->jp }}</div>
+    </div>
+  </div>
+  <div class="d-flex flex-row">
+    <div class="pl-1" style ="width:50%">
+      <div class="normal-text text-dark text-left small mt-1 card-text">
+        Lv.{{$word->level}}
       </div>
     </div>
-    <div class="card-body pt-2 border-left border-light" style="width:50%" >
-      <div class="text-dark card-text" style="white-space: pre-line;">{{ $word->jp }}</div>
-        
-      
+    <div class="pl-2 pt-0 border-left border-light" style="width:50%" >        
       <div class="d-flex flex-row-reverse">
         @if( Auth::id() === $word->user_id )
           <!-- dropdown -->
@@ -48,7 +57,7 @@
             
             <div class="dropdown">
               <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-ellipsis-v"></i>
+                <i class="text-muted fas fa-ellipsis-v"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item" href="{{ route('words.edit', ['word' => $word]) }}">

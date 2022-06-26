@@ -1,4 +1,4 @@
-<a class="" href="{{ route('tags.show', ['name' => $tag->name]) }}" style='color:#1a237e; font-size:1.2rem; font-family:"UD デジタル 教科書体 N-R", "BIZ UDゴシック Regular";'>
+<a class="tag-text" href="{{ route('tags.show', ['name' => $tag->name]) }}" style="font-size:1.2rem;">
   <span class="d-inline-block white px-3 py-1  rounded shadow">
     {{ $tag->name }}
   </span>

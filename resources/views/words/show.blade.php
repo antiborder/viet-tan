@@ -5,7 +5,7 @@
 @section('content')
   @include('nav')
   <div class="container" style="max-width:800px">
-    <div class="card mt-3 mb-0 pb-2 pl-2 pr-2 border-warning bg-transparent text-warning" style="border-width:2px; max-width:30rem">
+    <div class="card my-2 mb-0 pb-2 pl-2 pr-2 border-warning bg-transparent text-warning" style="border-width:2px; max-width:30rem">
       <span style=";font-size:1.2rem">単語詳細</span>
       @include('words.detail')
 
@@ -22,7 +22,9 @@
         @endif
       @endforeach            
     </div>
-    @include('ads.horizontal')
+    <div class="my-2 shadow" style="height:200px">
+      @include('ads.horizontal')
+    </div>
 
     @foreach($word->synonyms()->sortBy('level') as $synonym)
       @if($loop->first)
@@ -62,7 +64,7 @@
     @if($subscription === 'NORMAL')
       @foreach($common_syllables as $i => $common_syllable)
         @if($loop->first)
-        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-success bg-transparent text-success" style="color: white; max-width: 30rem;border-width:2px">
+        <div class="card my-2 mb-1 pb-1 pl-2 pr-2 border-success bg-transparent text-success" style="color: white; max-width: 30rem;border-width:2px">
         <span style=";font-size:1.2rem">同じ音節を含む単語</span> (全{{$common_syllables->count()}}件)
         @endif
         @include('words.card',['word'=>$common_syllable])
@@ -74,7 +76,7 @@
     @elseif($subscription === 'TRIAL')
       @foreach($common_syllables as $i => $common_syllable)
         @if($loop->first)
-        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-success bg-transparent text-success" style="color: white; max-width: 30rem;border-width:2px">
+        <div class="card my-2 mb-1 pb-1 pl-2 pr-2 border-success bg-transparent text-success" style="color: white; max-width: 30rem;border-width:2px">
         <span style="font-size:1.2rem">同じ音節を含む単語<span class="text-dark" style="font-size:1.0rem"> (全{{$common_syllables->count()}}件)</span></span>
         @endif
         @if($i < config('const.SAME_SYLLABLE_TRIAL'))
@@ -92,7 +94,7 @@
     @elseif($subscription === 'GUEST')
       @foreach($common_syllables as $i => $common_syllable)
         @if($loop->first)
-        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-success bg-transparent text-success" style="color: white; max-width: 30rem;border-width:2px">
+        <div class="card my-2 mb-1 pb-1 pl-2 pr-2 border-success bg-transparent text-success" style="color: white; max-width: 30rem;border-width:2px">
         <span style="font-size:1.2rem">同じ音節を含む単語<span class="text-dark" style="font-size:1.0rem"> (全{{$common_syllables->count()}}件)</span></span>
         @endif
         @if($i < config('const.SAME_SYLLABLE_GUEST'))
@@ -108,8 +110,9 @@
         @endif
       @endforeach                    
     @endif
-
-    @include('ads.rectangle')
+    <div class="my-2 shadow">
+      @include('ads.rectangle')
+    </div>
   </div>
 
   @include('footer')

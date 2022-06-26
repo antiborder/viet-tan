@@ -12,32 +12,32 @@
         <div style="width:93%">
             <div v-if="mode==='FM'">
                 <div @click="turnPressed()" :class="cardColor()" class="card mt-0 mb-2 pt-1 pb-1 pl-2 pr-2 rounded d-flex flex-row" style="min-height:90px; max-width: 500px;"> 
-                    <div class = "h6 ml-0" style ="width:40%; white-space: pre-line; text-align:left">
-                        <div>
+                    <div class = "normal-text h6 ml-0" style ="width:40%; white-space: pre-line; text-align:left">
+                        <!-- <div> -->
                             <div v-if="sec >= 1">
                                 {{word.jp}}
                             </div>
-                        </div>
+                        <!-- </div> -->
                     </div>                          
                     <div class = "border-left border-light pl-2" style ="width:60%">
                         <div v-if="isPressed">
                             <div class="d-flex flex-row">
                                 <div v-for="j in 8">
-                                    <div v-if="isPressed" class="h4 card-title mr-2 mb-0">
+                                    <div v-if="isPressed" class="viet-text h4 card-title mr-2 mb-0">
                                         <div v-if="sec >= 1">
                                             {{ word.syllables[j-1] }}
                                         </div>
                                     </div>
-                                    <div v-if="isPressed" class="px-auto pr-2 mt-0 text-muted" style="font-size:1.3em" >
+                                    <div v-if="isPressed" class="kanji-text px-auto pr-2 mt-0 text-muted" style="font-size:1.3em" >
                                     {{ word.kanjis[j-1] }}
                                     </div>
                                 </div>
                             </div>
-                            <div v-if="isPressed" class="d-flex align-items-end" style="float:left" >
+                            <div v-if="isPressed" class="normal-text d-flex align-items-end" style="float:left" >
                             Lv.{{ word.level }}
                             </div>
                             <div>
-                                <a type="button" v-if="isPressed" v-bind:href="'/words/'+word.id" class="text-primary border border-primary rounded px-1 pt-1" target="_blank" rel="noopener noreferrer" style="font-size:1.0rem; height:30px;max-width:60px; float:right">
+                                <a type="button" v-if="isPressed" v-bind:href="'/words/'+word.id" class="normal-text text-primary border border-primary rounded px-1 pt-1" target="_blank" rel="noopener noreferrer" style="font-size:1.0rem; height:30px;max-width:60px; float:right">
                                     &nbsp;詳細&nbsp;
                                 </a>                  
                             </div>                                
@@ -55,17 +55,17 @@
                         <div>
                             <div class="d-flex flex-row">
                                 <div v-for="j in 8">
-                                    <div  class="h4 card-title mr-2 mb-0">
+                                    <div class="viet-text h4 card-title mr-2 mb-0">
                                         <div v-if="sec >= 1">
                                             {{ word.syllables[j-1] }}
                                         </div>
                                     </div>
-                                    <div v-if="isPressed" class="px-auto pr-2 mt-0 text-muted" style="font-size:1.3em" >
+                                    <div v-if="isPressed" class="kanji-text px-auto pr-2 mt-0 text-muted" style="font-size:1.3em" >
                                     {{ word.kanjis[j-1] }}
                                     </div>
                                 </div>
                             </div>
-                            <div v-if="isPressed" class="d-flex align-items-end" style="float:left">
+                            <div v-if="isPressed" class="normal-text d-flex align-items-end" style="float:left">
                             Lv.{{ word.level }}
                             </div>
                             <div>
@@ -75,7 +75,7 @@
                             </div>                            
                         </div>
                     </div>
-                    <div class = "h6 pl-2 border-left border-light" style ="width:40%; white-space: pre-line; text-align:left">
+                    <div class = "normal-text h6 pl-2 border-left border-light" style ="width:40%; white-space: pre-line; text-align:left">
                         <div v-if="isPressed" >
                             <div v-if="sec >= 1">
                                 {{word.jp}}
