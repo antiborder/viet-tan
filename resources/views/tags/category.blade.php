@@ -25,9 +25,10 @@
     </div>
 
     <div class=" my-5 text-center" style="">
-        <button onclick="location.href='{{route("words.search")}}'" class="text-white mx-1 px-3 py-1 border-0 rounded shadow" style="background-color:#ffc700; font-family:'Kosugi Maru', sans-serif;">
-          タグは検索からでも探せます
-        </button>
+      タグは検索からでも探せます<br>
+        <button onclick="location.href='{{route("words.search")}}'" class="search-button shadow">
+          検索から探す
+        </button><br>
     </div>              
 
     @include('ads.rectangle')
@@ -36,3 +37,7 @@
 
   @include('footer')    
 @endsection
+
+<style>
+
+</style>

@@ -58,7 +58,7 @@
         <p class="px-1 mx-2">
             当サイトではベトナム語の学習効率を上げるために漢字表記を使用しているため、昔使われていた字体と一致しない表記もあります。<br>
             例えば「台湾」の「台」は、昔は「臺」と書かれていました。現代の台湾で使われている繁体字でも「臺」です。これに対し、現代の日本語や中国の簡体字での表記は「台」です。「臺」という字を見てすぐにピンとくる日本人は少ないと思います。<br>
-            このような場合に当サイトでは、「台」の方で表記しています。また、表記については主に<a class="text-muted" href="https://en.wiktionary.org/wiki/Wiktionary:Main_Page">Wikitionary(英語版)</a>などを参考にしています。
+            このような場合に当サイトでは、なるべく「台」の方で表記しています。また、表記については主に<a class="text-muted" href="https://en.wiktionary.org/wiki/Wiktionary:Main_Page">Wikitionary(英語版)</a>などを参考にしています。
         </p>
     </div>          
     

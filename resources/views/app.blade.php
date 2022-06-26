@@ -24,12 +24,14 @@
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500&family=Kosugi+Maru&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500&family=Kosugi+Maru&family=Roboto+Condensed&display=swap" rel="stylesheet">
   <!-- Bootstrap core CSS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- Material Design Bootstrap -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">
 
+  <!-- Style Sheets -->
+  <link href="{{ asset('css/style.css') }}" rel="stylesheet">    
   <link href="{{ asset('css/stripe.css') }}" rel="stylesheet">  
 </head>
 

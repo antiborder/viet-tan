@@ -357,7 +357,8 @@ class WordController extends Controller
                 foreach($keyword_syllables as $keyword_syllable){
                     for($n=0; $n<8; $n++){
                         $name_n = 'name' . $n;                    
-                        $query->Orwhere($name_n, $keyword_syllable);
+                        $query->Orwhere($name_n, $keyword_syllable)->Orwhere($name_n, mb_strtolower($keyword_syllable));
+                        // $query->Orwhere($name_n, $keyword_syllable);
                     }
                 }
             });
@@ -369,11 +370,17 @@ class WordController extends Controller
             $words_jp = $query_jp->paginate(20)->sortBy('level');
 
             //漢字が該当
-            $query_kanji = Word::where('kanji0','like','%'.$keyword.'%');
-                for($i=1;$i<8;$i++){
-                    $query_kanji->orWhere('kanji'. $i, 'like', '%'.$keyword.'%');
+            $key_chars = preg_split("//u", $keyword, 20, PREG_SPLIT_NO_EMPTY);
+            foreach($key_chars as $j => $key_char){
+                for($i=0;$i<8;$i++){
+                    if($j === array_key_first($key_chars) && $i===0){
+                        $query_kanji = Word::where('kanji0','like','%'.$key_char.'%');
+                    }else{
+                        $query_kanji->orWhere('kanji'. $i, 'like', '%'.$key_char.'%');
+                    }
                 }
-            $words_kanji = $query_kanji->paginate(20)->sortBy('level');        
+            }
+            $words_kanji = $query_kanji->paginate(50)->sortBy('level');        
 
             //タグが該当
             $query_tag = Tag::where('name','like','%'.$keyword.'%');
