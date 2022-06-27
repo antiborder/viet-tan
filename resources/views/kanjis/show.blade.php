@@ -7,7 +7,7 @@
   <div class="container" style="max-width:800px">
     <div class="card my-3" style="max-width:30rem">
       <div class="card-body">
-        漢字　<span class="h3 card-title m-0" style='font-family:"UD デジタル 教科書体 N-R", "BIZ UDゴシック Regular";'>{{ $kanji->name }}</span>　を含む単語
+        漢字　<span class="kanji-text h3 card-title m-0">{{ $kanji->name }}</span>　を含む単語
       </div>
       <div class="text-right">
         <a href="{{route('articles.han-nom')}}" class="white border border-success text-success rounded mx-2 mb-2 pb-1 px-2" style="font-family: 'Kosugi Maru', sans-serif; display:inline-block;">

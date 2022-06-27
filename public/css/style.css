@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'han-nom'; /* フォント名 */
+    /* フォーマットごとにパスを指定 */
+    src: url('../font/Han-Nom Gothic 1.10.ttf') format('truetype');
+  }
 
 .normal-text{
     font-family:'Kosugi Maru', sans-serif;
@@ -6,7 +11,8 @@
     font-family:'Roboto Condensed',sans-serif;
 }
 .kanji-text{
-     /*"UD デジタル 教科書体 N-R","BIZ UDゴシック Regular"*/
+    /* font-family: "UD デジタル 教科書体 N-R","BIZ UDゴシック Regular" */
+    font-family:'han-nom';
 }
 .tag-text{
     font-family:'Kosugi Maru', sans-serif;
