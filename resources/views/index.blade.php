@@ -1,6 +1,14 @@
 @extends('app')
 
-@section('title', '【ベトナム語学習サービス】べとらん')
+@section('title', '【ベトナム語学習ツール】べとらん')
+
+@section('twitter_card')
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@viet_learn" />
+  <meta name="twitter:title" content="ベトナム語学習ツール【べとらん】" />
+  <meta name="twitter:description" content="学習に役立つ便利ツール。スキマ時間で進められる。初心者から、話せる人に。" />
+  <meta name="twitter:image" content="https://vietnamese-learn.net/image/twitter-card.png" />
+@endsection
 
 @section('content')
   @include('nav')
@@ -12,7 +20,7 @@
             初心者から、話せる人に
             <br>
             <p class="sizable-text-large mt-2" >
-              完全無料の<span class="text-nowrap">ベトナム語学習サービス</span><br>
+              無料の<span class="text-nowrap">ベトナム語学習ツール</span><br>
               <span class="sizable-text-large mt-2" style="display:inline-block; color:#ffa726;">べとらん</span>
             </p>  
           </h1>

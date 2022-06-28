@@ -366,7 +366,8 @@ class WordController extends Controller
             $words_name_syllables = $query_name_syllables->paginate(20)->sortBy('level');
 
             //意味が該当
-            $query_jp = Word::where('jp','like','%'.$keyword.'%');
+            $query_jp = Word::where('jp','like','%'.mb_convert_kana($keyword, 'c').'%');
+            $query_jp -> Orwhere('jp','like','%'.mb_convert_kana($keyword, 'C').'%');
             $words_jp = $query_jp->paginate(20)->sortBy('level');
 
             //漢字が該当
