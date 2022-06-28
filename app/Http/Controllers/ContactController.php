@@ -53,8 +53,17 @@ class ContactController extends Controller
 
         } else {
 
+            //スパムをフィルタ
+            $is_spam === false;
+            $ng_words = ['de','ロボット','.se/','.es/'];
+            foreach($ng_words as $ng_word){
+                if(strpos( $request['body'], $ng_word ) !== false){
+                    $is_spam === true;
+                }
+            }
+
             //入力されたメールアドレスにメールを送信
-            if ( strpos( $request['body'], 'de/hat' ) === false ) {
+            if ( $is_spam === false ) {
                 \Mail::to($inputs['email'])->send(new ContactSendmail($inputs));
                 \Mail::to(config('mail.from.address'))->send(new ContactSendmail($inputs));
             } else {

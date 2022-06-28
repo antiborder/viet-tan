@@ -1,6 +1,13 @@
 @extends('app')
 
 @section('title', $word->name.'の意味・発音・関連語')
+@section('twitter_card')
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@viet_learn" />
+  <meta name="twitter:title" content="ベトナム語 {{$word->name}}" />
+  <meta name="twitter:description" content="{{$word->name}} の意味・発音・関連語" />
+  <meta name="twitter:image" content="https://vietnamese-learn.net/image/twitter-card.png" />
+@endsection
 
 @section('content')
   @include('nav')
@@ -22,7 +29,7 @@
         @endif
       @endforeach            
     </div>
-    <div class="my-2 shadow" style="height:200px">
+    <div class="my-2" style="height:200px">
       @include('ads.horizontal')
     </div>
 
@@ -110,7 +117,7 @@
         @endif
       @endforeach                    
     @endif
-    <div class="my-2 shadow">
+    <div class="my-2">
       @include('ads.rectangle')
     </div>
   </div>

@@ -59,7 +59,7 @@
       @endif
     @endif
 
-    @include('ads.horizontal')
+    @include('ads.rectangle')
   </div>
 
   

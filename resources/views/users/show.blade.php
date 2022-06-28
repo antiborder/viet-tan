@@ -21,14 +21,14 @@
           $membership = '無料会員';
         }
         @endphp
-        <div style="font-size:1.1rem; line-height:200%">
+        <!-- <div style="font-size:1.1rem; line-height:200%">
           　　会員プラン ：　{{$membership}}
           @if( $subscription === "TRIAL")
-            <!-- <span class="m-3" style="text-align:center; font-size:1.2rem" >
+            <span class="m-3" style="text-align:center; font-size:1.2rem" >
               <a href="{{ route('stripe.subscription')}}" class="info-color text-white text-nowrap rounded ml-2 px-2 py-1" >通常会員に登録</a>
-            </span>             -->
+            </span>            
           @endif
-        </div>        
+        </div>         -->
       </div>
     </div>
     <div class="card my-2">
@@ -125,6 +125,11 @@
         </tr>           
         @endforeach
       </table>
+      <div class=" m-2 text-right" style="">
+          <button onclick="location.href='{{route("articles.han-nom")}}'" class="home-button shadow">
+            単語レベル一覧
+          </button><br>
+      </div>                
     </div>
 
     @include('ads.horizontal')
