@@ -1,28 +1,44 @@
 @extends('app')
 
-@section('title', '漢字表記について')
+@section('title', 'ベトナム語の漢字')
+@section('twitter_card')
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@viet_learn" />
+  <meta name="twitter:title" content="ベトナム語の『漢字』" />
+  <meta name="twitter:description" content="ベトナム語を学ぶ上で最低限知っておきたい背景知識をまとめました。漢字の知識を効率的に活用しましょう。" />
+  <meta name="twitter:image" content="https://vietnamese-learn.net/image/twitter-card.png" />
+@endsection
 
 @section('content')
   @include('nav')
   <div class="container article" style="max-width:800px">
-
     <div class="card my-3 p-0">    
-        <h4 class="p-1 mx-2">漢字表記について　<span class="text-nowrap" style="font-size:0.8rem"></span></h4>        
-        <h5 class="p-1 mx-2">ベトナムでは漢字が使われていた　<span class="text-nowrap" style="font-size:0.8rem"></span></h5>
+        <h4 class="p-1 mx-2 mt-3">ベトナム語の『漢字』</h4>        
         <p class="px-1 mx-2">
-            ベトナムでは昔、漢字が使われていました。例えば、今ではベトナムのことを「Việt Nam」と書きますが、昔は「越南」と書いていました。<br>
-            アルファベットを用いた表記は1600年代にフランス人が考案したもので、それ以前は漢字の表記でした。
+            日本人がベトナム語を学ぶ場合、漢字の知識を活かしたほうがお得です。このページではベトナム語を学ぶ上で知っておきたいことをを短くまとめました。
         </p>
 
-        <h5 class="p-1 mx-2">漢字を利用して学習効率を上げよう　<span class="text-nowrap" style="font-size:0.8rem"></span></h5>
+        <h5 class="p-1 mx-2">ベトナムでは漢字が使われていた　<span class="text-nowrap" style="font-size:0.8rem"></span></h5>
+        <p class="px-1 mx-2 mt-3">
+            ベトナムでは昔、漢字が使われていました。例えば、今ではベトナムのことを「Việt Nam」と書きますが、昔は「<span class="kanji-text">越南</span>」と書いていました。<br>
+            アルファベットを用いた表記は1600年代にフランス人が考案したもので、それ以前は漢字の表記でした。
+        </p>
+        <div class="text-center">
+          <img class="pl-1 mb-2 wide-image" src="/image/han-nom1.webp">
+        </div>          
+
+        <h5 class="p-1 mx-2 mt-3">漢字を利用して学習効率を上げよう　<span class="text-nowrap" style="font-size:0.8rem"></span></h5>
         <p class="px-1 mx-2">
             ベトナムで使われていた漢字はざっくり二つに分けることができます。
         </p>            
         <p class="px-1 mx-2">        
-            一方は中国から伝わったもの（Chữ Hán：𡨸漢）で、辞書に載っている単語の70% 以上とも言われています。具体例としては、chú ý（注意）や thiên nhiên（天然）などが挙げられます。<br>
+            一方は中国から伝わったもの（Chữ Hán：<span class="kanji-text">𡨸漢</span>）で、辞書に載っている単語の70% 以上とも言われています。具体例としては、chú ý（注意）や thiên nhiên（天然）などが挙げられます。<br>
             日本人に馴染みがあるのはこちらです。ですからベトナム語の学習に漢字を利用しない手はありません。漢越語と呼ばれているのもこちらです。<br>
             下に具体例を載せておきます。御覧の通り、日本語に近い単語が多いのです。<br>
-            （表内の単語をクリックすると詳細が開きます。）
+            漢字の活用によるメリットは学習を進めると実感できるようになり、その恩恵は強力です。慣れてくれば、初めて見る単語の意味を推測できることも増えるでしょう。
+        <p class="px-1 mx-2 mt-1 mb-0 pb-0 text-muted text-center">
+            表内の単語をクリックすると詳細が開きます。
+        </p>                        
             
             <table cellpadding="3" bgcolor="#e3f2fd" align="center" class="my-1" border="1" style="border-collapse:collapse; ; font-family: 'Kosugi Maru', sans-serif; max-width:500px; font-size:150%; margin:auto">
                 <thead>
@@ -51,16 +67,21 @@
 
 
         <p class="px-1 mx-2">              
-            もう一方は、ベトナム独自のもの（Chữ Nôm：𡨸喃）です。当サイトではこちらについても一部を表示しています。ベトナム語の学習に役立つ可能性があるためです。<small>（こちらは狭義の漢字には含まれませんが、上ではまとめて漢字としています。ちなみにChữ HánとChữ NômをまとめてHán Nômと呼びます。）</small>
+            もう一方は、ベトナム独自のもの（Chữ Nôm：<span class="kanji-text">𡨸喃</spam>）です。当サイトではこちらについても一部を表示しています。ベトナム語の学習に役立つ可能性があるためです。<small>（こちらは狭義の漢字には含まれませんが、上ではまとめて漢字としています。）</small>
         </p>
 
-        <h5 class="p-1 mx-2">わかりやすい字体　<span class="text-nowrap" style="font-size:0.8rem"></span></h5>
+        <h5 class="p-1 mx-2 mt-3">わかりやすい字体　<span class="text-nowrap" style="font-size:0.8rem"></span></h5>
         <p class="px-1 mx-2">
             ベトナムで昔使われていた漢字には、現在日本で使われている漢字と字体が一致しないものも多く存在します。異体字にはよく似ているものもありますし、大きく違うものもあります。<br>
+        </p>            
+        <p class="px-1 mx-2">
             当サイトではベトナム語の学習効率を上げるために漢字表記を使用しているため、昔使われていた字体と一致しない表記もあります。<br>
-            例えば「台湾」の「台」は、昔は「臺」と書かれていました。現代の台湾で使われている繁体字でも「臺」です。これに対し、現代の日本語や中国の簡体字での表記は「台」です。「臺」という字を見てすぐにピンとくる日本人は少ないと思います。<br>
+            例えば「<span class="kanji-text">台湾</span>（たいわん）」の「<span class="kanji-text">台</span>」は、昔は「<span class="kanji-text">臺</span>」と書かれていたそうです。現代の台湾で使われている繁体字でも「臺」です。これに対し、現代の日本語や中国の簡体字での表記は「<span class="kanji-text">台</span>」です。「<span class="kanji-text">臺</span>」という字を見てすぐにピンとくる日本人は少ないと考えられます。<br>
             このような場合に当サイトでは、なるべく「台」の方で表記しています。また、表記については主に<a class="text-muted" href="https://en.wiktionary.org/wiki/Wiktionary:Main_Page">Wikitionary(英語版)</a>などを参考にしています。
         </p>
+        <div class="text-center">
+          <img class="pl-1 mb-2 wide-image" src="/image/han-nom2.webp">
+        </div>                  
     </div>          
     
     @include('ads.horizontal')

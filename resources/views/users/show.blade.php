@@ -126,7 +126,7 @@
         @endforeach
       </table>
       <div class=" m-2 text-right" style="">
-          <button onclick="location.href='{{route("articles.han-nom")}}'" class="home-button shadow">
+          <button onclick="location.href='{{route("articles.level-table")}}'" class="home-button">
             単語レベル一覧
           </button><br>
       </div>                

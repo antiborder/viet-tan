@@ -27,7 +27,7 @@ class WordController extends Controller
     {
         $word_ids = config('const.HAN_NOM_WORDS');
 
-        $words = Word::wherein('id', $word_ids)->inRandomOrder()->take(3)->get();
+        $words = Word::wherein('id', $word_ids)->inRandomOrder()->take(6)->get();
 
         return view('index')->with(['words'=>$words]);
     }    

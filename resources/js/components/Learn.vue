@@ -1,14 +1,13 @@
-//単語詳細と検索結果に広告を貼ってトップページに飛ばせる。
-//twitterのトップ画像をサービスからツールに。twitterカード
 //wordのnameからrouteでurl取得。
 //単語更新でタグがない単語に空のタグが登録されるのを防止。
 //ユーザー一覧用の画面。//user毎の利用状況を一覧できる画面。
 //adblock対策
 //単語編集でタグも編集
+//広告の種類を増やす。measureも広告を交互に変える。
 //各カテゴリとタグのキーワードも表示。検索にカテゴリも引っかかるように。
 //ロゴ配置。//スモールアイコンの画像。
 //理解度ボタンにおおよその時間数日数を表示。おすすめレベル。
-//検索機能：音節が類似も載せたい。
+//検索機能：音節が類似も載せたい。->service層をつくるか。
 //過去24時間以内で生まれた学習計画
 //articleリスト。どの単語から、学習全体マップ。ベトナム語ってどんな言語。覚えるためには繰り返し。習慣化が大事。単語の意味と訳語。通じないときの原因は。
 //FAQ レベルについて、運営者について、支払いについて、不具合について　料金はいくらですか？　いつでもキャンセルできますか？
@@ -80,10 +79,10 @@
 
       <Adsense
         class="adsbygoogle my-2 box-shadow"
-        style="display:block; min-width:250px"
+        style="display:block;"
         data-ad-client="ca-pub-9067426465896411"
-        data-ad-slot="5078046569"
-        data-ad-format="horizontal"
+        data-ad-slot="5284563145"
+        data-ad-format="rectangle"
         data-full-width-responsive="true"
       >
       </Adsense>
@@ -193,16 +192,28 @@
     </div>
     <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' " style="text-align:center">
       {{sec}}
-      <Adsense
-        class="adsbygoogle my-2 box-shadow"
-        style="display:block; min-width:250px"
-        data-ad-client="ca-pub-9067426465896411"
-        data-ad-slot="5078046569"
-        data-ad-format="horizontal"
-        data-full-width-responsive="true"
-      >
-      </Adsense>
-
+      <div v-if="total%2 === 0">
+        <Adsense
+          class="adsbygoogle my-2 box-shadow"
+          style="display:block; min-width:250px"
+          data-ad-client="ca-pub-9067426465896411"
+          data-ad-slot="5078046569"
+          data-ad-format="horizontal"
+          data-full-width-responsive="true"
+        >
+        </Adsense>
+      </div>
+      <div v-else>
+        <Adsense
+          class="adsbygoogle my-2 box-shadow"
+          style="display:block;"
+          data-ad-client="ca-pub-9067426465896411"
+          data-ad-slot="5284563145"
+          data-ad-format="rectangle"
+          data-full-width-responsive="true"
+        >
+        </Adsense>
+      </div>  
     </div>
 
 
