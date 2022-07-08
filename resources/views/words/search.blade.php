@@ -118,9 +118,26 @@
         タグから探す
       </button>
     </div> 
-    
-    @include('ads.rectangle')
 
+    <div class="my-2">
+      @include('ads.rectangle')
+    </div>
+
+    <a href="{{route('index')}}" >
+      <div class="pb-1 normal-text orange text-white lighten-1 text-center rounded shadow" style="max-width:450px" >
+        <div>
+          <div style="display:inline-block">1日10分でOK。</div>
+          <div style="display:inline-block">スキマ時間にクリックするだけ。</div>
+        </div>
+        <div class="white rounded mb-1 mx-2" style="color:#ffa726;">
+          <div class="h3 mb-n1" >
+            <div class="mr-n1 " style="display:inline-block">ベトナム語学習の</div>
+            <div class="" style="display:inline-block">無料ツール</div>
+          </div>
+          <small class="">べとらん Homeに戻る</small>
+        </div>
+      </div>
+    </a>
   </div>
 
   <!-- about search -->

@@ -38,3 +38,8 @@
     border-style:none; 
     border-radius: 3px;
 }
+
+.wide-image{
+    text-align:center; 
+    width:calc(270px + ((100vw - 340px) * 0.2));
+}

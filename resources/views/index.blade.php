@@ -6,7 +6,7 @@
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@viet_learn" />
   <meta name="twitter:title" content="ベトナム語学習ツール【べとらん】" />
-  <meta name="twitter:description" content="学習に役立つ便利ツール。スキマ時間で進められる。初心者から、話せる人に。" />
+  <meta name="twitter:description" content="学習に役立つ便利ツール。スキマ時間に自分のペースで進められる。学習のお供に。優先順に整理された5000語。関連語・類似語が一目でわかる。" />
   <meta name="twitter:image" content="https://vietnamese-learn.net/image/twitter-card.png" />
 @endsection
 
@@ -184,7 +184,7 @@
     <div class="card my-2 p-0">
       <div class="card-body text-center p-1">
         <p class="sizable-text-small mt-1" style="text-align:center;">単語カードの見方</p>          
-          <img class="pl-1 mb-2" src="/image/card-image.webp" style="text-align:center; width:calc(280px + ((100vw - 350px) * 0.2))">
+          <img class="pl-1 mb-2 wide-image" src="/image/card-image.webp">
       </div>  
     </div>
     <h4 class="sizable-text-small mt-3 mb-0" style="text-align:left;"> 単語カードサンプル<br>
