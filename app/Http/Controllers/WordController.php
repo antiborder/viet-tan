@@ -43,7 +43,13 @@ class WordController extends Controller
         }else{
             return redirect()->route('index');
         }            
-    }    
+    }
+    
+    public function wordName($name)
+    {
+        $word = Word::where('name',$name)->first();
+        return redirect()->route('words.show',['word'=>$word]);        
+    }
 
     public function create()
     {

@@ -116,12 +116,6 @@
 
 <style>
 
-    .article h5{
-        border-bottom: 1px solid #ffa726;
-        border-left: 4px solid #ffa726;
-
-    }
-        
     table{
         font-size:1.5rem;
     }
