@@ -70,15 +70,28 @@
     </div>
     <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' " style="text-align:center">
       {{sec}}
-      <Adsense
-        class="adsbygoogle my-2 box-shadow"
-        style="display:block; min-width:250px"
-        data-ad-client="ca-pub-9067426465896411"
-        data-ad-slot="5078046569"
-        data-ad-format="horizontal"
-        data-full-width-responsive="true"
-      >
-      </Adsense>            
+      <div v-if="total%2 === 0">
+        <Adsense
+          class="adsbygoogle my-2 box-shadow"
+          style="display:block; min-width:250px"
+          data-ad-client="ca-pub-9067426465896411"
+          data-ad-slot="5078046569"
+          data-ad-format="horizontal"
+          data-full-width-responsive="true"
+        >
+        </Adsense>
+      </div>
+      <div v-else>
+        <Adsense
+          class="adsbygoogle my-2 box-shadow"
+          style="display:block;"
+          data-ad-client="ca-pub-9067426465896411"
+          data-ad-slot="5284563145"
+          data-ad-format="rectangle"
+          data-full-width-responsive="true"
+        >
+        </Adsense>
+      </div>  
     </div>
 
     <!-- 結果表示 RESULT -->

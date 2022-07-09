@@ -88,7 +88,7 @@ class LearnController extends Controller
             }else if($request->mode === "MF"){
                 $progress_MF = $point;
                 if($previous_progress <= 0.5*$point){ //相方が少なすぎる場合には底上げ
-                    $previous_progress = 0.5*$point;
+                    $progress = 0.5*$point; // <-20220709修正
                 }else{
                     $progress = $previous_progress; //相方が少なすぎなければ前回を引き継ぎ
                 }

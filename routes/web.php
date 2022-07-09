@@ -53,6 +53,8 @@ Route::prefix('users')->name('users.')->group(function () {
     Route::get('/{name}', 'UserController@show')->name('show');
 });
 
+Route::get('/word-name/{name}', 'WordController@wordName')->name('word-name');
+
 //stripe
 Route::get('/subscription', 'StripeController@subscription')->name('stripe.subscription');
 Route::post('/subscription/afterpay', 'StripeController@afterpay')->name('stripe.afterpay');

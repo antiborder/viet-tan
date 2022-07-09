@@ -125,11 +125,12 @@
         </tr>           
         @endforeach
       </table>
-      <div class=" m-2 text-right" style="">
-          <button onclick="location.href='{{route("articles.level-table")}}'" class="home-button">
-            単語レベル一覧
-          </button><br>
-      </div>                
+      <div class=" m-2 text-right">
+        <a href="{{route('articles.level-table')}}" class=" mx-2 mb-2 home-button-transparent">
+          <small>単語レベル一覧</small>
+        </a>                        
+      </div>      
+
     </div>
 
     @include('ads.horizontal')

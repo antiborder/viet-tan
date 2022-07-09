@@ -13,12 +13,12 @@
   @include('nav')
   <div class="container article" style="max-width:800px">
     <div class="card my-3 p-0">    
-        <h4 class="p-1 mx-2 mt-3">ベトナム語の『漢字』</h4>        
+        <h4 class="p-1 mx-2 mt-3 mb-3">ベトナム語の『漢字』</h4>        
         <p class="px-1 mx-2">
             日本人がベトナム語を学ぶ場合、漢字の知識を活かしたほうがお得です。このページではベトナム語を学ぶ上で知っておきたいことをを短くまとめました。
         </p>
 
-        <h5 class="p-1 mx-2">ベトナムでは漢字が使われていた　<span class="text-nowrap" style="font-size:0.8rem"></span></h5>
+        <h5 class="p-1 mx-2 mt-3">ベトナムでは漢字が使われていた　<span class="text-nowrap" style="font-size:0.8rem"></span></h5>
         <p class="px-1 mx-2 mt-3">
             ベトナムでは昔、漢字が使われていました。例えば、今ではベトナムのことを「Việt Nam」と書きますが、昔は「<span class="kanji-text">越南</span>」と書いていました。<br>
             アルファベットを用いた表記は1600年代にフランス人が考案したもので、それ以前は漢字の表記でした。
@@ -27,11 +27,11 @@
           <img class="pl-1 mb-2 wide-image" src="/image/han-nom1.webp">
         </div>          
 
-        <h5 class="p-1 mx-2 mt-3">漢字を利用して学習効率を上げよう　<span class="text-nowrap" style="font-size:0.8rem"></span></h5>
+        <h5 class="p-1 mx-2 mt-3 nb-3">漢字を利用して学習効率を上げよう　<span class="text-nowrap" style="font-size:0.8rem"></span></h5>
         <p class="px-1 mx-2">
             ベトナムで使われていた漢字はざっくり二つに分けることができます。
         </p>            
-        <p class="px-1 mx-2">        
+        <p class="px-1 mx-2" >        
             一方は中国から伝わったもの（Chữ Hán：<span class="kanji-text">𡨸漢</span>）で、辞書に載っている単語の70% 以上とも言われています。具体例としては、chú ý（注意）や thiên nhiên（天然）などが挙げられます。<br>
             日本人に馴染みがあるのはこちらです。ですからベトナム語の学習に漢字を利用しない手はありません。漢越語と呼ばれているのもこちらです。<br>
             下に具体例を載せておきます。御覧の通り、日本語に近い単語が多いのです。<br>
@@ -47,19 +47,19 @@
                     </tr>
                 </thead>
                 <tr>
-                    <td><a href="/words/10376" class="yellow lighten-3 text-dark rounded p-1">chú ý</a></td><td>注意</td><td>注意する</td>
+                    <td><a href="/word-name/chú ý" class="yellow lighten-3 text-dark rounded p-1">chú ý</a></td><td>注意</td><td>注意する</td>
                 </tr>
                 <tr>
-                    <td><a href="/words/11818" class="yellow lighten-3 text-dark rounded p-1">thiên nhiên</a></td><td>天然</td><td>天然の</td>
+                    <td><a href="/word-name/thiên nhiên" class="yellow lighten-3 text-dark rounded p-1">thiên nhiên</a></td><td>天然</td><td>天然の</td>
                 </tr>
                 <tr>
-                    <td><a href="/words/10643" class="yellow lighten-3 text-dark rounded p-1">động vật</a></td><td>動物</td><td>動物</td>
+                    <td><a href="/word-name/động vật" class="yellow lighten-3 text-dark rounded p-1">động vật</a></td><td>動物</td><td>動物</td>
                 </tr>
                 <tr>
-                    <td><a href="/words/9969" class="yellow lighten-3 text-dark rounded p-1">yêu cầu</a></td><td>要求</td><td>要求する</td>
+                    <td><a href="/word-name/yêu cầu" class="yellow lighten-3 text-dark rounded p-1">yêu cầu</a></td><td>要求</td><td>要求する</td>
                 </tr>
                 <tr>
-                    <td><a href="/words/10698" class="yellow lighten-3 text-dark rounded p-1">bảo quản</a></td><td>保管</td><td>保管する</td>
+                    <td><a href="/word-name/bảo quản" class="yellow lighten-3 text-dark rounded p-1">bảo quản</a></td><td>保管</td><td>保管する</td>
                 </tr>                                                
             </table>                    
         </p>
@@ -70,7 +70,7 @@
             もう一方は、ベトナム独自のもの（Chữ Nôm：<span class="kanji-text">𡨸喃</spam>）です。当サイトではこちらについても一部を表示しています。ベトナム語の学習に役立つ可能性があるためです。<small>（こちらは狭義の漢字には含まれませんが、上ではまとめて漢字としています。）</small>
         </p>
 
-        <h5 class="p-1 mx-2 mt-3">わかりやすい字体　<span class="text-nowrap" style="font-size:0.8rem"></span></h5>
+        <h5 class="p-1 mx-2 mt-3 mb-3">わかりやすい字体　<span class="text-nowrap" style="font-size:0.8rem"></span></h5>
         <p class="px-1 mx-2">
             ベトナムで昔使われていた漢字には、現在日本で使われている漢字と字体が一致しないものも多く存在します。異体字にはよく似ているものもありますし、大きく違うものもあります。<br>
         </p>            
@@ -93,11 +93,7 @@
 @endsection
 
 <style>
-    .article h5{
-        border-bottom: 1px solid #ffa726;
-        border-left: 4px solid #ffa726;
 
-    }
     table{
         font-size:1.5rem;
     }
