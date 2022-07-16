@@ -228,4 +228,20 @@ class UserController extends Controller
     //     }        
     //     return $subscription;
     // }           
+
+    public function list(){
+        if(Auth::id() === 1 ){
+            $users = User::all();
+
+            $users = User::leftjoin('learns', 'users.id', '=', 'learns.user_id')
+            ->select('users.id','users.name','users.email','users.created_at','users.updated_at',DB::raw('max(learns.updated_at) as latest_learn'))
+            ->groupBy('users.id')
+            ->get();
+                // return $users;
+            return view('users.list', ['users'=>$users] );
+        }else{
+            return view('index');
+        }        
+    }
+
 }
