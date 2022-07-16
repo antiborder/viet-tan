@@ -16,7 +16,7 @@
                     <th>email</th>
                     <th>created_at</th>
                     <th>updated_at</th>
-                    <th>latest_learn</th>
+                    <!-- <th>latest_learn</th> -->
                 </tr>
             </thead>
 
@@ -27,7 +27,7 @@
                 <td>{{$user->email}}</td>
                 <td>{{$user->created_at}}</td>                
                 <td>{{$user->updated_at}}</td>                
-                <td>{{$user->latest_learn}}</td>                
+                <!-- <td>{{$user->latest_learn}}</td>                 -->
             </tr>
             @endforeach                            
         </table>                    
