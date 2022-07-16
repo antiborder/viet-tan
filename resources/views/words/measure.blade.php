@@ -6,8 +6,8 @@
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@viet_learn" />
   <meta name="twitter:title" content="【ベトナム語】単語力測定" />
-  <meta name="twitter:description" content="たった2分間であなたの単語力を測定。腕試しに挑戦してみませんか？あなたのベトナム語力は『????語』です。" />
-  <meta name="twitter:image" content="https://vietnamese-learn.net/image/twitter-card.png" />
+  <meta name="twitter:description" content="たった2分間であなたの単語力を測定。腕試しに挑戦してみませんか？登録不要。あなたのベトナム語力は『????語』です。" />
+  <meta name="twitter:image" content="https://vietnamese-learn.net/image/twitter-card-measure.png" />
 @endsection
 
 @section('content')
