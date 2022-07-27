@@ -234,8 +234,7 @@ class UserController extends Controller
             $users = User::all();
 
             $users = User::leftjoin('learns', 'users.id', '=', 'learns.user_id')
-            // ->select('users.id','users.name','users.email','users.created_at','users.updated_at',DB::raw('max(learns.updated_at) as latest_learn'))
-            ->select('users.id','users.name','users.email','users.created_at','users.updated_at')
+            ->select('users.id','users.name','users.email','users.created_at','users.updated_at',DB::raw('max(learns.updated_at) as latest_learn'))
             ->groupBy('users.id')
             ->get();
                 // return $users;
