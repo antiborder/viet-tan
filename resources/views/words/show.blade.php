@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', $word->name.'の意味・発音・関連語')
+@section('title', $word->name.'の意味・発音・関連語 @ がんばらないベトナム語のススメ【べとらん】')
 @section('twitter_card')
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@viet_learn" />

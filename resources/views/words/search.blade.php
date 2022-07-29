@@ -149,10 +149,10 @@
           <span aria-hidden="true">&times;</span>
         </button><br>
       </div>
-      <div style="display:inline-block">
-          <img src="/image/search-description1.webp" style="height:300px; width:300px" alt='あいまい検索 使用例'>
-          <img src="/image/search-description2.webp" style="height:300px; width:300px" alt='声調記号などが違ってもヒットします 発音が似ている単語もヒットします 混同しやすい単語の整理にも便利です'>
-          <img src="/image/search-description3.webp" style="height:300px; width:300px" alt='ベトナム語だけでなく 日本語 漢越語 関連タグ もヒットします'>
+      <div class="border border-dark" style="display:inline-block;">
+          <img class="border m-1" src="/image/search-description1.webp" style="height:300px; width:300px;" alt='あいまい検索 使用例'>
+          <img class="border m-1" src="/image/search-description2.webp" style="height:300px; width:300px;" alt='声調記号などが違ってもヒットします 発音が似ている単語もヒットします 混同しやすい単語の整理にも便利です'>
+          <img class="border m-1" src="/image/search-description3.webp" style="height:300px; width:300px;" alt='ベトナム語だけでなく 日本語 漢越語 関連タグ もヒットします'>
       </div>
       <div class="text-center">
         <p>
