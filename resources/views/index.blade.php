@@ -133,9 +133,14 @@
       <li style="display:inline-block">
         <a href="{{route('tags.categories')}}" >
           <div class="card orange lighten-1 m-2 p-1 small-icon">
-            <div class="card white rounded shadow-none" style="width:100%; height:100%;">
-              <div class="pb-3" >
-                  タグから探す
+            <div class="card white rounded shadow-none p-1" style="width:100%; height:100%;">
+              <div class="" >
+                <div class="small-icon-text">
+                  <div style="display: table-cell; vertical-align: middle; font-size:130%">
+                    タグから探す
+                  </div>
+                </div>  
+                <img src='/image/tag-icon.webp' style="width:60px; height:60px">                  
               </div>
             <!-- <img src='' style="width:90px"> -->
             </div>
@@ -145,11 +150,15 @@
       <li style="display:inline-block">
         <a href="{{route('articles.level-table')}}" >
           <div class="card orange lighten-1 m-2 p-1 small-icon">
-            <div class="card white rounded shadow-none" style="width:100%; height:100%;">
-              <div class="pb-3" >
-                単語レベル<br>一覧
-              </div>
-              <!-- <img src='' style="width:90px"> -->
+            <div class="card white rounded shadow-none p-1" style="width:100%; height:100%;">
+              <div class="" >
+                <div class="small-icon-text">          
+                  <div style="display: table-cell; vertical-align: middle;">                           
+                    単語レベル<br>一覧
+                  </div >
+                </div>
+                <img src='/image/level-table-icon.webp' style="width:60px; height:60px">                              
+              </div>              
             </div>
           </div>
         </a>
@@ -163,20 +172,33 @@
           <a>      
       @endguest
          <div class="card orange lighten-1 m-2 p-1 small-icon">
-            <div class="card white rounded shadow-none" style="width:100%; height:100%;">
-                学習状況
+            <div class="card white rounded shadow-none p-1" style="width:100%; height:100%;">
+              <div class="" >            
+                <div class="small-icon-text">              
+                  <div style="display: table-cell; vertical-align: middle; font-size:130%;">
+                    学習状況
+                  </div>
+                </div>
+                <img src='/image/progress-icon.webp' style="width:60px; height:60px">                            
+              </div>
             </div>
-            <!-- <img src='' style="width:90px"> -->
           </div>
         </a>
       </li>       
       <li style="display:inline-block" data-toggle="modal" data-target="#contact">
         <a href="/articles/level-table"  >
-        <div class="card orange lighten-1 m-2 p-1 small-icon">
-          <div class="card white rounded shadow-none" style="width:100%; height:100%;">
-                ご意見<br>お問い合わせ
+          <div class="card orange lighten-1 m-2 p-1 small-icon">
+            <div class="card white rounded shadow-none p-1 " style="width:100%; height:100%;">
+              <div class="" >         
+                <div class="small-icon-text">   
+                  <div style="display: table-cell; vertical-align: middle;">                                             
+                    ご意見<br>お問い合わせ
+                  </div>
+                </div>
+                <img src='/image/contact-icon.webp' style="width:60px; height:60px">                                            
+              </div>
             </div>
-            <!-- <img src='' style="width:90px"> -->
+
           </div>
         </a>
       </li>          
@@ -228,11 +250,16 @@
   .small-icon{
     color:#ffa726;
     width:150px; 
-    height:70px; 
     text-align:center; 
     margin:0 auto; 
-    font-size:1.3rem;
+    font-size:1.0rem;
     font-family: 'Kosugi Maru', sans-serif; 
+  }
+
+  .small-icon-text{
+    height:50px;
+    display: table;
+    width: 100%;    
   }
 
   .large-icon{

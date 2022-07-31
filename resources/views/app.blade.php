@@ -21,6 +21,10 @@
   </title>
 
   @yield('twitter_card')
+
+  <!-- fabicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="./image/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/x-icon" href="./image/favicon.ico">
   
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
