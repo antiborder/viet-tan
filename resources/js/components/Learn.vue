@@ -60,7 +60,7 @@
             <a href="/register" class="deep-orange lighten-1 text-white rounded px-4 py-2" >無料登録する</a>
           </div>
           <div class="m-3" style="text-align:center; font-size:1.3rem" >
-            <a href="login" class="rounded px-4 py-2" style="color:#ffa726;border-color:#ffa726;border-style:solid">ログインする</a>
+            <a href="/login" class="rounded px-4 py-2" style="color:#ffa726;border-color:#ffa726;border-style:solid">ログインする</a>
           </div>          
           <button @click="load()" type="button" class="btn btn-info light-blue accent-4 rounded px-3 py-2 mt-3 text-nowrap shadow-none "style="font-size: 1.0rem;">
             ランダムでStart ▶
