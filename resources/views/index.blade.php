@@ -104,7 +104,7 @@
             自動でスケジュール管理
           </h3>
         </div>
-        <p class="sizable-text-small" style="text-align:center;">単語毎の習熟度に合わせて出題。<br>余計な作業がないから学習が快適。</p>
+        <p class="sizable-text-small" style="text-align:center;">単語毎の習熟度に合わせて出題。<br>余計な手間がないから学習が快適。</p>
         <div class="image-container">
           <div class="image-aligner" >
             <img class="pr-1" src="/image/schedule-image.webp"style="height:250px;">
