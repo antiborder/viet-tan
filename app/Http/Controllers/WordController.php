@@ -32,19 +32,6 @@ class WordController extends Controller
         return view('index')->with(['words'=>$words]);
     }    
 
-    public function level(int $level = null)
-    {
-        if(Auth::id() === 1 ){
-            if( $level === null ){
-                $level = 1;
-            }
-            $words = Word::all()->where('level',$level)->sortByDesc('created_at');
-            return view('words.level', ['words' => $words, 'count' => $words->count()]);
-        }else{
-            return redirect()->route('index');
-        }            
-    }
-    
     public function wordName($name)
     {
         $word = Word::where('name',$name)->first();
@@ -53,7 +40,7 @@ class WordController extends Controller
 
     public function create()
     {
-        if(Auth::id() === 1 ){
+        if(Auth::id() === 1 ){   //for admin (should be refactord by Middleware)
 
             $allTagNames = Tag::all()->map(function ($tag) {
                 return ['text' => $tag->name];
@@ -114,12 +101,14 @@ class WordController extends Controller
 
         $word->user_id = $request->user()->id;
         $word->save();
+        
         //tag
         $word->tags()->detach();
         $request->tags->each(function ($tagName) use ($word) {
             $tag = Tag::firstOrCreate(['name' => $tagName]);
             $word->tags()->attach($tag);
         });
+
         //synonym
         $word -> syno_followings() -> detach();        
         $word -> syno_followers() -> detach();        
@@ -308,11 +297,13 @@ class WordController extends Controller
 
         return redirect()->route('index');
     }
+
     public function destroy(Word $word)
     {
         $word->delete();
         return redirect()->route('index');
     }
+
     public function show(Word $word)
     {
         $target_words = Word::all();        
@@ -443,14 +434,6 @@ class WordController extends Controller
             $query_name->get()->toArray()
         );
         return $name_list;
-    }
-
-    public function choose(){
-        if(Auth::id() === 1 ){        
-            return view('choose');
-        }else{
-            return redirect()->route('index');
-        }
     }
 
     public function import(Request $request)
@@ -652,6 +635,7 @@ class WordController extends Controller
 
     }        
 
+    //delete all words
     public function clear(Request $request)
     {
         
@@ -662,6 +646,7 @@ class WordController extends Controller
         return redirect()->action('WordController@index')->with('flash_message', '単語を全て削除しました！');
     }
 
+    //delete words without a level
     public function trim(Request $request)
     {
         $words = Word::whereNull('level')->get();
@@ -669,9 +654,32 @@ class WordController extends Controller
             $word->delete();
         }
         return redirect()->action('WordController@index')->with('flash_message', 'level未登録の単語を削除しました！');
-    }    
+    }
 
+    //menu window including import and export
+    public function choose(){ 
+        if(Auth::id() === 1 ){   //for admin (should be refactord by Middleware)
+            return view('choose');
+        }else{
+            return redirect()->route('index');
+        }
+    }    
     
+    //list of words belonging to a level
+    public function level(int $level = null)
+    {
+        if(Auth::id() === 1 ){   //for admin (should be refactord by Middleware)
+            if( $level === null ){
+                $level = 1;
+            }
+            $words = Word::all()->where('level',$level)->sortByDesc('created_at');
+            return view('words.level', ['words' => $words, 'count' => $words->count()]);
+        }else{
+            return redirect()->route('index');
+        }            
+    }    
+    
+    //delete special symbols of Vietnamese language
     public function simplify_vowel($str){
 
         $str = str_replace('ã','a',$str);
@@ -835,6 +843,7 @@ class WordController extends Controller
         return $str;
     }
 
+    //identify similar words
     public function simplify_word($str){
 
         $str = mb_strtoupper($str);
@@ -862,31 +871,6 @@ class WordController extends Controller
         $str = preg_replace("/P\s/", "B ", $str);
         $str = preg_replace("/K$|Q$/", "C", $str);
         $str = preg_replace("/K\s|Q\s/", "C ", $str);        
-
-
-        // $str = preg_replace("/^gi|^d|^th|^r|^l/", "T", $str);
-        // $str = preg_replace("/\sgi|\sd|\sth|\sr|\sl/", " T", $str);
-        // $str = preg_replace("/^ngh|^ng|^gh/", "G", $str);
-        // $str = preg_replace("/\sngh|\sng|\sgh/", " G", $str);
-        // $str = preg_replace("/^tr|^ch/", "CH", $str);
-        // $str = preg_replace("/\str|\sch/", " CH", $str);
-        // $str = preg_replace("/^kh|^h|^q|^c|^q/", "K", $str);
-        // $str = preg_replace("/\skh|\sh|\sq|\sc|\sq/", " K", $str);
-        // $str = preg_replace("/^nh|^m/", "N", $str);
-        // $str = preg_replace("/\snh|\sm/", " N", $str);
-        // $str = preg_replace("/^ph|^p|^v/", "B", $str);
-        // $str = preg_replace("/\sph|\sp|\sv/", " B", $str);
-        // $str = preg_replace("/^x/", "S", $str);
-        // $str = preg_replace("/\sx/", " S", $str);                
-        // $str = preg_replace("/^y/", "I", $str);        
-        // $str = preg_replace("/\sy/", " I", $str);
-
-        // $str = preg_replace("/nh$|m$|ng$/", "N", $str);
-        // $str = preg_replace("/nh\s|m\s|ng\s/", "N ", $str);
-        // $str = preg_replace("/p$/", "B", $str);
-        // $str = preg_replace("/p\s/", "B ", $str);
-        // $str = preg_replace("/k$|q$/", "C", $str);
-        // $str = preg_replace("/k\s|q\s/", "C ", $str);        
         
         return $str;
     }

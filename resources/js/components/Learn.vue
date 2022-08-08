@@ -2,7 +2,7 @@
 <template>
   <div class="mx-auto" style="text-align:center; max-width:700px;">
     <div class="normal-text mt-1" style="text-align:left">
-      単語Lv.:{{level}}　正解率: {{correct}} / {{total}} 
+      単語Lv.:{{level}}　正解数:{{correct}}/回答数:{{total}} 
       <span>
         <button data-toggle="modal" data-target="#learn-description" class="border border-success text-success rounded ml-2 my-1 py-0 px-1" style="font-family: 'Kosugi Maru', sans-serif;">
           <small>単語学習の使い方</small>
