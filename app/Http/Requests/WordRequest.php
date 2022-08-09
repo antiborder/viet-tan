@@ -28,6 +28,7 @@ class WordRequest extends FormRequest
             'name' => 'required|max:50',
             'detail' => 'max:500',
             'tags' => 'json|regex:/^(?!.*\s).+$/u|regex:/^(?!.*\/).*$/u',            
+            'level' => 'integer',
         ];
     }
 
@@ -37,6 +38,7 @@ class WordRequest extends FormRequest
             'name' => '単語名',
             'detail' => '本文',
             'tags' => 'タグ',
+            'level' => 'レベル',
         ];
     }
 
