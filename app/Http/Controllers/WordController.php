@@ -67,100 +67,7 @@ class WordController extends Controller
 
     public function store(WordRequest $request, Word $word)
     {
-        $word->fill($request->all());
-   
-        //name
-        $exploded = explode(' ', $word->name, 8);
-        for($i=0; $i<count($exploded); $i++){
-            $name_n = "name" . $i;
-            $word->$name_n = $exploded[$i];
-        }                
-
-        //no-diacritic
-        $no_diacritic = $this->simplify_vowel($word->name);
-        $no_diacritic = str_replace('đ','d',$no_diacritic);        
-        $no_diacritic = mb_strtolower($no_diacritic, "UTF-8");
-        $word->fill(['no_diacritic' => $no_diacritic]);
-
-        //simplified
-        $simplified = $this->simplify_word($word->no_diacritic);
-        $simplified = mb_strtoupper($simplified, "UTF-8");
-        $word->fill(['simplified' => $simplified]);        
-
-        //kanji
-        for($i=0; $i<8; $i++){
-            $kanji_n = "kanji" . $i;
-            if($word->$kanji_n !=""){
-                $kanji = Kanji::firstOrCreate([
-                    'name' => $word->$kanji_n
-                ], [
-                    'name' => $word->$kanji_n,
-                ]);
-            }
-        }
-
-        $word->user_id = $request->user()->id;
-        $word->save();
-
-        //tag
-        $word->tags()->detach();
-        $request->tags->each(function ($tagName) use ($word) {
-            $tag = Tag::firstOrCreate(['name' => $tagName]);
-            $word->tags()->attach($tag);
-        });
-
-        //synonym
-        $word -> syno_followings() -> detach();        
-        $word -> syno_followers() -> detach();        
-        for($i=0;$i<config('const.SYNONYM_MAX');$i++){
-            $synonym_n = "synonym" . $i;
-            if($request->$synonym_n != '')
-            {
-                $synonym = Word::where('name',$request->$synonym_n)->first();
-                if(empty($synonym)){
-                    $synonym = new Word();
-                    $synonym->fill(['name' => $request->$synonym_n]);
-                    $syllables = explode(' ', $request->$synonym_n, 8);
-                    foreach($syllables as $index => $syllable){
-                        $synonym->fill(['name'.$index => $syllable]);
-                    }
-                    $synonym->user_id = $request->user()->id;                    
-                    $synonym->save();
-                } 
-                if($word->id > $synonym->id){
-                    $word->syno_followings()->attach($synonym);                    
-                }else if($word->id < $synonym->id){
-                    $word->syno_followers()->attach($synonym);                    
-                }                
-            }
-        }
-
-        //antonym
-        $word -> anto_followings() -> detach();        
-        $word -> anto_followers() -> detach();        
-        for($i=0;$i<config('const.ANTONYM_MAX');$i++){
-            $antonym_n = "antonym" . $i;
-            if($request->$antonym_n != '')
-            {
-                $antonym = Word::where('name',$request->$antonym_n)->first();
-                if(empty($antonym)){
-                    $antonym = new Word();
-                    $antonym->fill(['name' => $request->$antonym_n]);
-                    $syllables = explode(' ', $request->$antonym_n, 8);
-                    foreach($syllables as $index => $syllable){
-                        $antonym->fill(['name'.$index => $syllable]);
-                    }
-                    $antonym->user_id = $request->user()->id;                    
-                    $antonym->save();
-                } 
-                if($word->id > $antonym->id){
-                    $word->anto_followings()->attach($antonym);                    
-                }else if($word->id < $antonym->id){
-                    $word->anto_followers()->attach($antonym);                    
-                }                
-            }
-        }
-
+        $this->saveWord($request, $word);
         return redirect()->route('index');
     }
     public function edit(Word $word)
@@ -201,6 +108,13 @@ class WordController extends Controller
 
     public function update(WordRequest $request, Word $word)
     {
+
+        $this->saveWord($request, $word);
+        return redirect()->route('index');
+    }
+
+    public function saveWord(WordRequest $request, Word $word)
+    {
         $word->fill($request->all());
 
         //name
@@ -210,13 +124,13 @@ class WordController extends Controller
             $word->$name_n = $exploded[$i];
         }
 
-        //no-diacritic
+        //no-diacritic:記号なしver
         $no_diacritic = $this->simplify_vowel($word->name);
         $no_diacritic = str_replace('đ','d',$no_diacritic);        
         $no_diacritic = mb_strtolower($no_diacritic, "UTF-8");
         $word->fill(['no_diacritic' => $no_diacritic]);
 
-        //simplified
+        //simplified:単純ver:類似発音を同一視したもの
         $simplified = $this->simplify_word($word->no_diacritic);
         $simplified = mb_strtoupper($simplified, "UTF-8");
         $word->fill(['simplified' => $simplified]);                
@@ -243,7 +157,7 @@ class WordController extends Controller
             $word->tags()->attach($tag);
         });
 
-        //synonym
+        //synonym:類義語
         $word -> syno_followings() -> detach();        
         $word -> syno_followers() -> detach();        
         for($i=0;$i<config('const.SYNONYM_MAX');$i++){
@@ -269,7 +183,7 @@ class WordController extends Controller
             }
         }
 
-        //antonym
+        //antonym:対義語
         $word -> anto_followings() -> detach();        
         $word -> anto_followers() -> detach();        
         for($i=0;$i<config('const.ANTONYM_MAX');$i++){
@@ -293,9 +207,7 @@ class WordController extends Controller
                     $word->anto_followers()->attach($antonym);                    
                 }                
             }
-        }
-
-        return redirect()->route('index');
+        }        
     }
 
     public function destroy(Word $word)
@@ -486,13 +398,13 @@ class WordController extends Controller
                 $word->fill([$name_n => $exploded[$i]]);
             }
 
-            //no-diacritic
+            //no-diacritic:記号なしver
             $no_diacritic = $this->simplify_vowel($word->name);
             $no_diacritic = str_replace('đ','d',$no_diacritic);        
             $no_diacritic = mb_strtolower($no_diacritic, "UTF-8");
             $word->fill(['no_diacritic' => $no_diacritic]);
 
-            //simplified
+            //simplified:単純ver:類似発音を同一視したもの
             $simplified = $this->simplify_word($word->no_diacritic);
             $simplified = mb_strtoupper($simplified, "UTF-8");
             $word->fill(['simplified' => $simplified]);                    
@@ -527,7 +439,7 @@ class WordController extends Controller
                 $word->tags()->attach($tag);
             }    
 
-            //synonym
+            //synonym:類義語
             $word -> syno_followings() -> detach();        
             $word -> syno_followers() -> detach();        
             for($i=0;$i<config('const.SYNONYM_MAX');$i++){
@@ -554,7 +466,7 @@ class WordController extends Controller
                 }
             }
 
-            //antonym
+            //antonym:対義語
             $word -> anto_followings() -> detach();        
             $word -> anto_followers() -> detach();        
             for($i=0;$i<config('const.ANTONYM_MAX');$i++){
@@ -679,7 +591,7 @@ class WordController extends Controller
         }            
     }    
     
-    //delete special symbols of Vietnamese language
+    //ベトナム語特有の記号を消す
     public function simplify_vowel($str){
 
         $str = str_replace('ã','a',$str);
