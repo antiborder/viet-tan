@@ -40,7 +40,7 @@ class WordController extends Controller
 
     public function create()
     {
-        if(Auth::id() === 1 ){   //for admin (should be refactord by Middleware)
+        if(Auth::id() === 1 ){   //管理者のみ使用可 TODO:Middlewareで実装予定
 
             $allTagNames = Tag::all()->map(function ($tag) {
                 return ['text' => $tag->name];
@@ -101,7 +101,7 @@ class WordController extends Controller
 
         $word->user_id = $request->user()->id;
         $word->save();
-        
+
         //tag
         $word->tags()->detach();
         $request->tags->each(function ($tagName) use ($word) {
@@ -658,7 +658,7 @@ class WordController extends Controller
 
     //menu window including import and export
     public function choose(){ 
-        if(Auth::id() === 1 ){   //for admin (should be refactord by Middleware)
+        if(Auth::id() === 1 ){   //管理者のみ使用可 TODO:Middlewareで実装予定
             return view('choose');
         }else{
             return redirect()->route('index');
@@ -668,7 +668,7 @@ class WordController extends Controller
     //list of words belonging to a level
     public function level(int $level = null)
     {
-        if(Auth::id() === 1 ){   //for admin (should be refactord by Middleware)
+        if(Auth::id() === 1 ){   //管理者のみ使用可 TODO:Middlewareで実装予定
             if( $level === null ){
                 $level = 1;
             }
