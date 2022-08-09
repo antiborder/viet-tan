@@ -11,6 +11,7 @@ class WordRequest extends FormRequest
      *
      * @return bool
      */
+    //権限の設定は別途policyに書くのでここは一律true
     public function authorize()
     {
         return true;
