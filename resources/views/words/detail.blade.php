@@ -74,6 +74,8 @@
   </div>
  
   <div class="card-body pt-0" >
+    {{$word->no_diacritic}}<br>
+    {{$word->simplified}}
     <div class="">
       {{ $word->detail }}
     </div>
