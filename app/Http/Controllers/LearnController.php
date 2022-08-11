@@ -13,57 +13,66 @@ class LearnController extends Controller
 
     public function learn(...$level)
     {
-        $user = User::where('id',Auth::id())->first();
-        $user_name = $user !== null ? $user->name : null;
-        if( $user !== null ){
-            if($user->subscribed('default')){
-                $subscription = "NORMAL";
-            }else{
-                $subscription = "TRIAL";
-            }
-        }else{
-            $subscription = "GUEST";
-        }
+        $subscription = User::getSubscription();
+        $user_name= User::getUserName();        
+
+        //問題なき事確認でき次第削除する予定
+        // $user = User::where('id',Auth::id())->first();
+        // $user_name = $user !== null ? $user->name : null;
+        // if( $user !== null ){
+        //     if($user->subscribed('default')){
+        //         $subscription = "NORMAL";
+        //     }else{
+        //         $subscription = "TRIAL";
+        //     }
+        // }else{
+        //     $subscription = "GUEST";
+        // }
 
         if(count($level) === 0){
-            $level[0]=1;
+            $level[0] = 1;
         }
 
         return view('words.learn',['user_name'=>$user_name, 'subscription'=>$subscription, 'level'=>$level[0]]);
     }
 
-    public function measure(...$level)
+    public function measure()
     {
-        $user = User::where('id',Auth::id())->first();
-        $user_name = $user !== null ? $user->name : null;
-        if( $user !== null ){
-            if($user->subscribed('default')){
-                $subscription = "NORMAL";
-            }else{
-                $subscription = "TRIAL";
-            }
-        }else{  
-            $subscription = "GUEST";
-        }
 
-        if(count($level) === 0){
-            $level[0]=1;
-        }
+        $subscription = User::getSubscription();
 
-        return view('words.measure',['user_name'=>$user_name, 'subscription'=>$subscription, 'level'=>$level[0]]);
+        //問題なき事確認でき次第削除する予定//Userのimportも不要。
+        // $user = User::where('id',Auth::id())->first();
+        // $user_name = $user !== null ? $user->name : null;
+        // if( $user !== null ){
+        //     if($user->subscribed('default')){
+        //         $subscription = "NORMAL";
+        //     }else{
+        //         $subscription = "TRIAL";
+        //     }
+        // }else{
+        //     $subscription = "GUEST";
+        // }
+
+        // if(count($level) === 0){
+        //     $level[0]=1;
+        // }
+
+        // return view('words.measure',['user_name'=>$user_name, 'subscription'=>$subscription, 'level'=>$level[0]]);
+        return view('words.measure');        
     }
 
     public function store(Request $request)
     {
         if(Auth::check()){
-            $user_id = Auth::id();        
+            $user_id = Auth::id();
             $now = date("Y-m-d H:i:s");
             $word = Word::where('name',$request->name)->first();
             $word_id = $word->id;
             $previous_learn = Learn::where('user_id', $user_id)->where('word_id', $word_id)->first();
 
-            // calculate point
-            $initial_interval_point = 0.38;
+            // calculate point. 影響する因子はeasiness(自己申告)とinterval(前回の回答からの経過時間)と解答速度。
+            $initial_interval_point = 0.38;//初めて出題される単語の初期補正。
             if($previous_learn === null){
                 $previous_progress = 0;
                 $previous_progress_MF = 0;
@@ -73,49 +82,49 @@ class LearnController extends Controller
                 $previous_progress_MF = $previous_learn->progress_MF === null ? 0 : $previous_learn->progress_MF;
                 $interval_point = $this->getIntervalPoint($previous_learn->updated_at, $previous_learn->next_time);
             }
-            
             $easiness_point = $this->getEasinessPoint($request->easiness);
             $point = ($easiness_point+ $interval_point)/2;
-
             $point = $point - 0.15 * 2/config('const.TIME_LIMIT') * ($request->sec - config('const.TIME_LIMIT')/2 ); //解答速度の考慮
+
+            //Modeは言語方向を表す(MF:越->日, MF:日->越)。場合により今回の学習と逆方向を底上げ補正する。
             if($request->mode === "FM"){
                 $progress = $point;
                 if($previous_progress_MF <= 0.5*$point){ //相方が少なすぎる場合には底上げ
                     $progress_MF = 0.5*$point;
                 }else{
-                    $progress_MF = $previous_progress_MF; //相方が少なすぎなければ前回を引き継ぎ
+                    $progress_MF = $previous_progress_MF; //逆の場合は前回を引き継ぎ
                 }
             }else if($request->mode === "MF"){
                 $progress_MF = $point;
                 if($previous_progress <= 0.5*$point){ //相方が少なすぎる場合には底上げ
                     $progress = 0.5*$point; // <-20220709修正
                 }else{
-                    $progress = $previous_progress; //相方が少なすぎなければ前回を引き継ぎ
+                    $progress = $previous_progress; //逆の場合は前回を引き継ぎ
                 }
             }
 
-            //select next mode
+            //select next mode()
             $criteria = ($progress - $progress_MF) * 5/3 + 0.5 ;
             if($criteria > mt_rand() / mt_getrandmax() ){
                 $next_mode = "MF";
             }else{
-                $next_mode = "FM";                
+                $next_mode = "FM";
             }
-            
+
             //calculate next interval
             if($request->easiness === 0){
                 $min = 5;
             }else{
                 $random_factor=(mt_rand() / mt_getrandmax() - 0.5)/5;
-                if($next_mode === "MF"){ //20220426に=を===に修正した箇所
+                if($next_mode === "MF"){
                     $min = round( $this->getInterval($progress_MF + $random_factor), 0);
-                }else if($next_mode === "FM"){ //20220426に=を===に修正した箇所
+                }else if($next_mode === "FM"){
                     $min = round( $this->getInterval($progress + $random_factor), 0);
                 }
             }
-            
             $interval_text ="now +".$min." minutes";
-            
+
+            //Learn tableに格納。
             $learn = Learn::firstOrNew([ 'user_id'=> $user_id, 'word_id'=> $word_id,]);
             $learn -> fill([
                 'result'=> $request->result,
@@ -138,7 +147,7 @@ class LearnController extends Controller
         }
         return $interval_point;
     }
-    
+
     public function getEasinessPoint($easiness){
         switch ($easiness) {
             case 0:
@@ -152,7 +161,7 @@ class LearnController extends Controller
                 break;
             case 3:
                 $easiness_point = 0.85;
-                break;                
+                break;
         }
         return $easiness_point;
     }
@@ -161,7 +170,7 @@ class LearnController extends Controller
         $min = 6 * 60 * 2**(8*$point);
         return $min;
     }
-    
+
     public function getWords(Request $request){
         if($request->component === 'measure'){
             $answer = Word::where('level', $request->level)->inRandomOrder()->first();
@@ -171,14 +180,14 @@ class LearnController extends Controller
                 $mode = "MF";
             }
         }else if($request->component === 'learn'){
-        
+
             if(Auth::check() === false){ //ログイン未の場合
                 $answer = Word::where('level', $request->level)->inRandomOrder()->first();
                 $mode = "FM";
             }else{ //ログイン済の場合
 
                 if($request->level==="REVIEW_ALL"){
-                    
+
                     //学習待ちの単語をカウント
                     $delayed_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
                     ->where('learns.user_id', Auth::id())
@@ -204,7 +213,7 @@ class LearnController extends Controller
                         }
                         $next_word_id = $next_words[1]['word_id'];
                         $mode = $next_words[1]['next_mode']===null ? "FM" : $next_words[1]['next_mode'];
-                    }                
+                    }
 
                 }else{
 
@@ -215,8 +224,8 @@ class LearnController extends Controller
                     ->select('words.id')
                     ->get()->toArray();
                     $learned_word_ids = array_map(
-                        function ($element) { 
-                            return $element['id']; 
+                        function ($element) {
+                            return $element['id'];
                         },
                         $learned_words
                     );
@@ -227,7 +236,7 @@ class LearnController extends Controller
                     ->whereNotIn('id',$learned_word_ids)->
                     select('id')->get();
                     $unlearned_word_count = $unlearned_words->count();
-                    
+
                     //学習待ちの単語をカウント
                     $delayed_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
                     ->where('learns.user_id', Auth::id())
@@ -255,12 +264,12 @@ class LearnController extends Controller
                             $delay_degree = 0;
                         }
                     }
-                    
+
                     if( mt_rand() / mt_getrandmax() > $delay_degree ) { //未習の単語から一つ選択
 
                         $next_word_id = $unlearned_words ->random()->id;
                         $mode = "FM";
-                        
+
                     }else{  //既習の単語から一つ選択
 
                         $next_words= $delayed_words
@@ -289,7 +298,7 @@ class LearnController extends Controller
         foreach($answer->synonyms() as $synonym ){
                 $synonyms[] = $synonym->name;
         }
-        
+
         $length = strlen($answer->simplified);
         $similar_str = substr($answer->simplified,0,$length-1);
         $semi_similar_str = substr($answer->simplified,0,$length-2);
@@ -308,13 +317,11 @@ class LearnController extends Controller
             'others' =>[
                 $this->formatWord($others[0]),
                 $this->formatWord($others[1]),
-                $this->formatWord($others[2]),                                
+                $this->formatWord($others[2]),
             ],
         ];
-        
-    }   
-    
 
+    }
 
     public function formatWord(Word $word){
         return [
@@ -337,10 +344,10 @@ class LearnController extends Controller
                 $word->kanji5,
                 $word->kanji6,
                 $word->kanji7
-            ],               
+            ],
             'jp'=>$word->jp,
             'level'=>$word->level,
             'id'=>$word->id,
         ];
-    }    
+    }
 }
