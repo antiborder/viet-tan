@@ -18,7 +18,7 @@
               <div class="mx-auto" style="width:100%">
 
                 <span class="h4 card-title">      
-                  <a class="viet-text text-dark yellow lighten-3" style="padding-right:6px; padding-left:6px; margin-right:-6px; border-radius:8px; font-size:{{$name_font_size}}; " href="{{ route('words.show', ['word' => $word]) }}">
+                  <a href="{{ route('words.show', ['word' => $word]) }}" class="viet-text text-dark yellow lighten-3" style="padding-right:6px; padding-left:6px; margin-right:-6px; border-radius:8px; font-size:{{$name_font_size}};" >
                     {{$word->$name}}
                   </a>
                 </span>

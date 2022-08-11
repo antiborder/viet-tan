@@ -66,7 +66,7 @@ class WordController extends Controller
     public function store(WordRequest $request, Word $word)
     {
         $this->saveWord($request, $word);
-        return redirect()->route('index');
+        return redirect()->route('words.show', ['word' => $word]);
     }
     public function edit(Word $word)
     {
@@ -108,7 +108,7 @@ class WordController extends Controller
     {
 
         $this->saveWord($request, $word);
-        return redirect()->route('index');
+        return redirect()->route('words.show', ['word' => $word]);
     }
 
     private function saveWord(WordRequest $request, Word $word)
@@ -274,6 +274,15 @@ class WordController extends Controller
         $keyword = $request->input('keyword');
         $keyword = preg_replace("/　|・|「|」|、|。|,|\.|:|;|\/|\\|／|￥/"," ",$keyword);
 
+        //検索結果を保持する変数
+        $words_name_exact = []; //完全一致
+        $words_name_similar = []; //だいたい同じ
+        $words_name_simplified = []; //なんか似てる
+        $words_name_syllables = []; //音節が一致
+        $words_jp = []; //意味が該当
+        $words_kanji = []; //漢字が該当
+        $tags = []; //タグが該当
+
         //keyword有無を判定
         if(strlen(str_replace(" ","",$keyword)) > 0){
 
@@ -299,7 +308,6 @@ class WordController extends Controller
                     for($n=0; $n<8; $n++){
                         $name_n = 'name' . $n;
                         $query->Orwhere($name_n, $keyword_syllable)->Orwhere($name_n, mb_strtolower($keyword_syllable));
-                        // $query->Orwhere($name_n, $keyword_syllable);
                     }
                 }
             });
@@ -328,34 +336,24 @@ class WordController extends Controller
             $query_tag = Tag::where('name','like','%'.$keyword.'%');
             $tags = $query_tag->paginate(20);
 
-            $title = $keyword . 'の検索結果';
-
             //該当無しを判定
-            if(count($words_name_exact) === 0 &&
-            count($words_name_similar) === 0 &&
-            count($words_name_simplified) === 0 &&
-            count($words_name_syllables) === 0 &&
-            count($words_jp) === 0 &&
-            count($words_kanji) === 0
+            if(
+                count($words_name_exact) === 0 &&
+                count($words_name_similar) === 0 &&
+                count($words_name_simplified) === 0 &&
+                count($words_name_syllables) === 0 &&
+                count($words_jp) === 0 &&
+                count($words_kanji) === 0
             ){
                 $msg = '検索条件「' . $keyword . '」に該当する情報はありませんでした。';
-                $result = "FAIL";
             }else{
                 $msg = '「' . $keyword . '」の検索結果';
-                $result = "SUCCESS";
             }
+            $title = $keyword . 'の検索結果';
+
         }else{
-            $result = 'FAIL';
-            $words_name_exact = [];
-            $words_name_similar = [];
-            $words_name_simplified = [];
-            $words_name_syllables = [];
-            $words_jp = [];
-            $words_kanji = [];
-            $tags = [];
             $msg = '';
             $title = "あいまい検索";
-
         }
 
         return view('words.search')->with('keyword',$keyword)->
@@ -365,9 +363,9 @@ class WordController extends Controller
         with('words_name_syllables',$words_name_syllables)->
         with('words_jp',$words_jp)->
         with('words_kanji',$words_kanji)->
-        with('tags',$tags)->with('msg', $msg)->with('title', $title)->
-        with('result',$result);
-
+        with('tags',$tags)->with('msg', $msg)->with('title', $title)
+        // ->with('result',$result)
+        ;
     }
 
     public function get_name_list($query_name) {

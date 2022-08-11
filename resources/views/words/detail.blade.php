@@ -3,17 +3,17 @@
     <div style ="font-family:'Kosugi Maru', sans-serif;">
       <div class="d-flex flex-row">
         <div class="text-nowrap mr-1" style ="">
-          <div style="height:40px"><p class="pt-2" style="line-height: 40px;text-align:right;width:70px;font-size:0.7rem">ベトナム語：&nbsp;</p></div>  
-          <div style="height:40px"><p style="line-height: 40px;text-align:right;width:70px;font-size:0.8rem">漢字：&nbsp;</p></div>  
+          <div style="height:40px"><p class="pt-2" style="line-height: 40px;text-align:right;width:70px;font-size:0.7rem">ベトナム語：&nbsp;</p></div>
+          <div style="height:40px"><p style="line-height: 40px;text-align:right;width:70px;font-size:0.8rem">漢字：&nbsp;</p></div>
         </div>
         @foreach(array(0,1,2,3,4,5,6,7) as $i)
           @php
             $name = "name" . $i;
-          @endphp        
+          @endphp
           @if($word->$name!==null)
           <div>
             <div class="mx-auto pr-2" style="height:40px; width:100%">
-              <span class="card-title" style="height:40px; font-size:2rem">      
+              <span class="card-title" style="height:40px; font-size:2rem">
                 <a href="{{ route('words.show', ['word' => $word]) }}" class="viet-text text-dark  px-2 mx-n2 " style="font-size:95%; border-radius:10px;">
                   {{$word->$name}}
                 </a>
@@ -21,34 +21,34 @@
             </div>
             <div class="mx-auto" style="width:30px">
               @php
-                $kanji_n = 'kanji' . $i;  
-              @endphp        
+                $kanji_n = 'kanji' . $i;
+              @endphp
               @if($word->$kanji_n != '')
               <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="kanji-text p-1 mr-1 mt-1 blue-text" style='font-size:1.5rem;'>
                 {{$word->$kanji_n}}
-              </a>          
+              </a>
               @endif
             </div>
           </div>
           @endif
-        @endforeach   
+        @endforeach
       </div>
 
       @php
         $file_name = '/sound/word/'.$word->id.'.mp3';
-      @endphp      
+      @endphp
       @if(file_exists(public_path().$file_name))
         <div class="m-2 pl-1 border border-secondary rounded" style="width:320px">
           <div class="text-secondary mb-0 pb-0" style="text-align:left;font-size:0.8rem">発音を確認</div>
           <div class="ml-3 mt-0 pt-0" style="">
               <audio controls src={{$file_name}} class="ml-2" style="height:30px;width:280px;"><audio>
-          </div>      
+          </div>
         </div>
       @endif
       <div class="d-flex flex-row mt-2" style="white-space: pre-line;">
         <div class="pt-2" style="width:70px;text-align:right;font-size:0.8rem">意味：&nbsp;</div>
         <div class="normal-text" style="font-size:1.2rem">{{ $word->jp }}</div>
-      </div>      
+      </div>
 
       @php
         $search_word = implode("+", explode(" ", $word->name, 8) );
@@ -59,27 +59,27 @@
             <div>
               <span class="mt-0 pt-0" style="font-size:0.8rem">単語のイメージを確認</span>
             </div>
-            <div class="ml-2"> 
-              <i class="fas fa-image" style="font-size:2.0rem"></i> 
+            <div class="ml-2">
+              <i class="fas fa-image" style="font-size:2.0rem"></i>
             </div>
           </div>
-          <div class="text-black-50" style=" font-size:0.8rem;float:right;">※画像検索が開きます</div>                
-        </a>        
-      </div>      
+          <div class="text-black-50" style=" font-size:0.8rem;float:right;">※画像検索が開きます</div>
+        </a>
+      </div>
       <div class="normal-text d-flex flex-row pt-3">
         <div class="pt-1" style="width:50px;text-align:right;font-size:0.8rem">Level：&nbsp;</div>
         <div style="font-size:1.0rem">{{ $word->level }}</div>
-      </div>      
+      </div>
     </div>
   </div>
- 
+
   <div class="card-body pt-0" >
     {{$word->no_diacritic}}<br>
     {{$word->simplified}}
     <div class="">
       {{ $word->detail }}
     </div>
-  </div>    
+  </div>
   <div class=" d-flex flex-row">
     @if( Auth::id() === $word->user_id )
       <!-- dropdown -->
@@ -125,7 +125,7 @@
         </div>
       </div>
       <!-- modal -->
-    @endif    
+    @endif
   </div>
 
 </div>
@@ -139,5 +139,5 @@
   }
   .sizable-text-large{
     font-size: calc(2.4rem + ((1vw - 0.64rem) * 2.1429));
-  }  
+  }
 </style>
