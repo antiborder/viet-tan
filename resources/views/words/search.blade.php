@@ -13,18 +13,18 @@
             <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control" placeholder="キーワードを入力">
           </div>
           <input type="submit" value="検索" class="btn text-white py-1 btn-sm" style="font-size:large; background-color:#ffc700; font-family: 'Kosugi Maru', sans-serif;" >
-          
+
         </form>
       </div>
       <div class="text-right">
         <button data-toggle="modal" data-target="#search-description" class="white border border-success text-success rounded mx-2 pb-1 px-2" style="font-family: 'Kosugi Maru', sans-serif;">
           <small>あいまい検索について</small>
-        </button>                        
+        </button>
       </div>
     </div>
 
-    <p class="pb-0 mb-0">{{$msg}}</p>    
-   
+    <p class="pb-0 mb-0">{{$msg}}</p>
+
     @foreach($words_name_exact ?? null as $word)
       @if($loop->first)
         <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 orange lighten-1 text-white " style=" max-width: 30rem;border-width:2px">
@@ -50,7 +50,7 @@
     @foreach($words_name_simplified ?? null as $word)
       @if($loop->first)
         <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-info bg-transparent text-info" style="color: white; max-width: 30rem;border-width:2px">
-          <span style=";font-size:1.2rem">発音が似てる単語</span>
+          <span style="font-size:1.2rem">発音が似てる単語</span>
       @endif
       @include('words.card',['word'=>$word])
       @if($loop->last)
@@ -69,38 +69,34 @@
         </div>
       @endif
     @endforeach
-                
-
-
-
 
     @foreach($words_jp as $word)
       @if($loop->first)
-        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 orange lighten-1 text-white" style="color: white; max-width: 30rem;">          
+        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 orange lighten-1 text-white" style="color: white; max-width: 30rem;">
         <span style=";font-size:1.2rem">意味が該当</span>
       @endif
       @include('words.card',['word'=>$word])
       @if($loop->last)
         </div>
         @include('ads.horizontal')
-      @endif      
-    @endforeach    
-    
-    
+      @endif
+    @endforeach
+
+
     @foreach($words_kanji as $word)
       @if($loop->first)
-        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-warning bg-transparent text-warning" style="color: white; max-width: 30rem;border-width:2px;">      
+        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-warning bg-transparent text-warning" style="color: white; max-width: 30rem;border-width:2px;">
         <span style=";font-size:1.2rem">漢字(漢越語) が該当</span>
       @endif
       @include('words.card',['word'=>$word])
       @if($loop->last)
         </div>
       @endif
-    @endforeach    
+    @endforeach
 
     @foreach($tags as $tag)
       @if($loop->first)
-        <div class="card mt-3 mb-1 pb-2 pl-2 pr-2 border-warning bg-transparent text-warning" style="color: white; max-width: 30rem;border-width:2px;">    
+        <div class="card mt-3 mb-1 pb-2 pl-2 pr-2 border-warning bg-transparent text-warning" style="color: white; max-width: 30rem;border-width:2px;">
         <span style=";font-size:1.2rem">関連タグ</span>
           <div class="card-text line-height">
       @endif
@@ -109,15 +105,15 @@
         </span>
       @if($loop->last)
           </div>
-        </div>        
+        </div>
       @endif
-    @endforeach      
+    @endforeach
 
     <div class="my-3" style="">
       <button onclick="location.href='{{route("tags.categories")}}'" class="search-button shadow">
         タグから探す
       </button>
-    </div> 
+    </div>
 
     <div class="my-2">
       @include('ads.rectangle')
@@ -173,6 +169,6 @@
     </div>
   </div>
 </div>
-  
-  @include('footer')      
+
+  @include('footer')
 @endsection
