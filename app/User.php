@@ -49,7 +49,8 @@ class User extends Authenticatable
         $this->notify(new PasswordResetNotification($token, new BareMail()));
     }
 
-    public static function getSubscription() {
+    public static function getSubscription() :String
+    {
         $user = Auth::user();
         if( $user !== null ){
             if($user->subscribed('default')){
@@ -59,8 +60,18 @@ class User extends Authenticatable
             }
         }else{
             $subscription = "GUEST";
-        }        
+        }
         return $subscription;
-    }           
+    }
 
+    public static function getUserName() :?String
+    {
+        $user = Auth::user();
+        if( $user !== null ){
+            return $user->name;
+        }
+        else{
+            return null;
+        }
+    }
 }

@@ -35,12 +35,12 @@ class UserController extends Controller
 
             //レベル毎progressを計算
             $level_averages = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
-            ->where('learns.user_id',$user->id)        
+            ->where('learns.user_id',$user->id)
             ->select('words.level',DB::raw('avg((progress+"progress_MF")/2) as progress'))
             ->groupBy('words.level')
-            ->get();        
+            ->get();
 
-            //既習語詳細を取得
+            //既習語詳細を取得//配列でまとめる。
             $learned_words_0 = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
             ->where('learns.user_id',$user->id)
             ->where('learns.easiness', 0)
@@ -58,7 +58,7 @@ class UserController extends Controller
             ->where('learns.easiness', 2)
             ->select('words.level',DB::raw('count(*) as count'))
             ->groupBy('words.level')
-            ->get();                        
+            ->get();
             $learned_words_3 = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
             ->where('learns.user_id',$user->id)
             ->where('learns.easiness', 3)
@@ -70,12 +70,12 @@ class UserController extends Controller
             $schedule_counts = DB::select("
                 select day, count(*) as count
                 from (
-                    select extract( day from (next_time - now() - cast ('9 hours' as interval) ))+1 as day 
-                    from learns 
+                    select extract( day from (next_time - now() - cast ('9 hours' as interval) ))+1 as day
+                    from learns
                     where user_id = " . $user->id . "
                     and next_time > now() + cast ('9 hours' as interval)
-                ) 
-                as diff 
+                )
+                as diff
                 group by day
             ");
 
@@ -89,10 +89,10 @@ class UserController extends Controller
             $history_counts = DB::select("
                 select day, count(*) as count
                 from (
-                    select extract( day from (  now() + cast ('9 hours' as interval) - updated_at  ))+1 as day 
-                    from learns 
+                    select extract( day from (  now() + cast ('9 hours' as interval) - updated_at  ))+1 as day
+                    from learns
                     where user_id = " . $user->id . "
-                ) 
+                )
                 as diff
                 group by day
             ");
@@ -146,7 +146,7 @@ class UserController extends Controller
                         $learned_0[$l] = $learned_word_0->count;
                         break;
                     }
-                }             
+                }
                 $learned_1[$l] = 0;
                 foreach($learned_words_1 as $learned_word_1){
                     if($l===$learned_word_1->level){
@@ -167,30 +167,30 @@ class UserController extends Controller
                         $learned_3[$l] = $learned_word_3->count;
                         break;
                     }
-                }                                                
-                   
+                }
+
             }
 
             //viewに渡す学習予定
             $schedule = array();
             for($i=1;$i<=60;$i++){
-                $schedule[$i] = 0;                
+                $schedule[$i] = 0;
                 foreach($schedule_counts as $schedule_count){
                     if($i === (int)$schedule_count->day){
                         $schedule[$i] = $schedule_count->count;
                     }
-                }                
+                }
             }
             //viewに渡す学習実績
             $history = array();
             for($i=1;$i<=60;$i++){
-                $history[$i] = 0;                
+                $history[$i] = 0;
                 foreach($history_counts as $history_count){
                     if($i === (int)$history_count->day){
                         $history[$i] = $history_count->count;
                     }
-                }                
-            }            
+                }
+            }
 
            return view('users.show', [
                 'user' => $user,
@@ -204,7 +204,7 @@ class UserController extends Controller
                 'learned_0' =>$learned_0,
                 'learned_1' =>$learned_1,
                 'learned_2' =>$learned_2,
-                'learned_3' =>$learned_3,                                                
+                'learned_3' =>$learned_3,
 
                 'schedule' =>$schedule,
                 'ready_total' =>$ready_total,
@@ -214,20 +214,6 @@ class UserController extends Controller
             return view('index');
         }
     }
-
-    // public static function getSubscription() {
-    //     $user = Auth::user();
-    //     if( $user !== null ){
-    //         if($user->subscribed('default')){
-    //             $subscription = "NORMAL";
-    //         }else{
-    //             $subscription = "TRIAL";
-    //         }
-    //     }else{
-    //         $subscription = "NONE";
-    //     }        
-    //     return $subscription;
-    // }           
 
     public function list(){
         if(Auth::id() === 1 ){
@@ -241,7 +227,7 @@ class UserController extends Controller
             return view('users.list', ['users'=>$users] );
         }else{
             return view('index');
-        }        
+        }
     }
 
 }
