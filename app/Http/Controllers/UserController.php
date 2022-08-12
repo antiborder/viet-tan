@@ -40,31 +40,43 @@ class UserController extends Controller
             ->groupBy('words.level')
             ->get();
 
-            //既習語詳細を取得//配列でまとめる。
-            $learned_words_0 = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
-            ->where('learns.user_id',$user->id)
-            ->where('learns.easiness', 0)
-            ->select('words.level',DB::raw('count(*) as count'))
-            ->groupBy('words.level')
-            ->get();
-            $learned_words_1 = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
-            ->where('learns.user_id',$user->id)
-            ->where('learns.easiness', 1)
-            ->select('words.level',DB::raw('count(*) as count'))
-            ->groupBy('words.level')
-            ->get();
-            $learned_words_2 = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
-            ->where('learns.user_id',$user->id)
-            ->where('learns.easiness', 2)
-            ->select('words.level',DB::raw('count(*) as count'))
-            ->groupBy('words.level')
-            ->get();
-            $learned_words_3 = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
-            ->where('learns.user_id',$user->id)
-            ->where('learns.easiness', 3)
-            ->select('words.level',DB::raw('count(*) as count'))
-            ->groupBy('words.level')
-            ->get();
+            //$easiness毎の既習語数を取得
+            $learned_word_details = [];
+            for($e=0;$e<4;$e++){ //$eはeasiness
+                $learned_word_details[] = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
+                ->where('learns.user_id',$user->id)
+                ->where('learns.easiness', $e)
+                ->select('words.level',DB::raw('count(*) as count'))
+                ->groupBy('words.level')
+                ->get();
+
+
+
+                // $learned_words_0 = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
+                // ->where('learns.user_id',$user->id)
+                // ->where('learns.easiness', 0)
+                // ->select('words.level',DB::raw('count(*) as count'))
+                // ->groupBy('words.level')
+                // ->get();
+                // $learned_words_1 = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
+                // ->where('learns.user_id',$user->id)
+                // ->where('learns.easiness', 1)
+                // ->select('words.level',DB::raw('count(*) as count'))
+                // ->groupBy('words.level')
+                // ->get();
+                // $learned_words_2 = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
+                // ->where('learns.user_id',$user->id)
+                // ->where('learns.easiness', 2)
+                // ->select('words.level',DB::raw('count(*) as count'))
+                // ->groupBy('words.level')
+                // ->get();
+                // $learned_words_3 = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
+                // ->where('learns.user_id',$user->id)
+                // ->where('learns.easiness', 3)
+                // ->select('words.level',DB::raw('count(*) as count'))
+                // ->groupBy('words.level')
+                // ->get();
+            }
 
             //学習予定      //現在時刻はnow() - cast ('9 hours' as interval)。　now()で求まるGMTを日本時刻に変換している。
             $schedule_counts = DB::select("
@@ -109,11 +121,9 @@ class UserController extends Controller
             $unlearned=array();
             $ready =array();
             $progress = array();
-            $learned_0=array();
 
             //viewに渡す値の計算
             foreach($levels as $l){
-
                 $learned[$l] = 0;
                 foreach($learned_words as $learned_word){
                     if($l===$learned_word->level){
@@ -139,35 +149,79 @@ class UserController extends Controller
                         break;
                     }
                 }
+                //easiness毎の既習語数
+                for($e=0;$e<4;$e++){ //$eはeasiness
+                    $learned_details[$e][$l] = 0;
+                    foreach($learned_word_details[$e] as $element){
+                        if($l===$element->level){
+                            $learned_details[$e][$l] = $element->count;
+                            break;
+                        }
+                    }
 
-                $learned_0[$l] = 0;
-                foreach($learned_words_0 as $learned_word_0){
-                    if($l===$learned_word_0->level){
-                        $learned_0[$l] = $learned_word_0->count;
-                        break;
-                    }
                 }
-                $learned_1[$l] = 0;
-                foreach($learned_words_1 as $learned_word_1){
-                    if($l===$learned_word_1->level){
-                        $learned_1[$l] = $learned_word_1->count;
-                        break;
-                    }
-                }
-                $learned_2[$l] = 0;
-                foreach($learned_words_2 as $learned_word_2){
-                    if($l===$learned_word_2->level){
-                        $learned_2[$l] = $learned_word_2->count;
-                        break;
-                    }
-                }
-                $learned_3[$l] = 0;
-                foreach($learned_words_3 as $learned_word_3){
-                    if($l===$learned_word_3->level){
-                        $learned_3[$l] = $learned_word_3->count;
-                        break;
-                    }
-                }
+
+                // $learned_0[$l] = 0;
+                // foreach($learned_word_details[0] as $element){
+                //     if($l===$element->level){
+                //         $learned_0[$l] = $element->count;
+                //         break;
+                //     }
+                // }
+
+                // $learned_1[$l] = 0;
+                // foreach($learned_word_details[1] as $element){
+                //     if($l===$element->level){
+                //         $learned_1[$l] = $element->count;
+                //         break;
+                //     }
+                // }
+
+                // $learned_2[$l] = 0;
+                // foreach($learned_word_details[2] as $element){
+                //     if($l===$element->level){
+                //         $learned_2[$l] = $element->count;
+                //         break;
+                //     }
+                // }
+
+                // $learned_3[$l] = 0;
+                // foreach($learned_word_details[3] as $element){
+                //     if($l===$element->level){
+                //         $learned_3[$l] = $element->count;
+                //         break;
+                //     }
+                // }
+
+                //動作確認できたら消去予定
+                // $learned_0[$l] = 0;
+                // foreach($learned_words_0 as $learned_word_0){
+                //     if($l===$learned_word_0->level){
+                //         $learned_0[$l] = $learned_word_0->count;
+                //         break;
+                //     }
+                // }
+                // $learned_1[$l] = 0;
+                // foreach($learned_words_1 as $learned_word_1){
+                //     if($l===$learned_word_1->level){
+                //         $learned_1[$l] = $learned_word_1->count;
+                //         break;
+                //     }
+                // }
+                // $learned_2[$l] = 0;
+                // foreach($learned_words_2 as $learned_word_2){
+                //     if($l===$learned_word_2->level){
+                //         $learned_2[$l] = $learned_word_2->count;
+                //         break;
+                //     }
+                // }
+                // $learned_3[$l] = 0;
+                // foreach($learned_words_3 as $learned_word_3){
+                //     if($l===$learned_word_3->level){
+                //         $learned_3[$l] = $learned_word_3->count;
+                //         break;
+                //     }
+                // }
 
             }
 
@@ -201,10 +255,10 @@ class UserController extends Controller
                 'unlearned' => $unlearned,
                 'progress' => $progress,
 
-                'learned_0' =>$learned_0,
-                'learned_1' =>$learned_1,
-                'learned_2' =>$learned_2,
-                'learned_3' =>$learned_3,
+                'learned_0' =>$learned_details[0],
+                'learned_1' =>$learned_details[1],
+                'learned_2' =>$learned_details[2],
+                'learned_3' =>$learned_details[3],
 
                 'schedule' =>$schedule,
                 'ready_total' =>$ready_total,

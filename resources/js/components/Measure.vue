@@ -28,12 +28,12 @@
         data-ad-format="horizontal"
         data-full-width-responsive="true"
       >
-      </Adsense>      
-    </div>          
+      </Adsense>
+    </div>
 
-    <!-- 出題画面 -->        
+    <!-- 出題画面 -->
     <div v-if="status!=='RESULT'" class="mt-1 d-flex flex-row" style=" height: 55px;">
-      <div v-bind:class="result_text_color" class="text-nowrap pt-1" style="text-align:left; width:20%; font-size: 1.0rem;"> 
+      <div v-bind:class="result_text_color" class="text-nowrap pt-1" style="text-align:left; width:20%; font-size: 1.0rem;">
         {{result_text}}
       </div>
       <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' "class="card white rounded"  style="width:60%; display:table;">
@@ -48,12 +48,12 @@
           次へ ▶
         </button>
       </span>
-    </div>    
+    </div>
 
     <!-- メッセージ -->
     <div v-if="status==='LOADING' " class="spinner-border text-muted " role="status" style="width: 3rem; height: 3rem;">
       <span class="sr-only">Loading...</span>
-    </div>    
+    </div>
     <div v-if="status==='LOADING' || status==='PROMPT' " class="pt-2" style=" text-align:center; height: 60px;">
       <span>
         {{message}}
@@ -61,7 +61,7 @@
     </div>
 
     <!-- 選択肢 -->
-    <div v-if="status==='PROMPT' || status === 'JUDGED' || status ==='ANSWERED'" class="" >    
+    <div v-if="status==='PROMPT' || status === 'JUDGED' || status ==='ANSWERED'" class="" >
       <div class="mx-auto" style="max-width:545px">
         <div v-for="i in [0,1,2,3]">
           <Choice :mode ="mode" :word = "choices[i].word" :isAnswer = "choices[i].isAnswer" :status = "status" :sec = "sec" v-on:pressed = "turnPressed(i)"/>
@@ -91,13 +91,13 @@
           data-full-width-responsive="true"
         >
         </Adsense>
-      </div>  
+      </div>
     </div>
 
     <!-- 結果表示 RESULT -->
     <div v-if="status==='RESULT' " class="card my-2 pb-1 white rounded mx-auto" style="text-align:center; max-width:400px;">
       <div class="p-1 text-muted" style="font-size:1.2rem;"> 結果 </div>
-      <div class="p-1"> 
+      <div class="p-1">
         <p class="px-5 py-0 m-0 text-left" style="font-size:0.9rem;">{{result_message[0]}}</p>
         <p class="px-5 py-0 m-0 text-center" style="font-size:1.2rem;">{{result_message[1]}}</p>
         <p class="px-5 py-0 m-0 text-right" style="font-size:0.9rem;">{{result_message[2]}}</p>
@@ -109,7 +109,7 @@
         </a>
         <a type="button" href="/" class="btn btn-primary orange lighten-1 rounded p-1 mt-2 text-nowrap" style="width: 240px; font-size: 1.0rem;">
           Homeに戻る
-        </a>        
+        </a>
       </div>
     </div>
 
@@ -123,7 +123,7 @@
               <th style="min-width:70%">単語</th>
               <th>level</th>
               <th>結果</th>
-            </tr >          
+            </tr >
             <tr v-for="e in this.history">
               <td>{{e.No}}</td>
               <td style="font-size:1.3rem">
@@ -143,13 +143,13 @@
                   </div>
                   <div v-else-if= "!e.result" class="text-top">
                     <span  class="m-0 p-0 text-danger" style="font-size:190%;"> ✖ </span>
-                  </div>                  
-              </td>            
+                  </div>
+              </td>
             </tr>
           </table>
           <div class="px-2" style="text-align:right">正解率： {{correct}}/{{total}}</div>
         </div>
-      </div>    
+      </div>
       <Adsense
         class="adsbygoogle my-2 box-shadow"
         style="display:block; min-width:250px"
@@ -158,7 +158,7 @@
         data-ad-format="horizontal"
         data-full-width-responsive="false"
       >
-      </Adsense>                  
+      </Adsense>
     </div>
   </div>
 </template>
@@ -180,7 +180,7 @@
         answer_level: 1,
         status : "INITIAL",
         sec: 0,
-        timerOn: false, 
+        timerOn: false,
         timerObj: null,
         choices:[],
         level: 0,
@@ -192,7 +192,7 @@
         current_estimate: 0,
         test_levels:[],
         estimate_record:[],
-        
+
       }
     },
 
@@ -208,7 +208,7 @@
           return "";
         }else if(this.status==="ANSWERED"){
           return "";
-        }        
+        }
       },
       result_message: function () {
         switch(Math.round(this.current_estimate)){
@@ -239,12 +239,12 @@
           case 12:
             return ['あなたの単語力はだいたい','4000語～5000語','くらいです。'];
           case 13:
-          case 14:  
+          case 14:
             return ['あなたの単語力はたぶん', '4500語以上', 'です。'];
           default:
             return ['申し訳ありません。不具合により単語力が測定できないようです。', '', ''];
         }
-      },      
+      },
       result_text: function(){
         if(this.isCorrect == true){
           return "正解";
@@ -276,7 +276,7 @@
           this.stopTimer();
           this.status = "JUDGED";
           this.isCorrect = false;
-          this.total +=1;  
+          this.total +=1;
         }
       },
     },
@@ -300,24 +300,24 @@
       },
 
     },
-    
+
     methods: {
 
       clickStart() { //学習開始のボタンをクリック
         console.log("START pressed");
-        this.setLevel();        
-        this.status = "LOADING";        
+        this.setLevel();
+        this.status = "LOADING";
         this.isCorrect = null;
         this.total = 0;
         this.history = [];
-        this.correct = 0;        
+        this.correct = 0;
         this.load();
       },
 
       load() { //学習開始のボタンをクリック
-        console.log("start LOADING");      
-        this.getWords();        
-      },      
+        console.log("start LOADING");
+        this.getWords();
+      },
 
       initialize(){ //最初の画面に戻る
         console.log("initialize");
@@ -325,7 +325,7 @@
         this.isCorrect = null;
         this.total = 0;
         this.history = [];
-        this.correct = 0;        
+        this.correct = 0;
       },
 
       clickButton() { //次の単語に進むボタンをクリック
@@ -333,7 +333,7 @@
         this.history.push({'No':this.total, 'name':this.answer_F, 'result':this.isCorrect, 'level':this.answer_level, 'id':this.answer_id});
         this.setEstimateLevel();
         this.setLevel();
-        this.isCorrect = null;          
+        this.isCorrect = null;
         if(this.total >= 11){
           this.status = "RESULT"
           this.level = Math.round(this.current_estimate)
@@ -344,7 +344,7 @@
           result_sound.volume = 0.3;
           result_sound.play();
         }else{
-          this.status = "LOADING";        
+          this.status = "LOADING";
           this.getWords();
         }
       },
@@ -365,7 +365,7 @@
           this.updateEstimate(this.total);
         }
       },
-      
+
       updateEstimate(index){
         let correct = (this.history[index-2]['result'] ? 1 : 0) + (this.history[index-1]['result'] ? 1 : 0);
         let estimate = this.estimateFromTwo( this.history[index-2]['level'], this.history[index-1]['level'], correct, (13-index)/2);
@@ -409,7 +409,7 @@
 
         let low = (0 + level - 1)/2;
         let high = (level + 15 - 1)/2;
-        if( correct === 0 ){        
+        if( correct === 0 ){
           return low;
         }else if(correct === 1){
           return (3*high + low)/4;
@@ -417,11 +417,11 @@
       },
 
       estimateFromTwo(level1, level2, correct, range){
-        let bottom = this.current_estimate - range; 
+        let bottom = this.current_estimate - range;
         if (bottom < 0){
           bottom = 0;
         }
-        let top = this.current_estimate + range; 
+        let top = this.current_estimate + range;
         // if (top > 14){
         //   top = 14;
         // }
@@ -434,7 +434,7 @@
         let low = (bottom + level1 - 1)/2;
         let mid = (level1 + level2 -1)/2;
         let high = (level2 + top - 1)/2;
-        if( correct === 0 ){        
+        if( correct === 0 ){
           return low;
         }else if(correct === 1){
           return (3*mid + low)/4;
@@ -442,7 +442,7 @@
           return (mid + 3*high)/4;
         }
       },
-      
+
       average(array){
         let sum = 0;
         array.forEach(function(v) {
@@ -463,7 +463,7 @@
         let jsoned;
         if(String(response.data).substr(0,1) == '　'){
           let trimed = response.data.replace(/　+/g,'');
-          jsoned = JSON.parse(trimed);        
+          jsoned = JSON.parse(trimed);
         }else{
           jsoned = response.data;
         }
@@ -475,9 +475,9 @@
           }
         }
         this.choices[3] = {
-          'word':this.formatWord(jsoned.answer), 
+          'word':this.formatWord(jsoned.answer),
           'isAnswer':true,
-        }        
+        }
 
         this.mode = jsoned.mode
         let formated = this.formatWord(jsoned.answer)
@@ -498,24 +498,24 @@
         }
         this.choices = this.arrayShuffle(this.choices)
         setTimeout(() => {
-          this.status = "PROMPT";        
-          this.startTimer();        
+          this.status = "PROMPT";
+          this.startTimer();
         },200)
       },
-      
+
       formatWord(word) {
         let syllables ='["'+word.syllables+'"]';
         syllables = JSON.parse(syllables.replace(/,/g, '","'));
         let kanjis ='["'+word.kanjis+'"]';
         kanjis = JSON.parse(kanjis.replace(/,/g, '","'));
-        
+
         return {
           syllables:syllables,
           kanjis:kanjis,
           jp:word.jp,
           level:word.level,
           id:word.id,
-        }       
+        }
       },
 
       arrayShuffle(array) { // 要素を並び替える
@@ -527,7 +527,7 @@
         }
         return array;
       },
-      
+
       turnPressed(n){  //選択肢がクリックされた時のアクション
 
         if(this.status === "PROMPT"){
@@ -542,7 +542,7 @@
             this.status = 'JUDGED'
             this.total++
           }
-          
+
         }else if(this.status === "JUDGED"){
           if(this.choices[n].isAnswer === true){
             this.status = "ANSWERED"
@@ -556,7 +556,7 @@
       },
 
       startTimer(){
-        let self = this;        
+        let self = this;
         this.timerObj = setInterval(function() {self.count()},1000)
         this.timerOn = true;
       },
@@ -565,7 +565,7 @@
         clearInterval(this.timerObj);
         this.timerOn = false;
       },
-    },  
-    
+    },
+
   }
 </script>

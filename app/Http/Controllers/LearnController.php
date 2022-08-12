@@ -14,7 +14,7 @@ class LearnController extends Controller
     public function learn(...$level)
     {
         $subscription = User::getSubscription();
-        $user_name= User::getUserName();        
+        $user_name= User::getUserName();
 
         //問題なき事確認でき次第削除する予定
         // $user = User::where('id',Auth::id())->first();
@@ -41,7 +41,7 @@ class LearnController extends Controller
 
         $subscription = User::getSubscription();
 
-        //問題なき事確認でき次第削除する予定//Userのimportも不要。
+        //動作確認でき次第削除する予定
         // $user = User::where('id',Auth::id())->first();
         // $user_name = $user !== null ? $user->name : null;
         // if( $user !== null ){
@@ -59,7 +59,7 @@ class LearnController extends Controller
         // }
 
         // return view('words.measure',['user_name'=>$user_name, 'subscription'=>$subscription, 'level'=>$level[0]]);
-        return view('words.measure');        
+        return view('words.measure');
     }
 
     public function store(Request $request)
@@ -71,8 +71,8 @@ class LearnController extends Controller
             $word_id = $word->id;
             $previous_learn = Learn::where('user_id', $user_id)->where('word_id', $word_id)->first();
 
-            // calculate point. 影響する因子はeasiness(自己申告)とinterval(前回の回答からの経過時間)と解答速度。
-            $initial_interval_point = 0.38;//初めて出題される単語の初期補正。
+            // calculate point. 進捗point = (easiness + interval)/2 + speed
+            $initial_interval_point = 0.38;//出題一回目の初期補正。
             if($previous_learn === null){
                 $previous_progress = 0;
                 $previous_progress_MF = 0;
@@ -83,10 +83,10 @@ class LearnController extends Controller
                 $interval_point = $this->getIntervalPoint($previous_learn->updated_at, $previous_learn->next_time);
             }
             $easiness_point = $this->getEasinessPoint($request->easiness);
-            $point = ($easiness_point+ $interval_point)/2;
-            $point = $point - 0.15 * 2/config('const.TIME_LIMIT') * ($request->sec - config('const.TIME_LIMIT')/2 ); //解答速度の考慮
+            $speed_point = - 0.15 * 2/config('const.TIME_LIMIT') * ($request->sec - config('const.TIME_LIMIT')/2 );
+            $point = ($easiness_point + $interval_point)/2 + $speed_point;
 
-            //Modeは言語方向を表す(MF:越->日, MF:日->越)。場合により今回の学習と逆方向を底上げ補正する。
+            //Modeは言語方向を表す(FM:越->日, MF:日->越)。M:Mother lang,F:Foreign lang
             if($request->mode === "FM"){
                 $progress = $point;
                 if($previous_progress_MF <= 0.5*$point){ //相方が少なすぎる場合には底上げ
@@ -103,9 +103,10 @@ class LearnController extends Controller
                 }
             }
 
-            //select next mode()
-            $criteria = ($progress - $progress_MF) * 5/3 + 0.5 ;
-            if($criteria > mt_rand() / mt_getrandmax() ){
+            //select next mode.次回出題時のmodeはrandomに決める。
+            $scale_factor = 5/3; //大きさ調整の係数。progressの差が0.3開いたら苦手な方の出題率100%となるようにした。
+            $criteria = ($progress - $progress_MF) * $scale_factor;//これが0なら半々の確率。0意外ならただし苦手な方が出やすくなってる。
+            if($criteria > mt_rand() / mt_getrandmax() - 0.5){
                 $next_mode = "MF";
             }else{
                 $next_mode = "FM";
@@ -115,7 +116,7 @@ class LearnController extends Controller
             if($request->easiness === 0){
                 $min = 5;
             }else{
-                $random_factor=(mt_rand() / mt_getrandmax() - 0.5)/5;
+                $random_factor = (mt_rand() / mt_getrandmax() - 0.5)/5;//出題時刻が固まらないようにランダム補正。
                 if($next_mode === "MF"){
                     $min = round( $this->getInterval($progress_MF + $random_factor), 0);
                 }else if($next_mode === "FM"){
@@ -138,17 +139,17 @@ class LearnController extends Controller
         }
     }
 
-    public function getIntervalPoint($updated_at, $next_time){
+    private function getIntervalPoint($updated_at, $next_time){
         $min = ( strtotime($next_time) - strtotime($updated_at) )/60;
         if ($min < 360){
             $interval_point = 0;
         }else{
-            $interval_point = log( $min/(6*60) , 2)/8;
+            $interval_point = log( $min/(6*60) , 2)/8; //getIntervalの逆演算
         }
         return $interval_point;
     }
 
-    public function getEasinessPoint($easiness){
+    private function getEasinessPoint($easiness){
         switch ($easiness) {
             case 0:
                 $easiness_point = 0.15;
@@ -166,63 +167,63 @@ class LearnController extends Controller
         return $easiness_point;
     }
 
-    public function getInterval($point){
-        $min = 6 * 60 * 2**(8*$point);
+    private function getInterval($point){
+        $min = 6 * 60 * 2**(8*$point); //最大(point=1)で64日、中間(point=0.5)で4日。
         return $min;
     }
 
     public function getWords(Request $request){
-        if($request->component === 'measure'){
+
+        if($request->component === 'measure'){ //単語力測定の場合
             $answer = Word::where('level', $request->level)->inRandomOrder()->first();
-            if(mt_rand() / mt_getrandmax() < 2/3){
+            $FM_ratio = 2/3; //越⇒日で出題する確率。50%より大きくしてある。
+            if(mt_rand() / mt_getrandmax() < $FM_ratio){
                 $mode = "FM";
             }else{
                 $mode = "MF";
             }
-        }else if($request->component === 'learn'){
+
+        }else if($request->component === 'learn'){ //単語学習の場合
 
             if(Auth::check() === false){ //ログイン未の場合
                 $answer = Word::where('level', $request->level)->inRandomOrder()->first();
-                $mode = "FM";
+                $mode = "FM"; //いつも越⇒日で出題。
+
             }else{ //ログイン済の場合
 
                 if($request->level==="REVIEW_ALL"){
 
-                    //学習待ちの単語をカウント
+                    //出題待ちの単語をカウント
                     $delayed_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
-                    ->where('learns.user_id', Auth::id())
-                    ->where('learns.next_time', '<', date("Y-m-d H:i:s"))
-                    ->get();
+                        ->where('learns.user_id', Auth::id())
+                        ->where('learns.next_time', '<', date("Y-m-d H:i:s"))
+                        ->get();
                     $delayed_word_count = $delayed_words->count();
 
                     if($delayed_word_count === 0){//単語が尽きたときはここでreturn
                         return "CLEARED";
                     }
 
-                    $next_words= $delayed_words
-                    ->sortBy('next_time')
-                    ->sortBy('easiness')
-                    ->values()
-                    ->take(2);
-                    if($next_words[0]['name'] !== $request->previous){
+                    $next_words= $delayed_words->sortBy('next_time')->sortBy('easiness')->values()->take(2);//学習順で一番前にあるのだけでなく、次のも取ってる。同じ単語を2連続で取ってしまわないように。
+
+                    if($next_words[0]['name'] !== $request->previous){ //一番前のが直前の出題語じゃないなら、そのまま出題。
                         $next_word_id = $next_words[0]['word_id'];
-                        $mode = $next_words[0]['next_mode']===null ? "FM" : $next_words[0]['next_mode'];
-                    }else{
+                        $mode = $next_words[0]['next_mode'] === null ? "FM" : $next_words[0]['next_mode'];
+                    }else{ //一番前のが直近の出題語だった場合
                         if($delayed_word_count === 1){//単語が尽きたときはここでreturn
                             return "CLEARED";
                         }
-                        $next_word_id = $next_words[1]['word_id'];
+                        $next_word_id = $next_words[1]['word_id']; //次のを出題
                         $mode = $next_words[1]['next_mode']===null ? "FM" : $next_words[1]['next_mode'];
                     }
 
-                }else{
-
+                }else{ //levelを選択した場合。既習後と未習後を良い感じに混ぜて出題する仕様。
                     //既習語取得
                     $learned_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
-                    ->where('learns.user_id',Auth::id())
-                    ->where('words.level',$request->level)
-                    ->select('words.id')
-                    ->get()->toArray();
+                        ->where('learns.user_id',Auth::id())
+                        ->where('words.level',$request->level)
+                        ->select('words.id')
+                        ->get()->toArray();
                     $learned_word_ids = array_map(
                         function ($element) {
                             return $element['id'];
@@ -237,7 +238,7 @@ class LearnController extends Controller
                     select('id')->get();
                     $unlearned_word_count = $unlearned_words->count();
 
-                    //学習待ちの単語をカウント
+                    //出題待ちの単語をカウント
                     $delayed_words = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
                     ->where('learns.user_id', Auth::id())
                     ->where('words.level',$request->level)
@@ -245,42 +246,34 @@ class LearnController extends Controller
                     ->get();
                     $delayed_word_count = $delayed_words->count();
 
-                    //delay_degreeの計算
+                    //学習の遅れ度を示すdelay_degreeの計算。
                     if($unlearned_word_count===0 && $delayed_word_count === 0){//単語が尽きたときはここでreturn
                         return "CLEARED";
-                    }else if($unlearned_word_count===0){
-                        $delay_degree = 1;
-                    }else if($delayed_word_count === 0){
+                    }else if($unlearned_word_count===0 || $unlearned_word_count===1){ //0だけでなく、未習語数1と計算したけどすでに0になってる場合も考慮。
+                        $delay_degree = 1; //delay_degreeを1にして、未習後をtakeしないようにしてる
+                    }else if($delayed_word_count === 0){ //遅れなしの場合
                         $delay_degree = 0;
                     }else{
-
-                        if($delayed_word_count <= 10){
+                        if($delayed_word_count <= 10){ //0語から10個までは比例関係。
                             $delay_degree= $delayed_word_count*0.05;
-                        }else{
+                        }else{ //10個を超えたら負の反比例。
                             $delay_degree= 1.0 - 5 / $delayed_word_count;
                         }
-
-                        if( $unlearned_word_count < 2 ){
-                            $delay_degree = 0;
-                        }
+                        //動作確認できたら削除予定
+                        // if( $unlearned_word_count < 2 ){
+                        //     $delay_degree = 0;
+                        // }
                     }
 
                     if( mt_rand() / mt_getrandmax() > $delay_degree ) { //未習の単語から一つ選択
-
                         $next_word_id = $unlearned_words ->random()->id;
                         $mode = "FM";
-
                     }else{  //既習の単語から一つ選択
-
-                        $next_words= $delayed_words
-                        ->sortBy('next_time')
-                        ->sortBy('easiness')
-                        ->values()
-                        ->take(2);
+                        $next_words= $delayed_words->sortBy('next_time')->sortBy('easiness')->values()->take(2);//学習順で一番前にあるのだけでなく、次のも取ってる。同じ単語を2連続で取ってしまわないように。
 
                         if($next_words[0]['name'] !== $request->previous){
                             $next_word_id = $next_words[0]['word_id'];
-                            $mode = $next_words[0]['next_mode']===null ? "FM" : $next_words[0]['next_mode'];
+                            $mode = $next_words[0]['next_mode'] === null ? "FM" : $next_words[0]['next_mode'];
                         }else{
                             if($unlearned_word_count + $delayed_word_count === 1){//単語が尽きたときはここでreturn
                                 return "CLEARED";
@@ -323,7 +316,7 @@ class LearnController extends Controller
 
     }
 
-    public function formatWord(Word $word){
+    private function formatWord(Word $word){
         return [
             'syllables'=>[
                 $word->name0,
