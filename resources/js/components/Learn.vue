@@ -2,11 +2,11 @@
 <template>
   <div class="mx-auto" style="text-align:center; max-width:700px;">
     <div class="normal-text mt-1" style="text-align:left">
-      単語Lv.:{{level}}　正解数:{{correct}}/回答数:{{total}} 
+      単語Lv.:{{level}}　正解数:{{correct}}/回答数:{{total}}
       <span>
         <button data-toggle="modal" data-target="#learn-description" class="border border-success text-success rounded ml-2 my-1 py-0 px-1" style="font-family: 'Kosugi Maru', sans-serif;">
           <small>単語学習の使い方</small>
-        </button>                        
+        </button>
       </span>
     </div>
 
@@ -19,7 +19,7 @@
             <select size="1" v-model= "level" class="m-2" style="width:100px;">
               <option v-for="i in Number(max_level)" >{{i}}</option>
               <option v-if="user_name!==''"value="REVIEW_ALL">復習のみ</option>
-            </select> 
+            </select>
           </div>
           <div class="mt-4 p-1">
             <button @click="clickStart()" type="button" class="btn btn-primary rounded p-1 text-nowrap"style="width: 220px; font-size: 1.5rem;">
@@ -30,9 +30,9 @@
             <span v-if="level==='REVIEW_ALL'">
               「復習のみ」では、復習可能語が<br>
               すべてのレベルから出題されます。
-            </span>            
+            </span>
 
-          </div>          
+          </div>
         </div>
       </div>
 
@@ -46,7 +46,7 @@
       >
       </Adsense>
 
-    </div>          
+    </div>
 
     <!-- 無料登録を勧める -->
     <div v-if="status==='WARN_RANDOM'" class="mx-auto" style=" text-align:center;max-width:400px">
@@ -61,13 +61,13 @@
           </div>
           <div class="m-3" style="text-align:center; font-size:1.3rem" >
             <a href="/login" class="rounded px-4 py-2" style="color:#ffa726;border-color:#ffa726;border-style:solid">ログインする</a>
-          </div>          
+          </div>
           <button @click="load()" type="button" class="btn btn-info light-blue accent-4 rounded px-3 py-2 mt-3 text-nowrap shadow-none "style="font-size: 1.0rem;">
             ランダムでStart ▶
           </button>
         </div>
       </div>
-    </div>              
+    </div>
 
     <!-- 通常会員登録を勧める -->
     <div v-if="status==='RECOMMEND_NORMAL'" class="mx-auto" style=" text-align:center;max-width:400px">
@@ -78,15 +78,15 @@
           </div>
           <div class="m-3" style="text-align:center; font-size:1.3rem" >
             <a href="/subscription" class="deep-orange lighten-1 text-white rounded px-5 py-2" >通常会員に登録</a>
-          </div>            
+          </div>
           <div class="m-3" style="text-align:center;" >
             <button @click="initialize()" type="button" class="btn btn-info light-blue accent-4 rounded px-5 py-1 mt-2 text-nowrap shadow-none" style=" font-size: 1.3rem;">
               レベルを変更
             </button>
-          </div>                      
+          </div>
         </div>
       </div>
-    </div>              
+    </div>
 
     <!-- お試し会員登録を勧める -->
     <div v-if="status==='RECOMMEND_TRIAL'" class="mx-auto" style=" text-align:center;max-width:400px">
@@ -97,19 +97,19 @@
           </div>
           <div class="m-3" style="text-align:center; font-size:1.3rem" >
             <a href="/register" class="deep-orange lighten-1 text-white rounded px-5 py-2" >無料登録する</a>
-          </div>            
+          </div>
           <div class="m-3" style="text-align:center;" >
             <button @click="initialize()" type="button" class="btn btn-info light-blue accent-4 rounded px-5 py-1 mt-2 text-nowrap shadow-none" style=" font-size: 1.3rem;">
               レベルを変更
             </button>
-          </div>                      
+          </div>
         </div>
       </div>
-    </div>              
+    </div>
 
-    <!-- 出題画面 -->        
+    <!-- 出題画面 -->
     <div v-if="status!=='RESULT' && status!=='CLEARED'" class="mt-1 d-flex flex-row" style=" height: 55px;">
-      <div v-bind:class="result_text_color" class="text-nowrap pt-1" style="text-align:left; width:20%; font-size: 1.0rem;"> 
+      <div v-bind:class="result_text_color" class="text-nowrap pt-1" style="text-align:left; width:20%; font-size: 1.0rem;">
         {{result_text}}
       </div>
       <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' "class="card white rounded"  style="width:60%; display:table;">
@@ -121,7 +121,7 @@
     <div v-if=" status==='ANSWERED' " class="mt-1 mb-1" style="text-align:left; max-width:500px; margin:auto">
       <span class="pt-2 text-nowrap;" style = "min-width:70px; text-align:left; font-size: 0.9rem;">
         覚えた？
-      </span>      
+      </span>
       <span v-for="i in [0,1,2,3]" style = " text-align:center;">
         <span v-if=" isCorrect===true || i===0">
           <button @click="clickButton(i)" type="button" v-bind:class="colors[i]" class="btn btn-sm rounded pt-1 pb-1 px-2 text-nowrap"style="min-height:40px; max-width: 100px; font-size: 0.9em;">
@@ -129,12 +129,12 @@
           </button>
         </span>
       </span>
-    </div>    
+    </div>
 
     <!-- メッセージ -->
     <div v-if="status==='LOADING' " class="spinner-border text-muted " role="status" style="width: 3rem; height: 3rem;">
       <span class="sr-only">Loading...</span>
-    </div>    
+    </div>
     <div v-if="status==='LOADING' || status==='PROMPT' || status==='JUDGED' " class="pt-2" style=" text-align:center; height: 60px;">
       <span>
         {{message}}
@@ -142,7 +142,7 @@
     </div>
 
     <!-- 選択肢 -->
-    <div v-if="status==='PROMPT' || status === 'JUDGED' || status ==='ANSWERED'" class="" >    
+    <div v-if="status==='PROMPT' || status === 'JUDGED' || status ==='ANSWERED'" class="" >
       <div class="mx-auto" style="max-width:545px">
         <div v-for="i in [0,1,2,3]">
           <Choice :mode ="mode" :word = "choices[i].word" :isAnswer = "choices[i].isAnswer" :status = "status" :sec = "sec" v-on:pressed = "turnPressed(i)"/>
@@ -172,12 +172,12 @@
           data-full-width-responsive="true"
         >
         </Adsense>
-      </div>  
+      </div>
     </div>
 
 
     <!-- 結果表示 RESULT and CLEARED-->
-    <div v-if="status==='RESULT' || status==='CLEARED' ">    
+    <div v-if="status==='RESULT' || status==='CLEARED' ">
       <div class="card white rounded mt-5 mx-auto" style="text-align:center; max-width:400px; font-size: 1.2 rem;">
         <div class="card-body" >
           <div v-if="total > 0" class="mb-2">
@@ -188,7 +188,7 @@
                 <th style="min-width:70%">単語</th>
                 <th>level</th>
                 <th>結果</th>
-              </tr >          
+              </tr >
               <tr v-for="e in this.history">
                 <td>{{e.No}}</td>
                 <td style="font-size:1.3rem">
@@ -206,12 +206,12 @@
                   <button type="button" v-bind:class="baseColors[e.easiness]" class="btn btn-sm rounded pt-1 pb-1 px-2 text-dark text-nowrap shadow-none"style="height:27px; max-width: 100px; font-size: 0.8rem;">
                     {{button_properties[e.easiness].text}}
                   </button>
-                </td>            
+                </td>
               </tr>
             </table>
             <div class="px-2" style="text-align:right">正解率： {{correct}}/{{total}}</div>
           </div>
-          
+
           <div v-if="status==='CLEARED'">
             <div v-if="level==='REVIEW_ALL'" class="mt-1 mb-1" >
               現時点で復習可能な単語は以上です。
@@ -241,9 +241,9 @@
             <button @click="initialize()" type="button" class="btn btn-info light-blue accent-4 rounded p-1 mt-2 text-nowrap" style="width: 240px; font-size: 1.3rem;">
               レベルを変更
             </button>
-          </div>              
+          </div>
         </div>
-      </div>    
+      </div>
       <Adsense
         class="adsbygoogle my-2 box-shadow"
         style="display:block; min-width:250px"
@@ -276,10 +276,10 @@
           </div>
         </div>
       </div>
-    </div>      
+    </div>
 
   </div>
- 
+
 </template>
 
 <script>
@@ -299,7 +299,7 @@
         answer_level: 1,
         status : "INITIAL",
         sec: 0,
-        timerOn: false, 
+        timerOn: false,
         timerObj: null,
         choices:[],
         level: this.initial_level,
@@ -315,14 +315,15 @@
         history:[],
         baseColors:[" red lighten-4", " amber lighten-4", " lime lighten-4", " green lighten-4"],
         adsenseContent1: '',
-        adsenseContent2: '',        
+        adsenseContent2: '',
       }
     },
 
+    //問題毎に違う広告を表示するのに必要。最初に出るwarningの原因はこれだが、とくに問題ないので運用。
     mounted(){
       this.adsenseContent1 = document.getElementById('divadsensedisplaynone1').innerHTML;
       this.adsenseContent2 = document.getElementById('divadsensedisplaynone2').innerHTML;
-    },    
+    },
 
     computed: {
       message: function () {
@@ -398,7 +399,7 @@
           this.stopTimer();
           this.status = "JUDGED";
           this.isCorrect = false;
-          this.total +=1;  
+          this.total +=1;
         }
       },
     },
@@ -430,9 +431,9 @@
       },
       guest_level:{
         type: String,
-      },            
+      },
     },
-    
+
     methods: {
 
       clickStart() { //学習開始のボタンをクリック
@@ -455,14 +456,14 @@
       },
 
       load() { //学習開始のボタンをクリック
-        console.log("start LOADING");      
-        this.status = "LOADING";        
+        console.log("start LOADING");
+        this.status = "LOADING";
         this.isCorrect = null;
         this.total = 0;
         this.history = [];
         this.correct = 0;
-        this.getWords();        
-      },      
+        this.getWords();
+      },
 
       initialize(){ //最初の画面に戻る
         console.log("initialize");
@@ -470,7 +471,7 @@
         this.isCorrect = null;
         this.total = 0;
         this.history = [];
-        this.correct = 0;        
+        this.correct = 0;
       },
 
       clickButton(n) { //次の単語に進むボタンをクリック
@@ -483,9 +484,9 @@
 
           let result_sound = new Audio('/sound/result.mp3');
           result_sound.volume = 0.3;
-          result_sound.play();          
+          result_sound.play();
         }else{
-          this.status = "LOADING";        
+          this.status = "LOADING";
           this.isCorrect = null;
           this.getWords();
         }
@@ -495,7 +496,7 @@
         const response = await axios.post(this.endpoint_to_record_learn,
           {
             name: this.answer_F,
-            result: this.isCorrect, 
+            result: this.isCorrect,
             easiness: n,
             sec: this.sec,
             mode: this.mode,
@@ -506,12 +507,12 @@
           console.log('response:', response); //
         }).catch(err => {
           console.log('err:', err);
-        });        
+        });
       },
-      
+
       async getWords() { //次の単語を取得
         const response = await axios.get(this.endpoint_to_get_word, {
-          params:{ 
+          params:{
             level: this.level,
             component: this.$options._componentTag,
             previous: this.answer_F,
@@ -522,13 +523,13 @@
           this.status = "CLEARED";
           let clear_sound = new Audio('/sound/clear.mp3');
           clear_sound.volume = 0.3;
-          clear_sound.play();                    
+          clear_sound.play();
           return;
         }
         let jsoned;
         if(String(response.data).substr(0,1) == '　'){
           let trimed = response.data.replace(/　+/g,'');
-          jsoned = JSON.parse(trimed);        
+          jsoned = JSON.parse(trimed);
         }else{
           jsoned = response.data;
         }
@@ -540,9 +541,9 @@
           }
         }
         this.choices[3] = {
-          'word':this.formatWord(jsoned.answer), 
+          'word':this.formatWord(jsoned.answer),
           'isAnswer':true,
-        }        
+        }
 
         this.mode = jsoned.mode
         let formated = this.formatWord(jsoned.answer)
@@ -563,24 +564,24 @@
         }
         this.choices = this.arrayShuffle(this.choices)
         setTimeout(() => {
-          this.status = "PROMPT";        
-          this.startTimer();        
+          this.status = "PROMPT";
+          this.startTimer();
         },200)
       },
-      
+
       formatWord(word) {
         let syllables ='["'+word.syllables+'"]';
         syllables = JSON.parse(syllables.replace(/,/g, '","'));
         let kanjis ='["'+word.kanjis+'"]';
         kanjis = JSON.parse(kanjis.replace(/,/g, '","'));
-        
+
         return {
           syllables:syllables,
           kanjis:kanjis,
           jp:word.jp,
           level:word.level,
           id:word.id,
-        }       
+        }
       },
 
       arrayShuffle(array) { // 要素を並び替える
@@ -592,7 +593,7 @@
         }
         return array;
       },
-      
+
       turnPressed(n){  //選択肢がクリックされた時のアクション
 
         if(this.status === "PROMPT"){
@@ -607,7 +608,7 @@
             this.status = 'JUDGED'
             this.total++
           }
-          
+
         }else if(this.status === "JUDGED"){
           if(this.choices[n].isAnswer === true){
             this.status = "ANSWERED"
@@ -621,7 +622,7 @@
       },
 
       startTimer(){
-        let self = this;        
+        let self = this;
         this.timerObj = setInterval(function() {self.count()},1000)
         this.timerOn = true;
       },
@@ -630,7 +631,7 @@
         clearInterval(this.timerObj);
         this.timerOn = false;
       },
-    },  
-    
+    },
+
   }
 </script>

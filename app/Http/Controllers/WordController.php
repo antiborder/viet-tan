@@ -17,6 +17,7 @@ use Goodby\CSV\Import\Standard\Interpreter;
 
 class WordController extends Controller
 {
+    const MAX_NUMBER_OF_SYLLABLES = 8;
 
     public function __construct()
     {
@@ -116,7 +117,7 @@ class WordController extends Controller
         $word->fill($request->all());
 
         //name
-        $exploded = explode(' ', $word->name, 8);
+        $exploded = explode(' ', $word->name, self::MAX_NUMBER_OF_SYLLABLES);
         for($i=0; $i<count($exploded); $i++){
             $name_n = "name" . $i;
             $word->fill([$name_n => $exploded[$i]]);
@@ -131,7 +132,7 @@ class WordController extends Controller
         $word->fill(['simplified' => $upper_simplified]);
 
         //kanji
-        for($i=0; $i<8; $i++){
+        for($i=0; $i < self::MAX_NUMBER_OF_SYLLABLES; $i++){
             $kanji_n = "kanji" . $i;
             if(strlen($word->$kanji_n) !== 0){
                 $kanji = Kanji::firstOrCreate(['name' => $word->$kanji_n]);
@@ -182,7 +183,7 @@ class WordController extends Controller
         if(empty($synonym)){
             $synonym = new Word();
             $synonym->fill(['name' => $synonym_name]);
-            $syllables = explode(' ', $synonym_name, 8);
+            $syllables = explode(' ', $synonym_name, self::MAX_NUMBER_OF_SYLLABLES);
             foreach($syllables as $index => $syllable){
                 $synonym->fill(['name'.$index => $syllable]);
             }
@@ -208,7 +209,7 @@ class WordController extends Controller
         if(empty($antonym)){
             $antonym = new Word();
             $antonym->fill(['name' => $antonym_name]);
-            $syllables = explode(' ', $antonym_name, 8);
+            $syllables = explode(' ', $antonym_name, self::MAX_NUMBER_OF_SYLLABLES);
             foreach($syllables as $index => $syllable){
                 $antonym->fill(['name'.$index => $syllable]);
             }
@@ -252,8 +253,8 @@ class WordController extends Controller
     {
         $target_words = Word::all();
         $common_syllables = collect([]);
-        for($m=0; $m<8; $m++){
-            for($n=0; $n<8; $n++){
+        for($m=0; $m < self::MAX_NUMBER_OF_SYLLABLES; $m++){
+            for($n=0; $n < self::MAX_NUMBER_OF_SYLLABLES; $n++){
                 $name_n = 'name' . $n;
                 if($word->$name_n !== null){
                     $addition = Word::all()->where('name' . $m, $word->$name_n)->Where('name', '!==', $word->name);
@@ -305,7 +306,7 @@ class WordController extends Controller
             $keyword_syllables = explode(' ', $keyword, 5);
             $query_name_syllables = Word::where(function($query) use ($keyword_syllables) {
                 foreach($keyword_syllables as $keyword_syllable){
-                    for($n=0; $n<8; $n++){
+                    for($n=0; $n < self::MAX_NUMBER_OF_SYLLABLES; $n++){
                         $name_n = 'name' . $n;
                         $query->Orwhere($name_n, $keyword_syllable)->Orwhere($name_n, mb_strtolower($keyword_syllable));
                     }
@@ -322,7 +323,7 @@ class WordController extends Controller
             //漢字が該当
             $key_chars = preg_split("//u", $keyword, 20, PREG_SPLIT_NO_EMPTY);
             foreach($key_chars as $j => $key_char){
-                for($i=0;$i<8;$i++){
+                for($i=0;$i < self::MAX_NUMBER_OF_SYLLABLES;$i++){
                     if($j === array_key_first($key_chars) && $i===0){
                         $query_kanji = Word::where('kanji0','like','%'.$key_char.'%');
                     }else{
@@ -356,16 +357,18 @@ class WordController extends Controller
             $title = "あいまい検索";
         }
 
-        return view('words.search')->with('keyword',$keyword)->
-        with('words_name_exact',$words_name_exact)->
-        with('words_name_similar',$words_name_similar)->
-        with('words_name_simplified',$words_name_simplified)->
-        with('words_name_syllables',$words_name_syllables)->
-        with('words_jp',$words_jp)->
-        with('words_kanji',$words_kanji)->
-        with('tags',$tags)->with('msg', $msg)->with('title', $title)
-        // ->with('result',$result)
-        ;
+        return view('words.search',[
+            'keyword' => $keyword,
+            'words_name_exact' => $words_name_exact,
+            'words_name_similar' => $words_name_similar,
+            'words_name_simplified' => $words_name_simplified,
+            'words_name_syllables' => $words_name_syllables,
+            'words_jp' => $words_jp,
+            'words_kanji' => $words_kanji,
+            'tags' => $tags,
+            'msg' => $msg,
+            'title' => $title
+        ]);
     }
 
     public function get_name_list($query_name) {
@@ -422,7 +425,7 @@ class WordController extends Controller
             ]);
 
             //name
-            $exploded = explode(' ', $word->name, 8);
+            $exploded = explode(' ', $word->name, self::MAX_NUMBER_OF_SYLLABLES);
             for($i=0; $i<count($exploded); $i++){
                 $name_n = "name" . $i;
                 $word->fill([$name_n => $exploded[$i]]);
@@ -437,7 +440,7 @@ class WordController extends Controller
             $word->fill(['simplified' => $upper_simplified]);
 
             //kanji
-            for($i=0; $i<8; $i++){
+            for($i=0; $i<self::MAX_NUMBER_OF_SYLLABLES; $i++){
                 $kanji_n = "kanji" . $i;
                 $kanji_from_csv = $row[2+$i];
                 if(strlen($kanji_from_csv) !== 0){
