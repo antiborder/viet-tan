@@ -11,7 +11,7 @@
 
 @section('content')
   @include('nav')
-  <div class="container" style="max-width:800px">
+  <div class="container normal-text" style="max-width:800px">
     <div class="card my-2 mb-0 pb-2 pl-2 pr-2 border-warning bg-transparent text-warning" style="border-width:2px; max-width:30rem">
       <span style=";font-size:1.2rem">単語詳細</span>
       @include('words.detail')
@@ -35,7 +35,7 @@
 
     @foreach($word->synonyms()->sortBy('level') as $synonym)
       @if($loop->first)
-        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-primary bg-transparent text-primary" style="color: white; max-width: 30rem;border-width:2px">        
+        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-primary bg-transparent text-primary" style="max-width: 30rem;border-width:2px">        
         <span style=";font-size:1.2rem">類義語</span>
       @endif      
       @include('words.card',['word'=>$synonym])
@@ -46,7 +46,7 @@
     
     @foreach($word->antonyms()->sortBy('level') as $antonym)
       @if($loop->first)
-        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-danger bg-transparent text-danger" style="color: white; max-width: 30rem;border-width:2px">        
+        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-danger bg-transparent text-danger" style="max-width: 30rem;border-width:2px">        
         <span style=";font-size:1.2rem">対義語</span>
       @endif
       @include('words.card',['word'=>$antonym])
@@ -57,7 +57,7 @@
     
     @foreach($similar_pronuciations as $similar_pronuciation)
       @if($loop->first)
-        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-info bg-transparent text-info" style="color: white; max-width: 30rem;border-width:2px">
+        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-info bg-transparent text-info" style="max-width: 30rem;border-width:2px">
           <span style=";font-size:1.2rem">発音が似てる単語</span>
       @endif
       @include('words.card',['word'=>$similar_pronuciation])
@@ -71,7 +71,7 @@
     @if($subscription === 'NORMAL')
       @foreach($common_syllables as $i => $common_syllable)
         @if($loop->first)
-        <div class="card my-2 mb-1 pb-1 pl-2 pr-2 border-success bg-transparent text-success" style="color: white; max-width: 30rem;border-width:2px">
+        <div class="card my-2 mb-1 pb-1 pl-2 pr-2 border-success bg-transparent text-success" style="max-width: 30rem;border-width:2px">
         <span style=";font-size:1.2rem">同じ音節を含む単語</span> (全{{$common_syllables->count()}}件)
         @endif
         @include('words.card',['word'=>$common_syllable])
@@ -83,7 +83,7 @@
     @elseif($subscription === 'TRIAL')
       @foreach($common_syllables as $i => $common_syllable)
         @if($loop->first)
-        <div class="card my-2 mb-1 pb-1 pl-2 pr-2 border-success bg-transparent text-success" style="color: white; max-width: 30rem;border-width:2px">
+        <div class="card my-2 mb-1 pb-1 pl-2 pr-2 border-success bg-transparent text-success" style="max-width: 30rem;border-width:2px">
         <span style="font-size:1.2rem">同じ音節を含む単語<span class="text-dark" style="font-size:1.0rem"> (全{{$common_syllables->count()}}件)</span></span>
         @endif
         @if($i < config('const.SAME_SYLLABLE_TRIAL'))
@@ -91,8 +91,8 @@
         @endif
         @if($loop->last)
           @if($common_syllables->count() > config('const.SAME_SYLLABLE_TRIAL'))
-            <div class="mt-2" data-toggle="modal" data-target="#recommend-normal" style="">
-              <button class="success-color text-white border border-0 px-2 py-1 rounded shadow" style="font-family: 'Kosugi Maru', sans-serif;">同じ音節を含む単語をもっと見る</button>
+            <div class="mt-2" data-toggle="modal" data-target="#recommend-normal">
+              <button class="success-color text-white border border-0 px-2 py-1 rounded shadow">同じ音節を含む単語をもっと見る</button>
             </div>          
           @endif        
           </div>
@@ -101,7 +101,7 @@
     @elseif($subscription === 'GUEST')
       @foreach($common_syllables as $i => $common_syllable)
         @if($loop->first)
-        <div class="card my-2 mb-1 pb-1 pl-2 pr-2 border-success bg-transparent text-success" style="color: white; max-width: 30rem;border-width:2px">
+        <div class="card my-2 mb-1 pb-1 pl-2 pr-2 border-success bg-transparent text-success" style="max-width: 30rem;border-width:2px">
         <span style="font-size:1.2rem">同じ音節を含む単語<span class="text-dark" style="font-size:1.0rem"> (全{{$common_syllables->count()}}件)</span></span>
         @endif
         @if($i < config('const.SAME_SYLLABLE_GUEST'))
@@ -109,8 +109,8 @@
         @endif
         @if($loop->last)
           @if($common_syllables->count() > config('const.SAME_SYLLABLE_GUEST'))
-            <div class="mt-2" data-toggle="modal" data-target="#recommend-trial" style="">
-              <button class="success-color text-white border border-0 px-2 py-1 rounded shadow" style="font-family: 'Kosugi Maru', sans-serif;">同じ音節を含む単語をもっと見る</button>
+            <div class="mt-2" data-toggle="modal" data-target="#recommend-trial">
+              <button class="success-color text-white border border-0 px-2 py-1 rounded shadow">同じ音節を含む単語をもっと見る</button>
             </div>          
           @endif        
           </div>
@@ -127,9 +127,9 @@
         <div class="white rounded mb-1 mx-2" style="color:#ffa726;">
           <div class="h3 mb-n1" >
             <div class="mr-n1 " style="display:inline-block">ベトナム語学習の</div>
-            <div class="" style="display:inline-block">無料ツール</div>
+            <div style="display:inline-block">無料ツール</div>
           </div>
-          <small class="">べとらん Homeに戻る</small>
+          <small>べとらん Homeに戻る</small>
         </div>
       </div>
     </a>

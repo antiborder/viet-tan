@@ -16,19 +16,6 @@ class LearnController extends Controller
         $subscription = User::getSubscription();
         $user_name= User::getUserName();
 
-        //問題なき事確認でき次第削除する予定
-        // $user = User::where('id',Auth::id())->first();
-        // $user_name = $user !== null ? $user->name : null;
-        // if( $user !== null ){
-        //     if($user->subscribed('default')){
-        //         $subscription = "NORMAL";
-        //     }else{
-        //         $subscription = "TRIAL";
-        //     }
-        // }else{
-        //     $subscription = "GUEST";
-        // }
-
         if(count($level) === 0){
             $level[0] = 1;
         }
@@ -38,27 +25,7 @@ class LearnController extends Controller
 
     public function measure()
     {
-
         $subscription = User::getSubscription();
-
-        //動作確認でき次第削除する予定
-        // $user = User::where('id',Auth::id())->first();
-        // $user_name = $user !== null ? $user->name : null;
-        // if( $user !== null ){
-        //     if($user->subscribed('default')){
-        //         $subscription = "NORMAL";
-        //     }else{
-        //         $subscription = "TRIAL";
-        //     }
-        // }else{
-        //     $subscription = "GUEST";
-        // }
-
-        // if(count($level) === 0){
-        //     $level[0]=1;
-        // }
-
-        // return view('words.measure',['user_name'=>$user_name, 'subscription'=>$subscription, 'level'=>$level[0]]);
         return view('words.measure');
     }
 
@@ -71,7 +38,7 @@ class LearnController extends Controller
             $word_id = $word->id;
             $previous_learn = Learn::where('user_id', $user_id)->where('word_id', $word_id)->first();
 
-            // calculate point. 進捗point = (easiness + interval)/2 + speed
+            // pointを計算。進捗point = (easiness + interval)/2 + speed
             $initial_interval_point = 0.38;//出題一回目の初期補正。
             if($previous_learn === null){
                 $previous_progress = 0;
@@ -259,10 +226,6 @@ class LearnController extends Controller
                         }else{ //10個を超えたら負の反比例。
                             $delay_degree= 1.0 - 5 / $delayed_word_count;
                         }
-                        //動作確認できたら削除予定
-                        // if( $unlearned_word_count < 2 ){
-                        //     $delay_degree = 0;
-                        // }
                     }
 
                     if( mt_rand() / mt_getrandmax() > $delay_degree ) { //未習の単語から一つ選択

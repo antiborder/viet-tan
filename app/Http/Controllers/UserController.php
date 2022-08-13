@@ -49,33 +49,6 @@ class UserController extends Controller
                 ->select('words.level',DB::raw('count(*) as count'))
                 ->groupBy('words.level')
                 ->get();
-
-
-
-                // $learned_words_0 = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
-                // ->where('learns.user_id',$user->id)
-                // ->where('learns.easiness', 0)
-                // ->select('words.level',DB::raw('count(*) as count'))
-                // ->groupBy('words.level')
-                // ->get();
-                // $learned_words_1 = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
-                // ->where('learns.user_id',$user->id)
-                // ->where('learns.easiness', 1)
-                // ->select('words.level',DB::raw('count(*) as count'))
-                // ->groupBy('words.level')
-                // ->get();
-                // $learned_words_2 = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
-                // ->where('learns.user_id',$user->id)
-                // ->where('learns.easiness', 2)
-                // ->select('words.level',DB::raw('count(*) as count'))
-                // ->groupBy('words.level')
-                // ->get();
-                // $learned_words_3 = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
-                // ->where('learns.user_id',$user->id)
-                // ->where('learns.easiness', 3)
-                // ->select('words.level',DB::raw('count(*) as count'))
-                // ->groupBy('words.level')
-                // ->get();
             }
 
             //学習予定      //現在時刻はnow() - cast ('9 hours' as interval)。　now()で求まるGMTを日本時刻に変換している。
@@ -90,7 +63,6 @@ class UserController extends Controller
                 as diff
                 group by day
             ");
-
 
             $ready_total = Word::leftjoin('learns', 'words.id', '=', 'learns.word_id')
             ->where('learns.user_id',$user->id)
@@ -158,71 +130,7 @@ class UserController extends Controller
                             break;
                         }
                     }
-
                 }
-
-                // $learned_0[$l] = 0;
-                // foreach($learned_word_details[0] as $element){
-                //     if($l===$element->level){
-                //         $learned_0[$l] = $element->count;
-                //         break;
-                //     }
-                // }
-
-                // $learned_1[$l] = 0;
-                // foreach($learned_word_details[1] as $element){
-                //     if($l===$element->level){
-                //         $learned_1[$l] = $element->count;
-                //         break;
-                //     }
-                // }
-
-                // $learned_2[$l] = 0;
-                // foreach($learned_word_details[2] as $element){
-                //     if($l===$element->level){
-                //         $learned_2[$l] = $element->count;
-                //         break;
-                //     }
-                // }
-
-                // $learned_3[$l] = 0;
-                // foreach($learned_word_details[3] as $element){
-                //     if($l===$element->level){
-                //         $learned_3[$l] = $element->count;
-                //         break;
-                //     }
-                // }
-
-                //動作確認できたら消去予定
-                // $learned_0[$l] = 0;
-                // foreach($learned_words_0 as $learned_word_0){
-                //     if($l===$learned_word_0->level){
-                //         $learned_0[$l] = $learned_word_0->count;
-                //         break;
-                //     }
-                // }
-                // $learned_1[$l] = 0;
-                // foreach($learned_words_1 as $learned_word_1){
-                //     if($l===$learned_word_1->level){
-                //         $learned_1[$l] = $learned_word_1->count;
-                //         break;
-                //     }
-                // }
-                // $learned_2[$l] = 0;
-                // foreach($learned_words_2 as $learned_word_2){
-                //     if($l===$learned_word_2->level){
-                //         $learned_2[$l] = $learned_word_2->count;
-                //         break;
-                //     }
-                // }
-                // $learned_3[$l] = 0;
-                // foreach($learned_words_3 as $learned_word_3){
-                //     if($l===$learned_word_3->level){
-                //         $learned_3[$l] = $learned_word_3->count;
-                //         break;
-                //     }
-                // }
-
             }
 
             //viewに渡す学習予定

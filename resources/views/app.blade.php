@@ -42,7 +42,7 @@
   <link href="{{ asset('css/stripe.css') }}" rel="stylesheet">  
 </head>
 
-<body class="blue-grey lighten-5">
+<body class="blue-grey lighten-5 normal-text">
   @if (session('flash_message'))
       <div class="flash_message">
           {{ session('flash_message') }}
