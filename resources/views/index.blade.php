@@ -12,11 +12,11 @@
 
 @section('content')
   @include('nav')
-  <div class="container" style="max-width:850px; font-family: 'Kosugi Maru', sans-serif;">
+  <div class="container" style="max-width:850px;">
     <div class="card mt-3 mb-1 p-0">
       <div class="card-body p-1">
         <div class="h5 card-title m-0 py-1">
-          <h1 class="sizable-text-small pt-4 mb-3" style="text-align:center; font-family: 'Kosugi Maru', sans-serif;">
+          <h1 class="sizable-text-small pt-4 mb-3" style="text-align:center;">
             がんばらないベトナム語のススメ
             <br>
             <p class="sizable-text-large mt-2" >
@@ -24,11 +24,10 @@
               <span class="sizable-text-large mt-2" style="display:inline-block; color:#ffa726;">べとらん</span>
             </p>  
           </h1>
-
           
           @guest
             <a href="{{ route('register')}}" >
-              <div class="card mb-3 py-3 px-3 text-white deep-orange lighten-1" style=" font-size:1.1rem; width: 150px;  text-align:center; margin:0 auto; font-family: 'Kosugi Maru', sans-serif;">
+              <div class="card mb-3 py-3 px-3 text-white deep-orange lighten-1" style=" font-size:1.1rem; width: 150px;  text-align:center; margin:0 auto;">
                 無料登録
               </div>
             </a>          
@@ -46,7 +45,9 @@
             <div class="white rounded">
               <img src='/image/learn-icon.webp' style="height:120px">
               <div class="white text-dark" style="font-size: 1rem; height:70px">
-              一日10分でOK。<br>単語毎の習熟度に<br>合わせて出題。
+              一日10分でOK。<br>
+              単語毎の習熟度に<br>
+              合わせて出題。
               </div>        
             </div>
           </div>
@@ -58,10 +59,12 @@
             <div class="h5 text-white" >
                 単語力測定
             </div>
-            <div class="white rounded" style="">
+            <div class="white rounded">
               <img src='/image/measure-icon.webp' style="height:120px">
               <div class="white text-dark" style="font-size:1.0rem;  height:70px">
-                2分間で実力チェック。<br>あなたの単語力は<br>????語です。
+                2分間で実力チェック。<br>
+                あなたの単語力は<br>
+                ????語です。
               </div>
             </div>
           </div>
@@ -73,10 +76,11 @@
             <div class="h5 text-white" >
                 あいまい検索
             </div>
-            <div class="white rounded" style="">
+            <div class="white rounded">
               <img src='/image/search-icon.webp' style="height:120px">
               <div class="white text-dark" style="font-size:1.0rem;  height:70px">
-                記憶があいまいでも大丈夫。<br>ベトナム語も漢越語もまとめて検索。
+                記憶があいまいでも大丈夫。<br>
+                ベトナム語も漢越語もまとめて検索。
               </div>
             </div>
           </div>
@@ -87,11 +91,13 @@
     <div class="card my-2 p-0">        
       <div class="card-body p-1">      
         <div class="h5 card-title m-0">
-          <h3 class="sizable-text-middle pt-5" style="text-align:center; font-family: 'Kosugi Maru', sans-serif;">
+          <h3 class="sizable-text-middle pt-5" style="text-align:center;">
             スキマ時間にクリックするだけ
           </h3>
         </div>
-        <p class="sizable-text-small" style="text-align:center;">1日10分でOK。忙しい人にもおすすめ。</p>
+        <p class="sizable-text-small" style="text-align:center;">
+          1日10分でOK。忙しい人にもおすすめ。
+        </p>
         <div class="image-container">
           <div class="image-aligner" >
             <img class="pr-1" src="/image/learn-image.webp"style="height:250px;">
@@ -100,11 +106,14 @@
         </div>
 
         <div class="h5 card-title m-0">
-          <h3 class="sizable-text-middle pt-5" style="text-align:center; font-family: 'Kosugi Maru', sans-serif;">
+          <h3 class="sizable-text-middle pt-5" style="text-align:center;">
             自動でスケジュール管理
           </h3>
         </div>
-        <p class="sizable-text-small" style="text-align:center;">単語毎の習熟度に合わせて出題。<br>余計な手間がないから学習が快適。</p>
+        <p class="sizable-text-small" style="text-align:center;">
+          単語毎の習熟度に合わせて出題。<br>
+          余計な手間がないから学習が快適。
+        </p>
         <div class="image-container">
           <div class="image-aligner" >
             <img class="pr-1" src="/image/schedule-image.webp"style="height:250px;">
@@ -113,11 +122,15 @@
         </div>
 
         <div class="h5 card-title m-0">
-          <h3 class="sizable-text-middle pt-5" style="text-align:center; font-family: 'Kosugi Maru', sans-serif;">
+          <h3 class="sizable-text-middle pt-5" style="text-align:center;">
             優先順に整理された約5000語
           </h3>
         </div>
-        <p class="sizable-text-small" style="text-align:center;">単語を関連付けて覚えるから忘れにくい。<br>よく使う重要な単語から学ぶので、<br>無駄がなく効率的。</p>
+        <p class="sizable-text-small" style="text-align:center;">
+          単語を関連付けて覚えるから忘れにくい。<br>
+          よく使う重要な単語から学ぶので、<br>
+          無駄がなく効率的。  
+        </p>
         <div class="image-container">
           <div class="image-aligner" >
             <img class="pr-1" src="/image/connection-image.webp"style="height:250px;">
@@ -134,7 +147,7 @@
         <a href="{{route('tags.categories')}}" >
           <div class="card orange lighten-1 m-2 p-1 small-icon">
             <div class="card white rounded shadow-none p-1" style="width:100%; height:100%;">
-              <div class="" >
+              <div>
                 <div class="small-icon-text">
                   <div style="display: table-cell; vertical-align: middle; font-size:130%">
                     タグから探す
@@ -151,7 +164,7 @@
         <a href="{{route('articles.level-table')}}" >
           <div class="card orange lighten-1 m-2 p-1 small-icon">
             <div class="card white rounded shadow-none p-1" style="width:100%; height:100%;">
-              <div class="" >
+              <div >
                 <div class="small-icon-text">          
                   <div style="display: table-cell; vertical-align: middle;">                           
                     単語レベル<br>一覧
@@ -173,7 +186,7 @@
       @endguest
          <div class="card orange lighten-1 m-2 p-1 small-icon">
             <div class="card white rounded shadow-none p-1" style="width:100%; height:100%;">
-              <div class="" >            
+              <div >            
                 <div class="small-icon-text">              
                   <div style="display: table-cell; vertical-align: middle; font-size:130%;">
                     学習状況
@@ -189,7 +202,7 @@
         <a href="/articles/level-table"  >
           <div class="card orange lighten-1 m-2 p-1 small-icon">
             <div class="card white rounded shadow-none p-1 " style="width:100%; height:100%;">
-              <div class="" >         
+              <div>         
                 <div class="small-icon-text">   
                   <div style="display: table-cell; vertical-align: middle;">                                             
                     ご意見<br>お問い合わせ
@@ -209,14 +222,16 @@
           <img class="pl-1 mb-2 wide-image" src="/image/card-image.webp">
       </div>  
     </div>
-    <h4 class="sizable-text-small mt-3 mb-0" style="text-align:left;"> 単語カードサンプル<br>
-    <small class="text-muted">（単語をclick↓）</small></h4>
+    <h4 class="sizable-text-small mt-3 mb-0" style="text-align:left;"> 
+      単語カードサンプル<br>
+      <small class="text-muted">（単語をclick↓）</small>
+    </h4>
     @foreach($words as $word)
-    <div>
-    <div class="" style="">
-      @include('words.card')
-    </div>
-    </div>
+      <div>
+        <div>
+          @include('words.card')
+        </div>
+      </div>
     @endforeach
 
   </div>
@@ -253,7 +268,6 @@
     text-align:center; 
     margin:0 auto; 
     font-size:1.0rem;
-    font-family: 'Kosugi Maru', sans-serif; 
   }
 
   .small-icon-text{
@@ -268,7 +282,6 @@
     height:240px; 
     text-align:center; 
     margin:0 auto; 
-    font-family: 'Kosugi Maru', sans-serif;
   }
 
 </style>

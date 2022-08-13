@@ -26,8 +26,8 @@ class WordController extends Controller
 
     public function index()
     {
-        $word_ids = config('const.HAN_NOM_WORDS');
-        $words = Word::wherein('id', $word_ids)->inRandomOrder()->take(6)->get();
+        $word_ids = config('const.HAN_NOM_WORDS'); //Homeページで紹介したい単語のリスト
+        $words = Word::wherein('id', $word_ids)->inRandomOrder()->take(6)->get(); //ランダムに6語ピックアップ
         return view('index')->with(['words'=>$words]);
     }
 

@@ -1,6 +1,6 @@
 <div class="text-dark card-plain mb-2  pt-0 pb-1 pl-1 pr-3 white shadow rounded">
   <div class=" card-body pt-2 pb-0 pl-0 d-flex flex-row">
-    <div style ="font-family:'Kosugi Maru', sans-serif;">
+    <div>
       <div class="d-flex flex-row">
         <div class="text-nowrap mr-1" style ="">
           <div style="height:40px"><p class="pt-2" style="line-height: 40px;text-align:right;width:70px;font-size:0.7rem">ベトナム語：&nbsp;</p></div>
@@ -74,8 +74,8 @@
   </div>
 
   <div class="card-body pt-0" >
-    {{$word->no_diacritic}}<br>
-    {{$word->simplified}}
+    <!-- {{$word->no_diacritic}}<br>
+    {{$word->simplified}} -->
     <div class="">
       {{ $word->detail }}
     </div>
