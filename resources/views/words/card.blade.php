@@ -17,7 +17,7 @@
             <div class="pt-1">
               <div class="mx-auto" style="width:100%">
 
-                <span class="h4 card-title">      
+                <span class="h4 card-title">
                   <a href="{{ route('words.show', ['word' => $word]) }}" class="viet-text text-dark yellow lighten-3" style="padding-right:6px; padding-left:6px; margin-right:-6px; border-radius:8px; font-size:{{$name_font_size}};" >
                     {{$word->$name}}
                   </a>
@@ -25,17 +25,17 @@
               </div>
               <div class="mx-auto text-center" style="width:1.0rem;">
                 @php
-                  $kanji_n = 'kanji' . $i;  
-                @endphp        
+                  $kanji_n = 'kanji' . $i;
+                @endphp
                 @if($word->$kanji_n != '')
-                <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="kanji-text pt-1 mr-1 mt-1 blue-text" style=' font-size:1.5rem'> 
+                <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="kanji-text pt-1 mr-1 mt-1 blue-text" style=' font-size:1.5rem'>
                   {{$word->$kanji_n}}
-                </a>          
+                </a>
                 @endif
               </div>
             </div>
           @endif
-        @endforeach    
+        @endforeach
       </div>
 
     </div>
@@ -49,12 +49,12 @@
         Lv.{{$word->level}}
       </div>
     </div>
-    <div class="pl-2 pt-0 border-left border-light" style="width:50%" >        
+    <div class="pl-2 pt-0 border-left border-light" style="width:50%" >
       <div class="d-flex flex-row-reverse">
         @if( Auth::id() === $word->user_id )
           <!-- dropdown -->
           <div class="ml-auto card-text d-flex flex-column-reverse">
-            
+
             <div class="dropdown">
               <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="text-muted fas fa-ellipsis-v"></i>
@@ -96,7 +96,7 @@
             </div>
           </div>
           <!-- modal -->
-        @endif    
+        @endif
       </div>
     </div>
   </div>

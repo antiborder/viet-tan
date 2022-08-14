@@ -11,7 +11,7 @@
         endpoint_to_get_word="{{ route('learn.random') }}"
         endpoint_to_record_learn="{{ route('learn.record') }}"
         user_name = "{{ $user_name }}"
-        subscription = "{{$subscription}}"        
+        subscription = "{{$subscription}}"
         initial_level = "{{$level}}"
         time_limit = "{{config('const.TIME_LIMIT')}}"
         max_level = "{{config('const.MAX_LEVEL')}}"

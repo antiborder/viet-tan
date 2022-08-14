@@ -226,7 +226,7 @@ class WordController extends Controller
         }else if($word->id < $antonym->id){
             $word->anto_followers()->attach($antonym);
         }
-    }    
+    }
 
     private function getLowerNodiacritic(String $word_name) :String
     {

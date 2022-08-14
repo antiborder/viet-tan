@@ -27,8 +27,8 @@
 
     @foreach($words_name_exact ?? null as $word)
       @if($loop->first)
-        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 orange lighten-1 text-white " style=" max-width: 30rem;border-width:2px">
-          <span style=";font-size:1.2rem">ベトナム語が一致</span>
+      <div class="grouping-square grouping-square-orange-filled text-white">
+          <span class="grouping-label">ベトナム語が一致</span>
       @endif
       @include('words.card',['word'=>$word])
       @if($loop->last)
@@ -38,8 +38,8 @@
 
     @foreach($words_name_similar ?? null as $word)
       @if($loop->first)
-        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-warning bg-transparent text-warning" style="max-width: 30rem;border-width:2px">
-          <span style=";font-size:1.2rem">アルファベットが同じ単語</span>
+        <div class="grouping-square grouping-square-ornage">
+          <span class="grouping-label">アルファベットが同じ単語</span>
       @endif
       @include('words.card',['word'=>$word])
       @if($loop->last)
@@ -49,8 +49,8 @@
 
     @foreach($words_name_simplified ?? null as $word)
       @if($loop->first)
-        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-info bg-transparent text-info" style="max-width: 30rem;border-width:2px">
-          <span style="font-size:1.2rem">発音が似てる単語</span>
+        <div class="grouping-square grouping-square-info">
+          <span class="grouping-label">発音が似てる単語</span>
       @endif
       @include('words.card',['word'=>$word])
       @if($loop->last)
@@ -61,8 +61,8 @@
 
     @foreach($words_name_syllables ?? null as $word)
       @if($loop->first)
-        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-success bg-transparent text-success" style="max-width: 30rem;border-width:2px">
-          <span style=";font-size:1.2rem">同じ音節を含む単語</span>
+        <div class="grouping-square grouping-square-success">
+          <span class="grouping-label">同じ音節を含む単語</span>
       @endif
       @include('words.card',['word'=>$word])
       @if($loop->last)
@@ -72,8 +72,8 @@
 
     @foreach($words_jp as $word)
       @if($loop->first)
-        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 orange lighten-1 text-white" style="max-width: 30rem;">
-        <span style=";font-size:1.2rem">意味が該当</span>
+      <div class="grouping-square grouping-square-orange-filled text-white">
+        <span class="grouping-label">意味が該当</span>
       @endif
       @include('words.card',['word'=>$word])
       @if($loop->last)
@@ -85,8 +85,8 @@
 
     @foreach($words_kanji as $word)
       @if($loop->first)
-        <div class="card mt-3 mb-1 pb-1 pl-2 pr-2 border-warning bg-transparent text-warning" style="max-width: 30rem;border-width:2px;">
-        <span style=";font-size:1.2rem">漢字(漢越語) が該当</span>
+        <div class="grouping-square grouping-square-orange">
+        <span class="grouping-label">漢字(漢越語) が該当</span>
       @endif
       @include('words.card',['word'=>$word])
       @if($loop->last)
@@ -96,8 +96,8 @@
 
     @foreach($tags as $tag)
       @if($loop->first)
-        <div class="card mt-3 mb-1 pb-2 pl-2 pr-2 border-warning bg-transparent text-warning" style="max-width: 30rem;border-width:2px;">
-        <span style=";font-size:1.2rem">関連タグ</span>
+      <div class="grouping-square grouping-square-orange">
+        <span class="grouping-label">関連タグ</span>
           <div class="card-text line-height">
       @endif
         <span class="mx-1">
@@ -120,17 +120,17 @@
     </div>
 
     <a href="{{route('index')}}" >
-      <div class="pb-1 normal-text orange text-white lighten-1 text-center rounded shadow" style="max-width:450px" >
+      <div class="self-ad-outer-square">
         <div>
-          <div style="display:inline-block">1日10分でOK。</div>
-          <div style="display:inline-block">スキマ時間にクリックするだけ。</div>
+          <div class="d-inline-block">1日10分でOK。</div>
+          <div class="d-inline-block">スキマ時間にクリックするだけ。</div>
         </div>
-        <div class="white rounded mb-1 mx-2" style="color:#ffa726;">
+        <div class="self-ad-inner-square">
           <div class="h3 mb-n1" >
-            <div class="mr-n1 " style="display:inline-block">ベトナム語学習の</div>
-            <div class="" style="display:inline-block">無料ツール</div>
+            <div class="mr-n1 d-inline-block">ベトナム語学習の</div>
+            <div class="d-inline-block">無料ツール</div>
           </div>
-          <small class="">べとらん Homeに戻る</small>
+          <small>べとらん Homeに戻る</small>
         </div>
       </div>
     </a>
@@ -172,3 +172,63 @@
 
   @include('footer')
 @endsection
+
+<style>
+
+  /* 8/28以降削除可 */
+
+  .self-ad-outer-square{
+    max-width: 450px;    
+    background-color:#ffa726;
+    color:white;
+    text-align:center;        
+    padding-bottom: 0.25rem;
+    border-radius: 10px;
+  }
+
+  .self-ad-inner-square{
+    background-color: white;
+    color: #ffa726;
+    margin: 0 0.5rem 0.25rem 0.5rem;
+  }
+  
+  .grouping-square{
+      color:#ffa726;
+      margin:0.75rem 0 0.25rem 0rem;
+      padding: 0 0.5rem 0.25rem 0.5rem ;
+      border: 2px solid #ffa726;
+      border-radius:10px 10px 10px 10px ;
+      max-width:30rem;
+  }
+
+  .grouping-square-orange-filled{
+    color:white;
+    background-color:#ffa726;
+  }
+
+  .grouping-square-orange{
+    color:#ffa726;
+    border: 2px solid #ffa726;
+  }
+  .grouping-square-primary{
+    color:#0275d8;
+    border: 2px solid #0275d8;
+  }
+  .grouping-square-danger{
+    color:#d9534f;
+    border: 2px solid #d9534f;
+  }
+  .grouping-square-info{
+    color:#5bc0de;
+    border: 2px solid #5bc0de;
+  }
+  .grouping-square-success{
+    color:#5cb85c;
+    border: 2px solid #5cb85c;
+  }
+
+  .grouping-label{
+    font-size:1.2rem;
+  }
+
+</style>

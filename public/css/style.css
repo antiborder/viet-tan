@@ -1,64 +1,176 @@
+
+/* font系・文字 */
 @font-face {
     font-family: 'han-nom'; /* フォント名 */
     src: url('../font/Han-Nom Gothic 1.10.ttf') format('truetype'); /* フォーマットごとにパスを指定 */
   }
-
 .kanji-text{
     font-family:"BIZ UDゴシック Regular",'han-nom';
-}  
-/* font-family: "UD デジタル 教科書体 N-R", */
+}
 .normal-text{
     font-family:'Kosugi Maru', sans-serif;
 }
 .viet-text{
     font-family:'Roboto Condensed',sans-serif;
 }
-
 .tag-text{
     font-family:'Kosugi Maru', sans-serif;
-    color:#1a237e;    
+    color:#1a237e;
 }
 
+/* article系 */
 .article h5{
     border-bottom: 1px solid #ffa726;
     border-left: 4px solid #ffa726;
 }
-
 .article p{
     line-height:1.8;
 }
 
+/* ボタン系 */
 .home-button{
-    background-color:#ffa726; 
+    background-color:#ffa726;
     font-family:'Kosugi Maru', sans-serif;
     color:white;
     margin: 0px 1px;
     padding: 4px 16px;
-    border-style:none; 
+    border-style:none;
     border-radius: 3px;
 }
-
 .home-button-transparent{
-    border: 1px solid #ffa726; 
-    border-radius:4px; 
-    color:#ffa726; 
-    padding:0px 8px 4px 8px; 
-    font-family: 'Kosugi Maru', sans-serif; 
+    border: 1px solid #ffa726;
+    border-radius:4px;
+    color:#ffa726;
+    padding:0px 8px 4px 8px;
+    font-family: 'Kosugi Maru', sans-serif;
     display:inline-block;
 }
-
 .search-button{
-    background-color:#ffc700; 
+    background-color:#ffc700;
     font-family:'Kosugi Maru', sans-serif;
     color:white;
     margin: 0px 1px;
     padding: 4px 16px;
-    border-style:none; 
+    border-style:none;
     border-radius: 3px;
 }
 
+/* 無料登録ボタン */
+.btn-signup{
+    background-color:#ff7043;
+    color: white;
+    border-radius:5px;
+    text-align:center;
+}
+.btn-signup-top{
+    margin: 0 0 0.75rem 0;
+    padding: 0.75rem;
+    font-size:1.1rem; width: 150px;
+    margin:0 auto
+}
+
+/* Top固有 */
 .wide-image{
-    text-align:center; 
+    text-align:center;
     width:calc(270px + ((100vw - 340px) * 0.2));
 }
+
+/* 関連語などのグループ化 */
+.grouping-square{
+    color:#ffa726;
+    margin:0.75rem 0 0.25rem 0rem;
+    padding: 0 0.5rem 0.25rem 0.5rem ;
+    border: 2px solid #ffa726;
+    border-radius:10px 10px 10px 10px ;
+    max-width:30rem;
+}
+
+.grouping-square-orange-filled{
+    color:white;
+    background-color:#ffa726;
+}
+.grouping-square-orange{
+    color:#ffa726;
+    border: 2px solid #ffa726;
+}
+.grouping-square-primary{
+    color:#0275d8;
+    border: 2px solid #0275d8;
+}
+.grouping-square-danger{
+    color:#d9534f;
+    border: 2px solid #d9534f;
+}
+.grouping-square-info{
+    color:#5bc0de;
+    border: 2px solid #5bc0de;
+}
+.grouping-square-success{
+    color:#5cb85c;
+    border: 2px solid #5cb85c;
+}
+
+.grouping-label{
+    font-size:1.2rem;
+}
+
+/* セルフ広告 */
+.self-ad-outer-square{
+    max-width: 450px;
+    background-color:#ffa726;
+    color:white;
+    text-align:center;
+    padding-bottom: 0.25rem;
+    border-radius: 10px;
+  }
+
+  .self-ad-inner-square{
+    background-color: white;
+    color: #ffa726;
+    margin: 0 0.5rem 0.25rem 0.5rem;
+  }
+
+/* top固有分 */
+  .sizable-text-small{
+    font-size: calc(1.2rem + ((1vw - 0.64rem) * 0.7143));
+  }
+  .sizable-text-middle{
+    font-size: calc(1.6rem + ((1vw - 0.64rem) * 1.13));
+  }
+  .sizable-text-large{
+    font-size: calc(2.4rem + ((1vw - 0.64rem) * 2.1429));
+  }
+
+  .image-container{
+    display:flex;
+    overflow-x:auto;
+  }
+
+  .image-aligner{
+    display:flex;
+    align-items:center;
+    margin:auto;
+  }
+
+  .small-icon{
+    color:#ffa726;
+    width:150px;
+    text-align:center;
+    margin:0 auto;
+    font-size:1.0rem;
+  }
+
+  .small-icon-text{
+    height:50px;
+    display: table;
+    width: 100%;
+  }
+
+  .large-icon{
+    color:white;
+    width:250px;
+    height:240px;
+    text-align:center;
+    margin:0 auto;
+  }
 
