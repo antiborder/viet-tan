@@ -2,7 +2,7 @@
   <div class=" card-body pt-2 pb-0 pl-0 d-flex flex-row">
     <div>
       <div class="d-flex flex-row">
-        <div class="text-nowrap mr-1" style ="">
+        <div class="text-nowrap mr-1">
           <div style="height:40px"><p class="pt-2" style="line-height: 40px;text-align:right;width:70px;font-size:0.7rem">ベトナム語：&nbsp;</p></div>
           <div style="height:40px"><p style="line-height: 40px;text-align:right;width:70px;font-size:0.8rem">漢字：&nbsp;</p></div>
         </div>
@@ -40,7 +40,7 @@
       @if(file_exists(public_path().$file_name))
         <div class="m-2 pl-1 border border-secondary rounded" style="width:320px">
           <div class="text-secondary mb-0 pb-0" style="text-align:left;font-size:0.8rem">発音を確認</div>
-          <div class="ml-3 mt-0 pt-0" style="">
+          <div class="ml-3 mt-0 pt-0">
               <audio controls src={{$file_name}} class="ml-2" style="height:30px;width:280px;"><audio>
           </div>
         </div>
@@ -76,7 +76,7 @@
   <div class="card-body pt-0" >
     <!-- {{$word->no_diacritic}}<br>
     {{$word->simplified}} -->
-    <div class="">
+    <div>
       {{ $word->detail }}
     </div>
   </div>

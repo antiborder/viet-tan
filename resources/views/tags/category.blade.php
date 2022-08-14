@@ -10,7 +10,7 @@
       <img src="{{'/image/'.$category['IMAGES'][0]}}" style="height:100px;">
     </div>
     <h4 class="p-1" >「{{$category['NAME']}}」に関連するタグ一覧</h4>
-    
+
     <div class="mt-2">
       @foreach($tags as $i => $tag)
         <span class="d-inline-block m-2">
@@ -21,7 +21,7 @@
           @include('ads.horizontal')
         @endif
 
-      @endforeach      
+      @endforeach
     </div>
 
     <div class=" my-5 text-center" style="">
@@ -29,13 +29,13 @@
         <button onclick="location.href='{{route("words.search")}}'" class="search-button shadow">
           検索から探す
         </button><br>
-    </div>              
+    </div>
 
     @include('ads.rectangle')
 
   </div>
 
-  @include('footer')    
+  @include('footer')
 @endsection
 
 <style>

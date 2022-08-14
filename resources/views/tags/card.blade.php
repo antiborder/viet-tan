@@ -2,4 +2,4 @@
   <span class="d-inline-block white px-3 py-1  rounded shadow">
     {{ $tag->name }}
   </span>
-</a>              
+</a>

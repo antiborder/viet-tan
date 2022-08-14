@@ -21,7 +21,8 @@
           $membership = '無料会員';
         }
         @endphp
-        <!-- <div style="font-size:1.1rem; line-height:200%">
+        <!-- 一時的に隠してる
+          <div style="font-size:1.1rem; line-height:200%">
           　　会員プラン ：　{{$membership}}
           @if( $subscription === "TRIAL")
             <span class="m-3" style="text-align:center; font-size:1.2rem" >
@@ -95,7 +96,7 @@
 
                   <div class="progress shadow-none" style="height:30px;"> 
 
-                  <!-- learned_nを配列にすれば少しきれいになる。 -->
+                  <!-- learned_nを配列にすればもう少しまとまる。 -->
                     @php
                       $individual = [0=>"red lighten-4", 1=>"amber lighten-4", 2=>"lime lighten-4", 3=>"green lighten-4", -1=>"blue-grey lighten-5"];
                     @endphp
