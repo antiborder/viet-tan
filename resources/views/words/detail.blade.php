@@ -129,15 +129,3 @@
   </div>
 
 </div>
-
-<style>
-  .sizable-text-small{
-    font-size: calc(1.2rem + ((1vw - 0.64rem) * 0.7143));
-  }
-  .sizable-text-middle{
-    font-size: calc(1.6rem + ((1vw - 0.64rem) * 1.13));
-  }
-  .sizable-text-large{
-    font-size: calc(2.4rem + ((1vw - 0.64rem) * 2.1429));
-  }
-</style>

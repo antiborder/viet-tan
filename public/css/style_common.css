@@ -1,3 +1,9 @@
+/* 様々なページに使う部品のstyleを定義
+navbar
+footer
+card
+detail 
+など*/
 
 /* font系・文字 */
 @font-face {
@@ -65,7 +71,8 @@
 .btn-signup-top{
     margin: 0 0 0.75rem 0;
     padding: 0.75rem;
-    font-size:1.1rem; width: 150px;
+    font-size:1.1rem; 
+    width: 150px;
     margin:0 auto
 }
 
@@ -94,20 +101,20 @@
     border: 2px solid #ffa726;
 }
 .grouping-square-primary{
-    color:#0275d8;
-    border: 2px solid #0275d8;
+    color:#4285F4;
+    border: 2px solid #4285F4;
 }
 .grouping-square-danger{
-    color:#d9534f;
-    border: 2px solid #d9534f;
+    color:#ff4444;
+    border: 2px solid #ff4444;
 }
 .grouping-square-info{
-    color:#5bc0de;
-    border: 2px solid #5bc0de;
+    color:#33b5e5;
+    border: 2px solid #33b5e5;
 }
 .grouping-square-success{
-    color:#5cb85c;
-    border: 2px solid #5cb85c;
+    color:#00C851;
+    border: 2px solid #00C851;
 }
 
 .grouping-label{
@@ -130,47 +137,12 @@
     margin: 0 0.5rem 0.25rem 0.5rem;
   }
 
-/* top固有分 */
-  .sizable-text-small{
+.sizable-text-small{
     font-size: calc(1.2rem + ((1vw - 0.64rem) * 0.7143));
   }
-  .sizable-text-middle{
+ .sizable-text-middle{
     font-size: calc(1.6rem + ((1vw - 0.64rem) * 1.13));
   }
-  .sizable-text-large{
+.sizable-text-large{
     font-size: calc(2.4rem + ((1vw - 0.64rem) * 2.1429));
   }
-
-  .image-container{
-    display:flex;
-    overflow-x:auto;
-  }
-
-  .image-aligner{
-    display:flex;
-    align-items:center;
-    margin:auto;
-  }
-
-  .small-icon{
-    color:#ffa726;
-    width:150px;
-    text-align:center;
-    margin:0 auto;
-    font-size:1.0rem;
-  }
-
-  .small-icon-text{
-    height:50px;
-    display: table;
-    width: 100%;
-  }
-
-  .large-icon{
-    color:white;
-    width:250px;
-    height:240px;
-    text-align:center;
-    margin:0 auto;
-  }
-

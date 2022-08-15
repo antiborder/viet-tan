@@ -7,7 +7,7 @@
 
    <div class="container" style="max-width:800px">
     <div class="card white pl-2 py-2 mt-2 mb-3 text-dark " style="max-width: 30rem;">
-      <div class="pt-1" style="">
+      <div class="pt-1">
         <form class="form-inline" action="{{url('/search')}}">
           <div class="form-group">
             <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control" placeholder="キーワードを入力">
@@ -109,7 +109,7 @@
       @endif
     @endforeach
 
-    <div class="my-3" style="">
+    <div class="my-3">
       <button onclick="location.href='{{route("tags.categories")}}'" class="search-button shadow">
         タグから探す
       </button>
@@ -172,63 +172,3 @@
 
   @include('footer')
 @endsection
-
-<style>
-
-  /* 8/28以降削除可 */
-
-  .self-ad-outer-square{
-    max-width: 450px;    
-    background-color:#ffa726;
-    color:white;
-    text-align:center;        
-    padding-bottom: 0.25rem;
-    border-radius: 10px;
-  }
-
-  .self-ad-inner-square{
-    background-color: white;
-    color: #ffa726;
-    margin: 0 0.5rem 0.25rem 0.5rem;
-  }
-  
-  .grouping-square{
-      color:#ffa726;
-      margin:0.75rem 0 0.25rem 0rem;
-      padding: 0 0.5rem 0.25rem 0.5rem ;
-      border: 2px solid #ffa726;
-      border-radius:10px 10px 10px 10px ;
-      max-width:30rem;
-  }
-
-  .grouping-square-orange-filled{
-    color:white;
-    background-color:#ffa726;
-  }
-
-  .grouping-square-orange{
-    color:#ffa726;
-    border: 2px solid #ffa726;
-  }
-  .grouping-square-primary{
-    color:#0275d8;
-    border: 2px solid #0275d8;
-  }
-  .grouping-square-danger{
-    color:#d9534f;
-    border: 2px solid #d9534f;
-  }
-  .grouping-square-info{
-    color:#5bc0de;
-    border: 2px solid #5bc0de;
-  }
-  .grouping-square-success{
-    color:#5cb85c;
-    border: 2px solid #5cb85c;
-  }
-
-  .grouping-label{
-    font-size:1.2rem;
-  }
-
-</style>

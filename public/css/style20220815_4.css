@@ -1,0 +1,9 @@
+/* 各cssに分岐するためのcss
+キャッシュ対策のため、ファイル名には更新日付を入れる。 */
+
+@import url("style_top.css");
+@import url("style_common.css");
+@import url("style_search.css");
+@import url("style_learn.css");
+@import url("style_category.css");
+@import url("style_article.css");

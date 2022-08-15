@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark navbar-expand-lg orange lighten-1 px-1 pt-1 pb-0" style="">
+<nav class="navbar navbar-dark navbar-expand-lg orange lighten-1 px-1 pt-1 pb-0">
 
    <!-- Logo -->
   <a href="{{route('index')}}" class="navbar-brand ml-1  " style="font-size:1.4rem; font-family: 'Kosugi Maru', sans-serif;">べとらん</a>
@@ -69,7 +69,7 @@
 
       @guest
       <li class="nav-item">
-        <span class="">
+        <span>
           <a href="{{ route('register')}}" class="text-white deep-orange lighten-1 rounded px-2 py-1 mx-1 mt-1 " style="font-size:1.0rem">無料登録</a>
         </span>
       </li>
