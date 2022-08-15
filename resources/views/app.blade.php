@@ -12,7 +12,7 @@
 
   gtag('config', 'UA-229768517-1');
 </script>
-  
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -25,7 +25,7 @@
   <!-- fabicon -->
   <link rel="apple-touch-icon" sizes="180x180" href="./image/apple-touch-icon-180x180.png">
   <link rel="icon" type="image/x-icon" href="./image/favicon.ico">
-  
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
   <!-- Google Font -->
@@ -38,8 +38,8 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">
 
   <!-- Style Sheets -->
-  <link href="{{ asset('css/style.css') }}" rel="stylesheet">    
-  <link href="{{ asset('css/stripe.css') }}" rel="stylesheet">  
+  <link href="{{ asset('css/style20220815_4.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/stripe.css') }}" rel="stylesheet">
 </head>
 
 <body class="blue-grey lighten-5 normal-text">
@@ -53,7 +53,7 @@
   </div>
 
   <script src="{{ mix('js/app.js') }}"></script>
-  
+
   <!-- JQuery -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <!-- Bootstrap tooltips -->

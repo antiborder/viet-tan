@@ -12,16 +12,16 @@
 
 @section('content')
   @include('nav')
-  <div class="container" style="max-width:850px;">
+  <div id='top' class="container container-top">
     <div class="card mt-3 mb-1 p-0">
       <div class="card-body p-1">
         <div class="h5 card-title m-0 py-1">
-          <h1 class="sizable-text-small pt-4 mb-3" style="text-align:center;">
+          <h1 class="catch-text1">
             がんばらないベトナム語のススメ
             <br>
-            <p class="sizable-text-large mt-2" >
-              無料の<span class="text-nowrap">ベトナム語学習ツール</span><br>
-              <span class="sizable-text-large mt-2" style="display:inline-block; color:#ffa726;">べとらん</span>
+            <p class="catch-text2" >
+              無料の<span class="part2">ベトナム語学習ツール</span><br>
+              <span  class="part3" >べとらん</span>
             </p>
           </h1>
 
@@ -35,16 +35,16 @@
         </div>
       </div>
     </div>
-    <ul class="inline-block" style="list-style-type: none; padding-left:0; text-align:center" >
-      <li style="display:inline-block">
+    <ul class="menu-block1">
+      <li class="d-inline-block">
         <a href="{{route('learn')}}" >
-          <div class="large-icon card mt-3 mx-2 mb-2 p-2 orange lighten-1">
+          <div class="large-icon">
             <div class="h5 text-white" >
                 単語学習
             </div>
             <div class="white rounded">
-              <img src='/image/learn-icon.webp' style="height:120px">
-              <div class="white text-dark" style="font-size: 1rem; height:70px">
+              <img src='/image/learn-icon.webp' class="large-icon-image">
+              <div class="large-icon-text">
               一日10分でOK。<br>
               単語毎の習熟度に<br>
               合わせて出題。
@@ -53,15 +53,15 @@
           </div>
         </a>
       </li>
-      <li style="display:inline-block">
+      <li class="d-inline-block">
         <a href="{{route('measure')}}"  >
-          <div class="large-icon card mt-3 mx-2 mb-2 p-2 orange lighten-1">
+          <div class="large-icon">
             <div class="h5 text-white" >
                 単語力測定
             </div>
             <div class="white rounded">
-              <img src='/image/measure-icon.webp' style="height:120px">
-              <div class="white text-dark" style="font-size:1.0rem;  height:70px">
+              <img src='/image/measure-icon.webp' class="large-icon-image">
+              <div class="large-icon-text">
                 2分間で実力チェック。<br>
                 あなたの単語力は<br>
                 ????語です。
@@ -70,15 +70,15 @@
           </div>
         </a>
       </li>
-      <li style="display:inline-block">
+      <li class="d-inline-block">
         <a href="{{route('words.search')}}"  >
-          <div class="large-icon card mt-3 mx-2 mb-2 p-2 orange lighten-1">
+          <div class="large-icon">
             <div class="h5 text-white" >
                 あいまい検索
             </div>
             <div class="white rounded">
-              <img src='/image/search-icon.webp' style="height:120px">
-              <div class="white text-dark" style="font-size:1.0rem;  height:70px">
+              <img src='/image/search-icon.webp' class="large-icon-image">
+              <div class="large-icon-text">
                 記憶があいまいでも大丈夫。<br>
                 ベトナム語も漢越語もまとめて検索。
               </div>
@@ -91,50 +91,50 @@
     <div class="card my-2 p-0">
       <div class="card-body p-1">
         <div class="h5 card-title m-0">
-          <h3 class="sizable-text-middle pt-5" style="text-align:center;">
+          <h3 class="sizable-text-middle pt-5 text-center" >
             スキマ時間にクリックするだけ
           </h3>
         </div>
-        <p class="sizable-text-small" style="text-align:center;">
+        <p class="sizable-text-small text-center">
           1日10分でOK。忙しい人にもおすすめ。
         </p>
         <div class="image-container">
           <div class="image-aligner" >
-            <img class="pr-1" src="/image/learn-image.webp"style="height:250px;">
-            <img class="pl-1" src="/image/result-image.webp"style="height:250px;">
+            <img class="feature-image pr-1" src="/image/learn-image.webp">
+            <img class="feature-image pl-1" src="/image/result-image.webp">
           </div>
         </div>
 
         <div class="h5 card-title m-0">
-          <h3 class="sizable-text-middle pt-5" style="text-align:center;">
+          <h3 class="sizable-text-middle pt-5 text-center">
             自動でスケジュール管理
           </h3>
         </div>
-        <p class="sizable-text-small" style="text-align:center;">
+        <p class="sizable-text-small text-center">
           単語毎の習熟度に合わせて出題。<br>
           余計な手間がないから学習が快適。
         </p>
         <div class="image-container">
           <div class="image-aligner" >
-            <img class="pr-1" src="/image/schedule-image.webp"style="height:250px;">
-            <img class="pl-1" src="/image/progress-image.webp"style="height:250px;">
+            <img class="feature-image pr-1" src="/image/schedule-image.webp">
+            <img class="feature-image pl-1" src="/image/progress-image.webp">
           </div>
         </div>
 
         <div class="h5 card-title m-0">
-          <h3 class="sizable-text-middle pt-5" style="text-align:center;">
+          <h3 class="sizable-text-middle pt-5 text-center">
             優先順に整理された約5000語
           </h3>
         </div>
-        <p class="sizable-text-small" style="text-align:center;">
+        <p class="sizable-text-small text-center">
           単語を関連付けて覚えるから忘れにくい。<br>
           よく使う重要な単語から学ぶので、<br>
           無駄がなく効率的。
         </p>
         <div class="image-container">
           <div class="image-aligner" >
-            <img class="pr-1" src="/image/connection-image.webp"style="height:250px;">
-            <img class="pl-1" src="/image/related-image.webp"style="height:250px;">
+            <img class="feature-image pr-1" src="/image/connection-image.webp">
+            <img class="feature-image pl-1" src="/image/related-image.webp">
           </div>
         </div>
         <br>
@@ -142,73 +142,72 @@
       </div>
     </div>
 
-    <ul class="inline-block" style="list-style-type: none; padding-left:0; text-align:center" >
-      <li style="display:inline-block">
+    <ul class="menu-block2">
+      <li class="d-inline-block">
         <a href="{{route('tags.categories')}}" >
-          <div class="card orange lighten-1 m-2 p-1 small-icon">
-            <div class="card white rounded shadow-none p-1" style="width:100%; height:100%;">
+          <div class="small-icon shadow">
+            <div class="small-icon-inner-square">
               <div>
-                <div class="small-icon-text">
-                  <div style="display: table-cell; vertical-align: middle; font-size:130%">
-                    タグから探す
+                <div class="small-icon-table">
+                  <div class="small-icon-lable">
+                    タグから<br>探す
                   </div>
                 </div>
-                <img src='/image/tag-icon.webp' style="width:60px; height:60px">
+                <img src='/image/tag-icon.webp' class="small-icon-image">
               </div>
-            <!-- <img src='' style="width:90px"> -->
             </div>
           </div>
         </a>
       </li>
-      <li style="display:inline-block">
+      <li class="d-inline-block">
         <a href="{{route('articles.level-table')}}" >
-          <div class="card orange lighten-1 m-2 p-1 small-icon">
-            <div class="card white rounded shadow-none p-1" style="width:100%; height:100%;">
-              <div >
-                <div class="small-icon-text">
-                  <div style="display: table-cell; vertical-align: middle;">
-                    単語レベル<br>一覧
-                  </div >
+          <div class="small-icon shadow">
+            <div class="small-icon-inner-square">
+              <div>
+                <div class="small-icon-table">
+                  <div class="small-icon-lable">
+                  単語レベル<br>一覧
+                  </div>
                 </div>
-                <img src='/image/level-table-icon.webp' style="width:60px; height:60px">
+                <img src='/image/level-table-icon.webp' class="small-icon-image">
               </div>
             </div>
           </div>
         </a>
-      </li>
+      </li>      
       @auth
-        <li style="display:inline-block">
+        <li class="d-inline-block">
           <a href="{{ route('users.show', ['name'=>Auth::user()->name]) }}" >
       @endauth
       @guest
-        <li style="display:inline-block" data-toggle="modal" data-target="#recommend-trial">
+        <li class="d-inline-block" data-toggle="modal" data-target="#recommend-trial">
           <a>
       @endguest
-         <div class="card orange lighten-1 m-2 p-1 small-icon">
-            <div class="card white rounded shadow-none p-1" style="width:100%; height:100%;">
+         <div class="small-icon shadow">
+            <div class="small-icon-inner-square">
               <div >
-                <div class="small-icon-text">
-                  <div style="display: table-cell; vertical-align: middle; font-size:130%;">
+                <div class="small-icon-table">
+                  <div class="small-icon-lable">
                     学習状況
                   </div>
                 </div>
-                <img src='/image/progress-icon.webp' style="width:60px; height:60px">
+                <img src='/image/progress-icon.webp' class="small-icon-image">
               </div>
             </div>
           </div>
         </a>
       </li>
-      <li style="display:inline-block" data-toggle="modal" data-target="#contact">
+      <li class="d-inline-block" data-toggle="modal" data-target="#contact">
         <a href="/articles/level-table"  >
-          <div class="card orange lighten-1 m-2 p-1 small-icon">
-            <div class="card white rounded shadow-none p-1 " style="width:100%; height:100%;">
+          <div class="small-icon shadow">
+            <div class="small-icon-inner-square">
               <div>
-                <div class="small-icon-text">
-                  <div style="display: table-cell; vertical-align: middle;">
+                <div class="small-icon-table">
+                  <div class="small-icon-lable">
                     ご意見<br>お問い合わせ
                   </div>
                 </div>
-                <img src='/image/contact-icon.webp' style="width:60px; height:60px">
+                <img src='/image/contact-icon.webp' class="small-icon-image">
               </div>
             </div>
 
@@ -218,11 +217,11 @@
 
     <div class="card my-2 p-0">
       <div class="card-body text-center p-1">
-        <p class="sizable-text-small mt-1" style="text-align:center;">単語カードの見方</p>
+        <p class="sizable-text-small mt-1 text-center">単語カードの見方</p>
           <img class="pl-1 mb-2 wide-image" src="/image/card-image.webp">
       </div>
     </div>
-    <h4 class="sizable-text-small mt-3 mb-0" style="text-align:left;">
+    <h4 class="sizable-text-small mt-3 mb-0 text-left">
       単語カードサンプル<br>
       <small class="text-muted">（単語をclick↓）</small>
     </h4>
@@ -238,67 +237,3 @@
 
   @include('footer')
 @endsection
-
-<style>
-
-/* 8/28以降に削除予定 */
-
-/* 無料登録ボタン */
-  .btn-signup{
-    background-color:#ff7043;
-    color: white;
-    border-radius:5px;
-    text-align:center;
-  }
-  .btn-signup-top{
-    margin: 0 0 0.75rem 0;
-    padding: 0.75rem;
-    font-size:1.1rem; width: 150px; 
-    margin:0 auto
-  }
-
-/* top固有 */
-  .sizable-text-small{
-    font-size: calc(1.2rem + ((1vw - 0.64rem) * 0.7143));
-  }
-  .sizable-text-middle{
-    font-size: calc(1.6rem + ((1vw - 0.64rem) * 1.13));
-  }
-  .sizable-text-large{
-    font-size: calc(2.4rem + ((1vw - 0.64rem) * 2.1429));
-  }
-
-  .image-container{
-    display:flex;
-    overflow-x:auto;
-  }
-
-  .image-aligner{
-    display:flex;
-    align-items:center;
-    margin:auto;
-  }
-
-  .small-icon{
-    color:#ffa726;
-    width:150px;
-    text-align:center;
-    margin:0 auto;
-    font-size:1.0rem;
-  }
-
-  .small-icon-text{
-    height:50px;
-    display: table;
-    width: 100%;
-  }
-
-  .large-icon{
-    color:white;
-    width:250px;
-    height:240px;
-    text-align:center;
-    margin:0 auto;
-  }
-
-</style>
