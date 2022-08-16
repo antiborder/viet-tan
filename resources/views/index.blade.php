@@ -26,11 +26,13 @@
           </h1>
 
           @guest
-            <a href="{{ route('register')}}" >
-              <div class="btn-signup btn-signup-top shadow">
-                無料登録
-              </div>
-            </a>
+            <div class="text-center">
+              <a href="{{ route('register')}}" >
+                <div class="btn-signup btn-signup-top">
+                  無料登録
+                </div>
+              </a>
+            </div>
           @endguest
         </div>
       </div>
@@ -145,7 +147,7 @@
     <ul class="menu-block2">
       <li class="d-inline-block">
         <a href="{{route('tags.categories')}}" >
-          <div class="small-icon shadow">
+          <div class="small-icon">
             <div class="small-icon-inner-square">
               <div>
                 <div class="small-icon-table">
@@ -161,7 +163,7 @@
       </li>
       <li class="d-inline-block">
         <a href="{{route('articles.level-table')}}" >
-          <div class="small-icon shadow">
+          <div class="small-icon">
             <div class="small-icon-inner-square">
               <div>
                 <div class="small-icon-table">
@@ -183,7 +185,7 @@
         <li class="d-inline-block" data-toggle="modal" data-target="#recommend-trial">
           <a>
       @endguest
-         <div class="small-icon shadow">
+         <div class="small-icon">
             <div class="small-icon-inner-square">
               <div >
                 <div class="small-icon-table">
@@ -199,7 +201,7 @@
       </li>
       <li class="d-inline-block" data-toggle="modal" data-target="#contact">
         <a href="/articles/level-table"  >
-          <div class="small-icon shadow">
+          <div class="small-icon">
             <div class="small-icon-inner-square">
               <div>
                 <div class="small-icon-table">

@@ -5,15 +5,14 @@
 @section('content')
   @include('nav')
 
-   <div class="container" style="max-width:800px">
-    <div class="card white pl-2 py-2 mt-2 mb-3 text-dark " style="max-width: 30rem;">
+   <div class="container container-search">
+    <div class="card-search">
       <div class="pt-1">
         <form class="form-inline" action="{{url('/search')}}">
           <div class="form-group">
             <input type="text" name="keyword" value="{{$keyword ?? null}}" class="form-control" placeholder="キーワードを入力">
           </div>
-          <input type="submit" value="検索" class="btn text-white py-1 btn-sm" style="font-size:large; background-color:#ffc700;" >
-
+          <input type="submit" value="検索" class="search-button search-button-card-search">
         </form>
       </div>
       <div class="text-right">
@@ -108,12 +107,11 @@
         </div>
       @endif
     @endforeach
-
-    <div class="my-3">
-      <button onclick="location.href='{{route("tags.categories")}}'" class="search-button shadow">
+    <a href='{{ route("tags.categories")}}' >
+      <div class="search-button-tag search-button">
         タグから探す
-      </button>
-    </div>
+      </div>
+    </a>
 
     <div class="my-2">
       @include('ads.rectangle')
@@ -137,23 +135,23 @@
   </div>
 
   <!-- about search -->
-<div class="modal fade" id="search-description" tabindex="-1" role="dialog" aria-hidden="true" >
-  <div class="modal-dialog  " style="max-width:950px;">
-    <div class="rounded p-1 modal-content text-center"  >
+<div class="modal fade" id="search-description" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="rounded p-1 modal-content text-center">
       <div class="text-right">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button><br>
       </div>
-      <div class="border border-dark mx-1" style="display:inline-block;">
-          <img class="border m-1" src="/image/search-description1.webp" style="height:300px; width:300px;" alt='あいまい検索 使用例'>
-          <img class="border m-1" src="/image/search-description2.webp" style="height:300px; width:300px;" alt='声調記号などが違ってもヒットします 発音が似ている単語もヒットします 混同しやすい単語の整理にも便利です'>
-          <img class="border m-1" src="/image/search-description3.webp" style="height:300px; width:300px;" alt='ベトナム語だけでなく 日本語 漢越語 関連タグ もヒットします'>
+      <div class="search-description-image-container">
+          <img class="search-description-image" src="/image/search-description1.webp" alt='あいまい検索 使用例'>
+          <img class="search-description-image" src="/image/search-description2.webp" alt='声調記号などが違ってもヒットします 発音が似ている単語もヒットします 混同しやすい単語の整理にも便利です'>
+          <img class="search-description-image" src="/image/search-description3.webp" alt='ベトナム語だけでなく 日本語 漢越語 関連タグ もヒットします'>
       </div>
       <div class="text-center">
         <p>
           追加機能のご要望やご意見等がありましたら、<br>
-          <button type="button" class="border border-2 border-primary white rounded" data-dismiss="modal" aria-label="Close" style="display:inline-block;">
+          <button type="button" class="border border-2 border-primary white rounded d-inline-block" data-dismiss="modal" aria-label="Close">
             <span data-toggle="modal" data-target="#contact">
               <a class="text-primary">
                 お問合せフォーム
@@ -162,7 +160,7 @@
           </button>
           から遠慮なくご連絡ください。
         </p>
-        <button type="button" class="border border-2 border-muted text-muted  white rounded" data-dismiss="modal" aria-label="Close" style="width:100px; display:inline-block;">
+        <button type="button" class="border border-2 border-muted text-muted white rounded d-inline-block" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">Close</span>
         </button>
       </div>
