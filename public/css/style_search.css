@@ -1,0 +1,99 @@
+/* search, word.showで使うstyle */
+
+.container-search{
+    max-width:800px;
+}
+.card-search{
+    max-width: 30rem;
+    background-color: white;
+    color: black;
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    margin: 0.5rem 0 0.75rem 0;
+    border-radius:8px;
+    box-shadow: 0px 2px 5px #AAAAAA;    
+}
+.search-button-card-search{
+    font-size: large;
+    margin: 0 0 0 0.5rem;
+    padding: 0.25rem 0.75rem; 
+}
+
+
+/* 関連語などのグループ化 */
+.grouping-square{
+    color:#ffa726;
+    margin:0.75rem 0 0.25rem 0rem;
+    padding: 0 0.5rem 0.25rem 0.5rem ;
+    border: 2px solid #ffa726;
+    border-radius:10px;
+    max-width:30rem;
+}
+
+.grouping-square-orange-filled{
+    color:white;
+    background-color:#ffa726;
+}
+.grouping-square-orange{
+    color:#ffa726;
+    border: 2px solid #ffa726;
+}
+.grouping-square-primary{
+    color:#4285F4;
+    border: 2px solid #4285F4;
+}
+.grouping-square-danger{
+    color:#ff4444;
+    border: 2px solid #ff4444;
+}
+.grouping-square-info{
+    color:#33b5e5;
+    border: 2px solid #33b5e5;
+}
+.grouping-square-success{
+    color:#00C851;
+    border: 2px solid #00C851;
+}
+
+.grouping-label{
+    font-size:1.2rem;
+}
+
+.search-button-tag{
+    margin: 0.75rem 0;
+    padding: 0.5rem 0.75rem;
+    box-shadow: 0px 2px 5px #AAAAAA;        
+    display:inline-block;
+}    
+
+
+/* セルフ広告 */
+.self-ad-outer-square{
+    max-width: 450px;
+    background-color:#ffa726;
+    color:white;
+    text-align:center;
+    padding-bottom: 0.25rem;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px #AAAAAA;    
+}
+.self-ad-inner-square{
+    background-color: white;
+    color: #ffa726;
+    margin: 0 0.5rem 0.25rem 0.5rem;
+}
+
+/* 検索機能の使い方 */
+.search-description-image-container{
+    border: 1px solid gray;    
+    margin: 0 0.25rem;
+    /* display:inline-block; */
+}
+.search-description-image{
+    height:300px; 
+    width:300px;
+    border: 1px solid black;
+    margin: 0.25rem;
+}
+.modal-dialog{
+    max-width:1050px;
+}

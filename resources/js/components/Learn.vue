@@ -313,7 +313,11 @@
           { text:"余裕♪"},
         ],
         history:[],
-        baseColors:[" red lighten-4", " amber lighten-4", " lime lighten-4", " green lighten-4"],
+        baseColors:[
+          "red lighten-4",
+          "amber lighten-4",
+          "lime lighten-4",
+          "green lighten-4"],
         adsenseContent1: '',
         adsenseContent2: '',
       }
@@ -476,7 +480,13 @@
 
       clickButton(n) { //次の単語に進むボタンをクリック
         this.sec = 0;
-        this.history.push({'No':this.total, 'name':this.answer_F, 'easiness':n, 'level':this.answer_level, 'id':this.answer_id});
+        this.history.push({
+          'No':this.total,
+          'name':this.answer_F,
+          'easiness':n,
+          'level':this.answer_level,
+          'id':this.answer_id
+        });
         this.recordLearn(n);
         if(this.total >= 10){
           this.status = "RESULT"
@@ -518,7 +528,7 @@
             previous: this.answer_F,
           }
         });
-        //本来はきれいなjsonで来てほしいが、dataの頭に全角スペースが入ることもあるため、どちらでもいいように場合分けしている。
+        //dataの頭に万が一全角スペースが入ってきてもいいように、場合分け。
         if(response.data === "CLEARED"){
           this.status = "CLEARED";
           let clear_sound = new Audio('/sound/clear.mp3');

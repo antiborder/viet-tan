@@ -1,6 +1,6 @@
-<div class="card mt-0 mb-1 pt-1 pb-1 pl-1 pr-3  white " style="max-width: 30rem; border-radius:8px;">
+<div class="card-word">
   <div class="d-flex flex-row">
-    <div class="pl-0" style ="width:50%">
+    <div class="upper-left-half">
       <div class="d-flex flex-row">
         <!-- 音節数によるfont-size調整 -->
         @if($word->name3=='')
@@ -15,20 +15,19 @@
           @endphp
           @if($word->$name!==null)
             <div class="pt-1">
-              <div class="mx-auto" style="width:100%">
-
+              <div>
                 <span class="h4 card-title">
-                  <a href="{{ route('words.show', ['word' => $word]) }}" class="viet-text text-dark yellow lighten-3" style="padding-right:6px; padding-left:6px; margin-right:-6px; border-radius:8px; font-size:{{$name_font_size}};" >
+                  <a href="{{ route('words.show', ['word' => $word]) }}" class="viet-text word-name" style="font-size:{{$name_font_size}};" >
                     {{$word->$name}}
                   </a>
                 </span>
               </div>
-              <div class="mx-auto text-center" style="width:1.0rem;">
+              <div class="kanji-box">
                 @php
                   $kanji_n = 'kanji' . $i;
                 @endphp
                 @if($word->$kanji_n != '')
-                <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="kanji-text pt-1 mr-1 mt-1 blue-text" style=' font-size:1.5rem'>
+                <a href="{{ route('kanjis.show', ['name' => $word->$kanji_n]) }}" class="kanji-text kanji">
                   {{$word->$kanji_n}}
                 </a>
                 @endif
@@ -39,17 +38,17 @@
       </div>
 
     </div>
-    <div class="pl-2 pt-1 border-left border-light" style="width:50%" >
-      <div class="normal-text text-dark text-left card-text" style="font-size:1.0rem; white-space: pre-line;">{{ $word->jp }}</div>
+    <div class="right-half" >
+      <div class="normal-text jp">{{ $word->jp }}</div>
     </div>
   </div>
   <div class="d-flex flex-row">
-    <div class="pl-1" style ="width:50%">
+    <div class="lower-left-half">
       <div class="normal-text text-dark text-left small mt-1 card-text">
         Lv.{{$word->level}}
       </div>
     </div>
-    <div class="pl-2 pt-0 border-left border-light" style="width:50%" >
+    <div class="right-half" >
       <div class="d-flex flex-row-reverse">
         @if( Auth::id() === $word->user_id )
           <!-- dropdown -->
