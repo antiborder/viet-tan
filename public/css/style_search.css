@@ -84,7 +84,7 @@
 
 /* 検索機能の使い方 */
 .search-description-image-container{
-    border: 1px solid gray;    
+    border: 1px solid #CCCCCC;    
     margin: 0 0.25rem;
     /* display:inline-block; */
 }

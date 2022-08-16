@@ -528,7 +528,7 @@
             previous: this.answer_F,
           }
         });
-        //dataの頭に万が一全角スペースが入ってきてもいいように、場合分け。
+        
         if(response.data === "CLEARED"){
           this.status = "CLEARED";
           let clear_sound = new Audio('/sound/clear.mp3');
@@ -537,7 +537,7 @@
           return;
         }
         let jsoned;
-        if(String(response.data).substr(0,1) == '　'){
+        if(String(response.data).substr(0,1) == '　'){//dataの頭にspaceがある場合に対応
           let trimed = response.data.replace(/　+/g,'');
           jsoned = JSON.parse(trimed);
         }else{
