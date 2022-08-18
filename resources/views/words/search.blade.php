@@ -125,8 +125,8 @@
         </div>
         <div class="self-ad-inner-square">
           <div class="h3 mb-n1" >
-            <div class="mr-n1 d-inline-block">ベトナム語学習の</div>
-            <div class="d-inline-block">無料ツール</div>
+            <div class="mr-n1 d-inline-block">がんばらない</div>
+            <div class="d-inline-block">ベトナム語のすすめ</div>
           </div>
           <small>べとらん Homeに戻る</small>
         </div>

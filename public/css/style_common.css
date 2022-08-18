@@ -227,6 +227,14 @@ detail
 }
 
 /* 単語詳細カード */
+#card-detail{
+    background-color:white;
+    color: #262626;
+    margin-bottom: 0.5rem;
+    padding: 0 0.75rem 0.25rem 0.25rem;
+    border-radius:8px;
+    box-shadow: 0px 2px 5px #AAAAAA;
+}
 #card-detail .label-text-vn{
     height:40px;
     padding-top: 0.5rem;
@@ -237,8 +245,7 @@ detail
     padding-top:16px;
     
 }
-
-#card-detail .label-text-jp{
+#card-detail .label-text-kanji{
     height:40px;
     text-align:right;
     width:70px;
@@ -246,7 +253,17 @@ detail
     margin:0;
     padding-top:8px;
 }
-
+#card-detail .detail-word-text{
+    height:40px; 
+    width:100%;
+    font-size:1.9rem;
+    margin: 0 auto;
+    padding: 0 0.25rem 0 0.25rem;
+}
+#card-detail .detail-kanji-box{
+    width:30px;
+    margin: 0 auto;
+}
 #card-detail .detail-kanji-text{
     color: #2196f3;
     font-size:1.5rem;
@@ -255,22 +272,54 @@ detail
 }
 #card-detail .pronunciation-block{
     max-width:320px;
-    margin: 0 0 0.5rem 0.5rem;
-    padding-left: 0.25rem;
+    font-size:0.8rem;    
+    color:#aa66cc;
     border: 1px solid #aa66cc;
     border-radius: 5px;
+    margin: 0 0 0.5rem 0.5rem;
+    padding-left: 0.25rem;
+}
+#card-detail .pronunciation-text{
+    text-align:left;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+#card-detail .pronunciation-control{
+    height:30px;
+    width:270px;
 }
 #card-detail .jp-block{
     margin-top: 0.5rem;
     white-space: pre-line;
 }
+#card-detail .label-text-jp{
+    width:70px;
+    text-align:right;
+    font-size:0.8rem;
+    padding-top: 0.35rem;
+}
+#card-detail .text-jp{
+    font-size:1.2rem;
+}
 #card-detail .image-block{
     width:190px;
     margin: 0.5rem 0 0.5rem 0; 
 }
+#card-detail .image-block-square{
+    width:180px;
+    margin: 0.5rem 0 0 0.5rem;
+    padding-left: 0.25rem;
+    border: 1px solid #00C851;
+    border-radius: 5px;
+}
+#card-detail .level-label{
+    width: 70px;
+    text-align:right;
+    font-size:0.8rem;
+    padding-top: 0.25rem;
+}
 #card-detail .image-text{
     font-size:0.8rem;
-
 }
 #card-detail .image-icon{
     font-size:2.0rem;
@@ -279,10 +328,4 @@ detail
     font-size:0.8rem;
     color: #888888;
     float:right;
-    
 }
-
-
-
-
-
