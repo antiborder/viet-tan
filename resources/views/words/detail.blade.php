@@ -1,10 +1,10 @@
-<div id="card-detail" class="text-dark card-plain mb-2  pt-0 pb-1 pl-1 pr-3 white shadow rounded">
+<div id="card-detail" class="card-plain">
   <div class=" card-body pt-2 pb-0 pl-0 d-flex flex-row">
     <div>
       <div class="d-flex flex-row">
         <div class="text-nowrap mr-1">
           <p class="label-text-vn">ベトナム語：&nbsp;</p>
-          <p class="label-text-jp">漢字：&nbsp;</p>
+          <p class="label-text-kanji">漢字：&nbsp;</p>
         </div>
         @foreach(array(0,1,2,3,4,5,6,7) as $i)
           @php
@@ -12,10 +12,10 @@
           @endphp
           @if($word->$name!==null)
           <div>
-            <div class="viet-text mx-auto px-1" style="height:40px; width:100%;font-size:1.9rem">
+            <div class="viet-text detail-word-text">
                 {{$word->$name}}
             </div>
-            <div class="mx-auto" style="width:30px">
+            <div class="detail-kanji-box">
               @php
                 $kanji_n = 'kanji' . $i;
               @endphp
@@ -35,17 +35,17 @@
       @endphp
       @if(file_exists(public_path().$file_name))
         <div class="pronunciation-block">
-          <div class="text-secondary mb-0 pb-0" style="text-align:left;font-size:0.8rem">
+          <div class="pronunciation-text">
             発音を確認
           </div>
           <div class="ml-1 mt-0 pt-0">
-              <audio controls src={{$file_name}} class="" style="height:30px;width:270px;"><audio>
+              <audio controls src={{$file_name}} class="pronunciation-control"><audio>
           </div>
         </div>
       @endif
       <div class="jp-block d-flex flex-row">
-        <div class="jp-text pt-2" style="width:70px;text-align:right;font-size:0.8rem">意味：&nbsp;</div>
-        <div style="font-size:1.2rem">{{ $word->jp }}</div>
+        <div class="label-text-jp">意味：&nbsp;</div>
+        <div class="text-jp">{{ $word->jp }}</div>
       </div>
 
       @php
@@ -53,7 +53,7 @@
       @endphp
       <div class="image-block">
         <a href={{'https://www.google.co.jp/search?q='.$search_word.'&tbm=isch'}} class="text-success" target="_blank" rel="noopener noreferrer">
-          <div class="ml-2 mt-2 pl-1 d-flex flex-row border border-success rounded" style="width:180px">
+          <div class="image-block-square d-flex flex-row">
             <div>
               <span class="image-text">単語のイメージを確認</span>
             </div>
@@ -64,9 +64,11 @@
           <div class="image-annotation">※画像検索が開きます</div>
         </a>
       </div>
-      <div class="normal-text d-flex flex-row pt-3">
-        <div class="pt-1" style="width:50px;text-align:right;font-size:0.8rem">Level：&nbsp;</div>
-        <div style="font-size:1.0rem">{{ $word->level }}</div>
+      <div class="d-flex flex-row pt-3 w-100">
+        <div class="level-label">
+          Level：&nbsp;
+        </div>
+        <div>{{ $word->level }}</div>
       </div>
     </div>
   </div>
