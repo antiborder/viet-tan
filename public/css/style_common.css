@@ -31,19 +31,19 @@ detail
     font-size:1.4rem;
 }
 #nav .nav-search-form{
-    max-width:100px; 
+    max-width:100px;
     min-width:40px;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
 #nav .nav-search-btn{
-    height:38px; 
+    height:38px;
     background-color:#ffc700;
-    color: white;    
-    position:relative; 
-    right:3px; 
+    color: white;
+    position:relative;
+    right:3px;
     border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;    
+    border-bottom-right-radius: 5px;
     border-width: 0px;
 }
 
@@ -67,7 +67,7 @@ detail
 /* footer */
 #footer{
     background-color: black;
-    width:100%; 
+    width:100%;
     position: absolute;
     bottom:0;
     margin-top: 0.75rem;
@@ -79,7 +79,7 @@ detail
 }
 #footer .footer-block1{
     width:170px;
-    text-align:center;    
+    text-align:center;
 }
 #footer .footer-logo1{
     color:#ffa726;
@@ -92,13 +92,13 @@ detail
     padding-top: 0;
 }
 #footer .footer-block2{
-    font-size:0.8rem; 
+    font-size:0.8rem;
     width:170px;
     text-align: center;
     padding: 0.5rem;
 }
 #footer .footer-block3{
-    font-size:0.8rem; 
+    font-size:0.8rem;
     width:170px;
     text-align: center;
     padding: 0.5rem;
@@ -120,8 +120,8 @@ detail
     line-height:1.8;
 }
 
-/* ボタン系 */
-.home-button{
+/* ボタン系 色だけ定義*/
+ .home-button{ /*どこで使ってるの？ */
     background-color:#ffa726;
     color:white;
     margin: 0px 1px;
@@ -129,19 +129,43 @@ detail
     border-style:none;
     border-radius: 3px;
 }
-.home-button-transparent{
+.home-button-transparent{ /*まだどこかで使ってるの？*/
     border: 1px solid #ffa726;
     border-radius:4px;
     color:#ffa726;
     padding:0px 8px 4px 8px;
     display:inline-block;
 }
+.login-button{
+    background-color: white;
+    color:#ffa726;
+    border-style:solid;
+    border-color:#ffa726;
+}
 .search-button{
     background-color:#ffc700;
     color:white;
     border-style:none;
-    border-radius: 3px;
+    /* border-radius: 3px; */
 }
+.signup-button{
+    background-color:#ff7043;
+    color:white;
+}
+.primary-btn-transparent{
+    border: 1px solid #4285F4;
+    color:#4285F4;
+}
+.success-btn-transparent{
+    border: 1px solid #00C851;
+    color:#00C851;
+}
+.muted-btn-transparent{
+    border: 1px solid #6c757d;
+    color:#6c757d;
+}
+
+/* ボタン  形を定義*/
 .btn-recommend{
     border-radius: 5px;
     padding: 0.5rem 0.75rem ;
@@ -149,16 +173,7 @@ detail
     display:inline-block;
     font-size:1.2rem
 }
-.signup-button{
-    background-color:#ff7043;
-    color:white;
-}
-.login-button{
-    background-color: white;
-    color:#ffa726;
-    border-style:solid;
-    border-color:#ffa726;    
-}
+
 
 
 
@@ -182,8 +197,8 @@ detail
 .card-word .word-name{
     color: #262626;
     background-color: #fff59d;
-    padding-right:6px; 
-    padding-left:6px; 
+    padding-right:6px;
+    padding-left:6px;
     margin-right:-6px;
     border-radius:8px;
 }
@@ -208,7 +223,7 @@ detail
 .card-word .jp{
     color:#262626;
     text-align: left;
-    font-size:1.0rem; 
+    font-size:1.0rem;
     white-space: pre-line;
 }
 .card-word .right-half{
@@ -243,7 +258,7 @@ detail
     font-size:0.7rem;
     margin:0;
     padding-top:16px;
-    
+
 }
 #card-detail .label-text-kanji{
     height:40px;
@@ -254,7 +269,7 @@ detail
     padding-top:8px;
 }
 #card-detail .detail-word-text{
-    height:40px; 
+    height:40px;
     width:100%;
     font-size:1.9rem;
     margin: 0 auto;
@@ -272,7 +287,7 @@ detail
 }
 #card-detail .pronunciation-block{
     max-width:320px;
-    font-size:0.8rem;    
+    font-size:0.8rem;
     color:#aa66cc;
     border: 1px solid #aa66cc;
     border-radius: 5px;
@@ -303,7 +318,7 @@ detail
 }
 #card-detail .image-block{
     width:190px;
-    margin: 0.5rem 0 0.5rem 0; 
+    margin: 0.5rem 0 0.5rem 0;
 }
 #card-detail .image-block-square{
     width:180px;

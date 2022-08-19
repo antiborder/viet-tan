@@ -108,7 +108,7 @@
       @endif
     @endforeach
     <a href='{{ route("tags.categories")}}' >
-      <div class="search-button-tag search-button">
+      <div class="search-button-normal search-button">
         タグから探す
       </div>
     </a>

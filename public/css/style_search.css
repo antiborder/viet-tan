@@ -58,13 +58,12 @@
     font-size:1.2rem;
 }
 
-.search-button-tag{
+.search-button-normal{
     margin: 0.75rem 0;
     padding: 0.5rem 0.75rem;
     box-shadow: 0px 2px 5px #AAAAAA;        
     display:inline-block;
 }    
-
 
 /* セルフ広告 */
 .self-ad-outer-square{
@@ -81,7 +80,7 @@
     background-color: white;
     color: #ffa726;
     margin: 0 0.5rem 0.25rem 0.5rem;
-    border-radius:8px;
+    border-radius:5px;
 }
 
 /* 検索機能の使い方 */

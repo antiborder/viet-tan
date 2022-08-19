@@ -1,4 +1,4 @@
-<div id="card-detail" class="card-plain">
+<div id="card-detail">
   <div class=" card-body pt-2 pb-0 pl-0 d-flex flex-row">
     <div>
       <div class="d-flex flex-row">

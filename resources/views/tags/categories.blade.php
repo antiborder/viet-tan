@@ -28,9 +28,11 @@
       </ul>
       <div class=" my-3 text-center" style="">
         タグは検索からでも探せます<br>
-          <button onclick="location.href='{{route("words.search")}}'" class="search-button shadow">
+        <a href='{{ route("words.search") }}' >
+          <div class="search-button-normal search-button">
             検索から探す
-          </button><br>
+          </div>
+        </a>
       </div>
 
       @include('ads.horizontal')

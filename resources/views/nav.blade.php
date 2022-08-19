@@ -99,7 +99,7 @@
           <span aria-hidden="true">&times;</span>
         </button><br>
         <div class="m-2 text-center">この機能は会員専用です。</div>
-        <div class="text-center" >
+        <div class="text-center">
           <a href="{{ route('register')}}" class="btn-recommend signup-button">
             無料登録する
           </a>
