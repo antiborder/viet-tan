@@ -38,7 +38,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">
 
   <!-- Style Sheets -->
-  <link href="{{ asset('css/style20220818.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/style20220819.css') }}" rel="stylesheet">
   <link href="{{ asset('css/stripe.css') }}" rel="stylesheet">
 </head>
 
