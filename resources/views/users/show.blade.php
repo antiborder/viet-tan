@@ -36,28 +36,24 @@
       <div class="h5 card-title  mt-1 ml-1">学習状況</div>
       <table class="mt=0 mb-1">
         <tr>
-          <th style="font-size:1.0rem; text-align:center">Level</th>
-          <th style="font-size:1.0rem; text-align:center; min-width:70px">進捗率</th>
-          <th style="font-size:1.0rem; text-align:center">復習可</th>
-          <th style="font-size:1.0rem; text-align:center">未習</th>
+          <th class="table-header">Level</th>
+          <th class="table-header" style="min-width:70px">進捗率</th>
+          <th class="table-header">復習可</th>
+          <th class="table-header">未習</th>
 
         </tr>
         @foreach($status as $s)
         <tr>
-          <td style="font-size:1.1rem; text-align:center">{{$s['level']}}</td>
-          @php
-            $style1 = "width:".$progress[$s['level']];
-            $style2 = "%; color:black";
-          @endphp
+          <td class="table-text">{{$s['level']}}</td>
           <td style="text-align:right">
             <span class="progress">
-              <span class="progress-bar bg-success" style="{{$style1.$style2}}">
+              <span class="progress-bar bg-success text-dark" style="width:{{ $progress[$s['level']] }}%">
                 　{{$progress[$s['level']]}}&#037;
               </span>
             </span >
           </td>
-          <td style="font-size:1.2rem; text-align:center">{{$ready[$s['level']]}}</td>
-          <td style="font-size:1.2rem; text-align:center">{{$unlearned[$s['level']]}}</td>
+          <td class="table-text">{{$ready[$s['level']]}}</td>
+          <td class="table-text">{{$unlearned[$s['level']]}}</td>
           <td style="text-align:center">
             <!-- Button trigger modal -->
             @php
@@ -165,9 +161,9 @@
               @endfor
             </div>
             <div class="label-horizontal"style="display: flex;">
-              <div class="label" style="font-size: 12px;  margin-left: 5px; line-height:14px; width: 15px;  text-align: center;  padding-top: 6px;">現在</div>
+              <div class="date-label">現在</div>
               @for($i=1;$i<=60;$i++)
-                <div class="label" style="font-size: 12px;  margin-left: 5px; line-height:14px; width: 15px;  text-align: center;  padding-top: 6px;">{{$i}} @if($i===1) 日後 @endif</div>
+                <div class="date-label">{{$i}} @if($i===1) 日後 @endif</div>
               @endfor
             </div>
           </div>
@@ -176,7 +172,7 @@
     </div>
 
     <a href="/learn/REVIEW_ALL" >
-      <div class="card my-2 px-2 py-2 primary-color text-white" style="color: white; max-width:230px; font-size:1.2rem; text-align:center; margin-left:auto; font-family:ＭＳ Ｐゴシック;">
+      <div class="reviewall-btn primary-btn">
         <div >
             復習のみでStart ▶
         </div>
