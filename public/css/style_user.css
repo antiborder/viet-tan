@@ -1,5 +1,13 @@
 /* users.showのstyle */
 
+#user .table-header{
+    font-size:1.0rem; 
+    text-align:center; 
+}
+#user .table-text{
+    font-size:1.2rem; 
+    text-align:center;
+}
 #user .detail-btn{
     height:30px;
     width:100%; 
@@ -9,7 +17,6 @@
     text-align:center;
     padding-top: 0.25rem;
     border-radius: 5px;
-    
 }
 #user .play-btn{
     height:30px;
@@ -29,6 +36,15 @@
     border-width:1px;
     display:inline-block;
 }
+#user .reviewall-btn{
+    max-width:230px; 
+    font-size:1.2rem; 
+    text-align:center; 
+    border-radius:5px;
+    margin: 0.5rem 0 0.5rem auto;
+    padding:0.5rem;
+    box-shadow: 0px 2px 5px #AAAAAA;
+}
 
 #user .word-number-label{
     font-size: 12px;
@@ -44,6 +60,15 @@
     margin: 0 auto;  
     background: #F0F0F0;
 }
+#user .date-label{
+    font-size: 12px;  
+    margin-left: 5px; 
+    line-height:14px; 
+    width: 15px;  
+    text-align: center;  
+    padding-top: 6px;
+}
+
 #user .confidence-btn{
     width:70px; 
     height:23px;

@@ -152,6 +152,10 @@ detail
     background-color:#ff7043;
     color:white;
 }
+.primary-btn{
+    background-color: #4285F4;
+    color:white;
+}
 .primary-btn-transparent{
     border: 1px solid #4285F4;
     color:#4285F4;
