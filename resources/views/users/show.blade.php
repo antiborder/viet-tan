@@ -32,6 +32,8 @@
         </div>         -->
       </div>
     </div>
+
+    <!-- 学習状況 -->
     <div class="card my-2">
       <div class="h5 card-title  mt-1 ml-1">学習状況</div>
       <table class="mt=0 mb-1">
@@ -132,32 +134,39 @@
 
     @include('ads.horizontal')
 
+    <!-- 学習予定 -->
     <div class="card my-2">
       <div class="h5 card-title  mt-1 ml-1">復習予定</div>
       <div class="card-body">
         <div class="overflow-auto" style="display:flex">
           <div class="label-vertical">
             <div class="word-number-label">[語]</div>
-            <div class="word-number-label">500</div>
+            @for ($i = 5; $i >= 0; $i--)
+              <div class="word-number-label">{{ $i * 100 }}</div>
+            @endfor
+            <!-- <div class="word-number-label">500</div> 消してOK
             <div class="word-number-label">400</div>
             <div class="word-number-label">300</div>
             <div class="word-number-label">200</div>
             <div class="word-number-label">100</div>
-            <div class="word-number-label">0</div>
+            <div class="word-number-label">0</div> -->
           </div>
           <div class="inner" style="display:flex; flex-flow: column;">
-            <div class="graph" style=" height:150x; width:1240px; border:1px solid #F0F0F0; position:relative; margin-top:13px;">
-              <hr class="word-number-rule" style="top: 25px;">
+            <div class="graph schedule-graph">
+              @for ($i = 1; $i <= 6; $i++)
+                <hr class="word-number-rule" style="top: {{ $i * 25 }}px;">
+              @endfor              
+              <!-- <hr class="word-number-rule" style="top: 25px;">　消してOOK
               <hr class="word-number-rule" style="top: 50px;">
               <hr class="word-number-rule" style="top: 75px;">
               <hr class="word-number-rule" style="top: 100px">
               <hr class="word-number-rule" style="top: 125px">
-              <hr class="word-number-rule" style="top: 150px">
+              <hr class="word-number-rule" style="top: 150px"> -->
 
 
-              <div class="bar pink lighten-3" style="height: {{$ready_total/4}}px; margin-top: {{150-$ready_total/4}}px; float: left;  text-align: center;  position: relative;  margin-left: 5px;  width: 15px;  background-color: #006400;"></div>
+              <div class="schedule-bar" style="height: {{$ready_total/4}}px; margin-top: {{150-$ready_total/4}}px;"></div>
               @for($i=1;$i<=60;$i++)
-                <div class="bar pink lighten-3" style="height: {{$schedule[$i]/4}}px; margin-top: {{150-$schedule[$i]/4}}px; float: left;  text-align: center;  position: relative;  margin-left: 5px;  width: 15px;  background-color: #006400;" ></div>
+                <div class="schedule-bar" style="height: {{$schedule[$i]/4}}px; margin-top: {{150-$schedule[$i]/4}}px;"></div>
               @endfor
             </div>
             <div class="label-horizontal"style="display: flex;">

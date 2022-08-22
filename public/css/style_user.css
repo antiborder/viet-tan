@@ -46,6 +46,13 @@
     box-shadow: 0px 2px 5px #AAAAAA;
 }
 
+#user .schedule-graph{
+    height:150x; 
+    width:1240px; 
+    border:1px solid #F0F0F0; 
+    position:relative; 
+    margin-top:13px;    
+}
 #user .word-number-label{
     font-size: 12px;
     line-height: 25px;
@@ -59,6 +66,14 @@
     height: 1px;  
     margin: 0 auto;  
     background: #F0F0F0;
+}
+#user .schedule-bar{
+    background-color: #f48fb1;
+    float: left;  
+    text-align: center;  
+    position: relative;  
+    margin-left: 5px;  
+    width: 15px;
 }
 #user .date-label{
     font-size: 12px;  
