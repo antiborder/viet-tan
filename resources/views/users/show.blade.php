@@ -39,7 +39,7 @@
       <table class="mt=0 mb-1">
         <tr>
           <th class="table-header">Level</th>
-          <th class="table-header" style="min-width:70px">進捗率</th>
+          <th class="table-header table-header-progress">進捗率</th>
           <th class="table-header">復習可</th>
           <th class="table-header">未習</th>
 
@@ -47,7 +47,7 @@
         @foreach($status as $s)
         <tr>
           <td class="table-text">{{$s['level']}}</td>
-          <td style="text-align:right">
+          <td class="text-center">
             <span class="progress">
               <span class="progress-bar bg-success text-dark" style="width:{{ $progress[$s['level']] }}%">
                 　{{$progress[$s['level']]}}&#037;
@@ -56,7 +56,7 @@
           </td>
           <td class="table-text">{{$ready[$s['level']]}}</td>
           <td class="table-text">{{$unlearned[$s['level']]}}</td>
-          <td style="text-align:center">
+          <td class="text-center">
             <!-- Button trigger modal -->
             @php
               $modal = "modal".$s['level'];
@@ -74,7 +74,7 @@
             @endif
 
           </td>
-          <td style="padding-right:0.5rem;">
+          <td>
             <a type="button" class="play-btn primary-btn-transparent"  href="{{'/learn/'.$s['level']}}">
             ▶
             </a>
@@ -144,30 +144,19 @@
             @for ($i = 5; $i >= 0; $i--)
               <div class="word-number-label">{{ $i * 100 }}</div>
             @endfor
-            <!-- <div class="word-number-label">500</div> 消してOK
-            <div class="word-number-label">400</div>
-            <div class="word-number-label">300</div>
-            <div class="word-number-label">200</div>
-            <div class="word-number-label">100</div>
-            <div class="word-number-label">0</div> -->
           </div>
+
           <div class="inner" style="display:flex; flex-flow: column;">
             <div class="graph schedule-graph">
               @for ($i = 1; $i <= 6; $i++)
                 <hr class="word-number-rule" style="top: {{ $i * 25 }}px;">
               @endfor              
-              <!-- <hr class="word-number-rule" style="top: 25px;">　消してOOK
-              <hr class="word-number-rule" style="top: 50px;">
-              <hr class="word-number-rule" style="top: 75px;">
-              <hr class="word-number-rule" style="top: 100px">
-              <hr class="word-number-rule" style="top: 125px">
-              <hr class="word-number-rule" style="top: 150px"> -->
-
 
               <div class="schedule-bar" style="height: {{$ready_total/4}}px; margin-top: {{150-$ready_total/4}}px;"></div>
               @for($i=1;$i<=60;$i++)
                 <div class="schedule-bar" style="height: {{$schedule[$i]/4}}px; margin-top: {{150-$schedule[$i]/4}}px;"></div>
               @endfor
+
             </div>
             <div class="label-horizontal"style="display: flex;">
               <div class="date-label">現在</div>

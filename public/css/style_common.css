@@ -109,8 +109,6 @@ detail
 
 
 
-
-
 /* article系 */
 .article h5{
     border-bottom: 1px solid #ffa726;
@@ -161,12 +159,12 @@ detail
     color:#4285F4;
 }
 .success-btn-transparent{
+    color:#00C851;    
     border: 1px solid #00C851;
-    color:#00C851;
 }
 .muted-btn-transparent{
+    color:#6c757d;    
     border: 1px solid #6c757d;
-    color:#6c757d;
 }
 
 /* ボタン  形を定義*/
