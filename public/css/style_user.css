@@ -4,6 +4,9 @@
     font-size:1.0rem; 
     text-align:center; 
 }
+#user .table-header-progress{
+    min-width:70px;
+}
 #user .table-text{
     font-size:1.2rem; 
     text-align:center;
