@@ -1,5 +1,8 @@
 /* users.showのstyle */
 
+#user .progress-card-body{
+    padding: 0 0.5rem 0.5rem 0;
+}
 #user .table-header{
     font-size:1.0rem; 
     text-align:center; 
@@ -29,12 +32,14 @@
     font-size:1.0rem; 
     text-align:center;
     padding-top: 0.125rem;
+    margin-left: 0.25rem;
     border-radius: 5px;
 }
 #user .level-table-btn{
     height:30px;
     font-size:1.0rem;
     padding:0 0.75rem 0 0.75rem;
+    
     border-radius:5px;
     border-width:1px;
     display:inline-block;

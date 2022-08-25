@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <p class="pb-0 mb-0">{{$msg}}</p>
+    <p class="search-message">{{$msg}}</p>
 
     @foreach($words_name_exact ?? null as $word)
       @if($loop->first)
@@ -107,11 +107,14 @@
         </div>
       @endif
     @endforeach
-    <a href='{{ route("tags.categories")}}' >
-      <div class="search-button-normal search-button">
-        タグから探す
-      </div>
-    </a>
+
+    <div class="tag-search-btn-block">
+      <a href='{{ route("tags.categories")}}' >
+        <div class="search-button-normal search-button">
+          タグから探す
+        </div>
+      </a>
+    </div>
 
     <div class="my-2">
       @include('ads.rectangle')

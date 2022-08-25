@@ -1,14 +1,14 @@
 /* search, word.showで使うstyle */
 
 .container-search{
-    max-width:800px;
+    max-width:850px;
 }
 .card-search{
     max-width: 30rem;
     background-color: white;
     color: #262626;
     padding: 0.5rem 0 0.5rem 0.5rem;
-    margin: 0.5rem 0 0.75rem 0;
+    margin: 0.5rem auto 0.75rem auto;
     border-radius:8px;
     box-shadow: 0px 2px 5px #AAAAAA;    
 }
@@ -17,12 +17,16 @@
     margin: 0 0 0 0.5rem;
     padding: 0.25rem 0.75rem; 
 }
-
+.search-message{
+    padding: 0;
+    margin: 0;
+    text-align:center;
+}
 
 /* 関連語などのグループ化 */
 .grouping-square{
     color:#ffa726;
-    margin:0.75rem 0 0.25rem 0rem;
+    margin:0.75rem auto 0.25rem auto;
     padding: 0 0.5rem 0.25rem 0.5rem ;
     border: 2px solid #ffa726;
     border-radius:10px;
@@ -57,9 +61,11 @@
 .grouping-label{
     font-size:1.2rem;
 }
-
+.tag-search-btn-block{
+    text-align:center
+}
 .search-button-normal{
-    margin: 0.75rem 0;
+    margin: 0.75rem auto;
     padding: 0.5rem 0.75rem;
     box-shadow: 0px 2px 5px #AAAAAA;        
     display:inline-block;
@@ -72,7 +78,7 @@
     color:white;
     text-align:center;
     padding-bottom: 0.25rem;
-    margin:0.75rem 0 0.25rem 0rem;
+    margin:0.75rem auto 0.25rem auto;
     border-radius: 8px;
     box-shadow: 0px 2px 5px #AAAAAA;    
 }

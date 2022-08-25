@@ -11,7 +11,7 @@
 
 @section('content')
   @include('nav')
-  <div class="container" style="max-width:800px">
+  <div class="container" style="max-width:850px">
     <div class="grouping-square grouping-square-orange">
       <span class="grouping-label">単語詳細</span>
       @include('words.detail')
