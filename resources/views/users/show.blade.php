@@ -35,108 +35,109 @@
 
     <!-- 学習状況 -->
     <div class="card my-2">
-      <div class="h5 card-title  mt-1 ml-1">学習状況</div>
-      <table class="mt=0 mb-1">
-        <tr>
-          <th class="table-header">Level</th>
-          <th class="table-header table-header-progress">進捗率</th>
-          <th class="table-header">復習可</th>
-          <th class="table-header">未習</th>
+      <div class="h5 card-title mt-1 ml-1 mb-1">学習状況</div>
+      <div class="card-body progress-card-body">
+        <table class="mt-0 mb-1 w-100">
+          <tr>
+            <th class="table-header">Level</th>
+            <th class="table-header table-header-progress">進捗率</th>
+            <th class="table-header">復習可</th>
+            <th class="table-header">未習</th>
 
-        </tr>
-        @foreach($status as $s)
-        <tr>
-          <td class="table-text">{{$s['level']}}</td>
-          <td class="text-center">
-            <span class="progress">
-              <span class="progress-bar bg-success text-dark" style="width:{{ $progress[$s['level']] }}%">
-                　{{$progress[$s['level']]}}&#037;
-              </span>
-            </span >
-          </td>
-          <td class="table-text">{{$ready[$s['level']]}}</td>
-          <td class="table-text">{{$unlearned[$s['level']]}}</td>
-          <td class="text-center">
-            <!-- Button trigger modal -->
-            @php
-              $modal = "modal".$s['level'];
-              $label = "label".$s['level'];
-            @endphp
+          </tr>
+          @foreach($status as $s)
+          <tr>
+            <td class="table-text">{{$s['level']}}</td>
+            <td class="text-center">
+              <span class="progress">
+                <span class="progress-bar bg-success text-dark" style="width:{{ $progress[$s['level']] }}%">
+                  　{{$progress[$s['level']]}}&#037;
+                </span>
+              </span >
+            </td>
+            <td class="table-text">{{$ready[$s['level']]}}</td>
+            <td class="table-text">{{$unlearned[$s['level']]}}</td>
+            <td class="text-center">
+              <!-- Button trigger modal -->
+              @php
+                $modal = "modal".$s['level'];
+                $label = "label".$s['level'];
+              @endphp
 
-            @if($learned[$s['level']] !==0)
-              <a type="button" class="detail-btn success-btn-transparent" data-toggle="modal" data-target="{{'#'.$modal}}" style="color:#00C851">
-                詳細
+              @if($learned[$s['level']] !==0)
+                <a type="button" class="detail-btn success-btn-transparent" data-toggle="modal" data-target="{{'#'.$modal}}" style="color:#00C851">
+                  詳細
+                </a>
+              @else
+                <a type="button" class="detail-btn muted-btn-transparent" style="color:#6c757d">
+                  詳細
+                </a>
+              @endif
+
+            </td>
+            <td>
+              <a type="button" class="play-btn primary-btn-transparent"  href="{{'/learn/'.$s['level']}}">
+              ▶
               </a>
-            @else
-              <a type="button" class="detail-btn muted-btn-transparent" style="color:#6c757d">
-                詳細
-              </a>
-            @endif
+            </td>
+              <!-- Modal -->
+            <div class="modal fade" id="{{$modal}}" tabindex="-1" role="dialog" aria-labelledby="{{$label}}" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header" style="height:50px">
+                    <h5 class="modal-title" id="{{$label}}" >Level {{$s['level']}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div>直近の解答</div>
 
-          </td>
-          <td>
-            <a type="button" class="play-btn primary-btn-transparent"  href="{{'/learn/'.$s['level']}}">
-            ▶
-            </a>
-          </td>
-            <!-- Modal -->
-          <div class="modal fade" id="{{$modal}}" tabindex="-1" role="dialog" aria-labelledby="{{$label}}" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header" style="height:50px">
-                  <h5 class="modal-title" id="{{$label}}" >Level {{$s['level']}}</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div>直近の解答</div>
+                    <div class="progress shadow-none" style="height:30px;margin-bottom:10px">
 
-                  <div class="progress shadow-none" style="height:30px;margin-bottom:10px">
+                    <!-- learned_nを配列にすればもう少しまとまる。 -->
+                      @php
+                        $individual = [0=>"red lighten-4", 1=>"amber lighten-4", 2=>"lime lighten-4", 3=>"green lighten-4", -1=>"blue-grey lighten-5"];
+                      @endphp
 
-                  <!-- learned_nを配列にすればもう少しまとまる。 -->
-                    @php
-                      $individual = [0=>"red lighten-4", 1=>"amber lighten-4", 2=>"lime lighten-4", 3=>"green lighten-4", -1=>"blue-grey lighten-5"];
-                    @endphp
+                      <div class="{{'progress-bar text-dark '.$individual[3]}}" role="progressbar" style="{{'width:' . (int)($learned_3[$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}"  aria-valuemin="0" aria-valuemax="100">{{$learned_3[$s['level']]}}</div>
+                      <div class="{{'progress-bar text-dark '.$individual[2]}}" role="progressbar" style="{{'width:' . (int)($learned_2[$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}" aria-valuemin="0" aria-valuemax="100">{{$learned_2[$s['level']]}}</div>
+                      <div class="{{'progress-bar text-dark '.$individual[1]}}" role="progressbar" style="{{'width:' . (int)($learned_1[$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}" aria-valuemin="0" aria-valuemax="100">{{$learned_1[$s['level']]}}</div>
+                      <div class="{{'progress-bar text-dark '.$individual[0]}}" role="progressbar" style="{{'width:' . (int)($learned_0[$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}" aria-valuemin="0" aria-valuemax="100">{{$learned_0[$s['level']]}}</div>
+                      <div class="{{'progress-bar text-dark '.$individual[-1]}}"  role="progressbar" style="{{'width:' . (int)($unlearned[$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}" aria-valuemin="0" aria-valuemax="100">{{$unlearned[$s['level']]}}</div>
+                    </div>
 
-                    <div class="{{'progress-bar text-dark '.$individual[3]}}" role="progressbar" style="{{'width:' . (int)($learned_3[$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}"  aria-valuemin="0" aria-valuemax="100">{{$learned_3[$s['level']]}}</div>
-                    <div class="{{'progress-bar text-dark '.$individual[2]}}" role="progressbar" style="{{'width:' . (int)($learned_2[$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}" aria-valuemin="0" aria-valuemax="100">{{$learned_2[$s['level']]}}</div>
-                    <div class="{{'progress-bar text-dark '.$individual[1]}}" role="progressbar" style="{{'width:' . (int)($learned_1[$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}" aria-valuemin="0" aria-valuemax="100">{{$learned_1[$s['level']]}}</div>
-                    <div class="{{'progress-bar text-dark '.$individual[0]}}" role="progressbar" style="{{'width:' . (int)($learned_0[$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}" aria-valuemin="0" aria-valuemax="100">{{$learned_0[$s['level']]}}</div>
-                    <div class="{{'progress-bar text-dark '.$individual[-1]}}"  role="progressbar" style="{{'width:' . (int)($unlearned[$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}" aria-valuemin="0" aria-valuemax="100">{{$unlearned[$s['level']]}}</div>
+                    <div><span class="confidence-btn {{$individual[3]}}">余裕♪</span>：　{{$learned_3[$s['level']]}}語</div>
+                    <div><span class="confidence-btn {{$individual[2]}}">覚えた!</span>：　{{$learned_2[$s['level']]}}語</div>
+                    <div><span class="confidence-btn {{$individual[1]}}">びみょう</span>：　{{$learned_1[$s['level']]}}語</div>
+                    <div><span class="confidence-btn {{$individual[0]}}">まだ。</span>：　{{$learned_0[$s['level']]}}語</div>
+                    <div><span class="confidence-btn {{$individual[-1]}}">未習</span>：　{{$unlearned[$s['level']]}}語</div>
+                    <hr>
+                    <div>合計：　{{$s['total']}}語</div>
+                    <div>進捗率：　{{$progress[$s['level']]}}&#037;</div>
+
                   </div>
 
-                  <div><span class="confidence-btn {{$individual[3]}}">余裕♪</span>：　{{$learned_3[$s['level']]}}語</div>
-                  <div><span class="confidence-btn {{$individual[2]}}">覚えた!</span>：　{{$learned_2[$s['level']]}}語</div>
-                  <div><span class="confidence-btn {{$individual[1]}}">びみょう</span>：　{{$learned_1[$s['level']]}}語</div>
-                  <div><span class="confidence-btn {{$individual[0]}}">まだ。</span>：　{{$learned_0[$s['level']]}}語</div>
-                  <div><span class="confidence-btn {{$individual[-1]}}">未習</span>：　{{$unlearned[$s['level']]}}語</div>
-                  <hr>
-                  <div>合計：　{{$s['total']}}語</div>
-                  <div>進捗率：　{{$progress[$s['level']]}}&#037;</div>
-
                 </div>
-
               </div>
             </div>
-          </div>
 
-        </tr>
-        @endforeach
-      </table>
-      <div class=" m-2 text-right">
-        <a href="{{route('articles.level-table')}}" class="login-button level-table-btn">
-          <small>単語レベル一覧</small>
-        </a>
+          </tr>
+          @endforeach
+        </table>
+        <div class="text-right mt-1">
+          <a href="{{route('articles.level-table')}}" class="login-button level-table-btn">
+            <small>単語レベル一覧</small>
+          </a>
+        </div>
       </div>
-
     </div>
 
     @include('ads.horizontal')
 
     <!-- 学習予定 -->
     <div class="card my-2">
-      <div class="h5 card-title  mt-1 ml-1">復習予定</div>
+      <div class="h5 card-title mt-1 ml-1 mb-1">復習予定</div>
       <div class="card-body">
         <div class="overflow-auto" style="display:flex">
           <div class="label-vertical">
@@ -182,7 +183,7 @@
     @if($subscription === 'NORMAL')
     <div class="card my-2">
       <div class="card-body">
-        <div class="h5 card-title  mt-1 ml-1">支払情報</div>
+        <div class="h5 card-title  mt-1 ml-1 mb-1">支払情報</div>
           <a href="{{route('stripe.portalsubscription', $user) }}" style="text-align:right;">
 	          <div class="btn text-info border border-info shadow-none px-2 py-1" style="font-size:1.0rem" >お支払い情報確認</div>
           </a>

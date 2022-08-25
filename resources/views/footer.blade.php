@@ -18,7 +18,12 @@
             <a href="{{route('tags.categories')}}" class="text-white">タグから探す</a>
         </div>
         <div class="footer-block3">
-            <span data-toggle="modal" data-target="#recommend-trial"><a class="text-white">学習状況</a></span><br>
+            @auth
+                <span><a class="text-white" href="{{ route('users.show', ['name'=>Auth::user()->name]) }}">学習状況</a></span><br>
+            @endauth
+            @guest
+                <span data-toggle="modal" data-target="#recommend-trial"><a class="text-white">学習状況</a></span><br>
+            @endguest
             <a href="{{route('articles.level-table')}}" class="text-white">単語レベル一覧</a><br>
             <span data-toggle="modal" data-target="#contact"><a class="text-white">ご意見・お問い合せ</a></span><br>
         </div>

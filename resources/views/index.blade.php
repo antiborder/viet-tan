@@ -37,59 +37,60 @@
         </div>
       </div>
     </div>
-    <ul class="menu-block1">
-      <li class="d-inline-block">
-        <a href="{{route('learn')}}" >
-          <div class="large-icon">
-            <div class="h5 text-white" >
-                単語学習
-            </div>
-            <div class="white rounded">
-              <img src='/image/learn-icon.webp' class="large-icon-image">
-              <div class="large-icon-text">
-              一日10分でOK。<br>
-              単語毎の習熟度に<br>
-              合わせて出題。
+    <div class="menu-block1">
+      <ul class="large-icon-list">
+        <li class="d-inline-block">
+          <a href="{{route('learn')}}" >
+            <div class="large-icon">
+              <div class="h5 text-white" >
+                  単語学習
+              </div>
+              <div class="white rounded">
+                <img src='/image/learn-icon.webp' class="large-icon-image">
+                <div class="large-icon-text">
+                一日10分でOK。<br>
+                単語毎の習熟度に<br>
+                合わせて出題。
+                </div>
               </div>
             </div>
-          </div>
-        </a>
-      </li>
-      <li class="d-inline-block">
-        <a href="{{route('measure')}}"  >
-          <div class="large-icon">
-            <div class="h5 text-white" >
-                単語力測定
-            </div>
-            <div class="white rounded">
-              <img src='/image/measure-icon.webp' class="large-icon-image">
-              <div class="large-icon-text">
-                2分間で実力チェック。<br>
-                あなたの単語力は<br>
-                ????語です。
+          </a>
+        </li>
+        <li class="d-inline-block">
+          <a href="{{route('measure')}}"  >
+            <div class="large-icon">
+              <div class="h5 text-white" >
+                  単語力測定
+              </div>
+              <div class="white rounded">
+                <img src='/image/measure-icon.webp' class="large-icon-image">
+                <div class="large-icon-text">
+                  2分間で実力チェック。<br>
+                  あなたの単語力は<br>
+                  ????語です。
+                </div>
               </div>
             </div>
-          </div>
-        </a>
-      </li>
-      <li class="d-inline-block">
-        <a href="{{route('words.search')}}"  >
-          <div class="large-icon">
-            <div class="h5 text-white" >
-                あいまい検索
-            </div>
-            <div class="white rounded">
-              <img src='/image/search-icon.webp' class="large-icon-image">
-              <div class="large-icon-text">
-                記憶があいまいでも大丈夫。<br>
-                ベトナム語も漢越語もまとめて検索。
+          </a>
+        </li>
+        <li class="d-inline-block">
+          <a href="{{route('words.search')}}"  >
+            <div class="large-icon">
+              <div class="h5 text-white" >
+                  あいまい検索
+              </div>
+              <div class="white rounded">
+                <img src='/image/search-icon.webp' class="large-icon-image">
+                <div class="large-icon-text">
+                  記憶があいまいでも大丈夫。<br>
+                  ベトナム語も漢越語もまとめて検索。
+                </div>
               </div>
             </div>
-          </div>
-        </a>
-      </li>
-    </ul>
-
+          </a>
+        </li>
+      </ul>
+    </div>
     <div class="card my-2 p-0">
       <div class="card-body p-1">
         <div class="h5 card-title m-0">
@@ -144,78 +145,80 @@
       </div>
     </div>
 
-    <ul class="menu-block2">
-      <li class="d-inline-block">
-        <a href="{{route('tags.categories')}}" >
-          <div class="small-icon">
-            <div class="small-icon-inner-square">
-              <div>
-                <div class="small-icon-table">
-                  <div class="small-icon-lable">
-                    タグから<br>探す
-                  </div>
-                </div>
-                <img src='/image/tag-icon.webp' class="small-icon-image">
-              </div>
-            </div>
-          </div>
-        </a>
-      </li>
-      <li class="d-inline-block">
-        <a href="{{route('articles.level-table')}}" >
-          <div class="small-icon">
-            <div class="small-icon-inner-square">
-              <div>
-                <div class="small-icon-table">
-                  <div class="small-icon-lable">
-                  単語レベル<br>一覧
-                  </div>
-                </div>
-                <img src='/image/level-table-icon.webp' class="small-icon-image">
-              </div>
-            </div>
-          </div>
-        </a>
-      </li>      
-      @auth
+    <div class="menu-block2">
+      <ul class="small-icon-list">
         <li class="d-inline-block">
-          <a href="{{ route('users.show', ['name'=>Auth::user()->name]) }}" >
-      @endauth
-      @guest
-        <li class="d-inline-block" data-toggle="modal" data-target="#recommend-trial">
-          <a>
-      @endguest
-         <div class="small-icon">
-            <div class="small-icon-inner-square">
-              <div >
-                <div class="small-icon-table">
-                  <div class="small-icon-lable">
-                    学習状況
+          <a href="{{route('tags.categories')}}" >
+            <div class="small-icon">
+              <div class="small-icon-inner-square">
+                <div>
+                  <div class="small-icon-table">
+                    <div class="small-icon-lable">
+                      タグから<br>探す
+                    </div>
                   </div>
+                  <img src='/image/tag-icon.webp' class="small-icon-image">
                 </div>
-                <img src='/image/progress-icon.webp' class="small-icon-image">
               </div>
             </div>
-          </div>
-        </a>
-      </li>
-      <li class="d-inline-block" data-toggle="modal" data-target="#contact">
-        <a href="/articles/level-table"  >
+          </a>
+        </li>
+        <li class="d-inline-block">
+          <a href="{{route('articles.level-table')}}" >
+            <div class="small-icon">
+              <div class="small-icon-inner-square">
+                <div>
+                  <div class="small-icon-table">
+                    <div class="small-icon-lable">
+                    単語レベル<br>一覧
+                    </div>
+                  </div>
+                  <img src='/image/level-table-icon.webp' class="small-icon-image">
+                </div>
+              </div>
+            </div>
+          </a>
+        </li>
+        @auth
+          <li class="d-inline-block">
+            <a href="{{ route('users.show', ['name'=>Auth::user()->name]) }}" >
+        @endauth
+        @guest
+          <li class="d-inline-block" data-toggle="modal" data-target="#recommend-trial">
+            <a>
+        @endguest
           <div class="small-icon">
-            <div class="small-icon-inner-square">
-              <div>
-                <div class="small-icon-table">
-                  <div class="small-icon-lable">
-                    ご意見<br>お問い合わせ
+              <div class="small-icon-inner-square">
+                <div >
+                  <div class="small-icon-table">
+                    <div class="small-icon-lable">
+                      学習状況
+                    </div>
                   </div>
+                  <img src='/image/progress-icon.webp' class="small-icon-image">
                 </div>
-                <img src='/image/contact-icon.webp' class="small-icon-image">
               </div>
             </div>
+          </a>
+        </li>
+        <li class="d-inline-block" data-toggle="modal" data-target="#contact">
+          <a href="/articles/level-table"  >
+            <div class="small-icon">
+              <div class="small-icon-inner-square">
+                <div>
+                  <div class="small-icon-table">
+                    <div class="small-icon-lable">
+                      ご意見<br>お問い合わせ
+                    </div>
+                  </div>
+                  <img src='/image/contact-icon.webp' class="small-icon-image">
+                </div>
+              </div>
 
-          </div>
-        </a>
-      </li>
+            </div>
+          </a>
+        </li>
+      </ul>
 
     <div class="card my-2 p-0">
       <div class="card-body text-center p-1">
@@ -223,17 +226,19 @@
           <img class="pl-1 mb-2 wide-image" src="/image/card-image.webp">
       </div>
     </div>
-    <h4 class="sizable-text-small mt-3 mb-0 text-left">
-      単語カードサンプル<br>
-      <small class="text-muted">（単語をclick↓）</small>
-    </h4>
-    @foreach($words as $word)
+    <div class="">
+      <h4 class="sizable-text-small mt-3 mb-0" >
+        単語カードサンプル
+      </h4>
+      <p class="sample-click-text">単語↓をclick</p>
       <div>
-        <div>
+        @foreach($words as $word)
+        <div class="word-card-box">
           @include('words.card')
         </div>
-      </div>
-    @endforeach
+        @endforeach
+      <div>
+    </div>
 
   </div>
 
