@@ -10,12 +10,12 @@
     padding: 0.5rem 0 0.5rem 0.5rem;
     margin: 0.5rem auto 0.75rem auto;
     border-radius:8px;
-    box-shadow: 0px 2px 5px #AAAAAA;    
+    box-shadow: 0px 2px 5px #AAAAAA;
 }
 .search-button-card-search{
     font-size: large;
     margin: 0 0 0 0.5rem;
-    padding: 0.25rem 0.75rem; 
+    padding: 0.25rem 0.75rem;
 }
 .search-message{
     padding: 0;
@@ -67,9 +67,9 @@
 .search-button-normal{
     margin: 0.75rem auto;
     padding: 0.5rem 0.75rem;
-    box-shadow: 0px 2px 5px #AAAAAA;        
+    box-shadow: 0px 2px 5px #AAAAAA;
     display:inline-block;
-}    
+}
 
 /* セルフ広告 */
 .self-ad-outer-square{
@@ -80,7 +80,7 @@
     padding-bottom: 0.25rem;
     margin:0.75rem auto 0.25rem auto;
     border-radius: 8px;
-    box-shadow: 0px 2px 5px #AAAAAA;    
+    box-shadow: 0px 2px 5px #AAAAAA;
 }
 .self-ad-inner-square{
     background-color: white;
@@ -91,16 +91,48 @@
 
 /* 検索機能の使い方 */
 .search-description-image-container{
-    border: 1px solid #CCCCCC;    
+    border: 1px solid #CCCCCC;
     margin: 0 0.25rem;
     /* display:inline-block; */
 }
 .search-description-image{
-    height:300px; 
+    height:300px;
     width:300px;
     border: 1px solid #262626;
     margin: 0.25rem;
 }
 .modal-dialog{
     max-width:1050px;
+}
+
+/* categories */
+.category-card-list{
+    list-style-type: none;
+    padding-left:0;
+    text-align:center;
+    margin:0 auto;
+}
+.category-card{
+    width:280px;
+    height:260px;
+    background-color:white;
+    margin: 0.0rem;
+    padding: 0.0rem;
+    display:inline-block;
+    position:relative;
+    text-align: left;
+    border-radius:4px;
+    box-shadow: 0px 2px 5px #AAAAAA;
+}
+.category-ad-card{
+    width:280px;
+    height:260px;
+    background-color:white;
+    margin: 0.0rem;
+    padding: 0.0rem;
+    display:inline-block;
+    position:relative;
+    text-align: left;
+    border-radius:4px;
+    box-shadow: 0px 2px 5px #AAAAAA;
 }
