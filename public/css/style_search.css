@@ -114,10 +114,10 @@
 }
 .category-card{
     width:280px;
-    height:260px;
+    height:250px;
     background-color:white;
-    margin: 0.0rem;
-    padding: 0.0rem;
+    margin: 0.25rem;
+    padding: 0.25rem;
     display:inline-block;
     position:relative;
     text-align: left;
@@ -126,10 +126,10 @@
 }
 .category-ad-card{
     width:280px;
-    height:260px;
+    height:250px;
     background-color:white;
-    margin: 0.0rem;
-    padding: 0.0rem;
+    margin: 0.25rem;
+    padding: 0.25rem;
     display:inline-block;
     position:relative;
     text-align: left;

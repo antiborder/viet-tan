@@ -1,7 +1,9 @@
 
 <template>
   <div class="mx-auto" style="text-align:center; max-width:700px;">
-    <div class="normal-text mt-1" style="text-align:left">
+
+    <!-- ステータスバー -->
+    <div class="normal-text mt-1" style="text-align:left">  
       単語Lv.:{{level}}　正解数:{{correct}}/回答数:{{total}}
       <span>
         <button data-toggle="modal" data-target="#learn-description" class="border border-success text-success rounded ml-2 my-1 py-0 px-1">
@@ -16,7 +18,7 @@
         <div class="card-body" style = "text-align:center;">
           <div class="m-2 p-2" style="font-size:1.2rem">
             レベルを選択：
-            <select size="1" v-model= "level" class="m-2" style="width:100px;">
+            <select size="1" v-model= "level" class="m-2"   style="width:100px; height:30px; text-align:center;">
               <option v-for="i in Number(max_level)" >{{i}}</option>
               <option v-if="user_name!==''"value="REVIEW_ALL">復習のみ</option>
             </select>
@@ -54,13 +56,13 @@
         <div class="card-body" style = "text-align:center;">
           <div class="m-2 p-2" style="font-size:1.0rem">
             ログインしていないため、ランダムに出題されます。<br><br>
-            <span  style="color:#ff7043">無料登録すれば、単語毎の学習スケジュールに基づいて出題されます。</span>
+            <span class="trial-attention">無料登録すれば、単語毎の学習スケジュールに基づいて出題されます。</span>
           </div>
           <div class="mb-3" style="text-align:center; font-size:1.3rem" >
-            <a href="/register" class="deep-orange lighten-1 text-white rounded px-4 py-2" >無料登録する</a>
+            <a href="/register" class="signup-button rounded px-4 py-2" >無料登録する</a>
           </div>
           <div class="m-3" style="text-align:center; font-size:1.3rem" >
-            <a href="/login" class="rounded px-4 py-2" style="color:#ffa726;border-color:#ffa726;border-style:solid">ログインする</a>
+            <a href="/login" class="login-button rounded px-4 py-2">ログインする</a>
           </div>
           <button @click="load()" type="button" class="btn btn-info light-blue accent-4 rounded px-3 py-2 mt-3 text-nowrap shadow-none "style="font-size: 1.0rem;">
             ランダムでStart ▶
@@ -118,14 +120,14 @@
       </div>
     </div>
     <!-- 自己評価ボタン -->
-    <div v-if=" status==='ANSWERED' " class="mt-1 mb-1" style="text-align:left; max-width:500px; margin:auto">
-      <span class="pt-2 text-nowrap;" style = "min-width:70px; text-align:left; font-size: 0.9rem;">
+    <div v-if=" status==='ANSWERED' " class="" style="min-height:52px; text-align:left; max-width:500px;">
+      <span class="text-nowrap;" style = "min-width:65px; text-align:left; font-size: 0.8rem;">
         覚えた？
       </span>
-      <span v-for="i in [0,1,2,3]" style = " text-align:center;">
-        <span v-if=" isCorrect===true || i===0">
-          <button @click="clickButton(i)" type="button" v-bind:class="colors[i]" class="btn btn-sm rounded pt-1 pb-1 px-2 text-nowrap"style="min-height:40px; max-width: 100px; font-size: 0.9em;">
-            {{button_properties[i].text}}
+      <span v-for="easiness in [0,1,2,3]" style = " text-align:center;">
+        <span v-if=" isCorrect===true || easiness===0">
+          <button @click="clickButton(easiness)" type="button" v-bind:class="'confidence-btn-color'+easiness" class="confidence-btn">
+            {{button_properties[easiness].text}}
           </button>
         </span>
       </span>
@@ -203,7 +205,7 @@
                   {{e.level}}
                 </td>
                 <td>
-                  <button type="button" v-bind:class="baseColors[e.easiness]" class="btn btn-sm rounded pt-1 pb-1 px-2 text-dark text-nowrap shadow-none"style="height:27px; max-width: 100px; font-size: 0.8rem;">
+                  <button type="button" v-bind:class="'confidence-btn-color'+e.easiness" class="result-confidence">
                     {{button_properties[e.easiness].text}}
                   </button>
                 </td>
@@ -264,10 +266,10 @@
             </button><br>
           </div>
           <div style="display:inline-block">
-              <img src="/image/learn-description1.webp" class="my-2" style="height:581px; width:300px" alt='スキマ時間にクリックするだけ 単語学習の使い方 1.最初はレベル1を選びましょう 2.STARTボタンを押しましょう'>
-              <img src="/image/learn-description2.webp" class="my-2" style="height:581px; width:300px" alt='3.4択問題が出るので正解を選びましょう 4.記憶の定着度に応じて自己評価ボタンを選びましょう'>
-              <img src="/image/learn-description3.webp" class="my-2" style="height:581px; width:300px" alt='5. 10問解くと結果が表示されるので、ざっと目を通しましょう 6.「学習状況を確認」を選びましょう'>
-              <img src="/image/learn-description4.webp" class="my-2" style="height:581px; width:300px" alt='7.学習状況と復習予定が表示されます 8.自分のペースで次の学習に進みましょう'>
+              <img src="/image/learn-description1.webp" class="learn-description-image" alt='スキマ時間にクリックするだけ 単語学習の使い方 1.最初はレベル1を選びましょう 2.STARTボタンを押しましょう'>
+              <img src="/image/learn-description2.webp" class="learn-description-image" alt='3.4択問題が出るので正解を選びましょう 4.記憶の定着度に応じて自己評価ボタンを選びましょう'>
+              <img src="/image/learn-description3.webp" class="learn-description-image" alt='5. 10問解くと結果が表示されるので、ざっと目を通しましょう 6.「学習状況を確認」を選びましょう'>
+              <img src="/image/learn-description4.webp" class="learn-description-image" alt='7.学習状況と復習予定が表示されます 8.自分のペースで次の学習に進みましょう'>
           </div>
           <div class="text-center">
             <button type="button" class="border border-2 border-muted text-muted  white rounded" data-dismiss="modal" aria-label="Close" style="width:100px; display:inline-block;">
@@ -313,11 +315,6 @@
           { text:"余裕♪"},
         ],
         history:[],
-        baseColors:[
-          "red lighten-4",
-          "amber lighten-4",
-          "lime lighten-4",
-          "green lighten-4"],
         adsenseContent1: '',
         adsenseContent2: '',
       }
@@ -382,18 +379,6 @@
           return null;
         }
 
-      },
-      colors: function(){
-
-        let colors = [];
-        for(let i=0;i<=3;i++){
-          if(i === this.recommendation){
-            colors.push(this.baseColors[i]+" animated bounceIn");
-          }else{
-            colors.push("grey"+" lighten-2");
-          }
-        }
-      return colors;
       },
     },
 
@@ -488,7 +473,7 @@
           'id':this.answer_id
         });
         this.recordLearn(n);
-        if(this.total >= 10){
+        if(this.total >= 2){
           this.status = "RESULT"
           this.isCorrect = null;
 
