@@ -1,0 +1,36 @@
+/* learnとmeasureのstyle */
+
+.trial-attention{
+    color:#ff7043;
+}
+
+
+.confidence-btn{
+    height:40px; 
+    max-width: 100px; 
+    color:#262626;    
+    font-size: 0.8em;
+    margin: 0.50rem 0.25rem;
+    padding: auto 0.25rem;
+    border-width: 0;
+    border-radius: 4px;
+    box-shadow: 0px 2px 5px #AAAAAA;
+}
+    
+    
+.result-confidence{
+    height:27px; 
+    max-width: 100px;   
+    color:#262626;
+    font-size: 0.7rem;
+    padding: auto 0.25rem;
+    border-width: 0;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.learn-description-image{
+    width:300px;
+    height:581px;
+    margin: 0.5rem 0 0.5rem 0;
+}
