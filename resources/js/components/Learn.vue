@@ -124,10 +124,10 @@
       <span class="text-nowrap;" style = "min-width:65px; text-align:left; font-size: 0.8rem;">
         覚えた？
       </span>
-      <span v-for="easiness in [0,1,2,3]" style = " text-align:center;">
-        <span v-if=" isCorrect===true || easiness===0">
-          <button @click="clickButton(easiness)" type="button" v-bind:class="'confidence-btn-color'+easiness" class="confidence-btn">
-            {{button_properties[easiness].text}}
+      <span v-for="e in [0,1,2,3]" style = " text-align:center;">
+        <span v-if=" isCorrect===true || e===0">
+          <button @click="clickButton(e)" type="button" v-bind:class="btn_actions[e]" class="confidence-btn">
+            {{button_properties[e].text}}
           </button>
         </span>
       </span>
@@ -362,6 +362,19 @@
           return "";
         }
       },
+
+      btn_actions: function(){
+        let btn_actions = [];
+        for(let e=0; e<=3; e++){
+          if(e === this.recommendation){
+            btn_actions.push("confidence-btn-color"+e+" animated bounceIn");
+          }else{
+            btn_actions.push("grey"+" lighten-2");
+          }
+        }
+      return btn_actions;
+      },
+
       recommendation: function(){
         if(this.status === "JUDGED" || this.status==="ANSWERED"){
           if(this.isCorrect){
@@ -473,7 +486,7 @@
           'id':this.answer_id
         });
         this.recordLearn(n);
-        if(this.total >= 2){
+        if(this.total >= 10){
           this.status = "RESULT"
           this.isCorrect = null;
 
