@@ -228,7 +228,7 @@
       </div>
     </div>
     <div class="">
-      <h4 class="sizable-text-small mt-3 mb-0" >
+      <h4 class="sizable-text-small text-center mt-3 mb-0" >
         単語カードサンプル
       </h4>
       <p class="sample-click-text">単語↓をclick</p>
