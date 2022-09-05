@@ -119,13 +119,10 @@ detail
 }
 
 /* ボタン系 色だけ定義*/
- .home-button{ /*どこで使ってるの？ */
+ .home-btn{ /*どこで使ってるの？ */
     background-color:#ffa726;
     color:white;
-    margin: 0px 1px;
-    padding: 4px 16px;
     border-style:none;
-    border-radius: 3px;
 }
 .home-button-transparent{ /*まだどこかで使ってるの？*/
     border: 1px solid #ffa726;

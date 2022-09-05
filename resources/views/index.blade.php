@@ -219,6 +219,7 @@
           </a>
         </li>
       </ul>
+    </div>
 
     <div class="card my-2 p-0">
       <div class="card-body text-center p-1">
@@ -237,7 +238,7 @@
           @include('words.card')
         </div>
         @endforeach
-      <div>
+      </div>
     </div>
 
   </div>
