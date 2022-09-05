@@ -13,7 +13,7 @@
     </div>
 
     <!-- 最初の画面 -->
-    <div v-if="status==='INITIAL'" class="mx-auto" style=" text-align:center;max-width:400px">
+    <div v-if="status==='INITIAL'" class="learn-setting-block">
       <div class="card white rounded" style="max-width: 400px;">
         <div class="card-body" style = "text-align:center;">
           <div class="m-2 p-2" style="font-size:1.2rem">
@@ -51,28 +51,26 @@
     </div>
 
     <!-- 無料登録を勧める -->
-    <div v-if="status==='WARN_RANDOM'" class="mx-auto" style=" text-align:center;max-width:400px">
+    <div v-if="status==='WARN_RANDOM'" class="learn-setting-block">
       <div class="card white rounded" style="max-width: 400px;">
         <div class="card-body" style = "text-align:center;">
           <div class="m-2 p-2" style="font-size:1.0rem">
-            ログインしていないため、ランダムに出題されます。<br><br>
-            <span class="trial-attention">無料登録すれば、単語毎の学習スケジュールに基づいて出題されます。</span>
+            ログインしていないため、ランダムに出題されます。<br>
+            <span class="trial-attention-text">無料登録すれば、単語毎の学習スケジュールに基づいて出題されます。</span>
           </div>
-          <div class="mb-3" style="text-align:center; font-size:1.3rem" >
-            <a href="/register" class="signup-button rounded px-4 py-2" >無料登録する</a>
-          </div>
-          <div class="m-3" style="text-align:center; font-size:1.3rem" >
-            <a href="/login" class="login-button rounded px-4 py-2">ログインする</a>
-          </div>
-          <button @click="load()" type="button" class="btn btn-info light-blue accent-4 rounded px-3 py-2 mt-3 text-nowrap shadow-none "style="font-size: 1.0rem;">
-            ランダムでStart ▶
-          </button>
+          <p class="text-center">
+            <a href="/register" class="member-btn signup-button">無料登録する</a><br>
+            <a href="/login" class="member-btn login-button">ログインする</a>
+            <a @click="load()" class="btn-primary random-start-btn text-white">
+              ランダムでStart ▶
+            </a>
+          </p>          
         </div>
       </div>
     </div>
 
     <!-- 通常会員登録を勧める -->
-    <div v-if="status==='RECOMMEND_NORMAL'" class="mx-auto" style=" text-align:center;max-width:400px">
+    <div v-if="status==='RECOMMEND_NORMAL'" class="learn-setting-block">
       <div class="card white rounded" style="max-width: 400px;">
         <div class="card-body" style = "text-align:center;">
           <div class="m-2 p-2" style="font-size:1.2rem">
@@ -91,7 +89,7 @@
     </div>
 
     <!-- お試し会員登録を勧める -->
-    <div v-if="status==='RECOMMEND_TRIAL'" class="mx-auto" style=" text-align:center;max-width:400px">
+    <div v-if="status==='RECOMMEND_TRIAL'" class="learn-setting-block">
       <div class="card white rounded" style="max-width: 400px;">
         <div class="card-body" style = "text-align:center;">
           <div class="m-2 p-2" style="font-size:1.2rem">
@@ -184,7 +182,7 @@
         <div class="card-body" >
           <div v-if="total > 0" class="mb-2">
             <div class="text-muted" style="font-size:0.8rem">単語をクリックすると詳細ページが開きます。</div>
-            <table class="normal-text blue-grey lighten-5 rounded rounded-4" style="margin:auto; border-collapse: separate; border-spacing: 0px 0px; min-width:90%">
+            <table class="result-table">
               <tr >
                 <th></th>
                 <th style="min-width:70%">単語</th>
@@ -223,24 +221,24 @@
             </div>
           </div>
           <div v-if="status==='RESULT' ">
-            <button @click="clickStart()" type="button" class="btn btn-info light-blue accent-4 rounded p-1 mt-3 text-nowrap" style="width: 240px; font-size: 1.3rem;">
+            <button @click="clickStart()" type="button" class="btn primary-btn result-btn">
               続ける ▶
             </button>
           </div>
           <div v-if="status==='RESULT'">
             <div v-if="this.user_name===''">
-              <a type="button" href="/" class="btn btn-info orange lighten-1 rounded p-1 mt-2 text-nowrap" style="width: 240px; font-size: 1.3rem;">
+              <a type="button" href="/" class="btn home-btn result-btn">
                 Homeに戻る
               </a>
             </div>
           </div>
           <div v-if="this.user_name!==''">
-            <a type="button" class="btn btn-info orange lighten-1 rounded p-1 mt-2 text-nowrap" style="width: 240px; font-size: 1.3rem;" v-bind:href="'/users/'+user_name">
+            <a type="button" class="btn home-btn result-btn" v-bind:href="'/users/'+user_name">
               学習状況を確認
             </a>
           </div>
           <div v-if="status==='CLEARED' ">
-            <button @click="initialize()" type="button" class="btn btn-info light-blue accent-4 rounded p-1 mt-2 text-nowrap" style="width: 240px; font-size: 1.3rem;">
+            <button @click="initialize()" type="button" class="btn primary-btn result-btn">
               レベルを変更
             </button>
           </div>
@@ -486,7 +484,7 @@
           'id':this.answer_id
         });
         this.recordLearn(n);
-        if(this.total >= 10){
+        if(this.total >= 10){//問題数の設定
           this.status = "RESULT"
           this.isCorrect = null;
 
