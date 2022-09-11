@@ -1,20 +1,20 @@
 
 <template>
-  <div class="mx-auto" style="text-align:center; max-width:700px;">
-    <div class="normal-text mt-1" style="text-align:left">
+  <div class="mx-auto text-center" style="max-width:700px;">
+    <div class="normal-text mt-1 text-left">
       単語力測定　正解率: {{correct}} / {{total}}
     </div>
 
     <!-- 最初の画面 -->
-    <div v-if="status==='INITIAL'" class="mx-auto" style=" text-align:center;max-width:400px">
+    <div v-if="status==='INITIAL'" class="mx-auto text-center" style="max-width:400px">
       <div class="card white rounded" style="max-width: 400px;">
-        <div class="card-body" style = "text-align:center;">
+        <div class="card-body text-center">
           <div class="m-2 p-2" style="font-size:1.1rem">
             単語力を測定するために<br>
             11問出題されます。
           </div>
           <div class="mt-4 p-1">
-            <button @click="clickStart()" type="button" class="btn btn-primary rounded p-1 text-nowrap"style="width: 220px; font-size: 1.5rem;">
+            <button @click="clickStart()" type="button" class="btn btn-primary start-btn">
               START ▶
             </button>
           </div>
@@ -33,7 +33,7 @@
 
     <!-- 出題画面 -->
     <div v-if="status!=='RESULT'" class="mt-1 d-flex flex-row" style=" height: 55px;">
-      <div v-bind:class="result_text_color" class="text-nowrap pt-1" style="text-align:left; width:20%; font-size: 1.0rem;">
+      <div v-bind:class="result_text_color" class="text-nowrap pt-1 text-left" style="width:20%; font-size: 1.0rem;">
         {{result_text}}
       </div>
       <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' "class="card white rounded"  style="width:60%; display:table;">
@@ -42,11 +42,11 @@
       </div>
     </div>
     <!-- 次へ進むボタン -->
-    <div v-if=" status==='JUDGED'  || status==='ANSWERED' " class="mt-1 mb-1" style="text-align:left; max-width:500px; margin:auto">
-      <span style = " text-align:center;">
-        <button @click="clickButton()" type="button" class="btn btn-sm btn-primary rounded pt-1 pb-1 px-2 text-white" style="min-height:40px; max-width: 100px; font-size: 0.9em;">
+    <div v-if=" status==='JUDGED'  || status==='ANSWERED' " class="mt-1 mb-1 text-left" style="max-width:500px; margin:auto">
+      <span class = "text-center">
+        <a @click="clickButton()" type="button" class="btn-primary next-btn text-white">
           次へ ▶
-        </button>
+        </a>
       </span>
     </div>
 
@@ -54,7 +54,7 @@
     <div v-if="status==='LOADING' " class="spinner-border text-muted " role="status" style="width: 3rem; height: 3rem;">
       <span class="sr-only">Loading...</span>
     </div>
-    <div v-if="status==='LOADING' || status==='PROMPT' " class="pt-2" style=" text-align:center; height: 60px;">
+    <div v-if="status==='LOADING' || status==='PROMPT' " class="pt-2 text-center" style="height: 60px;">
       <span>
         {{message}}
       </span>
@@ -68,7 +68,7 @@
         </div>
       </div>
     </div>
-    <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' " style="text-align:center">
+    <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' " class="text-center">
       {{sec}}
       <div v-if="total%2 === 0">
         <Adsense
@@ -95,7 +95,7 @@
     </div>
 
     <!-- 結果表示 RESULT -->
-    <div v-if="status==='RESULT' " class="card my-2 pb-1 white rounded mx-auto" style="text-align:center; max-width:400px;">
+    <div v-if="status==='RESULT' " class="card my-2 pb-1 white rounded mx-auto text-center" style="max-width:400px;">
       <div class="p-1 text-muted" style="font-size:1.2rem;"> 結果 </div>
       <div class="p-1">
         <p class="px-5 py-0 m-0 text-left" style="font-size:0.9rem;">{{result_message[0]}}</p>
@@ -103,21 +103,21 @@
         <p class="px-5 py-0 m-0 text-right" style="font-size:0.9rem;">{{result_message[2]}}</p>
       </div>
       <div v-if="level>0" class="p-1">おすすめレベル：　level {{level}}</div>
-      <div style="text-align:center">
-        <a type="button" v-bind:href="'/learn/' + level" class="btn btn-primary rounded p-1 mt-2 text-nowrap" style="width: 240px; font-size: 1.0rem;">
-          レベル {{level}}を学習する
-        </a>
-        <a type="button" href="/" class="btn btn-primary orange lighten-1 rounded p-1 mt-2 text-nowrap" style="width: 240px; font-size: 1.0rem;">
-          Homeに戻る
-        </a>
-      </div>
+      <!-- <div class="text-center"> -->
+      <a v-bind:href="'/learn/' + level" class="btn primary-btn leave-measure-btn">
+        レベル {{level}}を学習する
+      </a>
+      <a href="/" class="btn home-btn leave-measure-btn">
+        Homeに戻る
+      </a>
+      <!-- </div> -->
     </div>
 
     <div v-if="status==='RESULT' ">
-      <div class="card mt-4 white rounded mx-auto" style="text-align:center; max-width:400px; font-size: 1.2 rem;">
+      <div class="card white rounded mt-4 mx-auto text-center" style="max-width:400px; font-size: 1.2 rem;">
         <div class="mb-2">
           <div class="text-muted" style="font-size:0.8rem">単語をクリックすると詳細ページが開きます。</div>
-          <table class="blue-grey lighten-5 rounded rounded-4" style="margin:auto; border-collapse: separate; border-spacing: 0px 0px; min-width:90%">
+          <table class="result-table">
             <tr >
               <th></th>
               <th style="min-width:70%">単語</th>
@@ -127,7 +127,7 @@
             <tr v-for="e in this.history">
               <td>{{e.No}}</td>
               <td style="font-size:1.3rem">
-                <a v-bind:href="'/words/'+e.id" class="white text-dark rounded rounded-4" type="button" target="_blank" rel="noopener noreferrer">
+                <a v-bind:href="'/words/'+e.id" class="name-result viet-text" type="button" target="_blank" rel="noopener noreferrer">
                 &nbsp;{{e.name}}&nbsp;
                 </a>
               </td>
@@ -138,16 +138,16 @@
                 {{e.level}}
               </td>
               <td>
-                  <div v-if= "e.result" class="text-top pb-2">
-                    <i class="mt-2 text-success fas fa-check" style="font-size:190%;"></i>
-                  </div>
-                  <div v-else-if= "!e.result" class="text-top">
-                    <span  class="m-0 p-0 text-danger" style="font-size:190%;"> ✖ </span>
-                  </div>
+                <div v-if= "e.result" class="text-top pb-2">
+                  <i class="mt-2 text-success fas fa-check" style="font-size:190%;"></i>
+                </div>
+                <div v-else-if= "!e.result" class="text-top">
+                  <span  class="m-0 p-0 text-danger" style="font-size:190%;"> ✖ </span>
+                </div>
               </td>
             </tr>
           </table>
-          <div class="px-2" style="text-align:right">正解率： {{correct}}/{{total}}</div>
+          <div class="px-2 text-right" >正解率： {{correct}}/{{total}}</div>
         </div>
       </div>
       <Adsense

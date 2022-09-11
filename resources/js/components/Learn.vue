@@ -1,12 +1,12 @@
 
 <template>
-  <div class="mx-auto" style="text-align:center; max-width:700px;">
+  <div class="mx-auto text-center" style="max-width:700px;">
 
     <!-- ステータスバー -->
-    <div class="normal-text mt-1" style="text-align:left">  
+    <div class="normal-text mt-1 text-left">
       単語Lv.:{{level}}　正解数:{{correct}}/回答数:{{total}}
       <span>
-        <button data-toggle="modal" data-target="#learn-description" class="border border-success text-success rounded ml-2 my-1 py-0 px-1">
+        <button data-toggle="modal" data-target="#learn-description" class="success-btn-transparent ml-2 my-1 py-0 px-1">
           <small>単語学習の使い方</small>
         </button>
       </span>
@@ -15,19 +15,17 @@
     <!-- 最初の画面 -->
     <div v-if="status==='INITIAL'" class="learn-setting-block">
       <div class="card white rounded" style="max-width: 400px;">
-        <div class="card-body" style = "text-align:center;">
+        <div class="card-body text-center">
           <div class="m-2 p-2" style="font-size:1.2rem">
             レベルを選択：
-            <select size="1" v-model= "level" class="m-2"   style="width:100px; height:30px; text-align:center;">
+            <select size="1" v-model= "level" class="m-2 text-center"   style="width:100px; height:30px;">
               <option v-for="i in Number(max_level)" >{{i}}</option>
               <option v-if="user_name!==''"value="REVIEW_ALL">復習のみ</option>
             </select>
           </div>
-          <div class="mt-4 p-1">
-            <button @click="clickStart()" type="button" class="btn btn-primary rounded p-1 text-nowrap"style="width: 220px; font-size: 1.5rem;">
-              START ▶
-            </button>
-          </div>
+          <a @click="clickStart()" type="button" class="btn btn-primary start-btn">
+            START ▶
+          </a>
           <div class="text-primary" style="height:50px;">
             <span v-if="level==='REVIEW_ALL'">
               「復習のみ」では、復習可能語が<br>
@@ -53,7 +51,7 @@
     <!-- 無料登録を勧める -->
     <div v-if="status==='WARN_RANDOM'" class="learn-setting-block">
       <div class="card white rounded" style="max-width: 400px;">
-        <div class="card-body" style = "text-align:center;">
+        <div class="card-body text-center">
           <div class="m-2 p-2" style="font-size:1.0rem">
             ログインしていないため、ランダムに出題されます。<br>
             <span class="trial-attention-text">無料登録すれば、単語毎の学習スケジュールに基づいて出題されます。</span>
@@ -64,7 +62,7 @@
             <a @click="load()" class="btn-primary random-start-btn text-white">
               ランダムでStart ▶
             </a>
-          </p>          
+          </p>
         </div>
       </div>
     </div>
@@ -72,14 +70,14 @@
     <!-- 通常会員登録を勧める -->
     <div v-if="status==='RECOMMEND_NORMAL'" class="learn-setting-block">
       <div class="card white rounded" style="max-width: 400px;">
-        <div class="card-body" style = "text-align:center;">
+        <div class="card-body text-center">
           <div class="m-2 p-2" style="font-size:1.2rem">
             レベル{{Number(trial_level)+1}}以上は通常会員専用です。
           </div>
-          <div class="m-3" style="text-align:center; font-size:1.3rem" >
+          <div class="m-3 text-center" style="font-size:1.3rem" >
             <a href="/subscription" class="deep-orange lighten-1 text-white rounded px-5 py-2" >通常会員に登録</a>
           </div>
-          <div class="m-3" style="text-align:center;" >
+          <div class="m-3 text-center">
             <button @click="initialize()" type="button" class="btn btn-info light-blue accent-4 rounded px-5 py-1 mt-2 text-nowrap shadow-none" style=" font-size: 1.3rem;">
               レベルを変更
             </button>
@@ -91,14 +89,14 @@
     <!-- お試し会員登録を勧める -->
     <div v-if="status==='RECOMMEND_TRIAL'" class="learn-setting-block">
       <div class="card white rounded" style="max-width: 400px;">
-        <div class="card-body" style = "text-align:center;">
+        <div class="card-body text-center">
           <div class="m-2 p-2" style="font-size:1.2rem">
             レベル{{Number(guest_level)+1}}以上は会員専用です。
           </div>
-          <div class="m-3" style="text-align:center; font-size:1.3rem" >
+          <div class="m-3 text-center" style="font-size:1.3rem" >
             <a href="/register" class="deep-orange lighten-1 text-white rounded px-5 py-2" >無料登録する</a>
           </div>
-          <div class="m-3" style="text-align:center;" >
+          <div class="m-3 text-center" >
             <button @click="initialize()" type="button" class="btn btn-info light-blue accent-4 rounded px-5 py-1 mt-2 text-nowrap shadow-none" style=" font-size: 1.3rem;">
               レベルを変更
             </button>
@@ -109,7 +107,7 @@
 
     <!-- 出題画面 -->
     <div v-if="status!=='RESULT' && status!=='CLEARED'" class="mt-1 d-flex flex-row" style=" height: 55px;">
-      <div v-bind:class="result_text_color" class="text-nowrap pt-1" style="text-align:left; width:20%; font-size: 1.0rem;">
+      <div v-bind:class="result_text_color" class="text-nowrap pt-1 text-left" style="width:20%; font-size: 1.0rem;">
         {{result_text}}
       </div>
       <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' "class="card white rounded"  style="width:60%; display:table;">
@@ -118,11 +116,11 @@
       </div>
     </div>
     <!-- 自己評価ボタン -->
-    <div v-if=" status==='ANSWERED' " class="" style="min-height:52px; text-align:left; max-width:500px;">
-      <span class="text-nowrap;" style = "min-width:65px; text-align:left; font-size: 0.8rem;">
+    <div v-if=" status==='ANSWERED' " class="text-left" style="min-height:52px; max-width:500px;">
+      <span class="text-nowrap text-left" style = "min-width:65px; font-size: 0.8rem;">
         覚えた？
       </span>
-      <span v-for="e in [0,1,2,3]" style = " text-align:center;">
+      <span v-for="e in [0,1,2,3]" class = "text-center">
         <span v-if=" isCorrect===true || e===0">
           <button @click="clickButton(e)" type="button" v-bind:class="btn_actions[e]" class="confidence-btn">
             {{button_properties[e].text}}
@@ -135,7 +133,7 @@
     <div v-if="status==='LOADING' " class="spinner-border text-muted " role="status" style="width: 3rem; height: 3rem;">
       <span class="sr-only">Loading...</span>
     </div>
-    <div v-if="status==='LOADING' || status==='PROMPT' || status==='JUDGED' " class="pt-2" style=" text-align:center; height: 60px;">
+    <div v-if="status==='LOADING' || status==='PROMPT' || status==='JUDGED' " class="pt-2 text-center" style="height: 60px;">
       <span>
         {{message}}
       </span>
@@ -175,10 +173,9 @@
       </div>
     </div>
 
-
     <!-- 結果表示 RESULT and CLEARED-->
     <div v-if="status==='RESULT' || status==='CLEARED' ">
-      <div class="card white rounded mt-5 mx-auto" style="text-align:center; max-width:400px; font-size: 1.2 rem;">
+      <div class="card white rounded mt-5 mx-auto text-center" style="max-width:400px; font-size: 1.2 rem;">
         <div class="card-body" >
           <div v-if="total > 0" class="mb-2">
             <div class="text-muted" style="font-size:0.8rem">単語をクリックすると詳細ページが開きます。</div>
@@ -192,7 +189,7 @@
               <tr v-for="e in this.history">
                 <td>{{e.No}}</td>
                 <td style="font-size:1.3rem">
-                  <a v-bind:href="'/words/'+e.id" class="white viet-text text-dark rounded rounded-4" type="button" target="_blank" rel="noopener noreferrer">
+                  <a v-bind:href="'/words/'+e.id" class="name-result viet-text" type="button" target="_blank" rel="noopener noreferrer">
                   &nbsp;{{e.name}}&nbsp;
                   </a>
                 </td>
@@ -209,7 +206,7 @@
                 </td>
               </tr>
             </table>
-            <div class="px-2" style="text-align:right">正解率： {{correct}}/{{total}}</div>
+            <div class="px-2 text-right">正解率： {{correct}}/{{total}}</div>
           </div>
 
           <div v-if="status==='CLEARED'">
@@ -270,7 +267,7 @@
               <img src="/image/learn-description4.webp" class="learn-description-image" alt='7.学習状況と復習予定が表示されます 8.自分のペースで次の学習に進みましょう'>
           </div>
           <div class="text-center">
-            <button type="button" class="border border-2 border-muted text-muted  white rounded" data-dismiss="modal" aria-label="Close" style="width:100px; display:inline-block;">
+            <button type="button" class="border muted-btn-transparent modal-close-btn" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">Close</span>
             </button>
           </div>
@@ -524,7 +521,7 @@
             previous: this.answer_F,
           }
         });
-        
+
         if(response.data === "CLEARED"){
           this.status = "CLEARED";
           let clear_sound = new Audio('/sound/clear.mp3');

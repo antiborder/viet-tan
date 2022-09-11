@@ -16,7 +16,7 @@
         </form>
       </div>
       <div class="text-right">
-        <button data-toggle="modal" data-target="#search-description" class="white border border-success text-success rounded mx-2 pb-1 px-2">
+        <button data-toggle="modal" data-target="#search-description" class="success-btn-transparent mx-2 pb-1 px-2">
           <small>あいまい検索について</small>
         </button>
       </div>
@@ -163,9 +163,9 @@
             </button>
             から遠慮なくご連絡ください。
           </p>
-          <button type="button" class="border border-2 border-muted text-muted white rounded d-inline-block" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="border muted-btn-transparent modal-close-btn" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">Close</span>
-          </button>
+          </a>
         </div>
       </div>
     </div>
