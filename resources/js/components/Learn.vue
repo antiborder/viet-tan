@@ -267,7 +267,7 @@
               <img src="/image/learn-description4.webp" class="learn-description-image" alt='7.学習状況と復習予定が表示されます 8.自分のペースで次の学習に進みましょう'>
           </div>
           <div class="text-center">
-            <button type="button" class="border muted-btn-transparent modal-close-btn" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="muted-btn-transparent modal-close-btn" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">Close</span>
             </button>
           </div>
