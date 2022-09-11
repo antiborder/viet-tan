@@ -103,14 +103,14 @@
         <p class="px-5 py-0 m-0 text-right" style="font-size:0.9rem;">{{result_message[2]}}</p>
       </div>
       <div v-if="level>0" class="p-1">おすすめレベル：　level {{level}}</div>
-      <!-- <div class="text-center"> -->
-      <a v-bind:href="'/learn/' + level" class="btn primary-btn leave-measure-btn">
-        レベル {{level}}を学習する
-      </a>
-      <a href="/" class="btn home-btn leave-measure-btn">
-        Homeに戻る
-      </a>
-      <!-- </div> -->
+      <div class="text-center">
+        <a v-bind:href="'/learn/' + level" class="btn primary-btn leave-measure-btn">
+          レベル {{level}}を学習する
+        </a>
+        <a href="/" class="btn home-btn leave-measure-btn">
+          Homeに戻る
+        </a>
+      </div>
     </div>
 
     <div v-if="status==='RESULT' ">

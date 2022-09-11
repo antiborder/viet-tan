@@ -163,7 +163,7 @@
             </button>
             から遠慮なくご連絡ください。
           </p>
-          <button type="button" class="border muted-btn-transparent modal-close-btn" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="muted-btn-transparent modal-close-btn" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">Close</span>
           </a>
         </div>
