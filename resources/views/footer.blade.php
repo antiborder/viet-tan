@@ -15,7 +15,7 @@
             <a href="{{route('learn')}}" class="text-white">単語学習</a><br>
             <a href="{{route('measure')}}" class="text-white">単語力測定</a><br>
             <a href="{{route('words.search')}}" class="text-white">あいまい検索</a><br>
-            <a href="{{route('tags.categories')}}" class="text-white">タグから探す</a>
+            <a href="{{route('categories.index')}}" class="text-white">タグから探す</a>
         </div>
         <div class="footer-block3">
             @auth

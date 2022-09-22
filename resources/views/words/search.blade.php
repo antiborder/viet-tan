@@ -109,7 +109,7 @@
     @endforeach
 
     <div class="tag-search-btn-block">
-      <a href='{{ route("tags.categories")}}' >
+      <a href='{{ route("categories.index")}}' >
         <div class="search-button-normal search-button">
           タグから探す
         </div>

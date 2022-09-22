@@ -163,10 +163,10 @@ class UserController extends Controller
                 'unlearned' => $unlearned,
                 'progress' => $progress,
 
-                'learned_0' =>$learned_details[0],
-                'learned_1' =>$learned_details[1],
-                'learned_2' =>$learned_details[2],
-                'learned_3' =>$learned_details[3],
+                'learned_details' =>$learned_details,
+                // 'learned_1' =>$learned_details[1],
+                // 'learned_2' =>$learned_details[2],
+                // 'learned_3' =>$learned_details[3],
 
                 'schedule' =>$schedule,
                 'ready_total' =>$ready_total,
