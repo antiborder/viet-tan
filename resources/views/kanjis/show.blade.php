@@ -4,8 +4,8 @@
 
 @section('content')
   @include('nav')
-  <div class="container" style="max-width:800px">
-    <div class="card my-3" style="max-width:30rem">
+  <div class="container" style="max-width:850px">
+    <div class="card my-3 centered-block">
       <div class="card-body">
         漢字　<span class="kanji-text h3 card-title m-0">{{ $kanji->name }}</span>　を含む単語
       </div>
@@ -15,51 +15,55 @@
         </a>                        
       </div>      
     </div>
-    <div class="mb-1 mr-2" style="font-size:1.1rem">
+    <div class="centered-block">
       <span style="font-size:1.4rem">{{ $words->count() }}</span> 件が該当
     </div>
 
-    @if($subscription === 'NORMAL')
+    <div class="centered-block">
+      @if($subscription === 'NORMAL')
 
-      @foreach($words as $i => $word)
-        @include('words.card')
-        @if($i===9 || $i===21 || $i===35)
-          @include('ads.horizontal')
-        @endif        
-      @endforeach
-
-    @elseif($subscription === 'TRIAL')
-      @foreach($words as $i => $word)
-        @if($i < config('const.KANJI_WORD_TRIAL'))
+        @foreach($words as $i => $word)
           @include('words.card')
           @if($i===9 || $i===21 || $i===35)
             @include('ads.horizontal')
           @endif        
-        @endif
-      @endforeach
-      @if( $words->count() > config('const.KANJI_WORD_TRIAL'))
-        <div class="mt-2 shadow" data-toggle="modal" data-target="#recommend-normal" style="">
-        <button class="success-color text-white border border-0 px-2 py-1 rounded">「{{ $kanji->name }}」の関連語をもっと見る</button>
-        </div>
-      @endif     
+        @endforeach
 
-    @elseif($subscription === 'GUEST')
-      @foreach($words as $i => $word)
-        @if($i < config('const.KANJI_WORD_GUEST'))
-          @include('words.card')
-          @if($i===9 || $i===21 || $i===35)
-            @include('ads.horizontal')
-        @endif        
-        @endif
-      @endforeach
-      @if( $words->count() > config('const.KANJI_WORD_GUEST'))
-        <div class="mt-2 shadow" data-toggle="modal" data-target="#recommend-trial" style="">
+      @elseif($subscription === 'TRIAL')
+        @foreach($words as $i => $word)
+          @if($i < config('const.KANJI_WORD_TRIAL'))
+            @include('words.card')
+            @if($i===9 || $i===21 || $i===35)
+              @include('ads.horizontal')
+            @endif        
+          @endif
+        @endforeach
+        @if( $words->count() > config('const.KANJI_WORD_TRIAL'))
+          <div class="mt-2 shadow" data-toggle="modal" data-target="#recommend-normal" style="">
           <button class="success-color text-white border border-0 px-2 py-1 rounded">「{{ $kanji->name }}」の関連語をもっと見る</button>
-        </div>
-      @endif
-    @endif
+          </div>
+        @endif     
 
+      @elseif($subscription === 'GUEST')
+        @foreach($words as $i => $word)
+          @if($i < config('const.KANJI_WORD_GUEST'))
+            @include('words.card')
+            @if($i===9 || $i===21 || $i===35)
+              @include('ads.horizontal')
+          @endif        
+          @endif
+        @endforeach
+        @if( $words->count() > config('const.KANJI_WORD_GUEST'))
+          <div class="mt-2 shadow" data-toggle="modal" data-target="#recommend-trial" style="">
+            <button class="success-color text-white border border-0 px-2 py-1 rounded">「{{ $kanji->name }}」の関連語をもっと見る</button>
+          </div>
+        @endif
+      @endif
+    </div>
+    
+    <div class="centered-block">
     @include('ads.rectangle')
+    </div>
   </div>
 
   

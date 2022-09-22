@@ -37,8 +37,8 @@
         {{result_text}}
       </div>
       <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' "class="card white rounded"  style="width:60%; display:table;">
-        <span v-if="mode === 'FM'" class="h4 mt-1 bounce" style="vertical-align:middle; display:table-cell;">{{answer_F}}</span>
-        <span v-if="mode === 'MF'" class="h5 mt-1 bounce" style="white-space: pre-line; vertical-align:middle; display:table-cell;">{{answer_M}}</span>
+        <span v-if="mode === 'FM'" class="h4 answer-text bounce">{{answer_F}}</span>
+        <span v-if="mode === 'MF'" class="h5 answer-text bounce">{{answer_M}}</span>
       </div>
     </div>
     <!-- 次へ進むボタン -->
@@ -98,9 +98,9 @@
     <div v-if="status==='RESULT' " class="card my-2 pb-1 white rounded mx-auto text-center" style="max-width:400px;">
       <div class="p-1 text-muted" style="font-size:1.2rem;"> 結果 </div>
       <div class="p-1">
-        <p class="px-5 py-0 m-0 text-left" style="font-size:0.9rem;">{{result_message[0]}}</p>
+        <p class="px-5 py-0 m-0 text-left" style="font-size:0.8rem;">{{result_message[0]}}</p>
         <p class="px-5 py-0 m-0 text-center" style="font-size:1.2rem;">{{result_message[1]}}</p>
-        <p class="px-5 py-0 m-0 text-right" style="font-size:0.9rem;">{{result_message[2]}}</p>
+        <p class="px-5 py-0 m-0 text-right" style="font-size:0.8rem;">{{result_message[2]}}</p>
       </div>
       <div v-if="level>0" class="p-1">おすすめレベル：　level {{level}}</div>
       <div class="text-center">

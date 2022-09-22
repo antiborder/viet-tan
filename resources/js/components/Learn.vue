@@ -111,8 +111,8 @@
         {{result_text}}
       </div>
       <div v-if="status==='JUDGED' || status==='ANSWERED' || status==='PROMPT' "class="card white rounded"  style="width:60%; display:table;">
-        <span v-if="mode === 'FM'" class="h4 mt-1 bounce" style="vertical-align:middle; display:table-cell;">{{answer_F}}</span>
-        <span v-if="mode === 'MF'" class="h5 mt-1 bounce" style="white-space: pre-line; vertical-align:middle; display:table-cell;">{{answer_M}}</span>
+        <span v-if="mode === 'FM'" class="h4 bounce answer-text">{{answer_F}}</span>
+        <span v-if="mode === 'MF'" class="h5 bounce answer-text">{{answer_M}}</span>
       </div>
     </div>
     <!-- 自己評価ボタン -->

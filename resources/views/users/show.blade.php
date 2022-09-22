@@ -97,27 +97,23 @@
 
                     <!-- learned_nを配列にすればもう少しまとまる。 -->
                       @php
-                        $individual = [0=>"confidence-btn-color0", 1=>"confidence-btn-color1", 2=>"confidence-btn-color2", 3=>"confidence-btn-color3", -1=>"confidence-btn-color-1"];
+                        $colors = [0=>"confidence-btn-color0", 1=>"confidence-btn-color1", 2=>"confidence-btn-color2", 3=>"confidence-btn-color3", -1=>"confidence-btn-color-1"];
+                        $texts = [0=>"まだ。", 1=>"びみょう", 2=>"覚えた!", 3=>"余裕♪", -1=>"未習"];
                       @endphp
-
-                      <div class="{{'progress-bar text-dark '.$individual[3]}}" role="progressbar" style="{{'width:' . (int)($learned_3[$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}"  aria-valuemin="0" aria-valuemax="100">{{$learned_3[$s['level']]}}</div>
-                      <div class="{{'progress-bar text-dark '.$individual[2]}}" role="progressbar" style="{{'width:' . (int)($learned_2[$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}" aria-valuemin="0" aria-valuemax="100">{{$learned_2[$s['level']]}}</div>
-                      <div class="{{'progress-bar text-dark '.$individual[1]}}" role="progressbar" style="{{'width:' . (int)($learned_1[$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}" aria-valuemin="0" aria-valuemax="100">{{$learned_1[$s['level']]}}</div>
-                      <div class="{{'progress-bar text-dark '.$individual[0]}}" role="progressbar" style="{{'width:' . (int)($learned_0[$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}" aria-valuemin="0" aria-valuemax="100">{{$learned_0[$s['level']]}}</div>
-                      <div class="{{'progress-bar text-dark '.$individual[-1]}}"  role="progressbar" style="{{'width:' . (int)($unlearned[$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}" aria-valuemin="0" aria-valuemax="100">{{$unlearned[$s['level']]}}</div>
+                      @for($i=0; $i<4; $i++)
+                        <div class="progress-bar text-dark {{$colors[$i]}}" role="progressbar" style="{{'width:' . (int)($learned_details[$i][$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}" aria-valuemin="0" aria-valuemax="100">{{$learned_details[$i][$s['level']]}}</div>
+                      @endfor
+                      <div class="progress-bar text-dark {{$colors[-1]}}"  role="progressbar" style="{{'width:' . (int)($unlearned[$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}" aria-valuemin="0" aria-valuemax="100">{{$unlearned[$s['level']]}}</div>
                     </div>
-
-                    <div><span class="confidence-btn {{$individual[3]}}">余裕♪</span>：　{{$learned_3[$s['level']]}}語</div>
-                    <div><span class="confidence-btn {{$individual[2]}}">覚えた!</span>：　{{$learned_2[$s['level']]}}語</div>
-                    <div><span class="confidence-btn {{$individual[1]}}">びみょう</span>：　{{$learned_1[$s['level']]}}語</div>
-                    <div><span class="confidence-btn {{$individual[0]}}">まだ。</span>：　{{$learned_0[$s['level']]}}語</div>
-                    <div><span class="confidence-btn {{$individual[-1]}}">未習</span>：　{{$unlearned[$s['level']]}}語</div>
+                    @for($i=3; $i>=0; $i--)                    
+                      <div><span class="confidence-btn-fake {{$colors[$i]}}">{{$texts[$i]}}</span>：　{{$learned_details[$i][$s['level']]}}語</div>
+                    @endfor
+                    <div><span class="confidence-btn-fake {{$colors[-1]}}">{{$texts[-1]}}</span>：　{{$unlearned[$s['level']]}}語</div>
                     <hr>
                     <div>合計：　{{$s['total']}}語</div>
                     <div>進捗率：　{{$progress[$s['level']]}}&#037;</div>
 
                   </div>
-
                 </div>
               </div>
             </div>

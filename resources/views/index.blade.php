@@ -148,7 +148,7 @@
     <div class="menu-block2">
       <ul class="small-icon-list">
         <li class="d-inline-block">
-          <a href="{{route('tags.categories')}}" >
+          <a href="{{route('categories.index')}}" >
             <div class="small-icon">
               <div class="small-icon-inner-square">
                 <div>

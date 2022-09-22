@@ -26,8 +26,8 @@ Route::resource('/words', 'WordController')->except(['index'])->middleware('auth
 Route::resource('/words', 'WordController')->only(['show']);
 
 Route::get('/tags/{name}', 'TagController@show')->name('tags.show');
-Route::get('/category','TagController@showCategories')->name('tags.categories');
-Route::get('/category/{name}','TagController@showCategory')->name('tags.category');
+Route::get('/categories/index','TagController@showCategories')->name('categories.index');
+Route::get('/categories/{name}','TagController@showCategory')->name('categories.show');
 
 Route::get('/kanjis/{name}', 'KanjiController@show')->name('kanjis.show');
 Route::get('/search', 'WordController@search')->name('words.search');

@@ -107,7 +107,11 @@ detail
     margin: 0 auto;
 }
 
-
+/* 中央寄せ */
+.centered-block{
+    max-width:30rem;
+    margin: 0 auto;
+}
 
 /* article系 */
 .article h5{

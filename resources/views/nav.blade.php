@@ -41,7 +41,7 @@
         <a class="nav-link" href="{{route('words.search')}}" >あいまい検索</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{route('tags.categories')}}">タグから探す</a>
+        <a class="nav-link" href="{{route('categories.index')}}">タグから探す</a>
       </li>
       @auth
         <li class="nav-item">

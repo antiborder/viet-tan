@@ -26,7 +26,7 @@ class TagController extends Controller
             $category_names[] = $category_name;
         }
 
-        return view('tags.categories', ['categories' => $category_names]);
+        return view('categories.index', ['categories' => $category_names]);
     }
 
     public function showCategory(string $name)
@@ -34,7 +34,7 @@ class TagController extends Controller
         $tag_names = config('const.CATEGORIES')[$name]['TAGS'];
         $tags = Tag::wherein('name', $tag_names)->get();
 
-        return view('tags.category', ['category' => config('const.CATEGORIES')[$name] , 'tags' => $tags], );
+        return view('categories.show', ['category' => config('const.CATEGORIES')[$name] , 'tags' => $tags], );
         
     }    
 

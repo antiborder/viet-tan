@@ -54,6 +54,13 @@
     display: inline-block;
 }
 
+.answer-text{
+    white-space: pre-line; 
+    vertical-align:middle; 
+    display:table-cell;
+    margin-top: 0.25rem;
+}
+
 .confidence-btn{
     height:40px; 
     max-width: 100px; 
