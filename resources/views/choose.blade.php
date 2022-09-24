@@ -22,4 +22,3 @@
 </form>
 
 <a href="{{route('export_words')}}" download="export_words.csv">単語csvのダウンロード</a><br>
-<a href="{{route('export_tags')}}" download="export_tags.csv">タグcsvのダウンロード</a>
