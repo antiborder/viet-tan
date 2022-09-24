@@ -516,25 +516,6 @@ class WordController extends Controller
 
         return $text;
     }
-    public function export_tags(Request $request){
-        $task = new Tag;
-        $table = $task->getTable();
-        $columns = $task->getConnection()->getSchemaBuilder()->getColumnListing($table);
-        $header = collect($columns)->implode(",");
-        // return $header;
-        $selectStr = collect($columns)->map(function($item) {
-            return $item;//"ifnull({$item}, '')";
-        })->implode(", ',' ,");
-
-        $data = DB::table('tags')
-        ->select(DB::raw("concat({$selectStr}) as record"))
-         ->pluck("record");
-        // ヘッダーとデータを加えて改行コードでつなげて１つの文字列にする
-        $text = $data->prepend($header)->implode("\r\n");
-        $text = str_replace(array("\n"), ' ', $text);
-
-        return $text;
-    }
 
     //delete all words
     public function clear(Request $request)

@@ -25,7 +25,9 @@ Route::get('/', 'WordController@index')->name('index');
 Route::resource('/words', 'WordController')->except(['index'])->middleware('auth');
 Route::resource('/words', 'WordController')->only(['show']);
 
+Route::get('/tags/index', 'TagController@index')->name('tags.index');
 Route::get('/tags/{name}', 'TagController@show')->name('tags.show');
+
 Route::get('/categories/index','TagController@showCategories')->name('categories.index');
 Route::get('/categories/{name}','TagController@showCategory')->name('categories.show');
 
@@ -38,7 +40,7 @@ Route::post('/import', 'WordController@import')->name('import');
 Route::post('/clear', 'WordController@clear')->name('clear');
 Route::post('/trim', 'WordController@trim')->name('trim');
 Route::get('/export_words', 'WordController@export_words')->name('export_words');
-Route::get('/export_tags', 'WordController@export_tags')->name('export_tags');
+Route::get('/export_tags', 'TagController@export_tags')->name('export_tags');
 
 Route::get('/learn', 'LearnController@learn')->name('learn');
 Route::get('/learn/random', 'LearnController@getWords')->name('learn.random');
