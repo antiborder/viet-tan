@@ -27,6 +27,9 @@ Route::resource('/words', 'WordController')->only(['show']);
 
 Route::get('/tags/index', 'TagController@index')->name('tags.index');
 Route::get('/tags/{name}', 'TagController@show')->name('tags.show');
+Route::get('/tags/{name}/edit', 'TagController@edit')->name('tags.edit');
+Route::post('/tags/{name}/update', 'TagController@update')->name('tags.update');
+Route::delete('/tags/{name}/delete', 'TagController@destroy')->name('tags.delete');
 
 Route::get('/categories/index','TagController@showCategories')->name('categories.index');
 Route::get('/categories/{name}','TagController@showCategory')->name('categories.show');

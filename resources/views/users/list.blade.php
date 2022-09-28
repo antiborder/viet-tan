@@ -5,9 +5,8 @@
 @section('content')
   @include('nav')
   <div class="container" style="max-width:800px">
+    登録者数：{{$users->count()}} 人
       <div class="card my-3 p-0">    
-
-
         <table cellpadding="3" bgcolor="#e3f2fd" align="center" class="my-1" border="1" style="border-collapse:collapse; ; font-family: 'Kosugi Maru', sans-serif; font-size:150%; margin:auto">
             <thead>
                 <tr>
@@ -23,7 +22,11 @@
             @foreach($users as $user)
             <tr>
                 <td>{{$user->id}}</td>
-                <td>{{$user->name}}</td>
+                <td>
+                    <a href="{{ route('users.show', ['name'=>$user->name]) }}" >
+                        {{$user->name}}
+                    <a>
+                </td>
                 <td>{{$user->email}}</td>
                 <td>{{$user->created_at}}</td>                
                 <td>{{$user->updated_at}}</td>                

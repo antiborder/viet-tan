@@ -9,6 +9,7 @@ class Tag extends Model
 {
     protected $fillable = [
         'name',
+        'keywords',
     ];
 
     public function words(): BelongsToMany

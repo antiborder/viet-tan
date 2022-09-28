@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use DB;
 use App\Tag;
 use App\User;
+use App\Http\Requests\TagRequest;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,10 +15,13 @@ class TagController extends Controller
 
     public function index()
     {
-        $tags = Tag::all();
-
-        $subscription = User::getSubscription();
-        return view('tags.index', ['tags' => $tags, 'subscription'=>$subscription ], );
+        if(Auth::id() === 1 ){
+            $tags = Tag::all();
+            $subscription = User::getSubscription();
+            return view('tags.index', ['tags' => $tags, 'subscription'=>$subscription ], );
+        }else{
+            return redirect()->route('index');
+        }
 
     }
 
@@ -28,6 +33,51 @@ class TagController extends Controller
         return view('tags.show', ['tag' => $tag, 'subscription'=>$subscription ], );
 
     }
+
+    public function edit(string $name)
+    {
+        if(Auth::id() === 1 ){
+            $tag = Tag::where('name', $name)->first();
+            $subscription = User::getSubscription();
+            return view('tags.edit', ['tag' => $tag, 'subscription'=>$subscription ], );
+        }else{
+            return redirect()->route('index');
+        }
+    }
+
+    public function update(TagRequest $request, string $name)
+    {
+        if(Auth::id() === 1 ){
+            $tag = Tag::where('name', $name)->first();
+            $this->saveTag($request, $tag);
+            return redirect()->route('tags.index');
+        }else{
+            return redirect()->route('index');
+        }
+    }
+
+    public function delete(TagRequest $request, string $name)
+    {
+        if(Auth::id() === 1 ){
+            $tag = Tag::where('name', $name)->first();
+            $this->saveTag($request, $tag);
+            return redirect()->route('tags.index');
+        }else{
+            return redirect()->route('index');
+        }
+    }
+    
+    public function destroy(string $name)
+    {
+        if(Auth::id() === 1 ){
+            $tag = Tag::where('name', $name)->first();            
+            $tag->delete();
+            return redirect()->route('tags.index');
+        }else{
+            return redirect()->route('index');
+        }        
+
+    }    
 
     public function showCategories()
     {
@@ -68,5 +118,12 @@ class TagController extends Controller
 
         return $text;
     }
+
+    private function saveTag(TagRequest $request, Tag $tag)
+    {
+        $tag->fill(['keywords' => $request->keywords]);
+        $tag->save();
+    }
+
 
 }
