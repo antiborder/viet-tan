@@ -13,17 +13,29 @@
 
     <div class="mt-2">
         <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>number</th>
+                    <th>keywords</th>
+                </tr>
+            </thead>
             @foreach($tags as $i => $tag)
                 <tr>
                     <td>
                         {{$tag->id}}
                     </td>
                     <td>
-                        {{$tag->name}}
+                        <a href="{{route('tags.edit',$tag->name)}}">
+                            {{$tag->name}}
+                        </a>
                     </td>
                     <td>
                         {{$tag->words->count()}}
-
+                    </td>
+                    <td>
+                        {{$tag->keywords}}
                     </td>
                 </tr>
             @endforeach
@@ -50,7 +62,7 @@
     }
     table tr td,th:nth-of-type(1){
         text-align:center;
-        font-size:1.1rem;        
+        font-size:1.1rem;
     }
     table tr td,th:nth-of-type(2){
         text-align:center;
@@ -58,11 +70,11 @@
     }
     table tr td,th:nth-of-type(3){
         text-align:center;
-        font-size:1.1rem;        
-    }        
+        font-size:1.1rem;
+    }
     table tr td,th:nth-of-type(4){
         text-align:center;
-        font-size:1.1rem;        
-    }            
+        font-size:1.1rem;
+    }
 
 </style>

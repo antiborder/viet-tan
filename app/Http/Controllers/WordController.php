@@ -69,6 +69,7 @@ class WordController extends Controller
         $this->saveWord($request, $word);
         return redirect()->route('words.show', ['word' => $word]);
     }
+
     public function edit(Word $word)
     {
         $tagNames = $word->tags->map(function ($tag) {
@@ -334,7 +335,7 @@ class WordController extends Controller
             $words_kanji = $query_kanji->paginate(50)->sortBy('level');
 
             //タグが該当
-            $query_tag = Tag::where('name','like','%'.$keyword.'%');
+            $query_tag = Tag::where('name','like','%'.$keyword.'%')->Orwhere('keywords','like','%'.$keyword.'%');
             $tags = $query_tag->paginate(20);
 
             //該当無しを判定

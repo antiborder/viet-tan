@@ -186,7 +186,7 @@ class UserController extends Controller
             ->get();
             return view('users.list', ['users'=>$users] );
         }else{
-            return view('index');
+            return redirect()->route('index');
         }
     }
 

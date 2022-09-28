@@ -7,7 +7,13 @@
   <div class="container" style="max-width:800px" >
     <div class="card my-3 centered-block">
       <div class="card-body">
-        <span class="h4 card-title m-0">{{ $tag->name }}</span>　タグに該当
+        <p>
+          <span class="h4 card-title">{{ $tag->name }}</span>　タグに該当
+        </p>
+        <p class="mb-0">
+          <label>keyword:</label>
+          {{$tag->keywords}}
+        </p>
       </div>
     </div>
 
