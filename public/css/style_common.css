@@ -355,6 +355,14 @@ detail
     color: #888888;
     float:right;
 }
+/* 単語詳細ページ */
+.jp-detail{
+    background-color:white;
+    color: #262626;
+    padding: 0.5rem;
+    border-radius:8px;
+    box-shadow: 0px 2px 5px #AAAAAA;
+}
 
 /* 自己申告ボタン色 */
 .confidence-btn-color0{

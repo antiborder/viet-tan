@@ -13,21 +13,35 @@
   @include('nav')
   <div class="container" style="max-width:850px">
     <div class="grouping-square grouping-square-orange">
-      <span class="grouping-label">単語詳細</span>
-      @include('words.detail')
+      <div>
+        <span class="grouping-label">単語詳細</span>
+        @include('words.detail')
+      </div>
 
-      @foreach($word->tags as $tag)
-        @if($loop->first)
-          <span class="mt-1">
-          <span class="grouping-label">関連タグ&ensp;</span>
-        @endif
-          <span class="mx-1">
-            @include('tags.card',['tag'=>$tag])
-          </span>
-        @if($loop->last)
-          </span>
-        @endif
-      @endforeach
+      @if($word->detail !== null)
+        <div class="mt-2">
+          <span class="grouping-label">意味詳細</span>
+          <div class="card jp-detail">
+            {{$word->detail}}
+          </div>
+        </div>
+      @endif
+
+      <div class="mt-2">
+        @foreach($word->tags as $tag)
+          @if($loop->first)
+            <span class="mt-1">
+            <span class="grouping-label">関連タグ&ensp;</span>
+          @endif
+            <span class="mx-1">
+              @include('tags.card',['tag'=>$tag])
+            </span>
+          @if($loop->last)
+            </span>
+          @endif
+        @endforeach
+      </div>
+
     </div>
     <div class="my-2" style="height:200px">
       @include('ads.horizontal')

@@ -72,14 +72,9 @@
       </div>
     </div>
   </div>
-
-  <div class="card-body pt-0" >
+    <!-- デバッグ用 -->
     <!-- {{$word->no_diacritic}}<br>
     {{$word->simplified}} -->
-    <div>
-      {{ $word->detail }}
-    </div>
-  </div>
   <div class=" d-flex flex-row">
     @if( Auth::id() === $word->user_id )
       <!-- dropdown -->
