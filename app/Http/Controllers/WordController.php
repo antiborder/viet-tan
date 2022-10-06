@@ -319,6 +319,8 @@ class WordController extends Controller
             //意味が該当
             $query_jp = Word::where('jp','like','%'.mb_convert_kana($keyword, 'c').'%');
             $query_jp -> Orwhere('jp','like','%'.mb_convert_kana($keyword, 'C').'%');
+            $query_jp -> Orwhere('detail','like','%'.mb_convert_kana($keyword, 'c').'%');
+            $query_jp -> Orwhere('detail','like','%'.mb_convert_kana($keyword, 'C').'%');
             $words_jp = $query_jp->paginate(20)->sortBy('level');
 
             //漢字が該当
@@ -422,7 +424,8 @@ class WordController extends Controller
             $word = Word::firstOrNew(['name' => $row[0]]);
             $word->fill([
                 'jp' => $row[1],
-                'level' => $row[10]
+                'level' => $row[10],
+                'detail' => $row[12]
             ]);
 
             //name
