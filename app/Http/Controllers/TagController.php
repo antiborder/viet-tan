@@ -49,7 +49,6 @@ class TagController extends Controller
     {
         if(Auth::id() === 1 ){
             $tag = Tag::where('name', $name)->first();
-            return $request;
             $this->saveTag($request, $tag);
             return redirect()->route('tags.index');
         }else{
