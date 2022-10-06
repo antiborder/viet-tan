@@ -47,8 +47,8 @@ class TagController extends Controller
 
     public function update(TagRequest $request, string $name)
     {
-        file_put_contents('/tmp/log', date('Y-m-d H:i:s') . " [" . __FILE__  . ":" . __LINE__ . "] " . var_export($name, true) . "", FILE_APPEND);
-        return $request;
+        // file_put_contents('/tmp/log', date('Y-m-d H:i:s') . " [" . __FILE__  . ":" . __LINE__ . "] " . var_export($name, true) . "", FILE_APPEND);
+        // return $request;
         // if(Auth::id() === 1 ){
             $tag = Tag::where('name', $name)->first();
             $this->saveTag($request, $tag);
