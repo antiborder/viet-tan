@@ -36,7 +36,7 @@ class WordRequest extends FormRequest
     {
         return [
             'name' => '単語名',
-            'detail' => '本文',
+            'detail' => '意味詳細',
             'tags' => 'タグ',
             'level' => 'レベル',
         ];
