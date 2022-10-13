@@ -459,8 +459,10 @@ class WordController extends Controller
             $tagNames = explode(' ', $row[11],5);
             $word->tags()->detach();
             foreach($tagNames as $tagName){
-                $tag = Tag::firstOrCreate(['name' => $tagName]);
-                $word->tags()->attach($tag);
+                if($tagName !== ""){ //""をタグ名として登録しないように。
+                    $tag = Tag::firstOrCreate(['name' => $tagName]);
+                    $word->tags()->attach($tag);
+                }
             }
 
             //synonym:類義語
