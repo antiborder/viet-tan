@@ -16,7 +16,7 @@ class TagController extends Controller
     public function index()
     {
         if(Auth::id() === 1 ){
-            $tags = Tag::all();
+            $tags = Tag::all()->sortBy('id');
             $subscription = User::getSubscription();
             return view('tags.index', ['tags' => $tags, 'subscription'=>$subscription ], );
         }else{
