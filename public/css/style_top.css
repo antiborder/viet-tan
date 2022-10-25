@@ -40,6 +40,17 @@
     display:inline-block;
 }
 
+#top .info-table{
+    margin:0 auto;
+    max-width: 500px;
+    text-align:left;
+}
+
+#top .info-date{
+    color: #888888;
+    text-align:left;    
+    padding-right:0.5rem;
+}
 
 /* menu-block1 */
 #top .menu-block1{
