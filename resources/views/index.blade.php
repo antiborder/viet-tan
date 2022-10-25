@@ -37,6 +37,21 @@
         </div>
       </div>
     </div>
+
+    <div class="card my-2 p-0">
+      <div class="card-body p-1 text-center">
+        <p class="m-0">
+          お知らせ
+        </p>
+        <div>
+          <table class="info-table text-small">
+            <tr><td class="info-date">2022.10.13</td><td>単語の意味詳細を追加しました。</td></tr>
+            <tr><td class="info-date">2022.10.17</td><td>単語データベースを更新しました。</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
     <div class="menu-block1">
       <ul class="large-icon-list">
         <li class="d-inline-block">
