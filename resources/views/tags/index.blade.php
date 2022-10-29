@@ -19,6 +19,7 @@
                     <th>name</th>
                     <th>number</th>
                     <th>keywords</th>
+                    <th>words</th>
                 </tr>
             </thead>
             @foreach($tags as $i => $tag)
@@ -36,6 +37,9 @@
                     </td>
                     <td>
                         {{$tag->keywords}}
+                    </td>
+                    <td>
+                        {{$tag->words->first()['name']}}
                     </td>
                 </tr>
             @endforeach
