@@ -7,6 +7,15 @@
 
   <div class="container text-center" style="line-height:200%; ">
 
+    <form action="{{ route('tags.import') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="mt-4 form-group">
+            <input type="file" name="file" style="min-width:300px">
+            <br>
+            <button class="btn btn-success">import</button>
+        </div>
+    </form>
+
     <a href="{{route('export_tags')}}" download="export_tags.csv">タグcsvのダウンロード</a>
 
     <h4 class="p-1" >タグ一覧</h4>
