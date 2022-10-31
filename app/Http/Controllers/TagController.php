@@ -10,6 +10,10 @@ use App\Http\Requests\TagRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use Goodby\CSV\Import\Standard\LexerConfig;
+use Goodby\CSV\Import\Standard\Lexer;
+use Goodby\CSV\Import\Standard\Interpreter;
+
 class TagController extends Controller
 {
 
@@ -66,18 +70,68 @@ class TagController extends Controller
             return redirect()->route('index');
         }
     }
-    
+
     public function destroy(string $name)
     {
         if(Auth::id() === 1 ){
-            $tag = Tag::where('name', $name)->first();            
+            $tag = Tag::where('name', $name)->first();
             $tag->delete();
             return redirect()->route('tags.index');
         }else{
             return redirect()->route('index');
-        }        
+        }
 
-    }    
+    }
+
+
+    public function import(Request $request)
+    {
+        // CSV ファイル保存
+        $tmpName = mt_rand().".".$request->file('file')->guessExtension(); //TMPファイル名
+        $request->file('file')->move(public_path()."/csv/tmp",$tmpName);
+        $tmpPath = public_path()."/csv/tmp/".$tmpName;
+
+        //Goodby CSVのconfig設定
+        $config = new LexerConfig();
+        $interpreter = new Interpreter();
+        $lexer = new Lexer($config);
+
+        //CharsetをUTF-8に変換、CSVのヘッダー行を無視
+        $config->setToCharset("UTF-8");
+        $config->setFromCharset("UTF-8");
+        $config->setIgnoreHeaderLine(true);
+
+        $dataList = [];
+
+        // 新規Observerとして、$dataList配列に値を代入
+        $interpreter->addObserver(function (array $row) use (&$dataList){
+            // 各列のデータを取得
+            $dataList[] = $row;
+        });
+
+        // CSVデータをパース
+        $lexer->parse($tmpPath, $interpreter);
+
+        // TMPファイル削除
+        unlink($tmpPath);
+
+        // 登録処理
+        $count = 0;
+        foreach($dataList as $row){
+            $tag = Tag::where('name',$row[0]) ->first();
+            if($tag){
+                $tag->fill([
+                    'name' => $row[0],
+                    'keywords' => $row[1],
+                ]);
+                $count++;
+                $tag->save();
+            }
+        }
+
+        // return $dataList;
+        return redirect()->action('TagController@index')->with('flash_message', 'keywordを' . $count . '個登録しました！');
+    }
 
     public function showCategories()
     {
