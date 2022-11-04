@@ -155,6 +155,7 @@
           <table class="info-table text-small">
             <tr><td class="info-date">2022.10.13</td><td>単語の意味詳細を追加しました。</td></tr>
             <tr><td class="info-date">2022.10.17</td><td>単語データベースを更新しました。</td></tr>
+            <tr><td class="info-date">2022.10.31</td><td>関連タグに検索用のkeywordを追加しました。</td></tr>
           </table>
         </div>
       </div>
