@@ -11,7 +11,7 @@
             ユーザーID ：　{{ $user->name }}
         </div>
         <br>
-        <div class="my-2" style="font-size:1.1rem" >
+        <div class="my-2 h6">
           　　Eメール ：　{{ $user->email}}
         </div>
         @php
@@ -30,6 +30,8 @@
             </span>
           @endif
         </div>         -->
+
+
       </div>
     </div>
 
@@ -45,7 +47,7 @@
             <th class="table-header">未習</th>
 
           </tr>
-          @foreach($status as $s)
+          @foreach($totals as $s)
           <tr>
             <td class="table-text">{{$s['level']}}</td>
             <td class="text-center">
@@ -105,7 +107,7 @@
                       @endfor
                       <div class="progress-bar text-dark {{$colors[-1]}}"  role="progressbar" style="{{'width:' . (int)($unlearned[$s['level']] / $s['total'] * 100) . '%; height: 30px;'}}" aria-valuemin="0" aria-valuemax="100">{{$unlearned[$s['level']]}}</div>
                     </div>
-                    @for($i=3; $i>=0; $i--)                    
+                    @for($i=3; $i>=0; $i--)
                       <div><span class="confidence-btn-fake {{$colors[$i]}}">{{$texts[$i]}}</span>：　{{$learned_details[$i][$s['level']]}}語</div>
                     @endfor
                     <div><span class="confidence-btn-fake {{$colors[-1]}}">{{$texts[-1]}}</span>：　{{$unlearned[$s['level']]}}語</div>
@@ -147,7 +149,7 @@
             <div class="graph schedule-graph">
               @for ($i = 1; $i <= 6; $i++)
                 <hr class="word-number-rule" style="top: {{ $i * 25 }}px;">
-              @endfor              
+              @endfor
 
               <div class="schedule-bar" style="height: {{$ready_total/4}}px; margin-top: {{150-$ready_total/4}}px;"></div>
               @for($i=1;$i<=60;$i++)
@@ -173,6 +175,29 @@
         </div>
       </div>
     </a>
+    <div class="card my-2">
+      <div class="h5 card-title mt-1 ml-1 mb-1">個人設定</div>
+      <div class="card-body pt-0 pb-2 pl-3">
+        <div class="card-text d-flex flex-row my-2 ">
+          <div class="ml-4 mr-2 h6">北部方言を除外する</div>
+          <tag-switch
+          initial_check = "{{var_export( $user->excludes_north, true )}}"
+          column = "excludes_north"
+          endpoint_to_update_check = "{{ route('users.update_check',['name'=>Auth::user()->name]) }}"
+          >
+          </tag-switch>
+        </div>
+        <div class="card-text d-flex flex-row my-2 ">
+          <div class="ml-4 mr-2 h6">南部方言を除外する</div>
+          <tag-switch
+          initial_check = "{{var_export( $user->excludes_south, true )}}"
+          column = "excludes_south"
+          endpoint_to_update_check = "{{ route('users.update_check',['name'=>Auth::user()->name]) }}"
+          >
+          </tag-switch>
+        </div>
+      </div>
+    </div>
 
     @include('ads.rectangle')
 

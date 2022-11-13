@@ -3,6 +3,7 @@ import Vue from 'vue'
 
 import Measure from './components/Measure'
 import Learn from './components/Learn'
+import TagSwitch from './components/TagSwitch'
 
 //vue-google-adsense
 import Ads from 'vue-google-adsense'
@@ -14,6 +15,7 @@ const app = new Vue({
   components: {
     Learn,
     Measure,    
+    TagSwitch,
   },
 
 })
