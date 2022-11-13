@@ -175,6 +175,7 @@
         </div>
       </div>
     </a>
+    @if($user->id === 1)
     <div class="card my-2">
       <div class="h5 card-title mt-1 ml-1 mb-1">個人設定</div>
       <div class="card-body pt-0 pb-2 pl-3">
@@ -198,6 +199,7 @@
         </div>
       </div>
     </div>
+    @endif
 
     @include('ads.rectangle')
 
