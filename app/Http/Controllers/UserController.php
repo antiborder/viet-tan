@@ -15,7 +15,7 @@ class UserController extends Controller
         $user = User::where('name', $name)->first();
 
         if(Auth::id() === $user->id || Auth::id() === 1 ){
-            $status = Word::select('level',DB::raw('count(*) as total'))->groupBy('level')->orderBy('level')->get()->toArray();
+            $totals = Word::select('level',DB::raw('count(*) as total'))->groupBy('level')->orderBy('level')->get()->toArray();
             $subscription = User::getSubscription();
 
             //既習語数を取得
@@ -84,7 +84,7 @@ class UserController extends Controller
             //viewに渡す変数の準備
             $levels = [];
             $total = array();
-            foreach($status as $s){
+            foreach($totals as $s){
                 $levels[] = $s['level'];
                 $total[$s['level']] = $s['total'];
             }
@@ -157,7 +157,7 @@ class UserController extends Controller
            return view('users.show', [
                 'user' => $user,
                 'subscription' => $subscription,
-                'status' => $status,
+                'totals' => $totals,
                 'ready' => $ready,
                 'learned' => $learned,
                 'unlearned' => $unlearned,
@@ -189,5 +189,24 @@ class UserController extends Controller
             return redirect()->route('index');
         }
     }
+
+    public function updateCheck(Request $request){
+        $user_id = Auth::id();
+        $user = User::firstOrNew(['id'=> $user_id]);
+
+        if($request->column === 'excludes_north'){
+            $user -> fill([
+                'excludes_north' => $request->checked,
+            ]);        
+        }
+        if($request->column === 'excludes_south'){
+            $user -> fill([
+                'excludes_south' => $request->checked,
+            ]);        
+        }
+        $user->save();        
+        return ['column' => $request->column, 'north' => $user->excludes_north, 'south' => $user->excludes_south ];
+    }
+
 
 }

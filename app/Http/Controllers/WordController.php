@@ -460,6 +460,7 @@ class WordController extends Controller
             $word->tags()->detach();
             foreach($tagNames as $tagName){
                 if($tagName !== ""){ //""をタグ名として登録しないように。
+                
                     $tag = Tag::firstOrCreate(['name' => $tagName]);
                     $word->tags()->attach($tag);
                 }
