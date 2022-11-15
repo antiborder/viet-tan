@@ -179,21 +179,23 @@
     <div class="card my-2">
       <div class="h5 card-title mt-1 ml-1 mb-1">個人設定</div>
       <div class="card-body pt-0 pb-2 pl-3">
-        <div class="card-text d-flex flex-row my-2 ">
-          <div class="ml-4 mr-2 h6">北部方言を除外する</div>
+        <div class="card-text my-2 ">
+          <div class="ml-4 mr-2 h6">北部方言を除外しますか？</div>
           <tag-switch
           initial_check = "{{var_export( $user->excludes_north, true )}}"
           column = "excludes_north"
           endpoint_to_update_check = "{{ route('users.update_check',['name'=>Auth::user()->name]) }}"
+          class="ml-5 mr-5"
           >
           </tag-switch>
         </div>
-        <div class="card-text d-flex flex-row my-2 ">
-          <div class="ml-4 mr-2 h6">南部方言を除外する</div>
+        <div class="card-text my-2 ">
+          <div class="ml-4 mr-2 h6">南部方言を除外しますか？</div>
           <tag-switch
           initial_check = "{{var_export( $user->excludes_south, true )}}"
           column = "excludes_south"
           endpoint_to_update_check = "{{ route('users.update_check',['name'=>Auth::user()->name]) }}"
+          class="ml-5 mr-5"
           >
           </tag-switch>
         </div>
