@@ -1,7 +1,8 @@
 
 <template>
     <div >
-        <input type="checkbox" v-model="checked" />
+        <input class="pl-5 pr-5" type="checkbox" v-model="checked" />
+          　{{message}}
     </div>
 </template>
 
@@ -28,12 +29,36 @@
     data(){
       return {
         checked: JSON.parse(this.initial_check),
+        status: "INITIAL",
+        click_count : 0,
       }
+    },
+
+    computed: {
+      message : function () {
+        if(this.status === "INITIAL"){
+          if(this.initial_check==="true"){
+            return "除外する";
+          }else if(this.initial_check==="false"){
+            return "除外しない";
+          }else{
+            return "エラー";
+          }
+        }else{
+          if(this.status==="ON"){
+            return "除外する";
+          }else if(this.status==="OFF"){
+            return "除外しない";
+          }else{
+            return "エラー";
+          }
+        }
+      },
     },
 
     watch: {
       checked: function(val) {
-        // this.update;
+        this.click_count++;
         this.updateCheck();
       },
     },
@@ -49,13 +74,19 @@
           console.log('status:', response.status); // 200
           console.log('data:', response.data); //
           console.log('response:', response); //
+          if(response.data['status'] === true){
+            this.status = 'ON';  
+          }else if(response.data['status'] === false){
+            this.status = 'OFF';  
+          }          
 
         }).catch(err => {
           console.log('err:', err);
-          console.log('this.column');
-          console.log('this.checked');                    
+          alert(err)
+          this.status = 'エラー'
         });
       },
     }
+
   }
 </script>

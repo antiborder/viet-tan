@@ -197,15 +197,21 @@ class UserController extends Controller
         if($request->column === 'excludes_north'){
             $user -> fill([
                 'excludes_north' => $request->checked,
-            ]);        
+            ]);
         }
         if($request->column === 'excludes_south'){
             $user -> fill([
                 'excludes_south' => $request->checked,
-            ]);        
+            ]);
         }
-        $user->save();        
-        return ['column' => $request->column, 'north' => $user->excludes_north, 'south' => $user->excludes_south ];
+        $user->save();
+        
+        if($request->column === 'excludes_north'){
+            return ['column' => $request->column, 'status' => $user->excludes_north];
+        }
+        if($request->column === 'excludes_south'){
+            return ['column' => $request->column, 'status' => $user->excludes_south];
+        }
     }
 
 
