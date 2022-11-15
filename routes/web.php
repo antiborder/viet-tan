@@ -60,7 +60,7 @@ Route::view('/articles/han-nom','articles.han-nom')->name('articles.han-nom');
 Route::get('/users/list', 'UserController@list')->name('users.list');
 Route::prefix('users')->name('users.')->group(function () {
     Route::get('/{name}', 'UserController@show')->name('show');
-    Route::post('/{name}/update_check', 'userController@updateCheck')->name('update_check');    
+    Route::post('/{name}/update_check','UserController@updateCheck')->name('update_check');    
 });
 
 Route::get('/word-name/{name}', 'WordController@wordName')->name('word-name');
