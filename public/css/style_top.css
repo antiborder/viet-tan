@@ -144,6 +144,17 @@
     width:60px;
     height:60px
 }
+
+#top .new-func-border{
+    margin: 1.0rem 0.0rem;
+    padding: 0;
+    border: 5px solid #ffa726;
+}
+
+#top .new-func-tytle{
+    color:#ffa726;
+}
+
 #top .wide-image{
     text-align:center;
     width:calc(270px + ((100vw - 340px) * 0.2));

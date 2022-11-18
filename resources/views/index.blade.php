@@ -146,6 +146,18 @@
       </div>
     </div>
 
+    <div class="card new-func-border">
+      <div class="card-body p-1 text-center">
+        <h3 class="sizable-text-middle pt-1 text-center new-func-tytle">
+          新機能『方言設定』
+        </h3>
+        <p class="sizable-text-small text-center">
+          北部方言と南部方言の出題をON/OFFできます。<br>
+          ログイン後、『学習状況』下部の『方言設定』よりご利用ください。<br>
+        </p>
+      </div>
+    </div>
+
     <div class="card my-4 p-0">
       <div class="card-body p-1 text-center">
         <p class="m-0">
@@ -156,6 +168,7 @@
             <tr><td class="info-date">2022.10.13</td><td>単語の意味詳細を追加しました。</td></tr>
             <tr><td class="info-date">2022.10.17</td><td>単語データベースを更新しました。</td></tr>
             <tr><td class="info-date">2022.10.31</td><td>関連タグに検索用のkeywordを追加しました。</td></tr>
+            <tr><td class="info-date">2022.11.18</td><td>学習状況に方言設定を追加しました。</td></tr>
           </table>
         </div>
       </div>
