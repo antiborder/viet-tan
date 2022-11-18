@@ -175,9 +175,9 @@
         </div>
       </div>
     </a>
-    @if($user->id === 1)
+
     <div class="card my-2">
-      <div class="h5 card-title mt-1 ml-1 mb-1">個人設定</div>
+      <div class="h5 card-title mt-1 ml-1 mb-1">方言設定</div>
       <div class="card-body pt-0 pb-2 pl-3">
         <div class="card-text my-2 ">
           <div class="ml-4 mr-2 h6">北部方言を除外しますか？</div>
@@ -201,7 +201,6 @@
         </div>
       </div>
     </div>
-    @endif
 
     @include('ads.rectangle')
 
