@@ -18,6 +18,9 @@
               START ▶
             </button>
           </div>
+          <p class="text-muted">
+            ※単語の音声が出ます。
+          </p>
         </div>
       </div>
       <Adsense

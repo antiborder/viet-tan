@@ -28,6 +28,7 @@
       @if($loop->first)
       <div class="grouping-square grouping-square-orange-filled text-white">
           <span class="grouping-label">ベトナム語が一致</span>
+          <p class="sample-click-text">　↓ベトナム語をclick！</p>
       @endif
       @include('words.card',['word'=>$word])
       @if($loop->last)
@@ -37,7 +38,7 @@
 
     @foreach($words_name_similar ?? null as $word)
       @if($loop->first)
-        <div class="grouping-square grouping-square-ornage">
+        <div class="grouping-square grouping-square-orange">
           <span class="grouping-label">アルファベットが同じ単語</span>
       @endif
       @include('words.card',['word'=>$word])
@@ -73,6 +74,7 @@
       @if($loop->first)
       <div class="grouping-square grouping-square-orange-filled text-white">
         <span class="grouping-label">意味が該当</span>
+        <p class="sample-click-text">ベトナム語↓をclick！</p>
       @endif
       @include('words.card',['word'=>$word])
       @if($loop->last)

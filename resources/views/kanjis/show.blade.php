@@ -20,6 +20,7 @@
     </div>
 
     <div class="centered-block">
+      <p class="sample-click-text">　↓ベトナム語をclick！</p>      
       @if($subscription === 'NORMAL')
 
         @foreach($words as $i => $word)
