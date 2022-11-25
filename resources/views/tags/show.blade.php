@@ -10,18 +10,15 @@
         <p>
           <span class="h4 card-title">{{ $tag->name }}</span>　タグに該当
         </p>
-        <p class="mb-0">
-          <label>keyword:</label>
-          {{$tag->keywords}}
-        </p>
       </div>
     </div>
 
     <div class="centered-block">
       <span style="font-size:1.4rem"> {{ $tag->words->count() }}</span> 件が該当
-    </div>    
+    </div>
 
     <div class="centered-block">
+      <p class="sample-click-text">　↓ベトナム語をclick！</p>
       @if( $subscription==="NORMAL" )
         @foreach($tag->words->sortBy('level') as $i => $word)
           @include('words.card')
@@ -36,7 +33,7 @@
             @include('words.card')
             @if($i===9 || $i===21 || $i===35)
               @include('ads.horizontal')
-            @endif          
+            @endif
           @endif
         @endforeach
         @if( $tag->words->count() > config('const.TAG_WORD_TRIAL'))
@@ -51,7 +48,7 @@
             @include('words.card')
             @if($i===9 || $i===21 || $i===35)
               @include('ads.horizontal')
-            @endif          
+            @endif
           @endif
         @endforeach
         @if( $tag->words->count() > config('const.TAG_WORD_GUEST'))
@@ -68,19 +65,28 @@
           他のタグも見る
         </div>
       </a>
-    </div>    
+    </div>
+
+    <div class="card my-3 centered-block">
+      <div class="card-body">
+        <p class="mb-0">
+          <label class="text-muted">{{ $tag->name }}タグのkeyword:</label><br>
+          {{$tag->keywords}}
+        </p>
+      </div>
+    </div>
 
     <div class="centered-block">
       @include('ads.rectangle')
     </div>
-    
+
   </div>
 
   <!-- recommend-normal modal -->
   <div class="modal fade rounded" id="recommend-normal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-        <div class="modal-body"> 
+        <div class="modal-body">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button><br>
@@ -91,7 +97,7 @@
         </div>
       </div>
     </div>
-  </div>   
+  </div>
 
-  @include('footer')  
+  @include('footer')
 @endsection

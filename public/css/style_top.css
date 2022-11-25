@@ -159,13 +159,7 @@
     text-align:center;
     width:calc(270px + ((100vw - 340px) * 0.2));
 }
-#top .sample-click-text{
-    font-size:0.8rem;
-    color:#888888;
-    text-align:left;
-    margin:0 auto;
-    max-width:30rem;
-}
+
 #top .word-card-box{
     max-width:30rem;
     margin:0 auto;

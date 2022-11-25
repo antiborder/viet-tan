@@ -260,7 +260,7 @@
       <h4 class="sizable-text-small text-center mt-3 mb-0" >
         単語カードサンプル
       </h4>
-      <p class="sample-click-text">単語↓をclick</p>
+      <p class="sample-click-text">単語↓をclick！</p>
       <div>
         @foreach($words as $word)
         <div class="word-card-box">
